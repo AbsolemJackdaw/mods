@@ -2,8 +2,8 @@ package petBuddy.root;
 
 import java.util.Random;
 
-import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelCow;
+import net.minecraft.client.model.ModelEnderman;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
@@ -11,12 +11,9 @@ import net.minecraft.entity.EntityLiving;
 
 import org.lwjgl.opengl.GL11;
 
-import petBuddy.entity.BlazeBuddy;
-import petBuddy.entity.EnderManBuddy;
+import petBuddy.PetBuddyMain;
 import petBuddy.entity.EntityBuddy;
-import petBuddy.entity.GhastBuddy;
-import petBuddy.entity.SheepBuddy;
-import cpw.mods.fml.common.FMLLog;
+import petBuddy.entity.model.SheepBody;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -32,59 +29,59 @@ public class RenderBuddy extends RenderLiving
 		scaleBuddy = scale;
 	}
 
-	public RenderBuddy(ModelBase model, float par2, float scale)
-	{
-		super(new ModelCow(), par2);
-		scaleBuddy = scale;
-		this.setRenderPassModel(model);
-	}
-
 	protected void preRenderCallback(EntityLiving pet, float par2) {
 		GL11.glScalef(scaleBuddy, scaleBuddy, scaleBuddy);
-		if(pet instanceof GhastBuddy){
+		if(PetBuddyMain.proxy.getGuiId() == 13){
 			GL11.glTranslatef(0f, -1.5f, 0f);
-		}if(pet instanceof BlazeBuddy){
+		}
+		if(PetBuddyMain.proxy.getGuiId() == 6){
 			GL11.glTranslatef(0f, -0.5f, 0f);
 		}
 		if(pet.isRiding()){
-			GL11.glTranslatef(0f, ((BuddyBase)pet).offset, 0f);
-			
+			GL11.glTranslatef(0f, ((BuddyBase)pet).getMountedOffset(), 0f);
+
 		}
 	}
 
+	private ModelEnderman model;
+	private SheepBody modelBody = new SheepBody();
+
 	protected int sheepTexturing(BuddyBase buddy, int par2, float par3)
 	{
-		if (par2 == 0 && buddy instanceof SheepBuddy){
+		 if(PetBuddyMain.proxy.getGuiId() == 14){
+			this.setRenderPassModel(modelBody);
+		}
+
+		if (par2 == 0 && PetBuddyMain.proxy.getGuiId() == 14){
 			this.loadTexture("/mob/sheep_fur.png");
 			float f1 = 1.0F;
-			GL11.glColor3f(((SheepBuddy)buddy).randomColor,((SheepBuddy)buddy).randomColor2,((SheepBuddy)buddy).randomColor3);
+			GL11.glColor3f(((EntityBuddy)buddy).randomColor,((EntityBuddy)buddy).randomColor2,((EntityBuddy)buddy).randomColor3);
 			return 1;
 		}
-		else if(par2 == 0 && buddy instanceof EnderManBuddy){
+		 if(par2 == 0 && PetBuddyMain.proxy.getGuiId() == 15){
 			this.loadTexture("/mob/enderman_eyes.png");
-            float f1 = 1.0F;
-            GL11.glEnable(GL11.GL_BLEND);
-            GL11.glDisable(GL11.GL_ALPHA_TEST);
-            GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE);
-            GL11.glDisable(GL11.GL_LIGHTING);
+			float f1 = 1.0F;
+			GL11.glEnable(GL11.GL_BLEND);
+			GL11.glDisable(GL11.GL_ALPHA_TEST);
+			GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE);
+			GL11.glDisable(GL11.GL_LIGHTING);
+			if (buddy.isInvisible())
+			{
+				GL11.glDepthMask(false);
+			}
+			else
+			{
+				GL11.glDepthMask(true);
+			}
 
-            if (buddy.isInvisible())
-            {
-                GL11.glDepthMask(false);
-            }
-            else
-            {
-                GL11.glDepthMask(true);
-            }
-
-            char c0 = 61680;
-            int j = c0 % 65536;
-            int k = c0 / 65536;
-            OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)j / 1.0F, (float)k / 1.0F);
-            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            GL11.glEnable(GL11.GL_LIGHTING);
-            GL11.glColor4f(1.0F, 1.0F, 1.0F, f1);
-            return 1;
+			char c0 = 61680;
+			int j = c0 % 65536;
+			int k = c0 / 65536;
+			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)j / 1.0F, (float)k / 1.0F);
+			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+			GL11.glEnable(GL11.GL_LIGHTING);
+			GL11.glColor4f(1.0F, 1.0F, 1.0F, f1);
+			return 1;
 		}
 		else
 		{
@@ -96,6 +93,7 @@ public class RenderBuddy extends RenderLiving
 	{
 		return this.sheepTexturing((BuddyBase)par1EntityLiving, par2, par3);
 	}
+
 
 	public void renderCow(BuddyBase buddy, double par2, double par4, double par6, float par8, float par9)
 	{
@@ -111,7 +109,7 @@ public class RenderBuddy extends RenderLiving
 
 	protected void getDownloadableTexture(EntityLiving living)
 	{    		
-		if(living instanceof EntityBuddy){
+		if(PetBuddyMain.proxy.getGuiId() == 3){
 			this.loadDownloadableImageTexture(((EntityBuddy)living).getOwner().skinUrl, living.getTexture());
 		}
 		else{

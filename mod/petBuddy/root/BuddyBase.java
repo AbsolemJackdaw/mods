@@ -22,7 +22,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public abstract class BuddyBase extends EntityTameable
 {
-
+//	private int guiID;
 	public BuddyBase(World par1World)
 	{
 		super(par1World);
@@ -65,16 +65,15 @@ public abstract class BuddyBase extends EntityTameable
 		return 6;
 	}
 
+	/**retrieve the buddy's model based on the integer passed down by the buttons of the Gui.*/
 	@SideOnly(Side.CLIENT)
 	public abstract ModelBase getModel();
+		
 	@Override
 	public abstract String getTexture();
-
-	public float offset;
-	public void setMountedYOffset(float d){
-		offset = d;
-	}
-
+	
+	/**retrieve the buddy's mounted offset based on the integer passed down by the buttons of the Gui.*/
+	public abstract float getMountedOffset();
 	
 	protected void entityInit()
 	{

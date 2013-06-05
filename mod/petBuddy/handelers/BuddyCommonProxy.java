@@ -1,10 +1,7 @@
 package petBuddy.handelers;
 
-import java.util.Random;
-
 import net.minecraft.entity.player.EntityPlayer;
-import petBuddy.entity.SheepBuddy;
-import petBuddy.root.BuddyBase;
+import cpw.mods.fml.common.FMLLog;
 
 public class BuddyCommonProxy {
 
@@ -14,5 +11,15 @@ public class BuddyCommonProxy {
 	public void openGui(int id, EntityPlayer player, String name)
 	{
 
+	}
+	
+	private int guiID = 3;
+	public int getGuiId(){
+		return guiID;
+	}
+	
+	public void setGuiId(int guiId){
+		guiID = guiId;
+		FMLLog.getLogger().info("" + guiID);
 	}
 }

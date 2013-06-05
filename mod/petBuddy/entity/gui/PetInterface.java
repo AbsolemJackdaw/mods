@@ -14,14 +14,6 @@ import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.common.network.PacketDispatcher;
 
-import petBuddy.PetBuddyMain;
-import petBuddy.entity.BlazeBuddy;
-import petBuddy.entity.CowBuddy;
-import petBuddy.entity.CreeperBuddy;
-import petBuddy.entity.EntityBuddy;
-import petBuddy.entity.PigBuddy;
-import petBuddy.root.BuddyBase;
-
 public class PetInterface extends GuiScreen {
 
 	private float xSize_lo;
@@ -80,8 +72,8 @@ public class PetInterface extends GuiScreen {
 		this.buttonList.add(new GuiButton(26, posX+40 , posY+70, 50, 20, "Wolf"));
 
 		this.buttonList.add(new GuiButton(27, posX+100 , posY-50, 50, 20, "Pig Zombie"));
-		this.buttonList.add(new GuiButton(28, posX+100 , posY-20, 50, 20, "Slime"));
-		this.buttonList.add(new GuiButton(29, posX+100 , posY+10, 50, 20, "Magma SLime"));
+		this.buttonList.add(new GuiButton(28, posX+100 , posY-20, 50, 20, "x"));
+		this.buttonList.add(new GuiButton(29, posX+100 , posY+10, 50, 20, "x"));
 		this.buttonList.add(new GuiButton(1, posX+100 , posY+40, 50, 20, "x"));
 		this.buttonList.add(new GuiButton(1, posX+100 , posY+70, 50, 20, "x"));
 
@@ -115,6 +107,7 @@ public class PetInterface extends GuiScreen {
 	public boolean doesGuiPauseGame() {
 		return false;
 	}
+	
 
 	@Override
 	public void actionPerformed(GuiButton button) {
@@ -127,7 +120,7 @@ public class PetInterface extends GuiScreen {
 			mc.thePlayer.closeScreen();
 		}
 	}
-	
+
 	public void sendPacket(int id){
 		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
 		ObjectOutput out;
