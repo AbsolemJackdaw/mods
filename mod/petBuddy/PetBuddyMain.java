@@ -55,6 +55,9 @@ public class PetBuddyMain {
 	public static BuddyCommonProxy proxy;
 
 
+	// todo 
+	// make all the buddies, ONE entity. this is possible, as models can be changed when rendered.
+	// this could solve a LOT of issues.
 	@Init
 	public void load (FMLInitializationEvent e){
 
