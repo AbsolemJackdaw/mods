@@ -30,6 +30,7 @@ import petBuddy.entity.model.SilverFish;
 import petBuddy.entity.model.Squid;
 import petBuddy.entity.model.Wolf;
 import petBuddy.root.BuddyBase;
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -41,14 +42,14 @@ public class EntityBuddy extends BuddyBase
 	public float randomColor3 = 1.0f;
 	int sheepColor = rand.nextInt(5);
 
-	int catTextures = rand.nextInt(4);
-	int spiderTextures = rand.nextInt(2);
-	int villagerTextures = rand.nextInt(6);
-	int zombieModelChoice = rand.nextInt(2);
-	String cat;
-	String spider;
-	String villager;
-	
+	public int catTextures = rand.nextInt(4);
+	public int spiderTextures = rand.nextInt(2);
+	public int villagerTextures = rand.nextInt(6);
+	public int zombieModelChoice = rand.nextInt(2);
+	public String cat;
+	public String spider;
+	public String villager;
+
 	public EntityBuddy(World par1World)
 	{
 		super(par1World);	
@@ -57,6 +58,7 @@ public class EntityBuddy extends BuddyBase
 			randomColor2 = rand.nextFloat();
 			randomColor3 = rand.nextFloat();
 		}
+
 		cat = catTextures == 0 ? "ozelot" : catTextures == 1 ? "cat_black" : catTextures == 2 ? "cat_siamese" : "cat_red";
 		spider = spiderTextures == 0 ? "spider" : "cavespider";
 		villager = villagerTextures == 0 ? "smith" : villagerTextures == 1 ? "librarian" :villagerTextures == 2 ? 
@@ -145,7 +147,7 @@ public class EntityBuddy extends BuddyBase
 		case 18:
 			return new IronGolem();
 		case 20:
-		return new Bat();
+			return new Bat();
 		case 21:
 			return new Chicken();
 		case 22:
@@ -200,8 +202,8 @@ public class EntityBuddy extends BuddyBase
 			return "/mob/snowman.png";
 		case 18:
 			return "/mob/villager_golem.png";
-//		case 19:
-//			return "/mob/witch.png";
+			//		case 19:
+			//			return "/mob/witch.png";
 		case 20:
 			return "/mob/bat.png";
 		case 21:
@@ -226,40 +228,47 @@ public class EntityBuddy extends BuddyBase
 	public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
 	{
 		super.writeEntityToNBT(par1NBTTagCompound);
-		par1NBTTagCompound.setString("catTexture", cat);
-		par1NBTTagCompound.setString("vilTexture", villager);
-		par1NBTTagCompound.setString("spiTexture", spider);
-		
-		par1NBTTagCompound.setInteger("catInt", catTextures);
-		par1NBTTagCompound.setInteger("vilInt", villagerTextures);
-		par1NBTTagCompound.setInteger("spiInt", spiderTextures);
-		par1NBTTagCompound.setInteger("zombieInt", zombieModelChoice);
-		
-		par1NBTTagCompound.setFloat("firstRandomColor", randomColor);
-		par1NBTTagCompound.setFloat("seconRandomColor", randomColor2);
-		par1NBTTagCompound.setFloat("thirdRandomColor", randomColor3);
+		getEntityData().setString("catTexture", cat);
+		getEntityData().setString("vilTexture", villager);
+		getEntityData().setString("spiTexture", spider);
+
+		getEntityData().setInteger("catInt", catTextures);
+		getEntityData().setInteger("vilInt", villagerTextures);
+		getEntityData().setInteger("spiInt", spiderTextures);
+		getEntityData().setInteger("zombieInt", zombieModelChoice);
+		getEntityData().setInteger("renderingID", getGuiId());
+
+		getEntityData().setFloat("firstRandomColor", randomColor);
+		getEntityData().setFloat("seconRandomColor", randomColor2);
+		getEntityData().setFloat("thirdRandomColor", randomColor3);
 
 	}
 
 	public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
 	{
 		super.readEntityFromNBT(par1NBTTagCompound);
-		randomColor = par1NBTTagCompound.getFloat("firstRandomColor");
-		randomColor2 = par1NBTTagCompound.getFloat("seconRandomColor");
-		randomColor3 = par1NBTTagCompound.getFloat("thirdRandomColor");
+		cat = getEntityData().getString("catTexture");
+		villager = getEntityData().getString("vilTexture");
+		spider = getEntityData().getString("spiTexture");
+		
+		zombieModelChoice = getEntityData().getInteger("zombieInt");
+		catTextures = getEntityData().getInteger("catInt");
+		villagerTextures = getEntityData().getInteger("vilInt");
+		spiderTextures = getEntityData().getInteger("spiInt");
+		PetBuddyMain.proxy.setGuiId(getEntityData().getInteger("renderingID"));
+		
+		randomColor = getEntityData().getFloat("firstRandomColor");
+		randomColor2 = getEntityData().getFloat("seconRandomColor");
+		randomColor3 = getEntityData().getFloat("thirdRandomColor");
 
-		zombieModelChoice = par1NBTTagCompound.getInteger("zombieInt");
-		catTextures = par1NBTTagCompound.getInteger("catInt");
-		villagerTextures = par1NBTTagCompound.getInteger("vilInt");
-		spiderTextures = par1NBTTagCompound.getInteger("spiInt");
-
-		cat = par1NBTTagCompound.getString("catTexture");
-		villager = par1NBTTagCompound.getString("vilTexture");
-		spider = par1NBTTagCompound.getString("spiTexture");
-
+		
+		
+		
+		
+		
 	}
 
-	private int getGuiId(){
+	public int getGuiId(){
 		return PetBuddyMain.proxy.getGuiId();
 	}
 
