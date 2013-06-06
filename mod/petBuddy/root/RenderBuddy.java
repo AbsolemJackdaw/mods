@@ -124,6 +124,7 @@ public class RenderBuddy extends RenderLiving
 	{
 		BuddyBase pet = (BuddyBase)par1Entity;
 		this.renderCow((BuddyBase)par1Entity, par2, par4, par6, par8, par9);
-		this.renderLivingLabel(pet, pet.getOwnerName()+ "'s Buddy" , par2, par4+0.3, par6, 32);
+		String petname = ((EntityBuddy)pet).getName().equals("null")?pet.getOwnerName()+ "'s Buddy" : ((EntityBuddy)pet).getName();
+		this.renderLivingLabel(pet, petname , par2, par4+0.3, par6, 32);
 	}
 }

@@ -4,14 +4,21 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.packet.Packet250CustomPayload;
+import net.minecraft.src.ModLoader;
+import net.minecraft.world.World;
 
 import org.lwjgl.opengl.GL11;
 
+import petBuddy.entity.EntityBuddy;
+import betterbreeds.entity.EntityWolf3;
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class PetInterface extends GuiScreen {
@@ -24,13 +31,20 @@ public class PetInterface extends GuiScreen {
 	public EntityPlayer thePlayer;
 	public String playerName;
 	public static PetInterface inst;
+	private GuiTextField textfield;
+	private static EntityBuddy buddy;
+	private static int buddyID;
 
-	public PetInterface(EntityPlayer player, String name) {
+	public PetInterface(EntityPlayer player, String name, int entityID) {
 		super();
 		hi = "Choose a new Buddy to adventure with you.";
 		thePlayer = player;
 		playerName = name;
 		inst = this;
+		World world = player.worldObj;
+		buddyID = entityID;
+		buddy= (EntityBuddy)world.getEntityByID(entityID);
+
 	}
 
 	@Override
@@ -82,32 +96,52 @@ public class PetInterface extends GuiScreen {
 		this.buttonList.add(new GuiButton(1, posX+160 , posY+10, 50, 20, "x"));
 		this.buttonList.add(new GuiButton(1, posX+160 , posY+40, 50, 20, "x"));
 		this.buttonList.add(new GuiButton(1, posX+160 , posY+70, 50, 20, "x"));
+
+		this.buttonList.add(new GuiButton(100, posX-200 , posY-110, 50, 20, "Submit name"));
+
+		String text = buddy.getName().equals("null") ? buddy.getOwnerName() + "'s Buddy" : buddy.getName();
+		FMLLog.getLogger().info(text);
+		textfield = new GuiTextField(fontRenderer, posX-200 , posY-80, 150, 20);
+		textfield.setText(text);
+		textfield.setMaxStringLength(50);
 	}
 
 	public void drawScreen(int par1, int par2, float par3) {
 		this.xSize_lo = (float) par1;
 		this.ySize_lo = (float) par2;
-		super.drawScreen(par1, par2, par3);
 
 		try
 		{
 			this.mc.renderEngine.bindTexture("/gui/demo_bg.png");
 			GL11.glColor4f(0.0F, 0.0F, 0.0F, 5.0F);
-			int posX = (this.width - xSize) / 2;
-			int posY = (this.height - ySize) / 2;
+			int posX = (this.width ) / 2;
+			int posY = (this.height) / 2;
 			drawTexturedModalRect(posX, posY, 0, 0, xSize, ySize);
 			drawTexturedModalRect(posX*2, posY+5, 0, 90, 45, ySize);
 			fontRenderer.drawSplitString(hi, this.width / 2-49, this.height / 2-100, 150 ,0x000000);
 			fontRenderer.drawSplitString(hi, this.width / 2-50, this.height / 2-101, 150 ,0xffffff);
 		}
-		catch (Throwable e){
+		finally
+		{
+			textfield.drawTextBox();
 		}
-	}
+		super.drawScreen(par1, par2, par3);
 
+	}
+	protected void keyTyped(char c, int i)
+	{
+		super.keyTyped(c, i);
+		textfield.textboxKeyTyped(c, i);
+	}
+	protected void mouseClicked(int i, int j, int k)
+	{
+		super.mouseClicked(i, j, k);
+		textfield.mouseClicked(i, j, k);
+	}
 	public boolean doesGuiPauseGame() {
 		return false;
 	}
-	
+
 
 	@Override
 	public void actionPerformed(GuiButton button) {
@@ -115,18 +149,25 @@ public class PetInterface extends GuiScreen {
 		{
 			mc.thePlayer.closeScreen();
 		}
+		else if(button.id == 100){
+			sendPacket(button.id, buddyID, textfield.getText());
+			this.mc.thePlayer.closeScreen();
+		}
+
 		else{
-			sendPacket(button.id);
+			sendPacket(button.id, button.id, "Failed to read string");
 			mc.thePlayer.closeScreen();
 		}
 	}
 
-	public void sendPacket(int id){
+	public void sendPacket(int id, int secondID, String petName){
 		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
 		ObjectOutput out;
 		DataOutputStream outputStream = new DataOutputStream(bytes);
 		try {
 			outputStream.writeInt(id);
+			outputStream.writeInt(secondID);
+			outputStream.writeUTF(petName);
 			Packet250CustomPayload packet = new Packet250CustomPayload("buddyPet", bytes.toByteArray());
 			PacketDispatcher.sendPacketToServer(packet);
 			thePlayer.closeScreen();

@@ -9,8 +9,15 @@ import petBuddy.entity.EntityBuddy;
 public class BuddyCommonProxy {
 
 	public void render() {}
-	public void openGui(int id, EntityPlayer player, String name){}
+	public void openGui(int id, EntityPlayer player, String name, int entityID){}
 
+	String name = "null";
+	public String getName(){
+		return name;
+	}
+	public void setName(String n){
+		name = n;
+	}
 	private int guiID = 3;
 	public int getGuiId(){
 		return guiID;
@@ -22,7 +29,7 @@ public class BuddyCommonProxy {
 	private float randomColor;
 	private float randomColor2;
 	private float randomColor3;
-	
+
 	public float getColor(){
 		return randomColor ;
 	}public float getColor2(){

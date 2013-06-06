@@ -1,5 +1,6 @@
 package petBuddy.entity;
 
+import net.minecraft.block.BlockCloth;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelBlaze;
@@ -16,6 +17,7 @@ import net.minecraft.client.model.ModelZombie;
 import net.minecraft.client.model.ModelZombieVillager;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemDye;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
@@ -41,7 +43,7 @@ public class EntityBuddy extends BuddyBase
 	private float randomColor;
 	private float randomColor2;
 	private float randomColor3;
-
+	
 	public EntityBuddy(World par1World)
 	{
 		super(par1World);
@@ -213,16 +215,15 @@ public class EntityBuddy extends BuddyBase
 	@Override
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
-
 	}
 
 	/**
 	 * Called when a player interacts with a mob. e.g. gets milk from a cow, gets into the saddle on a pig.
 	 */
-	public boolean interact(EntityPlayer par1EntityPlayer)
+	public boolean interact(EntityPlayer player)
 	{
-		if(par1EntityPlayer.getCurrentEquippedItem() != null){
-			if(par1EntityPlayer.getCurrentEquippedItem().getItem() instanceof ItemDye){
+		if(player.getCurrentEquippedItem() != null){
+			if(player.getCurrentEquippedItem().getItem() instanceof ItemDye){
 				float fl= 1.0f;
 				float flo= 1.0f;
 				float fla= 1.0f;
@@ -233,7 +234,22 @@ public class EntityBuddy extends BuddyBase
 				PetBuddyMain.proxy.setColor(fl,flo,fla);
 			}
 		}
-		return super.interact(par1EntityPlayer);
+		
+		
+		if(player.inventory.getCurrentItem() != null){
+			if(player.inventory.getCurrentItem().getItem().equals(Item.stick)){
+				PetBuddyMain.proxy.openGui(0, player, player.username, this.entityId);
+			}
+		} 
+		else if (!this.worldObj.isRemote && this.ridingEntity == null){
+			this.mountEntity(player);
+			this.ridingEntity = player;
+		}
+		else if(!this.worldObj.isRemote && this.ridingEntity == player){
+			this.unmountEntity(player);
+			this.ridingEntity = null;
+		}
+		return super.interact(player);
 	}
 
 	public float getColor(){
@@ -255,5 +271,9 @@ public class EntityBuddy extends BuddyBase
 	public EntityAgeable createChild(EntityAgeable par1EntityAgeable)
 	{
 		return this.spawnBabyAnimal(par1EntityAgeable);
+	}
+
+	public String getName(){
+		return PetBuddyMain.proxy.getName();
 	}
 }

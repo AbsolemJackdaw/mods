@@ -71,7 +71,7 @@ public abstract class BuddyBase extends EntityTameable
 		
 	@Override
 	public abstract String getTexture();
-	
+		
 	/**retrieve the buddy's mounted offset based on the integer passed down by the buttons of the Gui.*/
 	public abstract float getMountedOffset();
 	
@@ -138,19 +138,6 @@ public abstract class BuddyBase extends EntityTameable
 	 */
 	public boolean interact(EntityPlayer player)
 	{
-		if(player.inventory.getCurrentItem() != null){
-			if(player.inventory.getCurrentItem().getItem().equals(Item.stick)){
-				PetBuddyMain.proxy.openGui(0, player, player.username);
-			}
-		} 
-		else if (!this.worldObj.isRemote && this.ridingEntity == null){
-			this.mountEntity(player);
-			this.ridingEntity = player;
-		}
-		else if(!this.worldObj.isRemote && this.ridingEntity == player){
-			this.unmountEntity(player);
-			this.ridingEntity = null;
-		}
 		return super.interact(player);
 	}
 

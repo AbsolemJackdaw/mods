@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
+import petBuddy.PetBuddyMain;
 import petBuddy.entity.EntityBuddy;
 import petBuddy.entity.gui.PetInterface;
 import petBuddy.root.RenderBuddy;
@@ -14,10 +15,20 @@ public class BuddyClientProxy extends BuddyCommonProxy{
 	public void render() {
 		RenderingRegistry.registerEntityRenderingHandler(EntityBuddy.class, new RenderBuddy(0.3f,0.4f));
 	}
-	public void openGui(int id, EntityPlayer player, String name)
+	@Override
+	public void openGui(int id, EntityPlayer player, String name, int entityID)
 	{
-		Minecraft.getMinecraft().displayGuiScreen(new PetInterface(player, name));
+		Minecraft.getMinecraft().displayGuiScreen(new PetInterface(player, name, entityID));
 	}
+	
+	String name = "null";
+	public String getName(){
+		return name;
+	}
+	public void setName(String n){
+		name = n;
+	}
+	
 	private int guiID = 3;
 	public int getGuiId(){
 		return guiID;
