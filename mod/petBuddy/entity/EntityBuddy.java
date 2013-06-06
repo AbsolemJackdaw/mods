@@ -175,8 +175,6 @@ public class EntityBuddy extends BuddyBase
 			return "/mob/snowman.png";
 		case 18:
 			return "/mob/villager_golem.png";
-			//		case 19:
-			//			return "/mob/witch.png";
 		case 20:
 			return "/mob/bat.png";
 		case 21:
@@ -201,22 +199,11 @@ public class EntityBuddy extends BuddyBase
 	public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
 	{
 		super.writeEntityToNBT(par1NBTTagCompound);
-		//		getEntityData().setInteger("renderingID", getGuiId());
-		//
-		//		getEntityData().setFloat("firstRandomColor", getColor());
-		//		getEntityData().setFloat("seconRandomColor", getColor2());
-		//		getEntityData().setFloat("thirdRandomColor", getColor3());
-
 	}
 
 	public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
 	{
 		super.readEntityFromNBT(par1NBTTagCompound);
-		//		PetBuddyMain.proxy.setGuiId(getEntityData().getInteger("renderingID"));
-		//
-		//		setColor(getEntityData().getFloat("firstRandomColor"),
-		//				getEntityData().getFloat("seconRandomColor"),
-		//				getEntityData().getFloat("thirdRandomColor"));
 	}
 
 	public int getGuiId(){
@@ -243,26 +230,20 @@ public class EntityBuddy extends BuddyBase
 				fl = rand.nextFloat();
 				flo = rand.nextFloat();
 				fla = rand.nextFloat();
-				setColor(fl,flo,fla);
+				PetBuddyMain.proxy.setColor(fl,flo,fla);
 			}
 		}
 		return super.interact(par1EntityPlayer);
-
 	}
 
 	public float getColor(){
-		return randomColor;
+		return PetBuddyMain.proxy.getColor() ;
 	}public float getColor2(){
-		return randomColor2;
+		return PetBuddyMain.proxy.getColor2() ;
 	}public float getColor3(){
-		return randomColor3;
+		return PetBuddyMain.proxy.getColor3();
 	}
 
-	public void setColor(float f, float g, float h){
-		randomColor  = f;
-		randomColor2 = g;
-		randomColor3 = h;
-	}
 	/**
 	 * This function is used when two same-species animals in 'love mode' breed to generate the new baby animal.
 	 */

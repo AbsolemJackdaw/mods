@@ -15,9 +15,26 @@ public class BuddyCommonProxy {
 	public int getGuiId(){
 		return guiID;
 	}
-
 	public void setGuiId(int guiId){
 		guiID = guiId;
+	}
+
+	private float randomColor;
+	private float randomColor2;
+	private float randomColor3;
+	
+	public float getColor(){
+		return randomColor ;
+	}public float getColor2(){
+		return randomColor2 ;
+	}public float getColor3(){
+		return randomColor3;
+	}
+
+	public void setColor(float f, float g, float h){
+		randomColor  = f;
+		randomColor2 = g;
+		randomColor3 = h;
 	}
 
 	public NBTTagCompound getLoginPet(String username) {
@@ -25,9 +42,18 @@ public class BuddyCommonProxy {
 		if (MinecraftServer.getServer() != null && MinecraftServer.getServer().getConfigurationManager() != null) {
 			EntityPlayer player = MinecraftServer.getServer().getConfigurationManager().getPlayerForUsername(username);
 			if (player != null) {
-				if(player.getEntityData().hasKey(player.PERSISTED_NBT_TAG) && player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).hasKey("pet_login_id:"+username)) {
+				if(player.getEntityData().hasKey(player.PERSISTED_NBT_TAG)){
+					NBTTagCompound tag = player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG);
+					if(tag.hasKey("pet_login_id:"+username)) {
+						PETNBT.setInteger("pet_login_id:"+username, tag.getInteger("pet_login_id:"+username));
 
-					PETNBT.setInteger("pet_login_id:"+username, player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).getInteger("pet_login_id:"+username));
+					}if(tag.hasKey("pet_color1:"+username)&&tag.hasKey("pet_color2:"+username)&&tag.hasKey("pet_color3:"+username)) {
+						PETNBT.setFloat("pet_color1:"+username, tag.getFloat("pet_color1:"+username));
+						PETNBT.setFloat("pet_color2:"+username, tag.getFloat("pet_color2:"+username));
+						PETNBT.setFloat("pet_color3:"+username, tag.getFloat("pet_color3:"+username));
+					}
+
+
 					return PETNBT;
 				}else{
 					if (!player.getEntityData().hasKey(player.PERSISTED_NBT_TAG)){
@@ -35,22 +61,40 @@ public class BuddyCommonProxy {
 					}
 					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setInteger("pet_login_id:"+username,3);
 					PETNBT.setInteger("pet_login_id:"+username, 3);
+					PETNBT.setFloat("pet_color1:"+username, 1);
+					PETNBT.setFloat("pet_color2:"+username, 1);
+					PETNBT.setFloat("pet_color3:"+username, 1);
+
 					return PETNBT;
 				}
 			}
 		}else{
 			EntityPlayer player = Minecraft.getMinecraft().theWorld.getPlayerEntityByName(username);
 			if (player != null) {
-				if (player.getEntityData().hasKey(player.PERSISTED_NBT_TAG) && player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).hasKey("pet_login_id:"+username)) {
-					PETNBT.setInteger("pet_login_id:"+username, player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).getInteger("pet_login_id:"+username));
+				if(player.getEntityData().hasKey(player.PERSISTED_NBT_TAG)){
+					NBTTagCompound tag = player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG);
+					if(tag.hasKey("pet_login_id:"+username)) {
+						PETNBT.setInteger("pet_login_id:"+username, tag.getInteger("pet_login_id:"+username));
+
+					}if(tag.hasKey("pet_color1:"+username)&&tag.hasKey("pet_color2:"+username)&&tag.hasKey("pet_color3:"+username)) {
+						PETNBT.setFloat("pet_color1:"+username, tag.getFloat("pet_color1:"+username));
+						PETNBT.setFloat("pet_color2:"+username, tag.getFloat("pet_color2:"+username));
+						PETNBT.setFloat("pet_color3:"+username, tag.getFloat("pet_color3:"+username));
+					}
+
+
 					return PETNBT;
-				} else {
-					if (!player.getEntityData().hasKey(player.PERSISTED_NBT_TAG)) {
+				}else{
+					if (!player.getEntityData().hasKey(player.PERSISTED_NBT_TAG)){
 						player.getEntityData().setCompoundTag(player.PERSISTED_NBT_TAG, new NBTTagCompound(player.PERSISTED_NBT_TAG));
 					}
 					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setInteger("pet_login_id:"+username,3);
 					PETNBT.setInteger("pet_login_id:"+username, 3);
-					return PETNBT;				
+					PETNBT.setFloat("pet_color1:"+username, 1);
+					PETNBT.setFloat("pet_color2:"+username, 1);
+					PETNBT.setFloat("pet_color3:"+username, 1);
+
+					return PETNBT;
 				}
 			}
 		}
@@ -63,23 +107,37 @@ public class BuddyCommonProxy {
 			if (player != null) {
 				if(player.getEntityData().hasKey(player.PERSISTED_NBT_TAG)) {
 					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setInteger("pet_login_id:"+username, buddy.getGuiId());
+					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_color1:"+username, buddy.getColor());
+					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_color2:"+username, buddy.getColor2());
+					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_color3:"+username, buddy.getColor3());
+
 				}else{
 					if (!player.getEntityData().hasKey(player.PERSISTED_NBT_TAG)){
 						player.getEntityData().setCompoundTag(player.PERSISTED_NBT_TAG, new NBTTagCompound(player.PERSISTED_NBT_TAG));
 					}
 					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setInteger("pet_login_id:"+username, 3);
+					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_color1:"+username, 1);
+					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_color2:"+username, 1);
+					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_color3:"+username, 1);
 				}
 			}
 		}else{
 			EntityPlayer player = Minecraft.getMinecraft().theWorld.getPlayerEntityByName(username);
 			if (player != null) {
-				if (player.getEntityData().hasKey(player.PERSISTED_NBT_TAG)) {
+				if(player.getEntityData().hasKey(player.PERSISTED_NBT_TAG)) {
 					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setInteger("pet_login_id:"+username, buddy.getGuiId());
-				} else {
-					if (!player.getEntityData().hasKey(player.PERSISTED_NBT_TAG)) {
+					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_color1:"+username, buddy.getColor());
+					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_color2:"+username, buddy.getColor2());
+					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_color3:"+username, buddy.getColor3());
+
+				}else{
+					if (!player.getEntityData().hasKey(player.PERSISTED_NBT_TAG)){
 						player.getEntityData().setCompoundTag(player.PERSISTED_NBT_TAG, new NBTTagCompound(player.PERSISTED_NBT_TAG));
 					}
-					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setInteger("pet_login_id:"+username,3);
+					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setInteger("pet_login_id:"+username, 3);
+					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_color1:"+username, 1);
+					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_color2:"+username, 1);
+					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_color3:"+username, 1);
 				}
 			}
 		}
