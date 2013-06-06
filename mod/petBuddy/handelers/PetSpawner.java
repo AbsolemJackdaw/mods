@@ -19,11 +19,9 @@ public class PetSpawner implements IPlayerTracker{
 		/*START*/
 		//section to get the buddy data and spawn it when the player logs in. this prevents reseting the buddy.
 		NBTTagCompound tag = PetBuddyMain.proxy.getBuddyData(player.username);
-		FMLLog.getLogger().info(""+ tag);
-		FMLLog.getLogger().info(""+ player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).getCompoundTag("Pet_Buddy_Player:"+player.username));
 		buddy.writeToNBT(tag);
-		buddy.readFromNBT(tag);
 		bud = buddy;
+		FMLLog.getLogger().info(""+ bud.getEntityData());
 		/*END*/
 		if(!player.worldObj.isRemote){
 			player.worldObj.spawnEntityInWorld(buddy);
@@ -34,7 +32,6 @@ public class PetSpawner implements IPlayerTracker{
 	public void onPlayerLogout(EntityPlayer player) {		
 		PetBuddyMain.proxy.setBuddyData(player.username, bud);
 		FMLLog.getLogger().info(""+ bud.getEntityData());
-		FMLLog.getLogger().info(""+ player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).getCompoundTag("Pet_Buddy_Player:"+player.username));
 
 	}
 

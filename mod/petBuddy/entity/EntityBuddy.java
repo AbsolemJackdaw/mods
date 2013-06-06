@@ -16,6 +16,7 @@ import net.minecraft.client.model.ModelZombie;
 import net.minecraft.client.model.ModelZombieVillager;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemDye;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import petBuddy.PetBuddyMain;
@@ -37,9 +38,9 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class EntityBuddy extends BuddyBase
 {
 
-	public float randomColor = 1.0f;
-	public float randomColor2 = 1.0f;
-	public float randomColor3 = 1.0f;
+	private float randomColor;
+	private float randomColor2;
+	private float randomColor3;
 
 	public EntityBuddy(World par1World)
 	{
@@ -202,9 +203,9 @@ public class EntityBuddy extends BuddyBase
 		super.writeEntityToNBT(par1NBTTagCompound);
 		getEntityData().setInteger("renderingID", getGuiId());
 
-		getEntityData().setFloat("firstRandomColor", randomColor);
-		getEntityData().setFloat("seconRandomColor", randomColor2);
-		getEntityData().setFloat("thirdRandomColor", randomColor3);
+		getEntityData().setFloat("firstRandomColor", getColor());
+		getEntityData().setFloat("seconRandomColor", getColor2());
+		getEntityData().setFloat("thirdRandomColor", getColor3());
 
 
 	}
@@ -214,9 +215,9 @@ public class EntityBuddy extends BuddyBase
 		super.readEntityFromNBT(par1NBTTagCompound);
 		PetBuddyMain.proxy.setGuiId(getEntityData().getInteger("renderingID"));
 
-		randomColor = getEntityData().getFloat("firstRandomColor");
-		randomColor2 = getEntityData().getFloat("seconRandomColor");
-		randomColor3 = getEntityData().getFloat("thirdRandomColor");
+		setColor(getEntityData().getFloat("firstRandomColor"),
+				getEntityData().getFloat("seconRandomColor"),
+				getEntityData().getFloat("thirdRandomColor"));
 	}
 
 	public int getGuiId(){
@@ -226,6 +227,7 @@ public class EntityBuddy extends BuddyBase
 	@Override
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
+
 	}
 
 	/**
@@ -233,9 +235,35 @@ public class EntityBuddy extends BuddyBase
 	 */
 	public boolean interact(EntityPlayer par1EntityPlayer)
 	{
+		if(par1EntityPlayer.getCurrentEquippedItem() != null){
+			if(par1EntityPlayer.getCurrentEquippedItem().getItem() instanceof ItemDye){
+				float fl= 1.0f;
+				float flo= 1.0f;
+				float fla= 1.0f;
+
+				fl = rand.nextFloat();
+				flo = rand.nextFloat();
+				fla = rand.nextFloat();
+				setColor(fl,flo,fla);
+			}
+		}
 		return super.interact(par1EntityPlayer);
+
 	}
 
+	public float getColor(){
+		return randomColor;
+	}public float getColor2(){
+		return randomColor2;
+	}public float getColor3(){
+		return randomColor3;
+	}
+
+	public void setColor(float f, float g, float h){
+		randomColor  = f;
+		randomColor2 = g;
+		randomColor3 = h;
+	}
 	/**
 	 * This function is used when two same-species animals in 'love mode' breed to generate the new baby animal.
 	 */

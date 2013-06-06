@@ -34,13 +34,26 @@ public class BuddyCommonProxy {
 		if (MinecraftServer.getServer() != null && MinecraftServer.getServer().getConfigurationManager() != null) {
 			EntityPlayer player = MinecraftServer.getServer().getConfigurationManager().getPlayerForUsername(username);
 			if (player != null) {
-				if(player.getEntityData().hasKey(player.PERSISTED_NBT_TAG) && player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).hasKey("Pet_Buddy_Player:"+username)){
-					return player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).getCompoundTag("Pet_Buddy_Player:"+username);
+				if(player.getEntityData().hasKey(player.PERSISTED_NBT_TAG) && player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).hasKey("Buddy_Player:"+username)) {
+					return player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).getCompoundTag("Buddy_Player:"+username);
 				}else{
 					if (!player.getEntityData().hasKey(player.PERSISTED_NBT_TAG)){
 						player.getEntityData().setCompoundTag(player.PERSISTED_NBT_TAG, new NBTTagCompound(player.PERSISTED_NBT_TAG));
 					}
-					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setCompoundTag("Pet_Buddy_Player:"+username, new NBTTagCompound());
+					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setCompoundTag("Buddy_Player:"+username, new NBTTagCompound());
+					return new NBTTagCompound();
+				}
+			}
+		}else{
+			EntityPlayer player = Minecraft.getMinecraft().theWorld.getPlayerEntityByName(username);
+			if (player != null) {
+				if (player.getEntityData().hasKey(player.PERSISTED_NBT_TAG) && player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).hasKey("Buddy_Player:"+username)) {
+					return player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).getCompoundTag("Buddy_Player:"+username);
+				} else {
+					if (!player.getEntityData().hasKey(player.PERSISTED_NBT_TAG)) {
+						player.getEntityData().setCompoundTag(player.PERSISTED_NBT_TAG, new NBTTagCompound(player.PERSISTED_NBT_TAG));
+					}
+					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setCompoundTag("Buddy_Player:"+username, new NBTTagCompound());
 					return new NBTTagCompound();
 				}
 			}
@@ -53,12 +66,24 @@ public class BuddyCommonProxy {
 			EntityPlayer player = MinecraftServer.getServer().getConfigurationManager().getPlayerForUsername(username);
 			if (player != null) {
 				if(player.getEntityData().hasKey(player.PERSISTED_NBT_TAG)) {
-					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setInteger("Pet_Buddy_Player:"+username, buddy.getGuiId());
+					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setCompoundTag("Buddy_Player:"+username, buddy.getEntityData());
 				}else{
 					if (!player.getEntityData().hasKey(player.PERSISTED_NBT_TAG)){
 						player.getEntityData().setCompoundTag(player.PERSISTED_NBT_TAG, new NBTTagCompound(player.PERSISTED_NBT_TAG));
 					}
-					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setCompoundTag("Pet_Buddy_Player:"+username, new NBTTagCompound());
+					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setCompoundTag("Buddy_Player:"+username, new NBTTagCompound());
+				}
+			}
+		}else{
+			EntityPlayer player = Minecraft.getMinecraft().theWorld.getPlayerEntityByName(username);
+			if (player != null) {
+				if (player.getEntityData().hasKey(player.PERSISTED_NBT_TAG)) {
+					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setCompoundTag("Buddy_Player:"+username, buddy.getEntityData());
+				} else {
+					if (!player.getEntityData().hasKey(player.PERSISTED_NBT_TAG)) {
+						player.getEntityData().setCompoundTag(player.PERSISTED_NBT_TAG, new NBTTagCompound(player.PERSISTED_NBT_TAG));
+					}
+					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setCompoundTag("Buddy_Player:"+username, new NBTTagCompound());
 				}
 			}
 		}

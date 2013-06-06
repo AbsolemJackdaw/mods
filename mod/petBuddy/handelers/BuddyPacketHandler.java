@@ -34,8 +34,7 @@ public class BuddyPacketHandler implements IPacketHandler {
 	private void handlePacket(Packet250CustomPayload packet, Player player) {
 		EntityPlayer p = (EntityPlayer) player;
 		World world = p.worldObj;
-//		Random rand = new Random();
-		
+	
 		DataInputStream dis = new DataInputStream(new ByteArrayInputStream(packet.data));
 		try {
 
