@@ -201,23 +201,22 @@ public class EntityBuddy extends BuddyBase
 	public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
 	{
 		super.writeEntityToNBT(par1NBTTagCompound);
-		getEntityData().setInteger("renderingID", getGuiId());
-
-		getEntityData().setFloat("firstRandomColor", getColor());
-		getEntityData().setFloat("seconRandomColor", getColor2());
-		getEntityData().setFloat("thirdRandomColor", getColor3());
-
+		//		getEntityData().setInteger("renderingID", getGuiId());
+		//
+		//		getEntityData().setFloat("firstRandomColor", getColor());
+		//		getEntityData().setFloat("seconRandomColor", getColor2());
+		//		getEntityData().setFloat("thirdRandomColor", getColor3());
 
 	}
 
 	public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
 	{
 		super.readEntityFromNBT(par1NBTTagCompound);
-		PetBuddyMain.proxy.setGuiId(getEntityData().getInteger("renderingID"));
-
-		setColor(getEntityData().getFloat("firstRandomColor"),
-				getEntityData().getFloat("seconRandomColor"),
-				getEntityData().getFloat("thirdRandomColor"));
+		//		PetBuddyMain.proxy.setGuiId(getEntityData().getInteger("renderingID"));
+		//
+		//		setColor(getEntityData().getFloat("firstRandomColor"),
+		//				getEntityData().getFloat("seconRandomColor"),
+		//				getEntityData().getFloat("thirdRandomColor"));
 	}
 
 	public int getGuiId(){
