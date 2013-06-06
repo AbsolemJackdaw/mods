@@ -41,10 +41,12 @@ public class BuddyPacketHandler implements IPacketHandler {
 			String buddyName = dis.readUTF();
 			BuddyBase myBuddy = null;
 			FMLLog.getLogger().info("" + secondID + " "+ guiId + " "+ buddyName);
-			
+
 			if(guiId == 100){
 				EntityBuddy buddy = (EntityBuddy)world.getEntityByID(secondID);
-				PetBuddyMain.proxy.setName(buddyName);
+				String name = buddyName.equals("null") || buddyName.equals("") ? buddy.getOwnerName()+"'s Buddy" :
+					buddyName;
+				PetBuddyMain.proxy.setName(name);
 
 			}else{
 				List<EntityLiving> entl = p.worldObj.getEntitiesWithinAABB(EntityLiving.class, p.boundingBox.expand(10, 10, 10));

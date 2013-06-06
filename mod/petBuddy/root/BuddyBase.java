@@ -26,7 +26,7 @@ public abstract class BuddyBase extends EntityTameable
 	public BuddyBase(World par1World)
 	{
 		super(par1World);
-		this.setSize(0.5F, 0.5F);
+		this.setSize(0.2F, 0.8F);
 		this.moveSpeed = 0.3F;
 		this.getNavigator().setAvoidsWater(true);
 		this.tasks.addTask(1, new EntityAISwimming(this));

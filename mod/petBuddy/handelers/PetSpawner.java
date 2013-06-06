@@ -26,8 +26,10 @@ public class PetSpawner implements IPlayerTracker{
 			color2 = nbt.getFloat("pet_color2:"+player.username);
 			color3 = nbt.getFloat("pet_color3:"+player.username);
 		}
-		if(nbt.hasKey("pet_color1:"+player.username)){
-			name = nbt.getString("pet_name:"+player.username);
+		if(nbt.hasKey("pet_name:"+player.username)){
+			name = nbt.getString("pet_name:"+player.username).equals("null") ||
+					nbt.getString("pet_name:"+player.username).equals("") ? player.username+"'s Buddy" :
+						nbt.getString("pet_name:"+player.username);
 		}
 		PetBuddyMain.proxy.setName(name);
 		PetBuddyMain.proxy.setGuiId(loginid);

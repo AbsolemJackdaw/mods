@@ -44,7 +44,6 @@ public class PetInterface extends GuiScreen {
 		World world = player.worldObj;
 		buddyID = entityID;
 		buddy= (EntityBuddy)world.getEntityByID(entityID);
-
 	}
 
 	@Override
