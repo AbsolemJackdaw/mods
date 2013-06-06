@@ -37,43 +37,6 @@ public class CommonProxy {
 		te.customName = b;
 	}
 
-	//	public int getRenderID(String username) {
-	//		if (MinecraftServer.getServer() != null && MinecraftServer.getServer().getConfigurationManager() != null) {
-	//			EntityPlayer player = MinecraftServer.getServer().getConfigurationManager().getPlayerForUsername(username);
-	//			if (player != null) {
-	//				if (player.getEntityData().hasKey(player.PERSISTED_NBT_TAG) && player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).hasKey("renderID_"+username)) {
-	//					return player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).getInteger("renderID_"+username);
-	//
-	//				} else {
-	//					if (!player.getEntityData().hasKey(player.PERSISTED_NBT_TAG)) {
-	//						player.getEntityData().setCompoundTag(player.PERSISTED_NBT_TAG, new NBTTagCompound(player.PERSISTED_NBT_TAG));
-	//					}
-	//					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setInteger("renderID_"+username, 6);
-	//					return 6;
-	//				}
-	//			}
-	//		}
-	//		return 0;
-	//	}
-	//	
-	//	public void setRenderID(String username, int renderID) {
-	//		if (MinecraftServer.getServer() != null && MinecraftServer.getServer().getConfigurationManager() != null) {
-	//			EntityPlayer player = MinecraftServer.getServer().getConfigurationManager().getPlayerForUsername(username);
-	//			if (player != null) {
-	//				if (player.getEntityData().hasKey(player.PERSISTED_NBT_TAG)) {
-	//					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setInteger("renderID_"+username, renderID);
-	//
-	//				} else {
-	//					if (!player.getEntityData().hasKey(player.PERSISTED_NBT_TAG)) {
-	//						player.getEntityData().setCompoundTag(player.PERSISTED_NBT_TAG, new NBTTagCompound(player.PERSISTED_NBT_TAG));
-	//					}
-	//					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setInteger("renderID_"+username, renderID);
-	//					FMLLog.getLogger().info("fail");
-	//				}
-	//			}
-	//		}
-	//	}
-
 	public int getRenderID(String username) {
 		if (MinecraftServer.getServer() != null && MinecraftServer.getServer().getConfigurationManager() != null) {
 			EntityPlayer player = MinecraftServer.getServer().getConfigurationManager().getPlayerForUsername(username);

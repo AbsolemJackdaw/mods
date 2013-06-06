@@ -51,7 +51,7 @@ public class RenderBuddy extends RenderLiving
 			this.setRenderPassModel(modelBody);
 			this.loadTexture("/mob/sheep_fur.png");
 			float f1 = 1.0F;
-			GL11.glColor3f(((EntityBuddy)buddy).randomColor,((EntityBuddy)buddy).randomColor2,((EntityBuddy)buddy).randomColor3);
+			GL11.glColor3f(((EntityBuddy)buddy).getColor(),((EntityBuddy)buddy).getColor2(),((EntityBuddy)buddy).getColor3());
 			return 1;
 		}
 		if(par2 == 0 && PetBuddyMain.proxy.getGuiId() == 15){
