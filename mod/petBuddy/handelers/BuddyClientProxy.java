@@ -1,11 +1,14 @@
 package petBuddy.handelers;
 
+import java.util.Random;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import petBuddy.entity.EntityBuddy;
 import petBuddy.entity.gui.PetInterface;
+import petBuddy.root.BuddyBase;
 import petBuddy.root.RenderBuddy;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
@@ -71,7 +74,11 @@ public class BuddyClientProxy extends BuddyCommonProxy{
 			EntityPlayer player = MinecraftServer.getServer().getConfigurationManager().getPlayerForUsername(username);
 			if (player != null) {
 				if(player.getEntityData().hasKey(player.PERSISTED_NBT_TAG)) {
-					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setCompoundTag("Pet_Buddy_Player:"+username, buddy.getEntityData());
+					if(buddy.getEntityData() != null){
+						player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setCompoundTag("Pet_Buddy_Player:"+username, buddy.getEntityData());
+					}else{
+						player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setCompoundTag("Pet_Buddy_Player:"+username, new NBTTagCompound());
+					}
 
 				}else{
 					if (!player.getEntityData().hasKey(player.PERSISTED_NBT_TAG)){
@@ -84,7 +91,11 @@ public class BuddyClientProxy extends BuddyCommonProxy{
 			EntityPlayer player = Minecraft.getMinecraft().theWorld.getPlayerEntityByName(username);
 			if (player != null) {
 				if (player.getEntityData().hasKey(player.PERSISTED_NBT_TAG)) {
-					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setCompoundTag("Pet_Buddy_Player:"+username, buddy.getEntityData());
+					if(buddy.getEntityData() != null){
+						player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setCompoundTag("Pet_Buddy_Player:"+username, buddy.getEntityData());
+					}else{
+						player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setCompoundTag("Pet_Buddy_Player:"+username, new NBTTagCompound());
+					}
 				} else {
 					if (!player.getEntityData().hasKey(player.PERSISTED_NBT_TAG)) {
 						player.getEntityData().setCompoundTag(player.PERSISTED_NBT_TAG, new NBTTagCompound(player.PERSISTED_NBT_TAG));
@@ -93,5 +104,5 @@ public class BuddyClientProxy extends BuddyCommonProxy{
 				}
 			}
 		}
-	}
+	}	
 }
