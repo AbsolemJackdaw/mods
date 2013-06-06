@@ -97,7 +97,7 @@ public class PetInterface extends GuiScreen {
 		this.buttonList.add(new GuiButton(1, posX+160 , posY+40, 50, 20, "x"));
 		this.buttonList.add(new GuiButton(1, posX+160 , posY+70, 50, 20, "x"));
 
-		this.buttonList.add(new GuiButton(100, posX-200 , posY-110, 50, 20, "Submit name"));
+		this.buttonList.add(new GuiButton(100, posX-200 , posY-110, 70, 20, "Submit name"));
 
 		String text = buddy.getName().equals("null") ? buddy.getOwnerName() + "'s Buddy" : buddy.getName();
 		FMLLog.getLogger().info(text);
@@ -151,7 +151,6 @@ public class PetInterface extends GuiScreen {
 		}
 		else if(button.id == 100){
 			sendPacket(button.id, buddyID, textfield.getText());
-			this.mc.thePlayer.closeScreen();
 		}
 
 		else{
@@ -170,7 +169,6 @@ public class PetInterface extends GuiScreen {
 			outputStream.writeUTF(petName);
 			Packet250CustomPayload packet = new Packet250CustomPayload("buddyPet", bytes.toByteArray());
 			PacketDispatcher.sendPacketToServer(packet);
-			thePlayer.closeScreen();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

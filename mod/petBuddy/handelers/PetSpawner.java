@@ -13,6 +13,7 @@ public class PetSpawner implements IPlayerTracker{
 	float color1;
 	float color2;
 	float color3;
+	String name = "null";
 	@Override
 	public void onPlayerLogin(EntityPlayer player) {
 		player.sendChatToPlayer(player.username + " found his Buddy");
@@ -25,6 +26,10 @@ public class PetSpawner implements IPlayerTracker{
 			color2 = nbt.getFloat("pet_color2:"+player.username);
 			color3 = nbt.getFloat("pet_color3:"+player.username);
 		}
+		if(nbt.hasKey("pet_color1:"+player.username)){
+			name = nbt.getString("pet_name:"+player.username);
+		}
+		PetBuddyMain.proxy.setName(name);
 		PetBuddyMain.proxy.setGuiId(loginid);
 		PetBuddyMain.proxy.setColor(color1,color2,color3);
 
