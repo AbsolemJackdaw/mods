@@ -22,7 +22,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public abstract class BuddyBase extends EntityTameable
 {
-//	private int guiID;
+	//	private int guiID;
 	public BuddyBase(World par1World)
 	{
 		super(par1World);
@@ -68,13 +68,13 @@ public abstract class BuddyBase extends EntityTameable
 	/**retrieve the buddy's model based on the integer passed down by the buttons of the Gui.*/
 	@SideOnly(Side.CLIENT)
 	public abstract ModelBase getModel();
-		
+
 	@Override
 	public abstract String getTexture();
-		
+
 	/**retrieve the buddy's mounted offset based on the integer passed down by the buttons of the Gui.*/
 	public abstract float getMountedOffset();
-	
+
 	protected void entityInit()
 	{
 		super.entityInit();
@@ -123,6 +123,13 @@ public abstract class BuddyBase extends EntityTameable
 				return;
 			}
 		}
+
+		if (riddenByEntity != null) {
+			//stops up-and-down head movement
+			rotationPitch = 0;
+			//Control where the pet is facing (doesn't work while standing still)
+			rotationYaw = prevRotationYaw = riddenByEntity.rotationYaw;
+		}
 		super.onLivingUpdate();
 	}
 
@@ -132,7 +139,7 @@ public abstract class BuddyBase extends EntityTameable
 		return par1Entity.attackEntityFrom(DamageSource.causeMobDamage(this), i);
 	}
 
-	
+
 	/**
 	 * Called when a player interacts with a mob. e.g. gets milk from a cow, gets into the saddle on a pig.
 	 */
