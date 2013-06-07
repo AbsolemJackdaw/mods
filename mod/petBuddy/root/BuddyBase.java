@@ -124,13 +124,18 @@ public abstract class BuddyBase extends EntityTameable
 			}
 		}
 
-		if (riddenByEntity != null) {
+		super.onLivingUpdate();
+	}
+
+	@Override
+	public void onUpdate(){
+		super.onUpdate();
+		if (ridingEntity != null) {
 			//stops up-and-down head movement
 			rotationPitch = 0;
 			//Control where the pet is facing (doesn't work while standing still)
-			rotationYaw = prevRotationYaw = riddenByEntity.rotationYaw;
+			rotationYaw = prevRotationYaw = ridingEntity.rotationYaw;
 		}
-		super.onLivingUpdate();
 	}
 
 	public boolean attackEntityAsMob(Entity par1Entity)
