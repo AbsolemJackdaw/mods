@@ -1,6 +1,6 @@
 package petBuddy.entity;
 
-import net.minecraft.block.BlockCloth;
+import net.minecraft.block.Block;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelBlaze;
@@ -12,13 +12,13 @@ import net.minecraft.client.model.ModelPig;
 import net.minecraft.client.model.ModelSnowMan;
 import net.minecraft.client.model.ModelSpider;
 import net.minecraft.client.model.ModelVillager;
-import net.minecraft.client.model.ModelWitch;
 import net.minecraft.client.model.ModelZombie;
-import net.minecraft.client.model.ModelZombieVillager;
 import net.minecraft.entity.EntityAgeable;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemDye;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import petBuddy.PetBuddyMain;
@@ -43,15 +43,23 @@ public class EntityBuddy extends BuddyBase
 	private float randomColor;
 	private float randomColor2;
 	private float randomColor3;
-	
+
+	private boolean hasItem = false;
+	private int findsItemTimer;
+
+	private Object[][] foundItems;
+	private int[][] foundItemsStackSize;
+
 	public EntityBuddy(World par1World)
 	{
 		super(par1World);
+		this.findsItemTimer = this.rand.nextInt(6000) + 9000;
 	}
 
 	public EntityBuddy(World par1World, EntityPlayer player)
 	{
 		super(par1World, player);
+		this.findsItemTimer = this.rand.nextInt(6000) + 9000;
 	}
 
 	@Override
@@ -214,6 +222,27 @@ public class EntityBuddy extends BuddyBase
 
 	@Override
 	public void onLivingUpdate() {
+		if(getEntityData() != null){
+			if(getEntityData().hasKey("itemTimer")){
+				if(!this.isRiding() && !this.worldObj.isRemote && this.findsItemTimer >=0)
+				{		        
+					findsItemTimer --;
+					getEntityData().setInteger("itemTimer", findsItemTimer);
+				}
+			}
+			else{
+				getEntityData().setInteger("itemTimer", findsItemTimer);
+			}
+		}
+		if(findsItemTimer == 0){
+			hasItem = true;
+			if(!worldObj.isRemote){
+				buddySpeak(getOwner(), "Hey, I think I found something !");
+			}
+		}
+		if(!worldObj.isRemote)
+			FMLLog.getLogger().info("" + findsItemTimer);
+
 		super.onLivingUpdate();
 	}
 
@@ -234,21 +263,25 @@ public class EntityBuddy extends BuddyBase
 				PetBuddyMain.proxy.setColor(fl,flo,fla);
 			}
 		}
-		
-		
+
+
 		if(player.inventory.getCurrentItem() != null){
 			if(player.inventory.getCurrentItem().getItem().equals(Item.stick)){
 				PetBuddyMain.proxy.openGui(0, player, player.username, this.entityId);
 			}
 		} 
-		else if (!this.worldObj.isRemote && this.ridingEntity == null){
+		else if (!this.worldObj.isRemote && this.ridingEntity == null && hasItem == false){
 			this.mountEntity(player);
 			this.ridingEntity = player;
 		}
-		else if(!this.worldObj.isRemote && this.ridingEntity == player){
+		else if(!this.worldObj.isRemote && this.ridingEntity == player && hasItem == false){
 			this.unmountEntity(player);
 			this.ridingEntity = null;
 		}
+		if(player.inventory.getCurrentItem() == null && hasItem == true){
+			giveOwnerRandomItem(player);
+		}
+
 		return super.interact(player);
 	}
 
@@ -275,5 +308,38 @@ public class EntityBuddy extends BuddyBase
 
 	public String getName(){
 		return PetBuddyMain.proxy.getName();
+	}
+
+	public void giveOwnerRandomItem(EntityPlayer player){
+
+
+		foundItems = new Object[][] {{Item.feather, Item.appleRed, Item.flint, Item.cake, Item.diamond, Item.coal, Item.coal} ,
+				{Block.wood, Block.planks}};
+		foundItemsStackSize = new int[][] {{s(20), s(5), s(64), s(1), s(3), s(5), s(10)},
+				{s(20), s(20)}};
+
+		int count = rand.nextInt(foundItems.length);
+
+		if(count > foundItems[0].length){
+			player.inventory.addItemStackToInventory(new ItemStack((Block)foundItems[1][foundItems.length-count], foundItemsStackSize[1][foundItems.length-count]));
+
+		}else{
+			player.inventory.addItemStackToInventory(new ItemStack((Item)foundItems[0][count], foundItemsStackSize[0][count]));
+
+		}
+
+		hasItem = false;
+		findsItemTimer = 6000 + rand.nextInt(9000);
+	}
+
+	public void buddySpeak(EntityLiving player , String text){
+		if(player instanceof EntityPlayer){
+			((EntityPlayer)getOwner()).sendChatToPlayer("<"+getName()+">" + text);
+
+		}
+	}
+	/* this is mearely to save space. that's how I role. YOLO !! XD*/
+	public int s (int i){
+		return rand.nextInt(i);
 	}
 }
