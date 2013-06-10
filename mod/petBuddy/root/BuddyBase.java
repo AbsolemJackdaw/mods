@@ -62,7 +62,7 @@ public abstract class BuddyBase extends EntityTameable
 
 	public int getMaxHealth()
 	{
-		return 6;
+		return 666;
 	}
 
 	/**retrieve the buddy's model based on the integer passed down by the buttons of the Gui.*/
@@ -107,7 +107,7 @@ public abstract class BuddyBase extends EntityTameable
 	 */
 	public boolean attackEntityFrom(DamageSource par1DamageSource, int par2)
 	{
-		return super.attackEntityFrom(par1DamageSource, 0);
+		return false;
 	}
 
 	@Override
