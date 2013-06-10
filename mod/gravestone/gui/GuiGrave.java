@@ -21,7 +21,6 @@ import net.minecraft.util.StringUtils;
 
 import org.lwjgl.opengl.GL11;
 
-import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class GuiGrave extends GuiScreen {

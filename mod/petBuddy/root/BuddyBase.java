@@ -112,17 +112,20 @@ public abstract class BuddyBase extends EntityTameable
 
 	@Override
 	public void onLivingUpdate() {
-		if (!worldObj.isRemote) {
-			EntityPlayer player = (EntityPlayer) getOwner();
-			if (player == null) {
-				this.setDead();
-				return;
-			}
-			if (this.dimension != getOwner().dimension) {
-				this.setDead();
-				return;
-			}
+		
+		if (this.getOwner() == null) {
+			this.setDead();
+			return;
 		}
+		if (this.dimension != getOwner().dimension) {
+			this.setDead();
+			return;
+		}
+		if(getOwner().isDead){
+			this.setDead();
+			return;
+		}
+
 
 		super.onLivingUpdate();
 	}

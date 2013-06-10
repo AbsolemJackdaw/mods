@@ -33,20 +33,18 @@ import petBuddy.entity.model.SilverFish;
 import petBuddy.entity.model.Squid;
 import petBuddy.entity.model.Wolf;
 import petBuddy.root.BuddyBase;
-import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class EntityBuddy extends BuddyBase
 {
 
-	private float randomColor;
+	private float randomColor ;
 	private float randomColor2;
 	private float randomColor3;
 
 	private boolean hasItem = false;
 	private int findsItemTimer;
-
 	private Object[][] foundItems;
 	private int[][] foundItemsStackSize;
 
@@ -54,12 +52,15 @@ public class EntityBuddy extends BuddyBase
 	{
 		super(par1World);
 		this.findsItemTimer = this.rand.nextInt(6000) + 9000;
+		//i hope to prevent any buddies going lost in portals.
+		this.timeUntilPortal = 6000;
 	}
 
 	public EntityBuddy(World par1World, EntityPlayer player)
 	{
 		super(par1World, player);
 		this.findsItemTimer = this.rand.nextInt(6000) + 9000;
+		this.timeUntilPortal = 6000;
 	}
 
 	@Override
@@ -222,27 +223,21 @@ public class EntityBuddy extends BuddyBase
 
 	@Override
 	public void onLivingUpdate() {
-		if(getEntityData() != null){
-			if(getEntityData().hasKey("itemTimer")){
-				if(!this.isRiding() && !this.worldObj.isRemote && this.findsItemTimer >=0)
-				{		        
-					findsItemTimer --;
-					getEntityData().setInteger("itemTimer", findsItemTimer);
-				}
-			}
-			else{
-				getEntityData().setInteger("itemTimer", findsItemTimer);
-			}
+		if(!this.isRiding() && !this.worldObj.isRemote && this.findsItemTimer >=0){		        
+			findsItemTimer --;
+		}else{
+			getEntityData().setInteger("itemTimer", findsItemTimer);
 		}
+
 		if(findsItemTimer == 0){
 			hasItem = true;
 			if(!worldObj.isRemote){
 				buddySpeak(getOwner(), "Hey, I think I found something !");
 			}
 		}
-		if(!worldObj.isRemote)
-			FMLLog.getLogger().info("" + findsItemTimer);
-
+		if(!PetBuddyMain.playersWithPets.containsValue(this.entityId)){
+			this.setDead();
+		}
 		super.onLivingUpdate();
 	}
 
@@ -310,21 +305,26 @@ public class EntityBuddy extends BuddyBase
 		return PetBuddyMain.proxy.getName();
 	}
 
+	/**Gives the given player a random itemstack in his inventory. Does not have a weighted randomness.*/
 	public void giveOwnerRandomItem(EntityPlayer player){
 
+		foundItems = new Object[][] {{Item.feather, Item.appleRed, Item.flint, Item.cake, Item.diamond, Item.coal, Item.coal, Item.pickaxeIron, Item.wheat, Item.arrow, Item.goldNugget} ,
+				{Block.wood, Block.planks, Block.grass, Block.oreIron, Block.torchWood}};
 
-		foundItems = new Object[][] {{Item.feather, Item.appleRed, Item.flint, Item.cake, Item.diamond, Item.coal, Item.coal} ,
-				{Block.wood, Block.planks}};
-		foundItemsStackSize = new int[][] {{s(20), s(5), s(64), s(1), s(3), s(5), s(10)},
-				{s(20), s(20)}};
+		foundItemsStackSize = new int[][] {{s(20), s(5), s(64), 1, s(3), s(5), s(10), 1, s(10), s(10), s(10)},
+				{s(20), s(20), s(5), s(4), s(64)}};
 
 		int count = rand.nextInt(foundItems.length);
 
 		if(count > foundItems[0].length){
 			player.inventory.addItemStackToInventory(new ItemStack((Block)foundItems[1][foundItems.length-count], foundItemsStackSize[1][foundItems.length-count]));
+			this.buddySpeak(getOwner(), "I found "+ foundItemsStackSize[1][foundItems.length-count] + " " +
+					((Block)foundItems[1][foundItems.length-count]).getLocalizedName());
 
 		}else{
 			player.inventory.addItemStackToInventory(new ItemStack((Item)foundItems[0][count], foundItemsStackSize[0][count]));
+			this.buddySpeak(getOwner(), "I found "+ foundItemsStackSize[0][count] +" "+
+			((Item)foundItems[0][count]).getItemDisplayName(new ItemStack((Item)foundItems[0][count])));
 
 		}
 
@@ -335,11 +335,12 @@ public class EntityBuddy extends BuddyBase
 	public void buddySpeak(EntityLiving player , String text){
 		if(player instanceof EntityPlayer){
 			((EntityPlayer)getOwner()).sendChatToPlayer("<"+getName()+">" + text);
-
 		}
 	}
+
 	/* this is mearely to save space. that's how I role. YOLO !! XD*/
+	/**Picks a random integer, and adds 1 to the result, so we never have 0.*/
 	public int s (int i){
-		return rand.nextInt(i);
+		return rand.nextInt(i)+1;
 	}
 }

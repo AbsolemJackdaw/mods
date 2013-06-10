@@ -128,22 +128,18 @@ public class mod_Gravestone{
 			for(int scanX = 0; scanX < 100; scanX ++){
 				if(player.worldObj.getBlockMaterial(x+scanX, y, z).isSolid()){
 					x += scanX;
-					FMLLog.getLogger().info("x = " + x + ". z = " + z);
 					break;
 				}else if(player.worldObj.getBlockMaterial(x-scanX, y, z).isSolid()){
 					x -= scanX;
-					FMLLog.getLogger().info("x = " + x + ". z = " + z);
 					break;
 				}
 			}
 			for(int scanZ = 0; scanZ < 100; scanZ ++){
 				if(player.worldObj.getBlockMaterial(x, y, z-scanZ).isSolid()){
 					z -= scanZ;
-					FMLLog.getLogger().info("x = " + x + ". z = " + z);
 					break;
 				}else if(player.worldObj.getBlockMaterial(x, y, z+scanZ).isSolid()){
 					z += scanZ;
-					FMLLog.getLogger().info("x = " + x + ". z = " + z);
 					break;
 				}
 			}
@@ -171,9 +167,7 @@ public class mod_Gravestone{
 				tegrave.dropItems();
 				if(stack != null)
 					tegrave.setItems(stack);
-				ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-				ObjectOutput out;
-				DataOutputStream outputStream = new DataOutputStream(bytes);
+
 				for(int id = 0; id <inv.mainInventory.length; id++)
 				{
 					if(inv.getStackInSlot(id)!= null)
@@ -181,6 +175,7 @@ public class mod_Gravestone{
 						tegrave.setInventorySlotContents(id, inv.getStackInSlot(id));
 					}
 				}
+
 				for(int id = inv.mainInventory.length; id <inv.mainInventory.length+inv.armorInventory.length; id++)
 				{
 					if(inv.getStackInSlot(id)!= null)
@@ -194,10 +189,5 @@ public class mod_Gravestone{
 				e.printStackTrace();
 			}
 		}
-	}
-
-	public void setStack(ItemStack [] stacks)
-	{
-		stack = stacks;
 	}
 }

@@ -4,21 +4,17 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.packet.Packet250CustomPayload;
-import net.minecraft.src.ModLoader;
 import net.minecraft.world.World;
 
 import org.lwjgl.opengl.GL11;
 
 import petBuddy.entity.EntityBuddy;
-import betterbreeds.entity.EntityWolf3;
-import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class PetInterface extends GuiScreen {
@@ -32,8 +28,8 @@ public class PetInterface extends GuiScreen {
 	public String playerName;
 	public static PetInterface inst;
 	private GuiTextField textfield;
-	private static EntityBuddy buddy;
-	private static int buddyID;
+	private  EntityBuddy buddy;
+	private  int buddyID;
 
 	public PetInterface(EntityPlayer player, String name, int entityID) {
 		super();
@@ -99,7 +95,6 @@ public class PetInterface extends GuiScreen {
 		this.buttonList.add(new GuiButton(100, posX-200 , posY-110, 70, 20, "Submit name"));
 
 		String text = buddy.getName().equals("null") ? buddy.getOwnerName() + "'s Buddy" : buddy.getName();
-		FMLLog.getLogger().info(text);
 		textfield = new GuiTextField(fontRenderer, posX-200 , posY-80, 150, 20);
 		textfield.setText(text);
 		textfield.setMaxStringLength(50);

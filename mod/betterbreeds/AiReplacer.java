@@ -18,14 +18,12 @@ import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.WorldServer;
-import net.minecraftforge.event.Event.Result;
 import betterbreeds.entity.ai.extended.EntityAIMateChicken;
 import betterbreeds.entity.ai.extended.EntityAIMateCow;
 import betterbreeds.entity.ai.extended.EntityAIMatePig;
 import betterbreeds.entity.ai.extended.EntityAIMateSheep;
 import betterbreeds.entity.ai.extended.EntityAIMateWolf;
 import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.IScheduledTickHandler;
 import cpw.mods.fml.common.TickType;
 
@@ -73,7 +71,6 @@ public class AiReplacer implements IScheduledTickHandler {
 //
 //							if(e instanceof EntityPig && ((EntityPig) e).isBreedingItem(breedingItem.getEntityItem()))
 //							{
-//								FMLLog.getLogger().info(""+e+" "+breedingItem);
 //								if(((EntityPig) e).inLove == 0){
 //									this.feedItem((EntityPig)e,breedingItem);
 //								}

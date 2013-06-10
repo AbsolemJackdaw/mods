@@ -126,9 +126,9 @@ public class ClientProxy extends CommonProxy
 			threeDitems.RenderItem.inst.addMeat(ModBreeds.horsemeatCooked, "/subaraki/3d/beefCooked.png",1.0f,0.5f);
 			threeDitems.RenderItem.inst.addEgg(ModBreeds.EasterEgg, "/subaraki/3d/eggC.png",0.6f,0.3f);
 
-			FMLLog.getLogger().info("rendered");
+			FMLLog.getLogger().info("3d items are rendered");
 		}catch(Throwable e){
-			FMLLog.getLogger().info("not rendered");
+			FMLLog.getLogger().info("3d items are not rendered");
 		}
 	}
 

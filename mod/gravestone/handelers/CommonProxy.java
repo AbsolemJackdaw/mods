@@ -1,8 +1,6 @@
 package gravestone.handelers;
 
-import cpw.mods.fml.common.FMLLog;
 import gravestone.grave.TEGrave;
-import gravestone.gui.GuiGraveChoice;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;

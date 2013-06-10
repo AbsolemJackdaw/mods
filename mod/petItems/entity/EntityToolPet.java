@@ -19,13 +19,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import petItems.itemEater.ItemEaterAxe;
 import petItems.itemEater.ItemEaterPick;
 import petItems.itemEater.ItemEaterSpade;
 import petItems.itemEater.ItemEaterSword;
-import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class EntityToolPet extends EntityTameable

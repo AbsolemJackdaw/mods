@@ -13,7 +13,6 @@ import net.minecraft.world.World;
 import petBuddy.PetBuddyMain;
 import petBuddy.entity.EntityBuddy;
 import petBuddy.root.BuddyBase;
-import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.network.IPacketHandler;
 import cpw.mods.fml.common.network.Player;
 
@@ -40,7 +39,6 @@ public class BuddyPacketHandler implements IPacketHandler {
 			int secondID = dis.readInt();
 			String buddyName = dis.readUTF();
 			BuddyBase myBuddy = null;
-			FMLLog.getLogger().info("" + secondID + " "+ guiId + " "+ buddyName);
 
 			if(guiId == 100){
 				EntityBuddy buddy = (EntityBuddy)world.getEntityByID(secondID);

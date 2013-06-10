@@ -41,7 +41,6 @@ public class GuiGraveChoice extends GuiScreen {
 		thePlayer = player;
 		try{
 			nbt = player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG);
-			FMLLog.getLogger().info("Player data exists.");
 		}catch(Throwable e){
 			player.getEntityData().setCompoundTag(player.PERSISTED_NBT_TAG, new NBTTagCompound(player.PERSISTED_NBT_TAG));
 			FMLLog.getLogger().info("Player data could not be read.");
@@ -49,7 +48,6 @@ public class GuiGraveChoice extends GuiScreen {
 		try{
 			render = mod_Gravestone.proxy.getRenderID(player.username);
 			sendPacket(render, 3);
-			FMLLog.getLogger().info("render id set. render id = "+ render);
 		}catch(Throwable e){
 			FMLLog.getLogger().info("render id corrupt. switching to default render ID");
 			render = 6;

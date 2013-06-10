@@ -1,5 +1,7 @@
 package petBuddy;
 
+import java.util.HashMap;
+
 import petBuddy.entity.EntityBuddy;
 import petBuddy.handelers.BuddyCommonProxy;
 import petBuddy.handelers.BuddyPacketHandler;
@@ -29,10 +31,8 @@ public class PetBuddyMain {
 	@SidedProxy(serverSide = "petBuddy.handelers.BuddyCommonProxy", clientSide = "petBuddy.handelers.BuddyClientProxy")
 	public static BuddyCommonProxy proxy;
 
+	public static HashMap<String, Integer> playersWithPets = new HashMap();
 
-	// todo 
-	// make all the buddies, ONE entity. this is possible, as models can be changed when rendered.
-	// this could solve a LOT of issues.
 	@Init
 	public void load (FMLInitializationEvent e){
 
@@ -40,6 +40,5 @@ public class PetBuddyMain {
 		this.proxy.render();
 
 		GameRegistry.registerPlayerTracker(new PetSpawner());
-
 	}
 }

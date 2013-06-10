@@ -34,13 +34,4 @@ public class DeathEvent {
 			}
 		}
 	}
-
-
-	private void createPlayerGrave(EntityPlayer player, LivingDeathEvent event) {
-		ItemStack[] items = new ItemStack[40];
-		System.arraycopy(player.inventory.mainInventory, 0, items, 0, 36);
-		System.arraycopy(player.inventory.armorInventory, 0, items, 36, 4);
-		player.inventory.clearInventory(-1, -1);
-		mod_Gravestone.instance.setStack(items);
-	}
 }
