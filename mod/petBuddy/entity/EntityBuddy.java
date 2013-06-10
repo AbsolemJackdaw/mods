@@ -1,5 +1,7 @@
 package petBuddy.entity;
 
+import java.util.HashMap;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBiped;
@@ -48,12 +50,18 @@ public class EntityBuddy extends BuddyBase
 	private Object[][] foundItems;
 	private int[][] foundItemsStackSize;
 
+	private HashMap<String, String> itemInventory = new HashMap();
+	private int harvestsWithHeldItem;
+
 	public EntityBuddy(World par1World)
 	{
 		super(par1World);
 		this.findsItemTimer = this.rand.nextInt(6000) + 9000;
 		//i hope to prevent any buddies going lost in portals.
 		this.timeUntilPortal = 6000;
+
+		this.harvestsWithHeldItem = 12000;
+
 	}
 
 	public EntityBuddy(World par1World, EntityPlayer player)
@@ -61,6 +69,8 @@ public class EntityBuddy extends BuddyBase
 		super(par1World, player);
 		this.findsItemTimer = this.rand.nextInt(6000) + 9000;
 		this.timeUntilPortal = 6000;
+
+		this.harvestsWithHeldItem = 12000;
 	}
 
 	@Override
@@ -235,6 +245,7 @@ public class EntityBuddy extends BuddyBase
 				buddySpeak(getOwner(), "Hey, I think I found something !");
 			}
 		}
+
 		if(!PetBuddyMain.playersWithPets.containsValue(this.entityId)){
 			this.setDead();
 		}
@@ -324,7 +335,7 @@ public class EntityBuddy extends BuddyBase
 		}else{
 			player.inventory.addItemStackToInventory(new ItemStack((Item)foundItems[0][count], foundItemsStackSize[0][count]));
 			this.buddySpeak(getOwner(), "I found "+ foundItemsStackSize[0][count] +" "+
-			((Item)foundItems[0][count]).getItemDisplayName(new ItemStack((Item)foundItems[0][count])));
+					((Item)foundItems[0][count]).getItemDisplayName(new ItemStack((Item)foundItems[0][count])));
 
 		}
 
