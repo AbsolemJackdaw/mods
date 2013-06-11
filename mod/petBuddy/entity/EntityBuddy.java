@@ -8,7 +8,6 @@ import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelBlaze;
 import net.minecraft.client.model.ModelCow;
 import net.minecraft.client.model.ModelCreeper;
-import net.minecraft.client.model.ModelDragon;
 import net.minecraft.client.model.ModelEnderman;
 import net.minecraft.client.model.ModelGhast;
 import net.minecraft.client.model.ModelPig;
@@ -18,16 +17,16 @@ import net.minecraft.client.model.ModelVillager;
 import net.minecraft.client.model.ModelZombie;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.boss.EntityDragonPart;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import petBuddy.PetBuddyMain;
 import petBuddy.entity.model.Bat;
+import petBuddy.entity.model.Boar;
+import petBuddy.entity.model.Bull;
 import petBuddy.entity.model.Chicken;
 import petBuddy.entity.model.DragonsModel;
 import petBuddy.entity.model.IronGolem;
@@ -165,6 +164,10 @@ public class EntityBuddy extends BuddyBase
 			return new Wolf();
 		case 27:
 			return new ModelZombie();
+		case 28:
+			return new Bull();
+		case 29:
+			return new Boar();
 		default :
 			return new ModelBiped();
 		}
@@ -225,8 +228,77 @@ public class EntityBuddy extends BuddyBase
 			return "/mob/wolf.png";
 		case 27:
 			return "/mob/pigzombie.png";
+		case 28:
+			return "/subaraki/mobs/bull.png";
+		case 29:
+			return "/subaraki/mobs/boar.png";
 		default :
 			return "/mob/char.png";
+		}
+	}
+
+	protected String getLivingSound()
+	{
+		switch(getGuiId()){
+		case 2:
+			return "mob.pig.say";
+		case 3:
+			return null;
+		case 4:
+			return "mob.creeper.say";
+		case 5:
+			return "mob.cow.say";
+		case 6:
+			return "mob.blaze.breathe";
+		case 7:
+	        return "mob.spider.say";
+		case 8:
+	        return "mob.wither.idle";
+		case 9:
+	        return "mob.spider.say";
+		case 10:
+	        return "mob.skeleton.say";
+		case 11:
+	        return "mob.skeleton.say";
+		case 12:
+	        return "mob.zombie.say";
+		case 13:
+			return "mob.ghast.moan";
+		case 14:
+			return "mob.sheep.say";
+		case 15:
+			return "mob.endermen.idle";
+		case 16:
+	        return "mob.silverfish.say";
+		case 17:
+			return "/mob/snowman.png";
+		case 18:
+			return null;
+		case 19:
+	        return "mob.enderdragon.growl";
+		case 20:
+			return "mob.bat.idle";
+		case 21:
+	        return "mob.chicken.say";
+		case 22:
+			return "mob.cow.say";
+		case 23:
+			int x =rand.nextInt(4);
+			return x == 0 ? "mob.cat.purreow" : x == 1 ? "mob.cat.meow" : "mob.cat.purr";
+		case 24:
+			return null;
+		case 25:
+			return null;
+		case 26:
+			return "mob.wolf.bark";
+		case 27:
+	        return "mob.zombiepig.zpig";
+		case 28:
+			return "mob.pig.say";
+		case 29:
+			return "mob.cow.say";
+		default :
+			return null;
 		}
 	}
 
@@ -275,7 +347,7 @@ public class EntityBuddy extends BuddyBase
 		if(player.getCurrentEquippedItem() != null){
 			if(player.getCurrentEquippedItem().getItem() instanceof ItemDye){
 				ItemStack item = player.getCurrentEquippedItem();
-				
+
 				if(getGuiId() == 14){
 					float fl= PetBuddyMain.proxy.getColor();
 					float flo= PetBuddyMain.proxy.getColor2();
@@ -418,7 +490,7 @@ public class EntityBuddy extends BuddyBase
 	public int s (int i){
 		return rand.nextInt(i)+1;
 	}
-	
+
 	//returns a value that can be used in coloring.
 	public float color(float f){
 		return f/255;
