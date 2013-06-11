@@ -388,6 +388,7 @@ public class EntityBuddy extends BuddyBase
 
 					PetBuddyMain.proxy.setDragonColor(fl,flo,fla);
 				}
+				item.stackSize--;
 			}
 		}
 
