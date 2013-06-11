@@ -13,6 +13,7 @@ import org.lwjgl.opengl.GL11;
 
 import petBuddy.PetBuddyMain;
 import petBuddy.entity.EntityBuddy;
+import petBuddy.entity.model.DragonsModel;
 import petBuddy.entity.model.SheepBody;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -40,6 +41,11 @@ public class RenderBuddy extends RenderLiving
 		if(PetBuddyMain.proxy.getGuiId() == 8){
 			GL11.glTranslatef(0f, -1.5f, 0f);
 		}
+		if(PetBuddyMain.proxy.getGuiId() == 19){
+			GL11.glScalef(scaleBuddy, scaleBuddy, scaleBuddy);
+			GL11.glTranslatef(0f, -2f, 0f);
+
+		}
 		if(pet.isRiding()){
 			GL11.glTranslatef(0f, ((BuddyBase)pet).getMountedOffset(), 0f);
 
@@ -48,6 +54,8 @@ public class RenderBuddy extends RenderLiving
 
 	private ModelEnderman model = new ModelEnderman();
 	private SheepBody modelBody = new SheepBody();
+	private DragonsModel modelDragon = new DragonsModel(0.0f);
+
 	protected int sheepTexturing(BuddyBase buddy, int par2, float par3)
 	{
 		if (par2 == 0 && PetBuddyMain.proxy.getGuiId() == 14){
@@ -57,6 +65,15 @@ public class RenderBuddy extends RenderLiving
 			GL11.glColor3f(((EntityBuddy)buddy).getColor(),((EntityBuddy)buddy).getColor2(),((EntityBuddy)buddy).getColor3());
 			return 1;
 		}
+		
+		if (par2 == 0 && PetBuddyMain.proxy.getGuiId() == 19){
+			this.setRenderPassModel(modelDragon);
+			this.loadTexture("/subaraki/mobs/ender.png");
+			float f1 = 1.0F;
+			GL11.glColor3f(((EntityBuddy)buddy).getDragonColor(),((EntityBuddy)buddy).getDragonColor2(),((EntityBuddy)buddy).getDragonColor3());
+			return 1;
+		}
+		
 		if(par2 == 0 && PetBuddyMain.proxy.getGuiId() == 15){
 			this.setRenderPassModel(model);
 			this.loadTexture("/mob/enderman_eyes.png");

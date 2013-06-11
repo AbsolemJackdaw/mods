@@ -18,11 +18,13 @@ import net.minecraft.client.model.ModelVillager;
 import net.minecraft.client.model.ModelZombie;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.boss.EntityDragonPart;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import petBuddy.PetBuddyMain;
 import petBuddy.entity.model.Bat;
@@ -205,8 +207,8 @@ public class EntityBuddy extends BuddyBase
 			return "/mob/snowman.png";
 		case 18:
 			return "/mob/villager_golem.png";
-			case 19:
-				return "/mob/dragon.png";
+		case 19:
+			return "/mob/enderdragon/ender.png";
 		case 20:
 			return "/mob/bat.png";
 		case 21:
@@ -272,17 +274,58 @@ public class EntityBuddy extends BuddyBase
 	{
 		if(player.getCurrentEquippedItem() != null){
 			if(player.getCurrentEquippedItem().getItem() instanceof ItemDye){
-				float fl= 1.0f;
-				float flo= 1.0f;
-				float fla= 1.0f;
+				ItemStack item = player.getCurrentEquippedItem();
+				
+				if(getGuiId() == 14){
+					float fl= PetBuddyMain.proxy.getColor();
+					float flo= PetBuddyMain.proxy.getColor2();
+					float fla= PetBuddyMain.proxy.getColor3();
+					if(item.getItemDamage() == 0){
+						fl -= 0.05; flo -= 0.05; fla-= 0.05;
+					}else if(item.getItemDamage() == 1){
+						fl += 0.05; flo -= 0.05; fla-=0.05;
+					}else if(item.getItemDamage() == 2){
+						fl -= 0.05; flo += 0.05; fla-=0.05;
+					}else if(item.getItemDamage() == 4){
+						fl -= 0.05; flo -= 0.05; fla+=0.05;
+					}else if(item.getItemDamage() == 15){
+						fl += 0.05; flo += 0.05; fla+=0.05;
+					}else{
+						fl = rand.nextFloat();
+						flo = rand.nextFloat();
+						fla = rand.nextFloat();
+					}
+					if(fl < 0) fl =0;if (flo < 0) flo =0; if(fla < 0) fla =0;
+					if(fl > 1) fl =1;if (flo > 1) flo =1; if(fla > 1) fla =1;
 
-				fl = rand.nextFloat();
-				flo = rand.nextFloat();
-				fla = rand.nextFloat();
-				PetBuddyMain.proxy.setColor(fl,flo,fla);
+					PetBuddyMain.proxy.setColor(fl,flo,fla);
+				}
+				if(getGuiId() == 19 ){
+					float fl= PetBuddyMain.proxy.getDragonColor();
+					float flo= PetBuddyMain.proxy.getDragonColor2();
+					float fla= PetBuddyMain.proxy.getDragonColor3();
+					if(item.getItemDamage() == 0){
+						fl -= 0.05; flo -= 0.05; fla-= 0.05;
+					}else if(item.getItemDamage() == 1){
+						fl += 0.05; flo -= 0.05; fla-=0.05;
+					}else if(item.getItemDamage() == 2){
+						fl -= 0.05; flo += 0.05; fla-=0.05;
+					}else if(item.getItemDamage() == 4){
+						fl -= 0.05; flo -= 0.05; fla+=0.05;
+					}else if(item.getItemDamage() == 15){
+						fl += 0.05; flo += 0.05; fla+=0.05;
+					}else{
+						fl = rand.nextFloat();
+						flo = rand.nextFloat();
+						fla = rand.nextFloat();
+					}
+					if(fl < 0) fl =0;if (flo < 0) flo =0; if(fla < 0) fla =0;
+					if(fl > 1) fl =1;if (flo > 1) flo =1; if(fla > 1) fla =1;
+
+					PetBuddyMain.proxy.setDragonColor(fl,flo,fla);
+				}
 			}
 		}
-
 
 		if(player.inventory.getCurrentItem() != null){
 			if(player.inventory.getCurrentItem().getItem().equals(Item.stick)){
@@ -310,6 +353,14 @@ public class EntityBuddy extends BuddyBase
 		return PetBuddyMain.proxy.getColor2() ;
 	}public float getColor3(){
 		return PetBuddyMain.proxy.getColor3();
+	}
+
+	public float getDragonColor(){
+		return PetBuddyMain.proxy.getDragonColor() ;
+	}public float getDragonColor2(){
+		return PetBuddyMain.proxy.getDragonColor2() ;
+	}public float getDragonColor3(){
+		return PetBuddyMain.proxy.getDragonColor3();
 	}
 
 	/**
@@ -366,5 +417,10 @@ public class EntityBuddy extends BuddyBase
 	/**Picks a random integer, and adds 1 to the result, so we never have 0.*/
 	public int s (int i){
 		return rand.nextInt(i)+1;
+	}
+	
+	//returns a value that can be used in coloring.
+	public float color(float f){
+		return f/255;
 	}
 }

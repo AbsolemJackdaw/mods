@@ -44,6 +44,23 @@ public class BuddyCommonProxy {
 		randomColor3 = h;
 	}
 
+	private float randomDragonColor;
+	private float randomDragonColor2;
+	private float randomDragonColor3;
+
+	public float getDragonColor(){
+		return randomDragonColor ;
+	}public float getDragonColor2(){
+		return randomDragonColor2 ;
+	}public float getDragonColor3(){
+		return randomDragonColor3;
+	}
+
+	public void setDragonColor(float f, float g, float h){
+		randomDragonColor  = f;
+		randomDragonColor2 = g;
+		randomDragonColor3 = h;
+	}
 	public NBTTagCompound getLoginPet(String username) {
 		NBTTagCompound PETNBT = new NBTTagCompound();
 		if (MinecraftServer.getServer() != null && MinecraftServer.getServer().getConfigurationManager() != null) {
@@ -58,7 +75,12 @@ public class BuddyCommonProxy {
 						PETNBT.setFloat("pet_color1:"+username, tag.getFloat("pet_color1:"+username));
 						PETNBT.setFloat("pet_color2:"+username, tag.getFloat("pet_color2:"+username));
 						PETNBT.setFloat("pet_color3:"+username, tag.getFloat("pet_color3:"+username));
+					}if(tag.hasKey("pet_dragon_color1:"+username)&&tag.hasKey("pet_dragon_color2:"+username)&&tag.hasKey("pet_dragon_color3:"+username)) {
+						PETNBT.setFloat("pet_dragon_color1:"+username, tag.getFloat("pet_dragon_color1:"+username));
+						PETNBT.setFloat("pet_dragon_color2:"+username, tag.getFloat("pet_dragon_color2:"+username));
+						PETNBT.setFloat("pet_dragon_color3:"+username, tag.getFloat("pet_dragon_color3:"+username));
 					}
+
 					if(tag.hasKey("pet_name:"+username)) {
 						PETNBT.setString("pet_name:"+username, tag.getString("pet_name:"+username));
 					}
@@ -73,6 +95,9 @@ public class BuddyCommonProxy {
 					PETNBT.setFloat("pet_color1:"+username, 1);
 					PETNBT.setFloat("pet_color2:"+username, 1);
 					PETNBT.setFloat("pet_color3:"+username, 1);
+					PETNBT.setFloat("pet_dragon_color1:"+username, 0);
+					PETNBT.setFloat("pet_dragon_color2:"+username, 0);
+					PETNBT.setFloat("pet_dragon_color3:"+username, 0);
 					PETNBT.setString("pet_name:"+username, "null");
 					return PETNBT;
 				}
@@ -89,6 +114,10 @@ public class BuddyCommonProxy {
 						PETNBT.setFloat("pet_color1:"+username, tag.getFloat("pet_color1:"+username));
 						PETNBT.setFloat("pet_color2:"+username, tag.getFloat("pet_color2:"+username));
 						PETNBT.setFloat("pet_color3:"+username, tag.getFloat("pet_color3:"+username));
+					}if(tag.hasKey("pet_dragon_color1:"+username)&&tag.hasKey("pet_dragon_color2:"+username)&&tag.hasKey("pet_dragon_color3:"+username)) {
+						PETNBT.setFloat("pet_dragon_color1:"+username, tag.getFloat("pet_dragon_color1:"+username));
+						PETNBT.setFloat("pet_dragon_color2:"+username, tag.getFloat("pet_dragon_color2:"+username));
+						PETNBT.setFloat("pet_dragon_color3:"+username, tag.getFloat("pet_dragon_color3:"+username));
 					}
 					if(tag.hasKey("pet_name:"+username)) {
 						PETNBT.setString("pet_name:"+username, tag.getString("pet_name:"+username));
@@ -104,6 +133,9 @@ public class BuddyCommonProxy {
 					PETNBT.setFloat("pet_color1:"+username, 1);
 					PETNBT.setFloat("pet_color2:"+username, 1);
 					PETNBT.setFloat("pet_color3:"+username, 1);
+					PETNBT.setFloat("pet_dragon_color1:"+username, 0);
+					PETNBT.setFloat("pet_dragon_color2:"+username, 0);
+					PETNBT.setFloat("pet_dragon_color3:"+username, 0);
 					PETNBT.setString("pet_name:"+username, "null");
 					return PETNBT;
 				}
@@ -121,6 +153,9 @@ public class BuddyCommonProxy {
 					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_color1:"+username, buddy.getColor());
 					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_color2:"+username, buddy.getColor2());
 					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_color3:"+username, buddy.getColor3());
+					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_dragon_color1:"+username, buddy.getColor());
+					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_dragon_color2:"+username, buddy.getColor2());
+					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_dragon_color3:"+username, buddy.getColor3());
 					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setString("pet_name:"+username, buddy.getName());
 
 				}else{
@@ -131,6 +166,9 @@ public class BuddyCommonProxy {
 					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_color1:"+username, 1);
 					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_color2:"+username, 1);
 					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_color3:"+username, 1);
+					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_dragon_color1:"+username, 0);
+					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_dragon_color2:"+username, 0);
+					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_dragon_color3:"+username, 0);
 					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setString("pet_name:"+username, "null");
 
 				}
@@ -143,6 +181,9 @@ public class BuddyCommonProxy {
 					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_color1:"+username, buddy.getColor());
 					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_color2:"+username, buddy.getColor2());
 					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_color3:"+username, buddy.getColor3());
+					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_dragon_color1:"+username, buddy.getColor());
+					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_dragon_color2:"+username, buddy.getColor2());
+					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_dragon_color3:"+username, buddy.getColor3());
 					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setString("pet_name:"+username, buddy.getName());
 
 				}else{
@@ -153,6 +194,9 @@ public class BuddyCommonProxy {
 					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_color1:"+username, 1);
 					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_color2:"+username, 1);
 					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_color3:"+username, 1);
+					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_dragon_color1:"+username, 0);
+					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_dragon_color2:"+username, 0);
+					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_dragon_color3:"+username, 0);
 					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setString("pet_name:"+username, "null");
 
 				}

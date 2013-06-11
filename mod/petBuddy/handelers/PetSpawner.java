@@ -13,6 +13,11 @@ public class PetSpawner implements IPlayerTracker{
 	float color1;
 	float color2;
 	float color3;
+	
+	float dragon_color1;
+	float dragon_color2;
+	float dragon_color3;
+	
 	String name = "null";
 
 	@Override
@@ -86,7 +91,11 @@ public class PetSpawner implements IPlayerTracker{
 			color2 = nbt.getFloat("pet_color2:"+player.username);
 			color3 = nbt.getFloat("pet_color3:"+player.username);
 		}
-
+		if(nbt.hasKey("pet_dragon_color1:"+player.username) && nbt.hasKey("pet_dragon_color2:"+player.username) && nbt.hasKey("pet_dragon_color3:"+player.username)){
+			dragon_color1 = nbt.getFloat("pet_dragon_color1:"+player.username);
+			dragon_color2 = nbt.getFloat("pet_dragon_color2:"+player.username);
+			dragon_color3 = nbt.getFloat("pet_dragon_color3:"+player.username);
+		}
 		if(nbt.hasKey("pet_name:"+player.username)){
 			name = nbt.getString("pet_name:"+player.username).equals("null") ||
 					nbt.getString("pet_name:"+player.username).equals("") ? player.username+"'s Buddy" :
@@ -96,6 +105,7 @@ public class PetSpawner implements IPlayerTracker{
 		PetBuddyMain.proxy.setName(name);
 		PetBuddyMain.proxy.setGuiId(loginid);
 		PetBuddyMain.proxy.setColor(color1,color2,color3);
+		PetBuddyMain.proxy.setDragonColor(dragon_color1,dragon_color2,dragon_color3);
 
 		buddy.writeEntityToNBT(nbt);
 

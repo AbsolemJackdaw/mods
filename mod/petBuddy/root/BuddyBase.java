@@ -1,8 +1,10 @@
 package petBuddy.root;
 
+import petBuddy.PetBuddyMain;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
+import net.minecraft.entity.IEntityMultiPart;
 import net.minecraft.entity.ai.EntityAIFollowOwner;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -10,18 +12,26 @@ import net.minecraft.entity.ai.EntityAIOwnerHurtByTarget;
 import net.minecraft.entity.ai.EntityAIOwnerHurtTarget;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.boss.EntityDragonPart;
+import net.minecraft.entity.boss.IBossDisplayData;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import petBuddy.PetBuddyMain;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public abstract class BuddyBase extends EntityTameable
 {
+	/**values copied from the enderdragon for the dragon*/
+	public int ringBufferIndex = -1;
+	public float prevAnimTime = -0.0F;
+	public float animTime = -0.0F;
+	public double[][] ringBuffer = new double[64][3];
+
+
 	//	private int guiID;
 	public BuddyBase(World par1World)
 	{
@@ -38,6 +48,7 @@ public abstract class BuddyBase extends EntityTameable
 		this.targetTasks.addTask(1, new EntityAIOwnerHurtByTarget(this));
 		this.targetTasks.addTask(2, new EntityAIOwnerHurtTarget(this));
 		this.targetTasks.addTask(3, new EntityAIHurtByTarget(this, true));
+
 	}
 	public BuddyBase(World par1World, EntityPlayer player)
 	{
@@ -50,6 +61,7 @@ public abstract class BuddyBase extends EntityTameable
 		this.tasks.addTask(9, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
 		this.tasks.addTask(9, new EntityAILookIdle(this));
 		this.setOwner(player.username);
+
 	}
 
 	/**
@@ -112,7 +124,8 @@ public abstract class BuddyBase extends EntityTameable
 
 	@Override
 	public void onLivingUpdate() {
-		
+		super.onLivingUpdate();
+
 		if (this.getOwner() == null) {
 			this.setDead();
 			return;
@@ -126,8 +139,70 @@ public abstract class BuddyBase extends EntityTameable
 			return;
 		}
 
+		if(PetBuddyMain.proxy.getGuiId() == 19){
+			float f;
+			float f1;
 
-		super.onLivingUpdate();
+			f = MathHelper.cos(this.animTime * (float)Math.PI * 2.0F);
+			f1 = MathHelper.cos(this.prevAnimTime * (float)Math.PI * 2.0F);
+
+			if (f1 <= -0.3F && f >= -0.3F)
+			{
+				this.worldObj.playSound(this.posX, this.posY, this.posZ, "mob.enderdragon.wings", 5.0F, 0.8F + this.rand.nextFloat() * 0.3F, false);
+			}
+
+
+			this.prevAnimTime = this.animTime;
+			float f2;
+
+
+			f = 0.2F / (MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ) * 10.0F + 1.0F);
+			f *= (float)Math.pow(2.0D, this.motionY);
+
+			this.animTime += f/5;
+
+			this.rotationYaw = MathHelper.wrapAngleTo180_float(this.rotationYaw);
+
+			if (this.ringBufferIndex < 0)
+			{
+				for (int i = 0; i < this.ringBuffer.length; ++i)
+				{
+					this.ringBuffer[i][0] = (double)this.rotationYaw;
+					this.ringBuffer[i][1] = this.posY;
+				}
+			}
+
+			if (++this.ringBufferIndex == this.ringBuffer.length)
+			{
+				this.ringBufferIndex = 0;
+			}
+
+			this.ringBuffer[this.ringBufferIndex][0] = (double)this.rotationYaw;
+			this.ringBuffer[this.ringBufferIndex][1] = this.posY;
+			double d0;
+			double d1;
+			double d2;
+			double d3;
+			float f3;
+
+			if (this.worldObj.isRemote)
+			{
+				if (this.newPosRotationIncrements > 0)
+				{
+					d3 = this.posX + (this.newPosX - this.posX) / (double)this.newPosRotationIncrements;
+					d0 = this.posY + (this.newPosY - this.posY) / (double)this.newPosRotationIncrements;
+					d1 = this.posZ + (this.newPosZ - this.posZ) / (double)this.newPosRotationIncrements;
+					d2 = MathHelper.wrapAngleTo180_double(this.newRotationYaw - (double)this.rotationYaw);
+					this.rotationYaw = (float)((double)this.rotationYaw + d2 / (double)this.newPosRotationIncrements);
+					this.rotationPitch = (float)((double)this.rotationPitch + (this.newRotationPitch - (double)this.rotationPitch) / (double)this.newPosRotationIncrements);
+					--this.newPosRotationIncrements;
+					this.setPosition(d3, d0, d1);
+					this.setRotation(this.rotationYaw, this.rotationPitch);
+				}
+			}
+
+							this.renderYawOffset = this.rotationYaw;
+		}
 	}
 
 	@Override
@@ -168,5 +243,26 @@ public abstract class BuddyBase extends EntityTameable
 	public EntityAgeable createChild(EntityAgeable par1EntityAgeable)
 	{
 		return this.spawnBabyAnimal(par1EntityAgeable);
+	}
+
+	public double[] getMovementOffsets(int par1, float par2)
+	{
+		if (this.health <= 0)
+		{
+			par2 = 0.0F;
+		}
+
+		par2 = 1.0F - par2;
+		int j = this.ringBufferIndex - par1 * 1 & 63;
+		int k = this.ringBufferIndex - par1 * 1 - 1 & 63;
+		double[] adouble = new double[3];
+		double d0 = this.ringBuffer[j][0];
+		double d1 = MathHelper.wrapAngleTo180_double(this.ringBuffer[k][0] - d0);
+		adouble[0] = d0 + d1 * (double)par2;
+		d0 = this.ringBuffer[j][1];
+		d1 = this.ringBuffer[k][1] - d0;
+		adouble[1] = d0 + d1 * (double)par2;
+		adouble[2] = this.ringBuffer[j][2] + (this.ringBuffer[k][2] - this.ringBuffer[j][2]) * (double)par2;
+		return adouble;
 	}
 }
