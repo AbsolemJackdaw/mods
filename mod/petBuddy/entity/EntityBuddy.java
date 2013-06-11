@@ -8,6 +8,7 @@ import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelBlaze;
 import net.minecraft.client.model.ModelCow;
 import net.minecraft.client.model.ModelCreeper;
+import net.minecraft.client.model.ModelDragon;
 import net.minecraft.client.model.ModelEnderman;
 import net.minecraft.client.model.ModelGhast;
 import net.minecraft.client.model.ModelPig;
@@ -26,6 +27,7 @@ import net.minecraft.world.World;
 import petBuddy.PetBuddyMain;
 import petBuddy.entity.model.Bat;
 import petBuddy.entity.model.Chicken;
+import petBuddy.entity.model.DragonsModel;
 import petBuddy.entity.model.IronGolem;
 import petBuddy.entity.model.ModelSkellington;
 import petBuddy.entity.model.ModelSpiderRpg;
@@ -33,6 +35,7 @@ import petBuddy.entity.model.Ocelot;
 import petBuddy.entity.model.SheepFleece;
 import petBuddy.entity.model.SilverFish;
 import petBuddy.entity.model.Squid;
+import petBuddy.entity.model.WitherModel;
 import petBuddy.entity.model.Wolf;
 import petBuddy.root.BuddyBase;
 import cpw.mods.fml.relauncher.Side;
@@ -120,6 +123,8 @@ public class EntityBuddy extends BuddyBase
 			return new ModelBlaze();
 		case 7:
 			return new ModelSpider();
+		case 8:
+			return new WitherModel();
 		case 9:
 			return new ModelSpiderRpg();
 		case 10:
@@ -140,6 +145,8 @@ public class EntityBuddy extends BuddyBase
 			return new ModelSnowMan();
 		case 18:
 			return new IronGolem();
+		case 19:
+			return new DragonsModel(0.0f);
 		case 20:
 			return new Bat();
 		case 21:
@@ -176,6 +183,8 @@ public class EntityBuddy extends BuddyBase
 			return "/mob/fire.png";
 		case 7:
 			return "/mob/spider.png";
+		case 8:
+			return "/mob/wither.png";
 		case 9:
 			return "/subaraki/mobs/spider.png";
 		case 10:
@@ -196,6 +205,8 @@ public class EntityBuddy extends BuddyBase
 			return "/mob/snowman.png";
 		case 18:
 			return "/mob/villager_golem.png";
+			case 19:
+				return "/mob/dragon.png";
 		case 20:
 			return "/mob/bat.png";
 		case 21:
@@ -245,7 +256,9 @@ public class EntityBuddy extends BuddyBase
 				buddySpeak(getOwner(), "Hey, I think I found something !");
 			}
 		}
-
+		if(this.isBurning()){
+			extinguish();
+		}
 		if(!PetBuddyMain.playersWithPets.containsValue(this.entityId)){
 			this.setDead();
 		}

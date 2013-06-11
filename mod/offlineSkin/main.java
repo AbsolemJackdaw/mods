@@ -13,7 +13,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 
 
-@Mod(modid = "buddyPet", name = "My tiny buddy", version = "1.0")
+@Mod(modid = "skins", name = "my skins", version = "0.0")
 
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
 
@@ -27,6 +27,6 @@ public class main {
 	@Init
 	public void load (FMLInitializationEvent e){
 
-		GameRegistry.registerPlayerTracker(new SkinAplyer());
+//		GameRegistry.registerPlayerTracker(new SkinAplyer());
 	}
 }
