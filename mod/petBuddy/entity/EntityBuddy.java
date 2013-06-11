@@ -242,8 +242,6 @@ public class EntityBuddy extends BuddyBase
 		switch(getGuiId()){
 		case 2:
 			return "mob.pig.say";
-		case 3:
-			return null;
 		case 4:
 			return "mob.creeper.say";
 		case 5:
@@ -251,17 +249,17 @@ public class EntityBuddy extends BuddyBase
 		case 6:
 			return "mob.blaze.breathe";
 		case 7:
-	        return "mob.spider.say";
+			return "mob.spider.say";
 		case 8:
-	        return "mob.wither.idle";
+			return "mob.wither.idle";
 		case 9:
-	        return "mob.spider.say";
+			return "mob.spider.say";
 		case 10:
-	        return "mob.skeleton.say";
+			return "mob.skeleton.say";
 		case 11:
-	        return "mob.skeleton.say";
+			return "mob.skeleton.say";
 		case 12:
-	        return "mob.zombie.say";
+			return "mob.zombie.say";
 		case 13:
 			return "mob.ghast.moan";
 		case 14:
@@ -269,30 +267,24 @@ public class EntityBuddy extends BuddyBase
 		case 15:
 			return "mob.endermen.idle";
 		case 16:
-	        return "mob.silverfish.say";
+			return "mob.silverfish.say";
 		case 17:
 			return "/mob/snowman.png";
-		case 18:
-			return null;
 		case 19:
-	        return "mob.enderdragon.growl";
+			return "mob.enderdragon.growl";
 		case 20:
 			return "mob.bat.idle";
 		case 21:
-	        return "mob.chicken.say";
+			return "mob.chicken.say";
 		case 22:
 			return "mob.cow.say";
 		case 23:
 			int x =rand.nextInt(4);
 			return x == 0 ? "mob.cat.purreow" : x == 1 ? "mob.cat.meow" : "mob.cat.purr";
-		case 24:
-			return null;
-		case 25:
-			return null;
 		case 26:
 			return "mob.wolf.bark";
 		case 27:
-	        return "mob.zombiepig.zpig";
+			return "mob.zombiepig.zpig";
 		case 28:
 			return "mob.pig.say";
 		case 29:
