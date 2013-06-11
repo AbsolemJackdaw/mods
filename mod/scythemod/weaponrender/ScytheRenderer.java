@@ -49,9 +49,6 @@ public class ScytheRenderer implements IItemRenderer {
 		return false;
 	}
         
-        private static ScytheInHand hand = new ScytheInHand();
-        private static ScytheInWorld siw = new ScytheInWorld();
-        
 	@Override
 	public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
 
@@ -59,14 +56,14 @@ public class ScytheRenderer implements IItemRenderer {
 
 		case  EQUIPPED:
 			
-			hand.renderInHand(type, item, textureFilePath, model, data);
+			ScytheInHand.instance.renderInHand(type, item, textureFilePath, model, data);
 			break;
 //		case  EQUIPPED_FIRST_PERSON:
 //			ScytheInHand sh = new ScytheInHand();
 //			sh.renderInHand(type, item, textureFilePath, model, data);
 //			break;
 		case  ENTITY:
-			siw.renderInWorld(item, textureFilePath, model, data);
+			ScytheInWorld.instance.renderInWorld(item, textureFilePath, model, data);
 			break;
 
 		default:

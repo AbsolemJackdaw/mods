@@ -12,7 +12,8 @@ import scythemod.item.FireScythe;
 
 public class ScytheInWorld {
 
-
+        public static ScytheInWorld instance = new ScytheInWorld();
+        
 	public void renderInWorld(ItemStack item,String textureFilePath,ModelBase model, Object... data){
 
 		GL11.glPushMatrix();

@@ -17,7 +17,7 @@ import scythemod.item.ItemSwordTest2;
 
 public class ScytheInHand {
 
-
+    public static ScytheInHand instance = new ScytheInHand();
 	public void renderInHand(ItemRenderType type, ItemStack item,String textureFilePath,ModelBase model, Object... data){
 		float scale = 0.6F;
 
