@@ -68,8 +68,7 @@ public class ScytheRenderer implements IItemRenderer {
 
 		default:
                         if("EQUIPPED_FIRST_PERSON".equals(type.name())){
-                            ScytheInHand sh = new ScytheInHand();
-                            sh.renderInHand(type, item, textureFilePath, model, data);
+                            ScytheInHand.instance.renderInHand(type, item, textureFilePath, model, data);
                         }
 			break;
 		}
