@@ -2,7 +2,6 @@ package scythemod.weaponrender;
 
 import net.minecraft.item.Item;
 import net.minecraftforge.client.MinecraftForgeClient;
-import threeDitems.models.ingot;
 
 public class RenderScytheHelper {
 	

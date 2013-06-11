@@ -17,6 +17,7 @@ import petBuddy.entity.model.DragonsModel;
 import petBuddy.entity.model.SheepBody;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.potion.Potion;
 
 @SideOnly(Side.CLIENT)
 public class RenderBuddy extends RenderLiving
@@ -82,7 +83,7 @@ public class RenderBuddy extends RenderLiving
 			GL11.glDisable(GL11.GL_ALPHA_TEST);
 			GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE);
 			GL11.glDisable(GL11.GL_LIGHTING);
-			if (buddy.isInvisible())
+			if (buddy.isPotionActive(Potion.invisibility)) //isInvisible added in 1.5.2
 			{
 				GL11.glDepthMask(false);
 			}

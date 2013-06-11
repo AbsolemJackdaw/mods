@@ -31,11 +31,14 @@ public class ScytheRenderer implements IItemRenderer {
 		switch(type){
 		case  EQUIPPED: 
 			return true;
-		case  EQUIPPED_FIRST_PERSON: 
-			return true;
+//		case  EQUIPPED_FIRST_PERSON: 
+//			return true;
 		case  ENTITY:
 			return false;
 		default: 
+                    if("EQUIPPED_FIRST_PERSON".equals(type.name())){
+                            return true;
+                    }
 			return false;
 		}
 	}
@@ -45,26 +48,32 @@ public class ScytheRenderer implements IItemRenderer {
 			ItemRendererHelper helper) {
 		return false;
 	}
-
+        
+        private static ScytheInHand hand = new ScytheInHand();
+        private static ScytheInWorld siw = new ScytheInWorld();
+        
 	@Override
 	public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
 
 		switch(type){
 
 		case  EQUIPPED:
-			ScytheInHand hand = new ScytheInHand();
+			
 			hand.renderInHand(type, item, textureFilePath, model, data);
 			break;
-		case  EQUIPPED_FIRST_PERSON:
-			ScytheInHand sh = new ScytheInHand();
-			sh.renderInHand(type, item, textureFilePath, model, data);
-			break;
+//		case  EQUIPPED_FIRST_PERSON:
+//			ScytheInHand sh = new ScytheInHand();
+//			sh.renderInHand(type, item, textureFilePath, model, data);
+//			break;
 		case  ENTITY:
-			ScytheInWorld siw = new ScytheInWorld();
 			siw.renderInWorld(item, textureFilePath, model, data);
 			break;
 
 		default:
+                        if("EQUIPPED_FIRST_PERSON".equals(type.name())){
+                            ScytheInHand sh = new ScytheInHand();
+                            sh.renderInHand(type, item, textureFilePath, model, data);
+                        }
 			break;
 		}
 	}
