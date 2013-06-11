@@ -168,20 +168,15 @@ public class mod_Gravestone{
 				if(stack != null)
 					tegrave.setItems(stack);
 
-				for(int id = 0; id <inv.mainInventory.length; id++)
+				for(int id = 0; id <inv.getSizeInventory(); id++)
 				{
-					if(inv.getStackInSlot(id)!= null)
+                                        ItemStack is = inv.getStackInSlot(id);
+					if(is != null && id < tegrave.getSizeInventory())
 					{
-						tegrave.setInventorySlotContents(id, inv.getStackInSlot(id));
+						tegrave.setInventorySlotContents(id, is);
+                                                inv.setInventorySlotContents(id, null);
 					}
-				}
-
-				for(int id = inv.mainInventory.length; id <inv.mainInventory.length+inv.armorInventory.length; id++)
-				{
-					if(inv.getStackInSlot(id)!= null)
-					{
-						tegrave.setInventorySlotContents(id, inv.getStackInSlot(id));
-					}
+                                        
 				}
 			}
 			catch(Throwable e)
