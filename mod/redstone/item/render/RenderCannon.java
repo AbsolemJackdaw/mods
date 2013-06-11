@@ -8,6 +8,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.IItemRenderer;
+import static net.minecraftforge.client.IItemRenderer.ItemRenderType.ENTITY;
+import static net.minecraftforge.client.IItemRenderer.ItemRenderType.EQUIPPED;
 
 import org.lwjgl.opengl.GL11;
 
@@ -25,11 +27,14 @@ public class RenderCannon implements IItemRenderer {
 		switch(type)
 		{
 		case  EQUIPPED: return true;
-		case  EQUIPPED_FIRST_PERSON: return true;
+//		case  EQUIPPED_FIRST_PERSON: return true;
 		case ENTITY: return true;
-		default: break;
+		default:
+                    if("EQUIPPED_FIRST_PERSON".equals(type.name())){
+                            return true;
+                    }
+                    return false;
 		}
-		return false;
 	}
 
 	@Override
@@ -75,8 +80,56 @@ public class RenderCannon implements IItemRenderer {
 
 			GL11.glPopMatrix();
 			break;
-		case  EQUIPPED_FIRST_PERSON:
+//		case  EQUIPPED_FIRST_PERSON:
+//			GL11.glPushMatrix();
+//			Minecraft.getMinecraft().renderEngine.bindTexture("/subaraki/aran.png");
+//			GL11.glRotatef(15, 0.0f, 0.0f, 1.0f);
+//			GL11.glRotatef(12, 0.0f, 1.0f, 0.0f);
+//			GL11.glRotatef(195, 1.0f, 0.0f, 0.0f);
+//
+//			if(data[1] != null && data[1] instanceof EntityPlayer)
+//			{
+//				if(!((EntityPlayer)data[1] == Minecraft.getMinecraft().renderViewEntity && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0 && !((Minecraft.getMinecraft().currentScreen instanceof GuiInventory || Minecraft.getMinecraft().currentScreen instanceof GuiContainerCreative) && RenderManager.instance.playerViewY == 180.0F)))
+//				{
+//					float f = 1.65f;
+//					GL11.glScalef(f,f,f);
+//					GL11.glTranslatef(0.13F, -0.1F, -0F);
+//				}
+//				else
+//				{
+//					GL11.glScalef(3f, 3f, 3f);
+//					GL11.glRotatef(80F, 1.0f, 0.0f, 0.0f);
+//					GL11.glRotatef(0F, 1.0f, 0.0f, 1.0f);
+//					GL11.glRotatef(-100F, 0.0f, 1.0f, 0.0f);
+//					GL11.glRotatef(95F, 0.0f, 0.0f, 1.0f);
+//					GL11.glTranslatef(-0.5f ,-0.1f,-0.8F);
+//				}
+//			}
+//			else
+//			{
+//				GL11.glScalef(2.2f, 2.2f, 2.2f);
+//				GL11.glTranslatef(0F, 0.0F, 0F);
+//			}
+//			gun.render((Entity)data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
+//
+//			GL11.glPopMatrix();
+//			break;
+			
+		case ENTITY:
 			GL11.glPushMatrix();
+			Minecraft.getMinecraft().renderEngine.bindTexture("/subaraki/aran.png");
+			GL11.glScalef(3f, 3f, 3f);
+			GL11.glRotatef(0, 0.0f, 0.0f, 1.0f);
+			GL11.glRotatef(0, 0.0f, 1.0f, 0.0f);
+			GL11.glRotatef(-180, 1.0f, 0.0f, 0.0f);
+			GL11.glTranslatef(0f,-0.2f,0F);
+			gun.render((Entity)data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
+
+			GL11.glPopMatrix();
+			break;
+		default:
+                    if("EQUIPPED_FIRST_PERSON".equals(type.name())){
+                        GL11.glPushMatrix();
 			Minecraft.getMinecraft().renderEngine.bindTexture("/subaraki/aran.png");
 			GL11.glRotatef(15, 0.0f, 0.0f, 1.0f);
 			GL11.glRotatef(12, 0.0f, 1.0f, 0.0f);
@@ -108,21 +161,7 @@ public class RenderCannon implements IItemRenderer {
 			gun.render((Entity)data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
 
 			GL11.glPopMatrix();
-			break;
-			
-		case ENTITY:
-			GL11.glPushMatrix();
-			Minecraft.getMinecraft().renderEngine.bindTexture("/subaraki/aran.png");
-			GL11.glScalef(3f, 3f, 3f);
-			GL11.glRotatef(0, 0.0f, 0.0f, 1.0f);
-			GL11.glRotatef(0, 0.0f, 1.0f, 0.0f);
-			GL11.glRotatef(-180, 1.0f, 0.0f, 0.0f);
-			GL11.glTranslatef(0f,-0.2f,0F);
-			gun.render((Entity)data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
-
-			GL11.glPopMatrix();
-			break;
-		default:
+                    }
 			break;
 		}		
 	}

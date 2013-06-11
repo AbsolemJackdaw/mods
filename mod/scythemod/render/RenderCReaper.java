@@ -13,6 +13,7 @@ import scythemod.entity.EntityCReaper;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.potion.Potion;
 
 @SideOnly(Side.CLIENT)
 public class RenderCReaper extends RenderLiving
@@ -89,7 +90,7 @@ public class RenderCReaper extends RenderLiving
     {
         if (par1EntityCReaper.getPowered())
         {
-            if (par1EntityCReaper.isInvisible())
+            if (par1EntityCReaper.isPotionActive(Potion.invisibility)) //1.5.1 Compat
             {
                 GL11.glDepthMask(false);
             }
