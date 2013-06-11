@@ -11,6 +11,7 @@ import net.minecraft.client.model.ModelCreeper;
 import net.minecraft.client.model.ModelEnderman;
 import net.minecraft.client.model.ModelGhast;
 import net.minecraft.client.model.ModelPig;
+import net.minecraft.client.model.ModelSlime;
 import net.minecraft.client.model.ModelSnowMan;
 import net.minecraft.client.model.ModelSpider;
 import net.minecraft.client.model.ModelVillager;
@@ -30,6 +31,7 @@ import petBuddy.entity.model.Bull;
 import petBuddy.entity.model.Chicken;
 import petBuddy.entity.model.DragonsModel;
 import petBuddy.entity.model.IronGolem;
+import petBuddy.entity.model.ModelMagmaCube;
 import petBuddy.entity.model.ModelSkellington;
 import petBuddy.entity.model.ModelSpiderRpg;
 import petBuddy.entity.model.Ocelot;
@@ -106,6 +108,10 @@ public class EntityBuddy extends BuddyBase
 			return 2.6f;
 		case 26:
 			return 2.4f;
+		case 30:
+			return 1f;
+		case 31:
+			return 1f;
 		default:
 			return 3.2f;
 		}
@@ -168,6 +174,10 @@ public class EntityBuddy extends BuddyBase
 			return new Bull();
 		case 29:
 			return new Boar();
+		case 30:
+			return new ModelMagmaCube();
+		case 31:
+			return new ModelSlime(16); // model from petbuddy, not from vanilla
 		default :
 			return new ModelBiped();
 		}
@@ -232,6 +242,10 @@ public class EntityBuddy extends BuddyBase
 			return "/subaraki/mobs/bull.png";
 		case 29:
 			return "/subaraki/mobs/boar.png";
+		case 30:
+			return "/mob/lava.png";
+		case 31:
+			return "/mob/slime.png";
 		default :
 			return "/mob/char.png";
 		}

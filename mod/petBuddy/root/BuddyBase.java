@@ -31,6 +31,10 @@ public abstract class BuddyBase extends EntityTameable
 	public float animTime = -0.0F;
 	public double[][] ringBuffer = new double[64][3];
 
+	/**values copied from slimes*/
+	public float field_70813_a;
+	public float field_70811_b;
+	public float field_70812_c;
 
 	//	private int guiID;
 	public BuddyBase(World par1World)
@@ -201,7 +205,7 @@ public abstract class BuddyBase extends EntityTameable
 				}
 			}
 
-							this.renderYawOffset = this.rotationYaw;
+			this.renderYawOffset = this.rotationYaw;
 		}
 	}
 
@@ -214,8 +218,52 @@ public abstract class BuddyBase extends EntityTameable
 			//Control where the pet is facing (doesn't work while standing still)
 			rotationYaw = prevRotationYaw = ridingEntity.rotationYaw;
 		}
+
+		//method copied from slimes
+		if(PetBuddyMain.proxy.getGuiId() == 30 || PetBuddyMain.proxy.getGuiId() == 31){
+			this.field_70811_b += (this.field_70813_a - this.field_70811_b) * 0.5F;
+			this.field_70812_c = this.field_70811_b;
+			boolean flag = this.onGround;
+			super.onUpdate();
+			int i;
+
+			if (this.onGround && !flag)
+			{
+				i = 3;
+
+				for (int j = 0; j < i * 8; ++j)
+				{
+					float f = this.rand.nextFloat() * (float)Math.PI * 2.0F;
+					float f1 = this.rand.nextFloat() * 0.5F + 0.5F;
+					float f2 = MathHelper.sin(f) * (float)i * 0.5F * f1;
+					float f3 = MathHelper.cos(f) * (float)i * 0.5F * f1;
+					//commented out this line because it spawned only particles on the ground when mounted, and only on the spot where it got mounted
+					//					this.worldObj.spawnParticle("slime", this.posX + (double)f2, this.boundingBox.minY, this.posZ + (double)f3, 0.0D, 0.0D, 0.0D);
+				}
+
+				this.field_70813_a = -0.5F;
+			}
+			
+			else if (!this.onGround && flag)
+			{
+				this.field_70813_a = 1.0F;
+			}
+
+			this.func_70808_l();
+
+			if (this.worldObj.isRemote)
+			{
+				i = 3;
+				this.setSize(0.6F * (float)i, 0.6F * (float)i);
+			}
+		}
 	}
 
+	//method copied from slimes.
+	protected void func_70808_l()
+	{
+		this.field_70813_a *= 0.6F;
+	}
 	public boolean attackEntityAsMob(Entity par1Entity)
 	{
 		int i = 1;

@@ -82,8 +82,8 @@ public class PetInterface extends GuiScreen {
 		this.buttonList.add(new GuiButton(27, posX+100 , posY-50, 50, 20, "Pig Zombie"));
 		this.buttonList.add(new GuiButton(28, posX+100 , posY-20, 50, 20, "Rpg Bull"));
 		this.buttonList.add(new GuiButton(29, posX+100 , posY+10, 50, 20, "Rpg Boar"));
-		this.buttonList.add(new GuiButton(1, posX+100 , posY+40, 50, 20, "x"));
-		this.buttonList.add(new GuiButton(1, posX+100 , posY+70, 50, 20, "x"));
+		this.buttonList.add(new GuiButton(30, posX+100 , posY+40, 50, 20, "Magma Cube"));
+		this.buttonList.add(new GuiButton(31, posX+100 , posY+70, 50, 20, "Slime"));
 
 		this.buttonList.add(new GuiButton(1, posX+160 , posY-50, 50, 20, "x"));
 		this.buttonList.add(new GuiButton(1, posX+160 , posY-20, 50, 20, "x"));
