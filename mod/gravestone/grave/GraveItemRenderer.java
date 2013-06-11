@@ -48,10 +48,6 @@ public class GraveItemRenderer implements IItemRenderer {
 		switch(type){
 
 		case EQUIPPED:
-                    for(Object cont: data){
-                        FMLLog.getLogger().info(cont.toString());
-                        FMLLog.getLogger().info(cont.getClass().toString());
-                    }
 			GL11.glPushMatrix();
 			grave.showBasic(true);
 			grave.showZerk(false);
