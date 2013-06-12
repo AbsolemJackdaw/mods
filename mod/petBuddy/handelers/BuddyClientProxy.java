@@ -15,6 +15,7 @@ public class BuddyClientProxy extends BuddyCommonProxy{
 	public void render() {
 		RenderingRegistry.registerEntityRenderingHandler(EntityBuddy.class, new RenderBuddy(0f,0.4f));
 	}
+
 	@Override
 	public void openGui(int id, EntityPlayer player, String name, int entityID, boolean creative)
 	{

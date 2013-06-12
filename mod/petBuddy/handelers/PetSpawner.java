@@ -45,6 +45,9 @@ public class PetSpawner implements IPlayerTracker{
 			spawnPet(player);
 			FMLLog.getLogger().info("Changed Dimensions. Step 2: Spawning Pet.");
 		}
+		if(player.worldObj.provider.dimensionId == -1){
+			player.addStat(PetBuddyMain.portalNether, 1);
+		}
 	}
 
 	@Override

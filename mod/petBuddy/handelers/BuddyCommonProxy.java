@@ -4,12 +4,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
+import petBuddy.PetBuddyMain;
 import petBuddy.entity.EntityBuddy;
 
 public class BuddyCommonProxy {
 
 	public void render() {}
-	public void openGui(int id, EntityPlayer player, String name, int entityID, boolean creative){}
+	public void openGui(int id, EntityPlayer player, String name, int entityID, boolean creative){ }
 
 	String name = "null";
 	public String getName(){

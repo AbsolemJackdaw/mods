@@ -354,6 +354,8 @@ public class EntityBuddy extends BuddyBase
 	 */
 	public boolean interact(EntityPlayer player)
 	{
+		player.addStat(PetBuddyMain.findBuddy, 1);
+
 		if(player.getCurrentEquippedItem() != null){
 			if(player.getCurrentEquippedItem().getItem() instanceof ItemDye){
 				ItemStack item = player.getCurrentEquippedItem();

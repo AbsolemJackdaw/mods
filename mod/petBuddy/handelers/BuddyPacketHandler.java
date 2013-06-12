@@ -45,6 +45,7 @@ public class BuddyPacketHandler implements IPacketHandler {
 				String name = buddyName.equals("null") || buddyName.equals("") ? buddy.getOwnerName()+"'s Buddy" :
 					buddyName;
 				PetBuddyMain.proxy.setName(name);
+				p.addStat(PetBuddyMain.nameBuddy, 1);
 
 			}else{
 				List<EntityLiving> entl = p.worldObj.getEntitiesWithinAABB(EntityLiving.class, p.boundingBox.expand(10, 10, 10));

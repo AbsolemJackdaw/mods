@@ -292,32 +292,41 @@ public abstract class BuddyBase extends EntityTameable
 		if(player.inventory.getCurrentItem() != null){
 			ItemStack is = player.inventory.getCurrentItem();
 			Item item = is.getItem();
-			
+
 			//Sending a packet for changing buddy apearence does not use strings. they are here mainly used to find back 
 			// the proper entity without any hassle.
 			if(item.equals(Item.porkRaw)){
 				sendPacket(2, 2, "pig");
+				player.addStat(PetBuddyMain.pigAchieve, 1);
 			}if(item.equals(Item.bread)){
-				sendPacket(3, 3, "cow");
+				sendPacket(3, 3, "tiny you");
+				player.addStat(PetBuddyMain.tinyYou, 1);
 			}if(item.equals(Item.gunpowder)){
 				sendPacket(4, 4, "creeper");
 			}if(item.equals(Item.beefRaw) || item.equals(Item.beefCooked)){
 				sendPacket(5, 5, "No name");
 			}if(item.equals(Item.blazeRod) || item.equals(Item.blazePowder)){
+				player.addStat(PetBuddyMain.ghost, 1);
 				sendPacket(6, 6, "No name");
 			}if(item.equals(Item.spiderEye) || item.equals(Item.silk)){ // fermented eye is for rpg spider
 				sendPacket(7, 7, "spider");
 			}if(item.equals(Item.netherStar)){
+				player.addStat(PetBuddyMain.wither, 1);
 				sendPacket(8, 8, "wither boss");
 			}if(item.equals(Item.fermentedSpiderEye)){
+				player.addStat(PetBuddyMain.rpgSpider, 1);
 				sendPacket(9, 9, "rpg spider");
 			}if(item.equals(Item.arrow)){
 				sendPacket(10, 10, "skeleton");
 			}if(item.equals(Item.skull) && is.getItemDamage() == 1){
+				player.addStat(PetBuddyMain.witherSkelly, 1);
 				sendPacket(11, 11, "skeleton w");
 			}if(item.equals(Item.rottenFlesh)){
+				if(PetBuddyMain.proxy.getGuiId() == 3)
+					player.addStat(PetBuddyMain.zombie, 1);
 				sendPacket(12, 12, "zombie");
 			}if(item.equals(Item.ghastTear)){
+				player.addStat(PetBuddyMain.ghast, 1);
 				sendPacket(13, 13, "ghast");
 			}if(is.itemID == Block.cloth.blockID){
 				sendPacket(14, 14, "sheep");
@@ -334,6 +343,7 @@ public abstract class BuddyBase extends EntityTameable
 			}if(is.itemID == Block.whiteStone.blockID){
 				sendPacket(19, 19, "dragon");
 			}if(item.equals(Item.netherStalkSeeds)){
+				player.addStat(PetBuddyMain.bat, 1);
 				sendPacket(20, 20, "bat");
 			}if(item.equals(Item.feather)){
 				sendPacket(21, 21, "chicken");
@@ -346,12 +356,16 @@ public abstract class BuddyBase extends EntityTameable
 			}if(item.equals(Item.bone)){
 				sendPacket(26, 26, "wolf");
 			}if(item.equals(Item.netherQuartz)){
+				player.addStat(PetBuddyMain.pigZombie, 1);
 				sendPacket(27, 27, "pig zombie");
 			}if(item.equals(Item.leather)){
+				player.addStat(PetBuddyMain.rpgBull, 1);
 				sendPacket(28, 28, "rpg bull");
 			}if(item.equals(Item.porkCooked)){
+				player.addStat(PetBuddyMain.rpgBoar, 1);
 				sendPacket(29, 29, "rpg boar");
 			}if(item.equals(Item.magmaCream)){
+				player.addStat(PetBuddyMain.magma, 1);
 				sendPacket(30, 30, "MagmaCube");
 			}if(item.equals(Item.slimeBall)){
 				sendPacket(31, 31, "Slime");
