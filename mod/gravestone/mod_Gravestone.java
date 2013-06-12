@@ -43,6 +43,10 @@ import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import net.minecraft.block.BlockPortal;
 
 
 @Mod(modid = "GraveStoneMod", name = "GraveStone", version = "Beta")
@@ -79,10 +83,10 @@ public class mod_Gravestone{
 	{
 		MinecraftForge.EVENT_BUS.register(new DeathEvent());
 
-		gravestone = new BlockGrave(500).setBlockUnbreakable().setResistance(5000f).setLightOpacity(0).setLightValue(0f).setUnlocalizedName("GraveStone");
-		bones = new BlockBones(501, Material.ground).setHardness(10f);
-		graveItem = new ItemGrave(5000).setUnlocalizedName("graveItem").setCreativeTab(CreativeTabs.tabDecorations);
-		bonesItem = new ItemSkulls(5001).setUnlocalizedName("bonesItem").setCreativeTab(CreativeTabs.tabDecorations);
+		gravestone = new BlockGrave(ConfigClass.instance.graveBlock).setBlockUnbreakable().setResistance(5000f).setLightOpacity(0).setLightValue(0f).setUnlocalizedName("GraveStone");
+		bones = new BlockBones(ConfigClass.instance.bonesBlock, Material.ground).setHardness(10f);
+		graveItem = new ItemGrave(ConfigClass.instance.grave).setUnlocalizedName("graveItem").setCreativeTab(CreativeTabs.tabDecorations);
+		bonesItem = new ItemSkulls(ConfigClass.instance.bones).setUnlocalizedName("bonesItem").setCreativeTab(CreativeTabs.tabDecorations);
 
 		GameRegistry.registerBlock(gravestone,"GraveStone");
 		LanguageRegistry.addName(gravestone, "GraveStone");
@@ -106,47 +110,47 @@ public class mod_Gravestone{
 		CommandHandler commandManager = (CommandHandler) event.getServer().getCommandManager();
 		commandManager.registerCommand(new gravestone.handelers.CommandPanel());
 	}
-
+        
 	public void buildGravestone(EntityPlayer player, InventoryPlayer inv ) {
 
 		int x = MathHelper.floor_double(player.posX),
 				y = MathHelper.floor_double(player.posY),
 				z = MathHelper.floor_double(player.posZ);
-
-		while(!player.worldObj.getBlockMaterial(x, y-1, z).isSolid()){
-			if(player.worldObj.getBlockId(x, y-1, z) == Block.lavaStill.blockID ||
-					player.worldObj.getBlockId(x, y-1, z) == Block.lavaMoving.blockID){
-				break;
-			}
-			y--;
-		}
-
-		while(player.worldObj.getBlockId(x, y-1, z) == Block.lavaMoving.blockID ||
-				player.worldObj.getBlockId(x, y-1, z) == Block.lavaStill.blockID||
-				player.worldObj.getBlockId(x, y, z) == Block.lavaMoving.blockID ||
-				player.worldObj.getBlockId(x, y, z) == Block.lavaStill.blockID){
-			for(int scanX = 0; scanX < 100; scanX ++){
-				if(player.worldObj.getBlockMaterial(x+scanX, y, z).isSolid()){
-					x += scanX;
-					break;
-				}else if(player.worldObj.getBlockMaterial(x-scanX, y, z).isSolid()){
-					x -= scanX;
-					break;
-				}
-			}
-			for(int scanZ = 0; scanZ < 100; scanZ ++){
-				if(player.worldObj.getBlockMaterial(x, y, z-scanZ).isSolid()){
-					z -= scanZ;
-					break;
-				}else if(player.worldObj.getBlockMaterial(x, y, z+scanZ).isSolid()){
-					z += scanZ;
-					break;
-				}
-			}
-			while(player.worldObj.getBlockId(x, y, z) != 0){
-				y++;
-			}
-		}
+                if(player.worldObj.isAirBlock(x, y, z)){
+                    if(y < 0){
+                        return;
+                    }
+                    while(player.worldObj.isAirBlock(x, y, z)){
+                        y--;
+                    }
+                }
+                if(player.worldObj.getBlockId(x, y, z) == Block.lavaStill.blockID || player.worldObj.getBlockId(x, y, z) == Block.lavaMoving.blockID){
+                    return;
+                }
+                int scanTime = 0;
+                while(scanTime < 100 && (!player.worldObj.getBlockMaterial(x, y, z).isSolid() || !player.worldObj.getBlockMaterial(x, y - 1, z).isSolid())){
+                    scanTime++;
+                    if(y < 0){
+                        return;
+                    }
+                    //Diagonal movement, avoids portal bugs
+                    x++;
+                    z++;
+                    while(player.worldObj.isAirBlock(x, y, z)){
+                        if(y < 0){
+                            return;
+                        }
+                        y--;
+                    }
+                    while(!player.worldObj.isAirBlock(x, y + 1, z) && y < 512){
+                        y++;
+                    }
+                }
+                if(scanTime == 100){
+                    //never found a plot.
+                    return;
+                }
+                y+=1;
 
 		player.worldObj.setBlock(x, y, z, gravestone.blockID);
 		TileEntity te = player.worldObj.getBlockTileEntity(x, y, z);
