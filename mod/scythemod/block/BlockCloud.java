@@ -34,9 +34,6 @@ public class BlockCloud extends Block
 
 	public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random) {
 
-		if(par1World.provider.dimensionId != 0){
-			par1World.setBlock(0, par2, par3, par4);
-		}
 	}
 
 
