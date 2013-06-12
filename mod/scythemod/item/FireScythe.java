@@ -49,7 +49,6 @@ public class FireScythe extends Item
 		{
 			this.itemIcon = par1IconRegister.registerIcon("DSM:scythefireON");
 		}
-		
 	}
 
 	/**
@@ -185,6 +184,8 @@ public class FireScythe extends Item
 	{
 		return this.toolMaterial.toString();
 	}
+	
+	@Override
 	public void onCreated(ItemStack itemstack, World par2World, EntityPlayer par3EntityPlayer)
 	{
 
