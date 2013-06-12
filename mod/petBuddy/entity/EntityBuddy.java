@@ -300,9 +300,13 @@ public class EntityBuddy extends BuddyBase
 		case 27:
 			return "mob.zombiepig.zpig";
 		case 28:
-			return "mob.pig.say";
-		case 29:
 			return "mob.cow.say";
+		case 29:
+			return "mob.pig.say";
+		case 30:
+			return "mob.magmacube.big";
+		case 31:
+			return "mob.slime.big";
 		default :
 			return null;
 		}
@@ -377,6 +381,7 @@ public class EntityBuddy extends BuddyBase
 					if(fl > 1) fl =1;if (flo > 1) flo =1; if(fla > 1) fla =1;
 
 					PetBuddyMain.proxy.setColor(fl,flo,fla);
+					item.stackSize--;
 				}
 				if(getGuiId() == 19 ){
 					float fl= PetBuddyMain.proxy.getDragonColor();
@@ -401,14 +406,14 @@ public class EntityBuddy extends BuddyBase
 					if(fl > 1) fl =1;if (flo > 1) flo =1; if(fla > 1) fla =1;
 
 					PetBuddyMain.proxy.setDragonColor(fl,flo,fla);
+					item.stackSize--;
 				}
-				item.stackSize--;
 			}
 		}
 
 		if(player.inventory.getCurrentItem() != null){
 			if(player.inventory.getCurrentItem().getItem().equals(Item.stick)){
-				PetBuddyMain.proxy.openGui(0, player, player.username, this.entityId);
+				PetBuddyMain.proxy.openGui(0, player, player.username, this.entityId, player.capabilities.isCreativeMode);
 			}
 		} 
 		else if (!this.worldObj.isRemote && this.ridingEntity == null && hasItem == false){

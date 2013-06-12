@@ -9,7 +9,7 @@ import petBuddy.entity.EntityBuddy;
 public class BuddyCommonProxy {
 
 	public void render() {}
-	public void openGui(int id, EntityPlayer player, String name, int entityID){}
+	public void openGui(int id, EntityPlayer player, String name, int entityID, boolean creative){}
 
 	String name = "null";
 	public String getName(){

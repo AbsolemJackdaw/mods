@@ -16,9 +16,9 @@ public class BuddyClientProxy extends BuddyCommonProxy{
 		RenderingRegistry.registerEntityRenderingHandler(EntityBuddy.class, new RenderBuddy(0f,0.4f));
 	}
 	@Override
-	public void openGui(int id, EntityPlayer player, String name, int entityID)
+	public void openGui(int id, EntityPlayer player, String name, int entityID, boolean creative)
 	{
-		Minecraft.getMinecraft().displayGuiScreen(new PetInterface(player, name, entityID));
+		Minecraft.getMinecraft().displayGuiScreen(new PetInterface(player, name, entityID, creative));
 	}
 	
 	String name = "null";

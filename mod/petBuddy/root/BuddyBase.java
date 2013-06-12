@@ -1,10 +1,14 @@
 package petBuddy.root;
 
-import petBuddy.PetBuddyMain;
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutput;
+
+import net.minecraft.block.Block;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
-import net.minecraft.entity.IEntityMultiPart;
 import net.minecraft.entity.ai.EntityAIFollowOwner;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -12,14 +16,18 @@ import net.minecraft.entity.ai.EntityAIOwnerHurtByTarget;
 import net.minecraft.entity.ai.EntityAIOwnerHurtTarget;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
-import net.minecraft.entity.boss.EntityDragonPart;
-import net.minecraft.entity.boss.IBossDisplayData;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBook;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import petBuddy.PetBuddyMain;
+import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -192,21 +200,21 @@ public abstract class BuddyBase extends EntityTameable
 			double d3;
 			float f3;
 
-			if (this.worldObj.isRemote)
-			{
-				if (this.newPosRotationIncrements > 0)
-				{
-					d3 = this.posX + (this.newPosX - this.posX) / (double)this.newPosRotationIncrements;
-					d0 = this.posY + (this.newPosY - this.posY) / (double)this.newPosRotationIncrements;
-					d1 = this.posZ + (this.newPosZ - this.posZ) / (double)this.newPosRotationIncrements;
-					d2 = MathHelper.wrapAngleTo180_double(this.newRotationYaw - (double)this.rotationYaw);
-					this.rotationYaw = (float)((double)this.rotationYaw + d2 / (double)this.newPosRotationIncrements);
-					this.rotationPitch = (float)((double)this.rotationPitch + (this.newRotationPitch - (double)this.rotationPitch) / (double)this.newPosRotationIncrements);
-					--this.newPosRotationIncrements;
-					this.setPosition(d3, d0, d1);
-					this.setRotation(this.rotationYaw, this.rotationPitch);
-				}
-			}
+			//			if (this.worldObj.isRemote)
+			//			{
+			//				if (this.newPosRotationIncrements > 0)
+			//				{
+			//					d3 = this.posX + (this.newPosX - this.posX) / (double)this.newPosRotationIncrements;
+			//					d0 = this.posY + (this.newPosY - this.posY) / (double)this.newPosRotationIncrements;
+			//					d1 = this.posZ + (this.newPosZ - this.posZ) / (double)this.newPosRotationIncrements;
+			//					d2 = MathHelper.wrapAngleTo180_double(this.newRotationYaw - (double)this.rotationYaw);
+			//					this.rotationYaw = (float)((double)this.rotationYaw + d2 / (double)this.newPosRotationIncrements);
+			//					this.rotationPitch = (float)((double)this.rotationPitch + (this.newRotationPitch - (double)this.rotationPitch) / (double)this.newPosRotationIncrements);
+			//					--this.newPosRotationIncrements;
+			//					this.setPosition(d3, d0, d1);
+			//					this.setRotation(this.rotationYaw, this.rotationPitch);
+			//				}
+			//			}
 
 			this.renderYawOffset = this.rotationYaw;
 		}
@@ -257,7 +265,8 @@ public abstract class BuddyBase extends EntityTameable
 			if (this.worldObj.isRemote)
 			{
 				i = 3;
-				this.setSize(0.6F * (float)i, 0.6F * (float)i);
+				// had to delete size change for slimes. it glitched the Name offset in the world.
+				//				this.setSize(0.6F * (float)i, 0.6F * (float)i);
 			}
 		}
 	}
@@ -267,6 +276,7 @@ public abstract class BuddyBase extends EntityTameable
 	{
 		this.field_70813_a *= 0.6F;
 	}
+
 	public boolean attackEntityAsMob(Entity par1Entity)
 	{
 		int i = 1;
@@ -279,10 +289,92 @@ public abstract class BuddyBase extends EntityTameable
 	 */
 	public boolean interact(EntityPlayer player)
 	{
+		if(player.inventory.getCurrentItem() != null){
+			ItemStack is = player.inventory.getCurrentItem();
+			Item item = is.getItem();
+			
+			//Sending a packet for changing buddy apearence does not use strings. they are here mainly used to find back 
+			// the proper entity without any hassle.
+			if(item.equals(Item.porkRaw)){
+				sendPacket(2, 2, "pig");
+			}if(item.equals(Item.bread)){
+				sendPacket(3, 3, "cow");
+			}if(item.equals(Item.gunpowder)){
+				sendPacket(4, 4, "creeper");
+			}if(item.equals(Item.beefRaw) || item.equals(Item.beefCooked)){
+				sendPacket(5, 5, "No name");
+			}if(item.equals(Item.blazeRod) || item.equals(Item.blazePowder)){
+				sendPacket(6, 6, "No name");
+			}if(item.equals(Item.spiderEye) || item.equals(Item.silk)){ // fermented eye is for rpg spider
+				sendPacket(7, 7, "spider");
+			}if(item.equals(Item.netherStar)){
+				sendPacket(8, 8, "wither boss");
+			}if(item.equals(Item.fermentedSpiderEye)){
+				sendPacket(9, 9, "rpg spider");
+			}if(item.equals(Item.arrow)){
+				sendPacket(10, 10, "skeleton");
+			}if(item.equals(Item.skull) && is.getItemDamage() == 1){
+				sendPacket(11, 11, "skeleton w");
+			}if(item.equals(Item.rottenFlesh)){
+				sendPacket(12, 12, "zombie");
+			}if(item.equals(Item.ghastTear)){
+				sendPacket(13, 13, "ghast");
+			}if(is.itemID == Block.cloth.blockID){
+				sendPacket(14, 14, "sheep");
+			}if(item.equals(Item.enderPearl)){
+				sendPacket(15, 15, "enderman");
+			}if(item.equals(Item.fishCooked)){
+				sendPacket(16, 16, "silverfish");
+			}if(item.equals(Item.fishRaw)){
+				sendPacket(23, 23, "cat");
+			}if(item.equals(Item.snowball)){
+				sendPacket(17, 17, "snowman");
+			}if(is.itemID == Block.blockIron.blockID){
+				sendPacket(18, 18, "iron golem");
+			}if(is.itemID == Block.whiteStone.blockID){
+				sendPacket(19, 19, "dragon");
+			}if(item.equals(Item.netherStalkSeeds)){
+				sendPacket(20, 20, "bat");
+			}if(item.equals(Item.feather)){
+				sendPacket(21, 21, "chicken");
+			}if(is.itemID == Block.mushroomBrown.blockID || is.itemID == Block.mushroomRed.blockID){
+				sendPacket(22, 22, "mooshroom");
+			}if(item.equals(Item.dyePowder) && is.getItemDamage() == 0){
+				sendPacket(24, 24, "squid");
+			}if(item instanceof ItemBook){
+				sendPacket(25, 25, "villager");
+			}if(item.equals(Item.bone)){
+				sendPacket(26, 26, "wolf");
+			}if(item.equals(Item.netherQuartz)){
+				sendPacket(27, 27, "pig zombie");
+			}if(item.equals(Item.leather)){
+				sendPacket(28, 28, "rpg bull");
+			}if(item.equals(Item.porkCooked)){
+				sendPacket(29, 29, "rpg boar");
+			}if(item.equals(Item.magmaCream)){
+				sendPacket(30, 30, "MagmaCube");
+			}if(item.equals(Item.slimeBall)){
+				sendPacket(31, 31, "Slime");
+			}
+		}
+
 		return super.interact(player);
 	}
 
-
+	public void sendPacket(int id, int secondID, String petName){
+		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+		ObjectOutput out;
+		DataOutputStream outputStream = new DataOutputStream(bytes);
+		try {
+			outputStream.writeInt(id);
+			outputStream.writeInt(secondID);
+			outputStream.writeUTF(petName);
+			Packet250CustomPayload packet = new Packet250CustomPayload("buddyPet", bytes.toByteArray());
+			PacketDispatcher.sendPacketToServer(packet);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	/**
 	 * This function is used when two same-species animals in 'love mode' breed to generate the new baby animal.
 	 */

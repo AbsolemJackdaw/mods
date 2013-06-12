@@ -27,14 +27,10 @@ public class RenderBuddy extends RenderLiving
 	private float scaleBuddy;
 	public Random rand = new Random();
 
-	//used for magma cube, copied from magma cube renderer
-	private int field_77120_a;
-
 	public RenderBuddy(float par2, float scale)
 	{
 		super(new ModelCow(), par2);
 		scaleBuddy = scale;
-		this.field_77120_a = 5;
 	}
 
 	protected void preRenderCallback(EntityLiving pet, float par2) {
@@ -137,7 +133,6 @@ public class RenderBuddy extends RenderLiving
 				GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 				return -1;
 			}
-
 		}
 
 		return -1;
@@ -147,16 +142,6 @@ public class RenderBuddy extends RenderLiving
 	public void renderCow(BuddyBase buddy, double par2, double par4, double par6, float par8, float par9)
 	{
 		this.mainModel = buddy.getModel();
-
-		if( ((EntityBuddy)buddy).getGuiId() == 30){
-			int i = 5;
-
-			if (i != this.field_77120_a)
-			{
-				this.field_77120_a = i;
-				this.mainModel = new ModelMagmaCube();
-			}
-		}
 		super.doRenderLiving(buddy, par2, par4, par6, par8, par9);
 	}
 
@@ -192,10 +177,11 @@ public class RenderBuddy extends RenderLiving
 		BuddyBase pet = (BuddyBase)par1Entity;
 		this.renderCow((BuddyBase)par1Entity, par2, par4, par6, par8, par9);
 		String petname = ((EntityBuddy)pet).getName().equals("null")?pet.getOwnerName()+ "'s Buddy" : ((EntityBuddy)pet).getName();
+		
 		if(pet.isRiding())
-			this.renderLivingLabel(pet, petname , par2, par4-pet.getHeight() -2f, par6, 32);
+			this.renderLivingLabel(pet, petname , par2, par4-pet.getHeight() -1f, par6, 32);
 		else
-			this.renderLivingLabel(pet, petname , par2, par4-pet.getHeight() - 1, par6, 32);
+			this.renderLivingLabel(pet, petname , par2, par4-pet.getHeight() , par6, 32);
 	}
 
 
