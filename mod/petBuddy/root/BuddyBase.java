@@ -35,6 +35,7 @@ public abstract class BuddyBase extends EntityTameable
 	public float field_70813_a;
 	public float field_70811_b;
 	public float field_70812_c;
+	private int slimeJumpDelay = 0;
 
 	//	private int guiID;
 	public BuddyBase(World par1World)
@@ -52,6 +53,7 @@ public abstract class BuddyBase extends EntityTameable
 		this.targetTasks.addTask(1, new EntityAIOwnerHurtByTarget(this));
 		this.targetTasks.addTask(2, new EntityAIOwnerHurtTarget(this));
 		this.targetTasks.addTask(3, new EntityAIHurtByTarget(this, true));
+		this.slimeJumpDelay = this.rand.nextInt(20) + 10;
 
 	}
 	public BuddyBase(World par1World, EntityPlayer player)
@@ -65,6 +67,7 @@ public abstract class BuddyBase extends EntityTameable
 		this.tasks.addTask(9, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
 		this.tasks.addTask(9, new EntityAILookIdle(this));
 		this.setOwner(player.username);
+		this.slimeJumpDelay = this.rand.nextInt(20) + 10;
 
 	}
 
@@ -243,7 +246,7 @@ public abstract class BuddyBase extends EntityTameable
 
 				this.field_70813_a = -0.5F;
 			}
-			
+
 			else if (!this.onGround && flag)
 			{
 				this.field_70813_a = 1.0F;
@@ -312,5 +315,82 @@ public abstract class BuddyBase extends EntityTameable
 		adouble[1] = d0 + d1 * (double)par2;
 		adouble[2] = this.ringBuffer[j][2] + (this.ringBuffer[k][2] - this.ringBuffer[j][2]) * (double)par2;
 		return adouble;
+	}
+
+	protected void updateEntityActionState()
+	{
+		if(PetBuddyMain.proxy.getGuiId() == 31){
+
+			if (this.onGround && this.slimeJumpDelay-- <= 0)
+			{
+				this.slimeJumpDelay = rand.nextInt(20) + 10;
+
+				this.slimeJumpDelay /= 3;
+
+				this.isJumping = true;
+
+				this.playSound("mob.slime.big", this.getSoundVolume(), ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F) * 0.8F);
+
+				this.moveStrafing = 1.0F - this.rand.nextFloat() * 2.0F;
+				this.moveForward = (float)(1 * 3);
+			}
+			else
+			{
+				this.isJumping = false;
+
+				if (this.onGround)
+				{
+					this.moveStrafing = this.moveForward = 0.0F;
+				}
+			}
+		}
+	}
+	public float getHeight(){
+		switch(PetBuddyMain.proxy.getGuiId()){
+		case 2:
+			return 0.3f;
+		case 4:
+			return 0.1f;
+		case 5:
+			return 0.3f;
+		case 7:
+			return 0.4f;
+		case 8:
+			return -0.3f;
+		case 9:
+			return 0.4f;
+		case 14:
+			return 0.3f;
+		case 15:
+			return -0.2f;
+		case 16:
+			return 0.7f;
+		case 17:
+			return 0.2f;
+		case 18:
+			return -0.2f;
+		case 20:
+			return 0.3f;
+		case 21:
+			return 0.5f;
+		case 22:
+			return 0.3f;
+		case 23:
+			return 0.7f;
+		case 24:
+			return 0.3f;
+		case 26:
+			return 0.4f;
+		case 28:
+			return 0.3f;
+		case 29:
+			return 0.3f;
+		case 30:
+			return 0.2f;
+		case 31:
+			return 0.2f;
+		default:
+			return 0f;
+		}
 	}
 }

@@ -49,8 +49,11 @@ public class RenderBuddy extends RenderLiving
 			GL11.glTranslatef(0f, -1.5f, 0f);
 		}
 		if(PetBuddyMain.proxy.getGuiId() == 19){
+			if(pet.isRiding())
+				GL11.glTranslatef(0f, 1f, 0f);
 			GL11.glScalef(scaleBuddy, scaleBuddy, scaleBuddy);
 			GL11.glTranslatef(0f, -2f, 0f);
+
 		}
 		if(PetBuddyMain.proxy.getGuiId() == 31){
 			float f1 = 3;
@@ -189,9 +192,10 @@ public class RenderBuddy extends RenderLiving
 		BuddyBase pet = (BuddyBase)par1Entity;
 		this.renderCow((BuddyBase)par1Entity, par2, par4, par6, par8, par9);
 		String petname = ((EntityBuddy)pet).getName().equals("null")?pet.getOwnerName()+ "'s Buddy" : ((EntityBuddy)pet).getName();
-		float offset = 0.3f;
-		if(pet.isRiding()) offset = -1.2f; else offset = 0.3f;
-		this.renderLivingLabel(pet, petname , par2, par4+offset, par6, 32);
+		if(pet.isRiding())
+			this.renderLivingLabel(pet, petname , par2, par4-pet.getHeight() -2f, par6, 32);
+		else
+			this.renderLivingLabel(pet, petname , par2, par4-pet.getHeight() - 1, par6, 32);
 	}
 
 
