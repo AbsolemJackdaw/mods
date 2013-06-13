@@ -164,7 +164,4 @@ public class PetBuddyMain {
 	{
 		LanguageRegistry.instance().addStringLocalization("achievement." + ach + ".desc", desc);
 	}
-
-
-
 }
