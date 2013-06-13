@@ -12,9 +12,6 @@ import gravestone.handelers.GuiHandler;
 import gravestone.handelers.PacketHandler;
 import gravestone.handelers.PlayerTracker;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.ObjectOutput;
 import java.util.Random;
 
 import net.minecraft.block.Block;
@@ -29,7 +26,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.PreInit;
@@ -43,10 +39,6 @@ import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import net.minecraft.block.BlockPortal;
 
 
 @Mod(modid = "GraveStoneMod", name = "GraveStone", version = "Beta")
@@ -110,47 +102,47 @@ public class mod_Gravestone{
 		CommandHandler commandManager = (CommandHandler) event.getServer().getCommandManager();
 		commandManager.registerCommand(new gravestone.handelers.CommandPanel());
 	}
-        
+
 	public void buildGravestone(EntityPlayer player, InventoryPlayer inv ) {
 
 		int x = MathHelper.floor_double(player.posX),
 				y = MathHelper.floor_double(player.posY),
 				z = MathHelper.floor_double(player.posZ);
-                if(player.worldObj.isAirBlock(x, y, z)){
-                    if(y < 0){
-                        return;
-                    }
-                    while(player.worldObj.isAirBlock(x, y, z)){
-                        y--;
-                    }
-                }
-                if(player.worldObj.getBlockId(x, y, z) == Block.lavaStill.blockID || player.worldObj.getBlockId(x, y, z) == Block.lavaMoving.blockID){
-                    return;
-                }
-                int scanTime = 0;
-                while(scanTime < 100 && (!player.worldObj.getBlockMaterial(x, y, z).isSolid() || !player.worldObj.getBlockMaterial(x, y - 1, z).isSolid())){
-                    scanTime++;
-                    if(y < 0){
-                        return;
-                    }
-                    //Diagonal movement, avoids portal bugs
-                    x++;
-                    z++;
-                    while(player.worldObj.isAirBlock(x, y, z)){
-                        if(y < 0){
-                            return;
-                        }
-                        y--;
-                    }
-                    while(!player.worldObj.isAirBlock(x, y + 1, z) && y < 512){
-                        y++;
-                    }
-                }
-                if(scanTime == 100){
-                    //never found a plot.
-                    return;
-                }
-                y+=1;
+		if(player.worldObj.isAirBlock(x, y, z)){
+			if(y < 0){
+				return;
+			}
+			while(player.worldObj.isAirBlock(x, y, z)){
+				y--;
+			}
+		}
+//		if(player.worldObj.getBlockId(x, y, z) == Block.lavaStill.blockID || player.worldObj.getBlockId(x, y, z) == Block.lavaMoving.blockID){
+//			return;
+//		}
+		int scanTime = 0;
+		while(scanTime < 100 && (!player.worldObj.getBlockMaterial(x, y, z).isSolid() || !player.worldObj.getBlockMaterial(x, y - 1, z).isSolid())){
+			scanTime++;
+			if(y < 0){
+				return;
+			}
+			//Diagonal movement, avoids portal bugs
+			x++;
+			z++;
+			while(player.worldObj.isAirBlock(x, y, z)){
+				if(y < 0){
+					return;
+				}
+				y--;
+			}
+			while(!player.worldObj.isAirBlock(x, y + 1, z) && y < 512){
+				y++;
+			}
+		}
+		if(scanTime == 100){
+			//never found a plot.
+			return;
+		}
+		y+=1;
 
 		player.worldObj.setBlock(x, y, z, gravestone.blockID);
 		TileEntity te = player.worldObj.getBlockTileEntity(x, y, z);
@@ -174,13 +166,13 @@ public class mod_Gravestone{
 
 				for(int id = 0; id <inv.getSizeInventory(); id++)
 				{
-                                        ItemStack is = inv.getStackInSlot(id);
+					ItemStack is = inv.getStackInSlot(id);
 					if(is != null && id < tegrave.getSizeInventory())
 					{
 						tegrave.setInventorySlotContents(id, is);
-                                                inv.setInventorySlotContents(id, null);
+						inv.setInventorySlotContents(id, null);
 					}
-                                        
+
 				}
 			}
 			catch(Throwable e)
