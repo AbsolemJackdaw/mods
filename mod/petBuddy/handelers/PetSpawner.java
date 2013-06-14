@@ -19,6 +19,7 @@ public class PetSpawner implements IPlayerTracker{
 	float dragon_color3;
 	
 	String name = "null";
+	String skin = "no skin";
 
 	@Override
 	public void onPlayerLogin(EntityPlayer player) {
@@ -47,6 +48,8 @@ public class PetSpawner implements IPlayerTracker{
 		}
 		if(player.worldObj.provider.dimensionId == -1){
 			player.addStat(PetBuddyMain.portalNether, 1);
+		}if(player.worldObj.provider.dimensionId == 1){
+			player.addStat(PetBuddyMain.endPortal, 1);
 		}
 	}
 
@@ -104,8 +107,14 @@ public class PetSpawner implements IPlayerTracker{
 					nbt.getString("pet_name:"+player.username).equals("") ? player.username+"'s Buddy" :
 						nbt.getString("pet_name:"+player.username);
 		}
-
+		if(nbt.hasKey("pet_skin:"+player.username)){
+			skin = nbt.getString("pet_skin:"+player.username).equals("null") ||
+					nbt.getString("pet_skin:"+player.username).toLowerCase().equals("i")||
+					nbt.getString("pet_skin:"+player.username).toLowerCase().equals("me")? player.username :
+						nbt.getString("pet_skin:"+player.username);
+		}
 		PetBuddyMain.proxy.setName(name);
+		PetBuddyMain.proxy.setSkinName(skin);
 		PetBuddyMain.proxy.setGuiId(loginid);
 		PetBuddyMain.proxy.setColor(color1,color2,color3);
 		PetBuddyMain.proxy.setDragonColor(dragon_color1,dragon_color2,dragon_color3);

@@ -133,7 +133,10 @@ public class GuiGrave extends GuiScreen {
 				}
 			}
 			if(!thePlayer.username.equals(playerName)){
-				this.buttonList.add(new GuiButton(4, posX+90 , posY+30 , 80, 20, "Request to Remove"));
+				this.buttonList.add(new GuiButton(4, posX+90 , posY+30 , 100, 20, "Request to Remove"));
+				if(te.customName == true){
+					this.buttonList.add(new GuiButton(3, posX+90 , posY+30 , 100, 20, "Salvage Grave"));
+				}
 			}
 		}
 	}

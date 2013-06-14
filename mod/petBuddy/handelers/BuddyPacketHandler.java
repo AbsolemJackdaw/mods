@@ -46,8 +46,17 @@ public class BuddyPacketHandler implements IPacketHandler {
 					buddyName;
 				PetBuddyMain.proxy.setName(name);
 				p.addStat(PetBuddyMain.nameBuddy, 1);
-
-			}else{
+				
+			}if(guiId == 101){
+				EntityBuddy buddy = (EntityBuddy)world.getEntityByID(secondID);
+				String skin = buddyName.equals("null") || buddyName.equals("")|| buddyName.toLowerCase().equals("me") ||
+						buddyName.toLowerCase().equals("i")? buddy.getOwnerName() :	buddyName;
+				PetBuddyMain.proxy.setSkinName(skin);
+				if(!skin.equals(buddy.getOwnerName())){
+					p.addStat(PetBuddyMain.skin, 1);
+				}
+				
+			}else if (guiId < 100){
 				List<EntityLiving> entl = p.worldObj.getEntitiesWithinAABB(EntityLiving.class, p.boundingBox.expand(10, 10, 10));
 				if (entl != null && entl.size() > 0) {
 					for (EntityLiving el : entl) {

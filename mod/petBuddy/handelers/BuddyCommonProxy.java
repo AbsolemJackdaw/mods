@@ -2,6 +2,7 @@ package petBuddy.handelers;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import petBuddy.PetBuddyMain;
@@ -10,8 +11,8 @@ import petBuddy.entity.EntityBuddy;
 public class BuddyCommonProxy {
 
 	public void render() {}
-	public void openGui(int id, EntityPlayer player, String name, int entityID, boolean creative){ }
-
+	public void openGui(int id, EntityPlayer player, String name, int entityID, boolean creative, Item item){}
+	
 	String name = "null";
 	public String getName(){
 		return name;
@@ -19,6 +20,15 @@ public class BuddyCommonProxy {
 	public void setName(String n){
 		name = n;
 	}
+	
+	String skin = "null";
+	public String getSkinName(){
+		return skin;
+	}
+	public void setSkinName(String n){
+		skin = n;
+	}
+	
 	private int guiID = 3;
 	public int getGuiId(){
 		return guiID;
@@ -85,7 +95,9 @@ public class BuddyCommonProxy {
 					if(tag.hasKey("pet_name:"+username)) {
 						PETNBT.setString("pet_name:"+username, tag.getString("pet_name:"+username));
 					}
-
+					if(tag.hasKey("pet_skin:"+username)) {
+						PETNBT.setString("pet_skin:"+username, tag.getString("pet_skin:"+username));
+					}
 					return PETNBT;
 				}else{
 					if (!player.getEntityData().hasKey(player.PERSISTED_NBT_TAG)){
@@ -123,7 +135,9 @@ public class BuddyCommonProxy {
 					if(tag.hasKey("pet_name:"+username)) {
 						PETNBT.setString("pet_name:"+username, tag.getString("pet_name:"+username));
 					}
-
+					if(tag.hasKey("pet_skin:"+username)) {
+						PETNBT.setString("pet_skin:"+username, tag.getString("pet_skin:"+username));
+					}
 					return PETNBT;
 				}else{
 					if (!player.getEntityData().hasKey(player.PERSISTED_NBT_TAG)){
@@ -138,6 +152,8 @@ public class BuddyCommonProxy {
 					PETNBT.setFloat("pet_dragon_color2:"+username, 0);
 					PETNBT.setFloat("pet_dragon_color3:"+username, 0);
 					PETNBT.setString("pet_name:"+username, "null");
+					PETNBT.setString("pet_skin:"+username, "no skin selected");
+
 					return PETNBT;
 				}
 			}
@@ -158,6 +174,8 @@ public class BuddyCommonProxy {
 					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_dragon_color2:"+username, buddy.getColor2());
 					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_dragon_color3:"+username, buddy.getColor3());
 					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setString("pet_name:"+username, buddy.getName());
+					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setString("pet_skin:"+username, getSkinName());
+
 
 				}else{
 					if (!player.getEntityData().hasKey(player.PERSISTED_NBT_TAG)){
@@ -171,6 +189,7 @@ public class BuddyCommonProxy {
 					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_dragon_color2:"+username, 0);
 					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_dragon_color3:"+username, 0);
 					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setString("pet_name:"+username, "null");
+					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setString("pet_skin:"+username, "no skin");
 
 				}
 			}
@@ -186,6 +205,7 @@ public class BuddyCommonProxy {
 					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_dragon_color2:"+username, buddy.getColor2());
 					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_dragon_color3:"+username, buddy.getColor3());
 					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setString("pet_name:"+username, buddy.getName());
+					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setString("pet_skin:"+username, getSkinName());
 
 				}else{
 					if (!player.getEntityData().hasKey(player.PERSISTED_NBT_TAG)){
@@ -199,6 +219,7 @@ public class BuddyCommonProxy {
 					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_dragon_color2:"+username, 0);
 					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_dragon_color3:"+username, 0);
 					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setString("pet_name:"+username, "null");
+					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setString("pet_skin:"+username, "no skin");
 
 				}
 			}

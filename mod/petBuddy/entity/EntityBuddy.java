@@ -414,8 +414,9 @@ public class EntityBuddy extends BuddyBase
 		}
 
 		if(player.inventory.getCurrentItem() != null){
-			if(player.inventory.getCurrentItem().getItem().equals(Item.stick)){
-				PetBuddyMain.proxy.openGui(0, player, player.username, this.entityId, player.capabilities.isCreativeMode);
+			if(player.inventory.getCurrentItem().getItem().equals(Item.stick)||
+					player.inventory.getCurrentItem().getItem().equals(Item.leather) && !player.capabilities.isCreativeMode){
+				PetBuddyMain.proxy.openGui(0, player, player.username, this.entityId, player.capabilities.isCreativeMode,player.inventory.getCurrentItem().getItem());
 			}
 		} 
 		else if (!this.worldObj.isRemote && this.ridingEntity == null && hasItem == false){

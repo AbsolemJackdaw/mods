@@ -5,11 +5,13 @@ import java.util.Random;
 import net.minecraft.client.model.ModelCow;
 import net.minecraft.client.model.ModelEnderman;
 import net.minecraft.client.model.ModelSlime;
+import net.minecraft.client.renderer.ImageBufferDownload;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.potion.Potion;
+import net.minecraft.util.StringUtils;
 
 import org.lwjgl.opengl.GL11;
 
@@ -18,6 +20,7 @@ import petBuddy.entity.EntityBuddy;
 import petBuddy.entity.model.DragonsModel;
 import petBuddy.entity.model.ModelMagmaCube;
 import petBuddy.entity.model.SheepBody;
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -157,9 +160,16 @@ public class RenderBuddy extends RenderLiving
 	}
 
 	protected void getDownloadableTexture(EntityLiving living)
-	{    		
+	{    	
+		//		FMLLog.getLogger().info(PetBuddyMain.proxy.getGuiId()+"");
 		if(PetBuddyMain.proxy.getGuiId() == 3){
-			this.loadDownloadableImageTexture(((EntityBuddy)living).getOwner().skinUrl, living.getTexture());
+			String s1 = "http://skins.minecraft.net/MinecraftSkins/" + PetBuddyMain.proxy.getSkinName() + ".png";
+			if (!renderManager.renderEngine.hasImageData(s1))
+			{
+				renderManager.renderEngine.obtainImageData(s1, new ImageBufferDownload());
+
+			}
+			this.loadDownloadableImageTexture(s1, living.getTexture());		
 		}
 		else{
 			this.loadDownloadableImageTexture(((BuddyBase)living).getOwner().skinUrl+"BuddySubstitute", living.getTexture());
@@ -177,7 +187,7 @@ public class RenderBuddy extends RenderLiving
 		BuddyBase pet = (BuddyBase)par1Entity;
 		this.renderCow((BuddyBase)par1Entity, par2, par4, par6, par8, par9);
 		String petname = ((EntityBuddy)pet).getName().equals("null")?pet.getOwnerName()+ "'s Buddy" : ((EntityBuddy)pet).getName();
-		
+
 		if(pet.isRiding())
 			this.renderLivingLabel(pet, petname , par2, par4-pet.getHeight() -1f, par6, 32);
 		else

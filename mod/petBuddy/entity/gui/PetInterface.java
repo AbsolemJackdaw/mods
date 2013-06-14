@@ -9,12 +9,15 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.world.World;
 
 import org.lwjgl.opengl.GL11;
 
+import petBuddy.PetBuddyMain;
 import petBuddy.entity.EntityBuddy;
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class PetInterface extends GuiScreen {
@@ -28,11 +31,13 @@ public class PetInterface extends GuiScreen {
 	public String playerName;
 	public static PetInterface inst;
 	private GuiTextField textfield;
+	private GuiTextField skinfield;
+
 	private  EntityBuddy buddy;
 	private  int buddyID;
 	private boolean isPlayerCreativeMode;
 
-	public PetInterface(EntityPlayer player, String name, int entityID, boolean creative) {
+	public PetInterface(EntityPlayer player, String name, int entityID, boolean creative, Item item) {
 		super();
 
 		thePlayer = player;
@@ -42,11 +47,11 @@ public class PetInterface extends GuiScreen {
 		buddyID = entityID;
 		buddy= (EntityBuddy)world.getEntityByID(entityID);
 		isPlayerCreativeMode = creative;
-
+		String skinOrName = item.equals(Item.leather) ? "skin": "name";
 		if(isPlayerCreativeMode)
 			hi = "Choose a new Buddy to adventure with you.";
 		else
-			hi = "Choose a new name for " + buddy.getName();
+			hi = "Choose a new "+ skinOrName +" for " + buddy.getName();
 
 	}
 
@@ -107,13 +112,35 @@ public class PetInterface extends GuiScreen {
 			this.buttonList.add(new GuiButton(100, (posX-posX/2) + 150/2 , posY, 70, 20, "Submit name"));
 
 		String text = buddy.getName().equals("null") ? buddy.getOwnerName() + "'s Buddy" : buddy.getName();
+
+
+
 		if(isPlayerCreativeMode)
 			textfield = new GuiTextField(fontRenderer, posX-200 , posY-80, 150, 20);
-		else
+		else 
 			textfield = new GuiTextField(fontRenderer, (posX-posX/2) + 70/2 , posY-50, 150, 20);
 
 		textfield.setText(text);
 		textfield.setMaxStringLength(50);
+
+		// case for skin naming
+		if(isPlayerCreativeMode)
+			this.buttonList.add(new GuiButton(101, posX+70 , posY-110, 70, 20, "Submit Skin"));
+		else if (thePlayer.getCurrentEquippedItem().getItem().equals(Item.leather))
+			this.buttonList.add(new GuiButton(101, (posX-posX/2) + 150/2 , posY, 70, 20, "Submit Skin"));
+
+		String s = PetBuddyMain.proxy.getSkinName();
+		String skin = s.equals("null") || s.equals("")|| s.toLowerCase().equals("me") ||
+				s.toLowerCase().equals("i") ? buddy.getOwnerName() : PetBuddyMain.proxy.getSkinName();
+				if(isPlayerCreativeMode)
+					skinfield = new GuiTextField(fontRenderer, posX , posY-80, 150, 20);
+				else if (thePlayer.getCurrentEquippedItem().getItem().equals(Item.leather))
+					skinfield = new GuiTextField(fontRenderer, (posX-posX/2) + 70/2 , posY-50, 150, 20);
+				if(skinfield != null){
+					skinfield.setText(skin);
+					skinfield.setMaxStringLength(32);
+				}
+
 	}
 
 	public void drawScreen(int par1, int par2, float par3) {
@@ -129,8 +156,8 @@ public class PetInterface extends GuiScreen {
 			drawTexturedModalRect(posX, posY, 0, 0, xSize, ySize);
 			drawTexturedModalRect(posX*2, posY+5, 0, 90, 45, ySize);
 			if(isPlayerCreativeMode){
-				fontRenderer.drawSplitString(hi, this.width / 2-49, this.height / 2-100, 150 ,0x000000);
-				fontRenderer.drawSplitString(hi, this.width / 2-50, this.height / 2-101, 150 ,0xffffff);
+				fontRenderer.drawSplitString(hi, this.width / 2-105, this.height / 2-110, 175 ,0x000000);
+				fontRenderer.drawSplitString(hi, this.width / 2-106, this.height / 2-111, 175 ,0xffffff);
 			}else{
 				fontRenderer.drawSplitString(hi, (posX-posX/2) + 70/2, this.height / 2-80, 180 ,0x000000);
 				fontRenderer.drawSplitString(hi, (posX-posX/2) + 70/2-1, this.height / 2-81, 180 ,0xffffff);
@@ -140,6 +167,8 @@ public class PetInterface extends GuiScreen {
 		finally
 		{
 			textfield.drawTextBox();
+			if(skinfield != null) skinfield.drawTextBox();
+
 		}
 		super.drawScreen(par1, par2, par3);
 
@@ -148,11 +177,15 @@ public class PetInterface extends GuiScreen {
 	{
 		super.keyTyped(c, i);
 		textfield.textboxKeyTyped(c, i);
+		if(skinfield != null) skinfield.textboxKeyTyped(c, i);
+
 	}
 	protected void mouseClicked(int i, int j, int k)
 	{
 		super.mouseClicked(i, j, k);
 		textfield.mouseClicked(i, j, k);
+		if(skinfield != null) skinfield.mouseClicked(i, j, k);
+
 	}
 	public boolean doesGuiPauseGame() {
 		return false;
@@ -170,7 +203,11 @@ public class PetInterface extends GuiScreen {
 			if(!isPlayerCreativeMode)
 				mc.thePlayer.closeScreen();
 		}
-
+		else if(button.id == 101){
+			sendPacket(button.id, buddyID, skinfield.getText());
+			if(!isPlayerCreativeMode)
+				mc.thePlayer.closeScreen();
+		}
 		else{
 			sendPacket(button.id, button.id, "Failed to read string");
 			mc.thePlayer.closeScreen();
