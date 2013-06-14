@@ -131,7 +131,7 @@ public class RenderItem
 	public void addPick(Item item, String texture, float scale, float inWorldScale)
 	{
 		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(new pick(), texture, 
-				0.55F, 0.06F, -0.03F, 80.0F, -100.0F, 70.0F, 0.0F, 0.6F, 0.0F, 0.0F, 0.0F, 70.0F, scale, inWorldScale));
+				0.55F, 0.06F, -0.03F, 80.0F, -100.0F, 70.0F, -0.3f,0.3f,-0.2f, -90f,70f,0f, scale, inWorldScale));
 	}
 
 	public void addFish(Item item, String texture, float scale, float inWorldScale)

@@ -14,7 +14,7 @@ public class clp extends cmp
 
 	public void render() {
 		instance = this;
-		Render3d.hastoRenderOnTick = false;
+		Render3d.hastoRenderOnTick = true;
 
 		MinecraftForgeClient.registerItemRenderer(Item.stick.itemID, new Render3d(new stick(),"/subaraki/3d/stick.png", 0.5f,0.2f,0.0f,40f,90f,10f,0f,0f,0f,0f,0f,0f,1,1));
 		MinecraftForgeClient.registerItemRenderer(Item.fishingRod.itemID, new Render3d(new rod(),"/subaraki/3d/rod.png", 0.5f,0.2f, -0.05f, -50f,-110f,0f,0.1f,-0.2f,0.4f,0f,0f,-30f,1,1));
