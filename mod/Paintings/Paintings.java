@@ -475,80 +475,93 @@ public class Paintings {
 
 		if(!tiny && Insane && !sphax && !gib)
 		{
-			//eerste helft. rechts van origineel
-			EnumHelper.addArt("EnumArt","ins001",192,0,128,64);
-			EnumHelper.addArt("EnumArt","ins002",320,0,48,48);
-			EnumHelper.addArt("EnumArt","ins003",368,32,48,16);
-			EnumHelper.addArt("EnumArt","ins004",416,0,32,48);
-			EnumHelper.addArt("EnumArt","ins005",448,0,64,64);
-			EnumHelper.addArt("EnumArt","ins006",64,128,256,48);
-			EnumHelper.addArt("EnumArt","ins007",128,48,320,48);
-			EnumHelper.addArt("EnumArt","ins008",48,16,320,112);
-			EnumHelper.addArt("EnumArt","ins000",48,16,384,112);
-			EnumHelper.addArt("EnumArt","ins010",48,96,64,448);
-			EnumHelper.addArt("EnumArt","ins011",48,96,160,448);
-			EnumHelper.addArt("EnumArt","ins012",128,128,320,128);
-			EnumHelper.addArt("EnumArt","ins013",64,64,256,192);
-			// tweede deel, onder origineel
-			EnumHelper.addArt("EnumArt","ins014",48,16,0,256);
-			EnumHelper.addArt("EnumArt","ins015",16,16,48,256);
-			EnumHelper.addArt("EnumArt","ins016",16,32,64,256);
-			EnumHelper.addArt("EnumArt","ins017",16,32,80,256);
-			EnumHelper.addArt("EnumArt","ins018",16,32,96,256);
-			EnumHelper.addArt("EnumArt","ins019",48,16,112,256);
-			EnumHelper.addArt("EnumArt","ins020",48,16,112,272);
-			EnumHelper.addArt("EnumArt","ins021",16,48,160,256);
-			EnumHelper.addArt("EnumArt","ins022",16,48,172,256);
-			EnumHelper.addArt("EnumArt","ins023",32,16,0,172);
-			EnumHelper.addArt("EnumArt","ins024",32,16,32,172);
-			EnumHelper.addArt("EnumArt","ins025",32,16,0,288);
-			EnumHelper.addArt("EnumArt","ins026",32,16,32,288);
-			EnumHelper.addArt("EnumArt","ins027",32,16,64,288);
-			EnumHelper.addArt("EnumArt","ins028",32,16,96,288);
-			EnumHelper.addArt("EnumArt","ins029",32,16,128,288);
-			EnumHelper.addArt("EnumArt","ins030",64,16,0,304);
-			EnumHelper.addArt("EnumArt","ins031",16,48,64,304);
-			EnumHelper.addArt("EnumArt","ins032",32,48,80,304);
-			EnumHelper.addArt("EnumArt","ins033",80,80,112,304);
-			EnumHelper.addArt("EnumArt","ins034",16,32,0,320);
-			EnumHelper.addArt("EnumArt","ins035",16,32,16,320);
-			EnumHelper.addArt("EnumArt","ins036",16,32,32,320);
-			EnumHelper.addArt("EnumArt","ins037",16,32,48,320);
-			EnumHelper.addArt("EnumArt","ins038",16,32,64,320);
-			EnumHelper.addArt("EnumArt","ins039",48,32,0,352);
-			EnumHelper.addArt("EnumArt","ins040",48,32,64,352);
-			EnumHelper.addArt("EnumArt","ins041",64,32,0,384);
-			EnumHelper.addArt("EnumArt","ins042",64,32,64,384);
-			EnumHelper.addArt("EnumArt","ins043",64,32,128,384);
-			EnumHelper.addArt("EnumArt","ins044",32,32,0,412);
-			EnumHelper.addArt("EnumArt","ins045",32,32,32,412);
-			EnumHelper.addArt("EnumArt","ins046",32,32,64,412);
-			EnumHelper.addArt("EnumArt","ins047",32,32,98,412);
-			EnumHelper.addArt("EnumArt","ins048",32,32,128,412);
-			EnumHelper.addArt("EnumArt","ins049",32,32,160,412);
-			EnumHelper.addArt("EnumArt","ins050",64,64,0,448);
-			EnumHelper.addArt("EnumArt","ins051",64,64,64,448);
-			EnumHelper.addArt("EnumArt","ins052",64,64,128,448);
-			EnumHelper.addArt("EnumArt","ins053",64,48,186,320);
-			EnumHelper.addArt("EnumArt","ins054",64,48,186,364);
-			EnumHelper.addArt("EnumArt","ins055",64,48,186,408);
-			EnumHelper.addArt("EnumArt","ins056",64,48,186,462);
-			EnumHelper.addArt("EnumArt","ins057",128,64,192,256);
-			EnumHelper.addArt("EnumArt","ins058",64,128,256,320);
-			EnumHelper.addArt("EnumArt","ins059",64,64,256,448);
-			EnumHelper.addArt("EnumArt","ins060",64,64,320,256);
-			EnumHelper.addArt("EnumArt","ins061",64,64,368,256);
-			EnumHelper.addArt("EnumArt","ins062",32,48,416,256);
-			EnumHelper.addArt("EnumArt","ins063",64,64,448,256);
-			EnumHelper.addArt("EnumArt","ins064",64,80,448,320);
-			EnumHelper.addArt("EnumArt","ins065",64,80,448,412);
-			EnumHelper.addArt("EnumArt","ins066",128,64,320,304);
-			EnumHelper.addArt("EnumArt","ins067",64,16,320,368);
-			EnumHelper.addArt("EnumArt","ins068",128,16,320,384);
-			EnumHelper.addArt("EnumArt","ins069",64,16,320,400);
-			EnumHelper.addArt("EnumArt","ins070",128,96,320,412);
-			EnumHelper.addArt("EnumArt","ins071",64,16,384,368);
-			EnumHelper.addArt("EnumArt","ins072",64,16,384,400);
+			EnumHelper.addArt("EnumArt","ins001",48,48,320,0);
+			EnumHelper.addArt("EnumArt","ins002",48,48,320,256);
+			EnumHelper.addArt("EnumArt","ins003",48,48,368,256);
+
+			EnumHelper.addArt("EnumArt","ins004",32,48,416,0);
+			EnumHelper.addArt("EnumArt","ins005",32,48,416,356);
+			EnumHelper.addArt("EnumArt","ins006",32,48,80,304);
+
+			EnumHelper.addArt("EnumArt","ins007",32,32,0,416);
+			EnumHelper.addArt("EnumArt","ins008",32,32,32,416);
+			EnumHelper.addArt("EnumArt","ins009",32,32,64,416);
+			EnumHelper.addArt("EnumArt","ins010",32,32,96,416);
+			EnumHelper.addArt("EnumArt","ins011",32,32,128,416);
+			EnumHelper.addArt("EnumArt","ins012",32,32,160,416);
+
+			EnumHelper.addArt("EnumArt","ins013",64,32,0,352);
+			EnumHelper.addArt("EnumArt","ins013",64,32,0,384);
+			EnumHelper.addArt("EnumArt","ins013",64,32,64,384);
+			EnumHelper.addArt("EnumArt","ins013",64,32,128,384);
+
+			EnumHelper.addArt("EnumArt","ins013",64,64,448,0);
+			EnumHelper.addArt("EnumArt","ins014",64,64,448,256);
+			EnumHelper.addArt("EnumArt","ins015",64,64,0,448);
+			EnumHelper.addArt("EnumArt","ins016",64,64,64,448);
+			EnumHelper.addArt("EnumArt","ins017",64,64,128,448);
+			EnumHelper.addArt("EnumArt","ins018",64,64,256,448);
+
+			EnumHelper.addArt("EnumArt","ins019",64,128,448,64);
+			EnumHelper.addArt("EnumArt","ins020",64,128,448,192);
+			EnumHelper.addArt("EnumArt","ins021",64,128,448,320);
+			EnumHelper.addArt("EnumArt","ins022",64,128,448,448);
+
+			EnumHelper.addArt("EnumArt","ins023",128,64,320,48);
+			EnumHelper.addArt("EnumArt","ins024",128,64,192,256);
+			EnumHelper.addArt("EnumArt","ins025",128,64,320,304);
+
+			EnumHelper.addArt("EnumArt","ins026",64,48,192,320);
+			EnumHelper.addArt("EnumArt","ins027",64,48,192,336);
+			EnumHelper.addArt("EnumArt","ins028",64,48,192,352);
+			EnumHelper.addArt("EnumArt","ins029",64,48,192,368);
+
+			EnumHelper.addArt("EnumArt","ins029",64,16,320,112);
+			EnumHelper.addArt("EnumArt","ins030",64,16,336,112);
+			EnumHelper.addArt("EnumArt","ins031",64,16,320,368);
+			EnumHelper.addArt("EnumArt","ins032",64,16,336,368);
+			EnumHelper.addArt("EnumArt","ins033",64,16,320,400);
+			EnumHelper.addArt("EnumArt","ins034",64,16,336,400);
+			EnumHelper.addArt("EnumArt","ins035",64,16,0,304);
+
+			EnumHelper.addArt("EnumArt","ins036",128,16,336,384);
+
+			EnumHelper.addArt("EnumArt","ins037",128,128,320,128);
+
+			EnumHelper.addArt("EnumArt","ins038",64,128,256,320);
+
+			EnumHelper.addArt("EnumArt","ins039",128,96,416,320);
+
+			EnumHelper.addArt("EnumArt","ins040",48,16,368,32);
+			EnumHelper.addArt("EnumArt","ins041",48,16,112,256);
+			EnumHelper.addArt("EnumArt","ins042",48,16,112,272);
+
+			EnumHelper.addArt("EnumArt","ins043",48,32,64,352);
+
+			EnumHelper.addArt("EnumArt","ins044",80,80,112,304);
+
+			EnumHelper.addArt("EnumArt","ins045",32,16,0,272);
+			EnumHelper.addArt("EnumArt","ins046",32,16,0,288);
+			EnumHelper.addArt("EnumArt","ins047",32,16,32,272);
+			EnumHelper.addArt("EnumArt","ins048",32,16,32,288);
+			EnumHelper.addArt("EnumArt","ins049",32,16,0,272);
+			EnumHelper.addArt("EnumArt","ins050",32,16,64,288);
+			EnumHelper.addArt("EnumArt","ins051",32,16,96,288);
+			EnumHelper.addArt("EnumArt","ins052",32,16,128,288);
+
+			EnumHelper.addArt("EnumArt","ins053",16,16,128,256);
+
+			EnumHelper.addArt("EnumArt","ins054",16,32,64,256);
+			EnumHelper.addArt("EnumArt","ins055",16,32,80,256);
+			EnumHelper.addArt("EnumArt","ins056",16,32,96,256);
+			EnumHelper.addArt("EnumArt","ins057",16,32,0,320);
+			EnumHelper.addArt("EnumArt","ins058",16,32,16,320);
+			EnumHelper.addArt("EnumArt","ins059",16,32,32,320);
+			EnumHelper.addArt("EnumArt","ins060",16,32,48,320);
+
+			EnumHelper.addArt("EnumArt","ins061",16,48,64,304);
+			EnumHelper.addArt("EnumArt","ins062",16,48,160,256);
+			EnumHelper.addArt("EnumArt","ins063",16,48,176,256);
 			//sphax
 			EnumHelper.addArt("EnumArt","XtraImg001", 48, 16, 112, 0);
 			EnumHelper.addArt("EnumArt","XtraImg002", 16, 48, 160, 0);
