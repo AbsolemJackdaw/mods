@@ -36,7 +36,7 @@ public class GuiGrave extends GuiScreen {
 	public String playerName;
 	private static ModelGrave grave = new ModelGrave();
 	private static ModelHead head = new ModelHead();
-	private int clicks =0;
+	private int clicks;
 	TEGrave te;
 
 	int x;
@@ -45,6 +45,7 @@ public class GuiGrave extends GuiScreen {
 
 	public GuiGrave(EntityPlayer player, String name, TEGrave grave ) {
 		super();
+		clicks =0;
 		x = PacketHandler.instance.x1;
 		y = PacketHandler.instance.y1;
 		z = PacketHandler.instance.z1;
@@ -378,6 +379,9 @@ public class GuiGrave extends GuiScreen {
 				DataOutputStream outputStream = new DataOutputStream(bytes);
 				try {
 					outputStream.writeInt(4);
+					outputStream.writeInt(te.xCoord);
+					outputStream.writeInt(te.yCoord);
+					outputStream.writeInt(te.zCoord);
 					outputStream.writeUTF(thePlayer.username);
 					Packet250CustomPayload packet = new Packet250CustomPayload("graveData", bytes.toByteArray());
 					PacketDispatcher.sendPacketToServer(packet);
@@ -386,6 +390,7 @@ public class GuiGrave extends GuiScreen {
 				}
 				clicks = 100;
 			}
+			
 			else if(clicks <= 100){
 				clicks-=1;
 			}
