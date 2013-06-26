@@ -107,8 +107,6 @@ public abstract class BuddyBase extends EntityTameable
 		super.entityInit();
 		this.dataWatcher.addObject(18, new Integer(this.getHealth()));
 	}
-
-
 	public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
 	{
 		super.writeEntityToNBT(par1NBTTagCompound);
@@ -118,7 +116,6 @@ public abstract class BuddyBase extends EntityTameable
 	{
 		super.readEntityFromNBT(par1NBTTagCompound);
 	}
-
 	protected boolean canDespawn()
 	{
 		return false;

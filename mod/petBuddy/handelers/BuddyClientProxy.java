@@ -22,6 +22,12 @@ public class BuddyClientProxy extends BuddyCommonProxy{
 		Minecraft.getMinecraft().displayGuiScreen(new PetInterface(player, name, entityID, creative, item));
 	}
 
+	//float between -1 and 1 that goes up by 0.01's to determine how happy your buddy is with you. 
+	// a hapier buddy will be able to harvest more and perform tasks.
+	// a sad buddy will not listen, but will also walk slower and gather les resources
+	private float HappynessFactor;
+
+
 	String name = "null";
 	public String getName(){
 		return name;

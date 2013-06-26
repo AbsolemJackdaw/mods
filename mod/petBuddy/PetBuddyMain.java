@@ -152,6 +152,7 @@ public class PetBuddyMain {
 	private int s(){
 		return AchievementList.achievementList.size() + 1;
 	}
+	
 	private void addAchievementLocalizations()
 	{
 		addAchievName("startBuddy", "A Friend !");
