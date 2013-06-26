@@ -21,6 +21,7 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemDye;
+import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
@@ -46,10 +47,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class EntityBuddy extends BuddyBase
 {
-
-	private float randomColor ;
-	private float randomColor2;
-	private float randomColor3;
+	private float happynessFactorCooldown;
 
 	private boolean hasItem = false;
 	private int findsItemTimer;
@@ -67,6 +65,8 @@ public class EntityBuddy extends BuddyBase
 		this.timeUntilPortal = 6000;
 
 		this.harvestsWithHeldItem = 12000;
+
+		happynessFactorCooldown = rand.nextInt(600) + 800;
 
 	}
 
@@ -340,6 +340,15 @@ public class EntityBuddy extends BuddyBase
 				buddySpeak(getOwner(), "Hey, I think I found something !");
 			}
 		}
+		if(findsItemTimer + rand.nextInt(6000)  == 5000){
+			if(!worldObj.isRemote){
+				buddySpeak(getOwner(), "I'm tired... I want to sit on your head...");
+			}
+		}if(findsItemTimer + rand.nextInt(10000)  == 12000){
+			if(!worldObj.isRemote){
+				buddySpeak(getOwner(), "I feel a strong band between you and me " + getOwnerName() + ". Don't you ?");
+			}
+		}
 		if(this.isBurning()){
 			extinguish();
 		}
@@ -357,6 +366,14 @@ public class EntityBuddy extends BuddyBase
 		player.addStat(PetBuddyMain.findBuddy, 1);
 
 		if(player.getCurrentEquippedItem() != null){
+			//adds happiness to pet.
+			if(player.getCurrentEquippedItem().getItem() instanceof ItemFood){
+				ItemFood food = (ItemFood) player.getCurrentEquippedItem().getItem();
+				float f = (float) 0.4f/food.getHealAmount(); // 0.4/8 = 0.05; beaf should add 0.05 happiness
+//				this.HappynessFactor += f;
+			}
+			
+			//colors the pet with 3 types of dye.
 			if(player.getCurrentEquippedItem().getItem() instanceof ItemDye){
 				ItemStack item = player.getCurrentEquippedItem();
 
@@ -510,4 +527,6 @@ public class EntityBuddy extends BuddyBase
 	public float color(float f){
 		return f/255;
 	}
+	
+	
 }
