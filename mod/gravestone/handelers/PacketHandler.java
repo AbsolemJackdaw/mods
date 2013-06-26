@@ -43,7 +43,6 @@ public class PacketHandler implements IPacketHandler {
 	{
 		EntityPlayer p = (EntityPlayer) player;
 		World world = p.worldObj;
-		TileEntity tile = world.getBlockTileEntity(x1, y1, z1);
 
 		DataInputStream dis = new DataInputStream(new ByteArrayInputStream(packet.data));
 		try {
@@ -53,6 +52,8 @@ public class PacketHandler implements IPacketHandler {
 				x1 = dis.readInt();
 				y1 = dis.readInt();
 				z1 = dis.readInt();
+
+				TileEntity tile = world.getBlockTileEntity(x1, y1, z1);
 
 				if(dis.readInt() == 6)
 				{
@@ -103,6 +104,12 @@ public class PacketHandler implements IPacketHandler {
 
 			if(guiId == 4)
 			{
+				x1 = dis.readInt();
+				y1 = dis.readInt();
+				z1 = dis.readInt();
+
+				TileEntity tile = world.getBlockTileEntity(x1, y1, z1);
+
 				if (tile != null)
 				{
 					TEGrave te = (TEGrave)tile;
