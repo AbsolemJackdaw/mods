@@ -51,6 +51,6 @@ public class KeyHandler extends KeyBindingRegistry.KeyHandler {
 
 	@Override
 	public String getLabel() {
-		return "Grave Mod Key";
+		return "Grave Model Key";
 	}
 }

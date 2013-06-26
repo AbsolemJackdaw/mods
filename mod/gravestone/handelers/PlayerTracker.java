@@ -17,12 +17,12 @@ public class PlayerTracker implements IPlayerTracker {
 			this.render = mod_Gravestone.proxy.getRenderID(player.username);
 			mod_Gravestone.proxy.setRenderID(player.username, this.render);
 			FMLLog.getLogger().info("render id set. render id = " + this.render);
+			
 		} catch (Throwable e) {
 			FMLLog.getLogger().info("render id corrupt. switching to default render ID");
 			this.render = 6;
 			mod_Gravestone.proxy.setRenderID(player.username, this.render);
 		}
-
 	}
 
 	@Override
@@ -43,5 +43,4 @@ public class PlayerTracker implements IPlayerTracker {
 		// TODO Auto-generated method stub
 
 	}
-
 }
