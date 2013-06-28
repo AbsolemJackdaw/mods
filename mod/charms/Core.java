@@ -2,7 +2,6 @@ package charms;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import petBuddy.handelers.BuddyCommonProxy;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.PreInit;
@@ -38,6 +37,8 @@ public class Core {
 
 	@PreInit
 	public void load (FMLPreInitializationEvent e){
+
+		ConfigClass.instance.loadConfig(e.getSuggestedConfigurationFile());
 		proxy.register();
 	}
 

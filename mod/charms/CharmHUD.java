@@ -62,7 +62,39 @@ public class CharmHUD implements ITickHandler {
 					GuiIngame gui = this.mc.ingameGUI;
 					ItemStack stack = mc.thePlayer.inventory.mainInventory[8];
 
-					mc.fontRenderer.drawString(""+(((Charm)stack.getItem()).heartsToHeal -stack.getItemDamage()), width/2+44, height-57, mc.currentScreen == null || mc.currentScreen instanceof GuiChat ? 0xffffff : 0x555555);
+					int yOffset = height-45;
+					int xOffset = width/2+10;
+
+					boolean leftyFlip = ConfigClass.instance.leftyFlip;
+					boolean noHero = mc.thePlayer.getMaxHealth() > 20;
+					boolean noHero2 = mc.thePlayer.getMaxHealth() > 40;
+
+					if(leftyFlip == true){
+						xOffset -= 101;
+						if(noHero == true){
+							yOffset -= 10;
+							if(noHero2 == true){
+								yOffset -= 10;
+							}
+						}
+						for(int i =0; i<4; i++){
+							if(mc.thePlayer.inventory.armorItemInSlot(i) != null){
+								yOffset = height-55;
+								if(noHero == true){
+									yOffset = height-55- 10;
+									if(noHero2 == true){
+										yOffset = height-55- 20;
+									}
+								}
+							}
+						}
+					}
+
+					if(mc.thePlayer.getAir() <300){
+						yOffset = height-55;
+					}
+
+					mc.fontRenderer.drawString(""+(((Charm)stack.getItem()).heartsToHeal - stack.getItemDamage()), xOffset+34, yOffset-2, mc.currentScreen == null || mc.currentScreen instanceof GuiChat ? 0xffffff : 0x555555);
 
 					this.mc.renderEngine.bindTexture("/charms/hud.png");
 
@@ -71,7 +103,7 @@ public class CharmHUD implements ITickHandler {
 						GL11.glColor3f(0.2f,0.2f,0.2f);
 					}
 					// back ground
-					gui.drawTexturedModalRect(width/2+10, height-55, 0, 0, 80, 5);
+					gui.drawTexturedModalRect(xOffset, yOffset, 0, 0, 80, 5);
 					GL11.glColor3f(1,1,1);
 					if(mc.currentScreen != null && !(mc.currentScreen instanceof GuiChat)){
 						GL11.glColor3f(0.2f,0.2f,0.2f);
@@ -82,7 +114,7 @@ public class CharmHUD implements ITickHandler {
 					if(mc.currentScreen != null && !(mc.currentScreen instanceof GuiChat)){
 						GL11.glColor3f(0.2f,0.2f,0.2f);
 					}
-					gui.drawTexturedModalRect(width/2+10, height-55, 0, 0,scaleCharmBar(stack) ,5);
+					gui.drawTexturedModalRect(xOffset, yOffset, 0, 0,scaleCharmBar(stack) ,5);
 
 				}
 			}
