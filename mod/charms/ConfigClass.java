@@ -15,6 +15,8 @@ public class ConfigClass {
     public int IV;
     public int V;
     public boolean leftyFlip;
+    public boolean showHearts;
+    public boolean halfHearts;
 
 
     private ConfigClass() {}
@@ -40,8 +42,11 @@ public class ConfigClass {
         itemnum++;
         
         config.addCustomCategoryComment("HUD Flip", "true for charm HUD lefty flip.");
-
         leftyFlip = config.get("HUD Flip", "leftyFlip", false).getBoolean(false);
+        
+        config.addCustomCategoryComment("Hearts", "Wether to show half or full hearts.");
+        showHearts = config.get("Hearts", "showHearts", true).getBoolean(true);
+        halfHearts = config.get("Hearts", "halfHearts", false).getBoolean(false);
 
     }
 }

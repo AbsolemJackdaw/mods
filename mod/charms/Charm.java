@@ -20,13 +20,13 @@ public class Charm extends Item{
 
 	public final int heartsToHeal;
 	private final int charmColor;
-	private int cooldown;
+	public int cooldown;
 
 	public Charm(int par1, int heal, int color) {
 		super(par1);
 		this.setMaxStackSize(1);
 		heartsToHeal = heal;
-		cooldown = 40*20; //seconds * ticks >> 20 second coolDown.
+		cooldown = 30*20; //seconds * ticks >> 20 second coolDown.
 		setCreativeTab(CreativeTabs.tabMisc);
 		this.setMaxDamage(heal);
 		charmColor = color;
@@ -39,7 +39,7 @@ public class Charm extends Item{
 	}
 
 	public void cooldown(){
-		if(cooldown >= 0 && cooldown < 40*20){
+		if(cooldown >= 0 && cooldown < 30*20){
 			cooldown++;
 		}
 	}
@@ -68,7 +68,7 @@ public class Charm extends Item{
 						//delete the item
 						p.inventory.setInventorySlotContents(8, (ItemStack) null);
 					}else{
-						if(cooldown == 40*20){
+						if(cooldown == 30*20){
 							//if the charm has less hearts to heal then the player has actual health 
 							//> case can be for noHero's more health mod
 							if(healthDif > heartsToHeal){
@@ -102,9 +102,9 @@ public class Charm extends Item{
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer p1, List list, boolean yesno) {
 
-		list.add(StatCollector.translateToLocal("Heal : " + heartsToHeal));
-		list.add(StatCollector.translateToLocal("Heals : " + (heartsToHeal-stack.getItemDamage())));
-		list.add(StatCollector.translateToLocal("CoolDown : 20 s"));
+		list.add(StatCollector.translateToLocal("Heal : " + heartsToHeal/ (ConfigClass.instance.halfHearts? 2 : 1)));
+		list.add(StatCollector.translateToLocal("Heals : " + (heartsToHeal-stack.getItemDamage())/(ConfigClass.instance.halfHearts? 2 : 1)));
+		list.add(StatCollector.translateToLocal("CoolDown : 30 s"));
 		list.add(StatCollector.translateToLocal("Equip in last hotbar slot !"));
 
 	}

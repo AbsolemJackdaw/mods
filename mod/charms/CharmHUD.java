@@ -55,7 +55,7 @@ public class CharmHUD implements ITickHandler {
 	}
 
 	public void onRenderTick(int width, int height){
-		if(mc.thePlayer != null){
+		if(mc.thePlayer != null && !mc.thePlayer.capabilities.isCreativeMode && mc.isGuiEnabled()){
 			if(mc.thePlayer.inventory.mainInventory[8] != null && mc.thePlayer.inventory.mainInventory[8].getItem() instanceof Charm){
 				if(mc.currentScreen == null || mc.currentScreen instanceof GuiChat || mc.currentScreen instanceof GuiIngameMenu || mc.currentScreen instanceof GuiGameOver){
 
@@ -66,6 +66,11 @@ public class CharmHUD implements ITickHandler {
 					int xOffset = width/2+10;
 
 					boolean leftyFlip = ConfigClass.instance.leftyFlip;
+					boolean showHearts  = ConfigClass.instance.showHearts;
+					boolean halfHearts = ConfigClass.instance.halfHearts;
+
+
+
 					boolean noHero = mc.thePlayer.getMaxHealth() > 20;
 					boolean noHero2 = mc.thePlayer.getMaxHealth() > 40;
 
@@ -93,8 +98,8 @@ public class CharmHUD implements ITickHandler {
 					if(mc.thePlayer.getAir() <300){
 						yOffset = height-55;
 					}
-
-					mc.fontRenderer.drawString(""+(((Charm)stack.getItem()).heartsToHeal - stack.getItemDamage()), xOffset+34, yOffset-2, mc.currentScreen == null || mc.currentScreen instanceof GuiChat ? 0xffffff : 0x555555);
+					int c = halfHearts ? 1 :2;
+					mc.fontRenderer.drawString(""+(((Charm)stack.getItem()).heartsToHeal - stack.getItemDamage())/c, xOffset+34, yOffset-2, mc.currentScreen == null || mc.currentScreen instanceof GuiChat ? 0xffffff : 0x555555);
 
 					this.mc.renderEngine.bindTexture("/charms/hud.png");
 
@@ -116,6 +121,26 @@ public class CharmHUD implements ITickHandler {
 					}
 					gui.drawTexturedModalRect(xOffset, yOffset, 0, 0,scaleCharmBar(stack) ,5);
 
+					this.mc.renderEngine.bindTexture("white.png");
+					GL11.glColor3f(0.7f,0f,0.7f);
+					if(mc.currentScreen != null && !(mc.currentScreen instanceof GuiChat)){
+						GL11.glColor3f(0.3f,0f,0.3f);
+					}
+					gui.drawTexturedModalRect(xOffset+1, yOffset, 0, 0, 80-((((Charm)stack.getItem()).cooldown)/10)-1 ,1);
+					gui.drawTexturedModalRect(xOffset+1, yOffset+4, 0, 0, 80-((((Charm)stack.getItem()).cooldown)/10)-1 ,1);
+
+					if(showHearts == true){
+						int h = halfHearts ? 5:9;
+						
+						GL11.glColor3f(1,1,1);
+						if(mc.currentScreen != null && !(mc.currentScreen instanceof GuiChat)){
+							GL11.glColor3f(0.2f,0.2f,0.2f);
+						}
+						this.mc.renderEngine.bindTexture("/gui/icons.png");
+						gui.drawTexturedModalRect(xOffset+24, yOffset-2, 16, 0, h ,9);
+						gui.drawTexturedModalRect(xOffset+24, yOffset-2, 52, 0, h ,9);
+
+					}
 				}
 			}
 		}
