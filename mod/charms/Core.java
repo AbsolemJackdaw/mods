@@ -14,7 +14,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 
 
 
-@Mod(modid = "Charms", name = "Health Charms", version = "1.0")
+@Mod(modid = "Charms", name = "Health Charms", version = "3.0")
 
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
 /*,

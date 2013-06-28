@@ -24,6 +24,7 @@ public class Charm extends Item{
 
 	public Charm(int par1, int heal, int color) {
 		super(par1);
+		this.setMaxStackSize(1);
 		heartsToHeal = heal;
 		cooldown = 40*20; //seconds * ticks >> 20 second coolDown.
 		setCreativeTab(CreativeTabs.tabMisc);
