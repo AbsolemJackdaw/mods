@@ -21,6 +21,7 @@ public class Charm extends Item{
 	public final int heartsToHeal;
 	private final int charmColor;
 	public int cooldown;
+	private final int SLOT_ID;
 
 	public Charm(int par1, int heal, int color) {
 		super(par1);
@@ -30,6 +31,7 @@ public class Charm extends Item{
 		setCreativeTab(CreativeTabs.tabMisc);
 		this.setMaxDamage(heal);
 		charmColor = color;
+		SLOT_ID = ConfigClass.instance.slotID;
 	}
 
 	@Override
@@ -51,42 +53,37 @@ public class Charm extends Item{
 
 			EntityPlayer p = (EntityPlayer)ent;
 
-			if(p.inventory.mainInventory[8]!= null && p.inventory.mainInventory[8].equals(is)){
+			if(p.inventory.mainInventory[SLOT_ID]!= null && p.inventory.mainInventory[SLOT_ID].equals(is)){
 
 				int hearts = p.getHealth();
 				int maxHearts = p.getMaxHealth();
 				int healthDif = maxHearts-hearts;
-				//FMLLog.getLogger().info(""+hearts + " "+maxHearts + " "+healthDif+ " "+ (heartsToHeal -is.getItemDamage())+ " "+cooldown );
 
 				if(hearts <= maxHearts/2){
 					if((heartsToHeal - is.getItemDamage())<= 0){
-						FMLLog.getLogger().info("0 condition");
 						// re-damage the item to make sure.
 						is.damageItem(1,p);
 						//Do the break item stuff
 						p.renderBrokenItemStack(is);
 						//delete the item
-						p.inventory.setInventorySlotContents(8, (ItemStack) null);
+						p.inventory.setInventorySlotContents(SLOT_ID, (ItemStack) null);
 					}else{
 						if(cooldown == 30*20){
 							//if the charm has less hearts to heal then the player has actual health 
 							//> case can be for noHero's more health mod
 							if(healthDif > heartsToHeal){
-								//FMLLog.getLogger().info("no hero case.");
 								p.heal(heartsToHeal);
 								is.damageItem(heartsToHeal, p);
 								cooldown = 0;
 							}
 							//if the charm has less uses left then the player needs to heal hearts.
 							else if(healthDif > (heartsToHeal - is.getItemDamage())){
-								//FMLLog.getLogger().info("low charm case");
 								p.heal((heartsToHeal - is.getItemDamage()));
 								is.damageItem((heartsToHeal - is.getItemDamage()), p);
 								cooldown = 0;
 							}
 							//in any other cases, use the health difference to heal.
 							else{
-								//FMLLog.getLogger().info("regular case.");
 								p.heal(healthDif);
 								is.damageItem(healthDif, p);
 								cooldown = 0;

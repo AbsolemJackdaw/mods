@@ -14,6 +14,7 @@ public class ConfigClass {
     public int III;
     public int IV;
     public int V;
+    public int slotID;
     public boolean leftyFlip;
     public boolean showHearts;
     public boolean halfHearts;
@@ -48,5 +49,7 @@ public class ConfigClass {
         showHearts = config.get("Hearts", "showHearts", true).getBoolean(true);
         halfHearts = config.get("Hearts", "halfHearts", false).getBoolean(false);
 
+        config.addCustomCategoryComment("slot", "the number of the slot the charm should be in. 0-35");
+        slotID = config.get("slot", "slot ID", 8).getInt(8);
     }
 }

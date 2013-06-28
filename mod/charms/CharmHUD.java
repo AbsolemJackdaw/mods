@@ -62,7 +62,7 @@ public class CharmHUD implements ITickHandler {
 					GuiIngame gui = this.mc.ingameGUI;
 					ItemStack stack = mc.thePlayer.inventory.mainInventory[8];
 
-					int yOffset = height-45;
+					int yOffset = height-45-1;
 					int xOffset = width/2+10;
 
 					boolean leftyFlip = ConfigClass.instance.leftyFlip;
@@ -126,8 +126,8 @@ public class CharmHUD implements ITickHandler {
 					if(mc.currentScreen != null && !(mc.currentScreen instanceof GuiChat)){
 						GL11.glColor3f(0.3f,0f,0.3f);
 					}
-					gui.drawTexturedModalRect(xOffset+1, yOffset, 0, 0, 80-((((Charm)stack.getItem()).cooldown)/10)-1 ,1);
-					gui.drawTexturedModalRect(xOffset+1, yOffset+4, 0, 0, 80-((((Charm)stack.getItem()).cooldown)/10)-1 ,1);
+					gui.drawTexturedModalRect(xOffset+1, yOffset, 0, 0, 80-(int)(( (float)(((Charm)stack.getItem()).cooldown)/600f)*80f)-1 ,1);
+					gui.drawTexturedModalRect(xOffset+1, yOffset+4, 0, 0, 80-(int)(( (float)(((Charm)stack.getItem()).cooldown)/600f)*80f)-1 ,1);
 
 					if(showHearts == true){
 						int h = halfHearts ? 5:9;
