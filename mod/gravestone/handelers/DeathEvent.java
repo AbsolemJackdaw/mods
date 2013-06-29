@@ -8,10 +8,6 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import cpw.mods.fml.common.FMLCommonHandler;
 
 public class DeathEvent {
-	@ForgeSubscribe
-	public void onEntityLivingUpdate(LivingUpdateEvent event) {
-
-	}
 
 	@ForgeSubscribe
 	public void onEntityLivingDeath(LivingDeathEvent event) {
