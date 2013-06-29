@@ -69,8 +69,6 @@ public class CharmHUD implements ITickHandler {
 					boolean showHearts  = ConfigClass.instance.showHearts;
 					boolean halfHearts = ConfigClass.instance.halfHearts;
 
-
-
 					boolean noHero = mc.thePlayer.getMaxHealth() > 20;
 					boolean noHero2 = mc.thePlayer.getMaxHealth() > 40;
 
@@ -98,8 +96,9 @@ public class CharmHUD implements ITickHandler {
 					if(mc.thePlayer.getAir() <300){
 						yOffset = height-55;
 					}
-					int c = halfHearts ? 1 :2;
-					mc.fontRenderer.drawString(""+(((Charm)stack.getItem()).heartsToHeal - stack.getItemDamage())/c, xOffset+34, yOffset-2, mc.currentScreen == null || mc.currentScreen instanceof GuiChat ? 0xffffff : 0x555555);
+					float c = halfHearts ? 1 :2;
+					int healAmount = ((Charm)stack.getItem()).heartsToHeal - stack.getItemDamage();
+					mc.fontRenderer.drawString(""+(healAmount/c), xOffset+34, yOffset-2, mc.currentScreen == null || mc.currentScreen instanceof GuiChat ? 0xffffff : 0x555555);
 
 					this.mc.renderEngine.bindTexture("/charms/hud.png");
 

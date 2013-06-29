@@ -71,16 +71,21 @@ public class Charm extends Item{
 						if(cooldown == 30*20){
 							//if the charm has less hearts to heal then the player has actual health 
 							//> case can be for noHero's more health mod
-							if(healthDif > heartsToHeal){
-								p.heal(heartsToHeal);
-								is.damageItem(heartsToHeal, p);
-								cooldown = 0;
+							//example for 30 hearts and iron charm. 
+							if(healthDif > heartsToHeal){ //30-15 > 10
+								p.heal(heartsToHeal);     //heal 10
+								is.damageItem(heartsToHeal, p); //damage item 10 > meaning it would deplete it immediatly
+								p.renderBrokenItemStack(is);    //rendering.
+								p.inventory.setInventorySlotContents(SLOT_ID, (ItemStack) null); //making sure it's gone.
 							}
 							//if the charm has less uses left then the player needs to heal hearts.
-							else if(healthDif > (heartsToHeal - is.getItemDamage())){
-								p.heal((heartsToHeal - is.getItemDamage()));
-								is.damageItem((heartsToHeal - is.getItemDamage()), p);
-								cooldown = 0;
+							//example> fall down and take 8 hearts of damage with golden charm that has 5 charges left
+							else if(healthDif > (heartsToHeal - is.getItemDamage())){ //8 > 5
+								p.heal((heartsToHeal - is.getItemDamage())); 		  //heal 5
+								is.damageItem((heartsToHeal - is.getItemDamage()), p); //damage item 5
+								//again, this would mean it breaks immediatly. making sure it does.
+								p.renderBrokenItemStack(is);    //rendering.
+								p.inventory.setInventorySlotContents(SLOT_ID, (ItemStack) null); //making sure it's gone.
 							}
 							//in any other cases, use the health difference to heal.
 							else{
@@ -89,7 +94,6 @@ public class Charm extends Item{
 								cooldown = 0;
 							}
 						}
-
 					}
 				}	
 			}
@@ -124,7 +128,7 @@ public class Charm extends Item{
 	@Override
 	public EnumRarity getRarity(ItemStack par1ItemStack)
 	{
-		return par1ItemStack.getMaxDamage() == 50*2 ? EnumRarity.rare :
-			par1ItemStack.getMaxDamage() == 60*2? EnumRarity.epic :EnumRarity.common;
+		return par1ItemStack.getMaxDamage() == 70*2 ? EnumRarity.rare :
+			par1ItemStack.getMaxDamage() == 100*2? EnumRarity.epic :EnumRarity.common;
 	}
 }
