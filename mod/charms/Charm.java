@@ -6,6 +6,7 @@ import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -21,9 +22,11 @@ public class Charm extends Item{
 	public final int heartsToHeal;
 	private final int charmColor;
 	public int cooldown;
-	private final int SLOT_ID;
+	private final int cooldownMAX;
 
-	public Charm(int par1, int heal, int color) {
+	private final int SLOT_ID;
+	private final int TIER;
+	public Charm(int par1, int heal, int color, int tier) {
 		super(par1);
 		this.setMaxStackSize(1);
 		heartsToHeal = heal;
@@ -32,6 +35,8 @@ public class Charm extends Item{
 		this.setMaxDamage(heal);
 		charmColor = color;
 		SLOT_ID = ConfigClass.instance.slotID;
+		TIER = tier;
+		cooldownMAX= cooldown;
 	}
 
 	@Override
@@ -103,10 +108,13 @@ public class Charm extends Item{
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer p1, List list, boolean yesno) {
 
-		list.add(StatCollector.translateToLocal("Heal : " + heartsToHeal/ (ConfigClass.instance.halfHearts? 2 : 1)));
-		list.add(StatCollector.translateToLocal("Heals : " + (heartsToHeal-stack.getItemDamage())/(ConfigClass.instance.halfHearts? 2 : 1)));
-		list.add(StatCollector.translateToLocal("CoolDown : 30 s"));
-		list.add(StatCollector.translateToLocal("Equip in last hotbar slot !"));
+		String[] charm = {"Luck","Faith","Protection","Wisdom","Prosperity"};
+		
+		list.add(StatCollector.translateToLocal("Heal : " + heartsToHeal/ (ConfigClass.instance.halfHearts? 1 : 2)));
+		list.add(StatCollector.translateToLocal("Heals : " + (heartsToHeal-stack.getItemDamage())/(ConfigClass.instance.halfHearts? 1 : 2)));
+		list.add(StatCollector.translateToLocal("CoolDown : "+(cooldown/20)+" s"));
+		list.add(StatCollector.translateToLocal("Equip in slot "+SLOT_ID+" !"));
+		list.add(StatCollector.translateToLocal("-"+charm[TIER-1]+"-"));
 
 	}
 

@@ -46,11 +46,11 @@ public class Core {
 
 	@Init
 	public void load (FMLInitializationEvent e){
-		charmTierI = new Charm(845, 10*2,0xc1c1c1).setUnlocalizedName("charmTierI.map");
-		charmTierII = new Charm(846, 15*2, 0xffe083).setUnlocalizedName("charmTierII.map");
-		charmTierIII = new Charm(847, 30*2, 0xdfd8cf).setUnlocalizedName("charmTierIII.map");
-		charmTierIV = new Charm(848, 70*2, 0xd1fbf3).setUnlocalizedName("charmTierIV.map");
-		charmTierV = new Charm(849, 100*2, 0x9bffcc).setUnlocalizedName("charmTierV.map");
+		charmTierI = new Charm(845, 10*2,0xc1c1c1,1).setUnlocalizedName("charmTierI.map");
+		charmTierII = new Charm(846, 15*2, 0xffe083,2).setUnlocalizedName("charmTierII.map");
+		charmTierIII = new Charm(847, 30*2, 0xdfd8cf,3).setUnlocalizedName("charmTierIII.map");
+		charmTierIV = new Charm(848, 70*2, 0xd1fbf3,4).setUnlocalizedName("charmTierIV.map");
+		charmTierV = new Charm(849, 100*2, 0x9bffcc,5).setUnlocalizedName("charmTierV.map");
 
 		LanguageRegistry.addName(charmTierI, "Iron Charm");
 		LanguageRegistry.addName(charmTierII, "Gold Charm");
@@ -60,11 +60,14 @@ public class Core {
 
 		GameRegistry.addShapelessRecipe(new ItemStack(charmTierI), new Object[]{Item.paper, new ItemStack(Item.dyePowder, 1, 0), 
 			Item.ingotIron, Item.ingotIron, Item.ingotIron});
-		GameRegistry.addShapelessRecipe(new ItemStack(charmTierII), new Object[]{charmTierI, Item.ingotGold, Item.ingotGold});
+		GameRegistry.addShapelessRecipe(new ItemStack(charmTierII), new Object[]{charmTierI, Item.ingotGold, Item.ingotGold,
+			new ItemStack(Item.dyePowder, 1, 0)});
 		GameRegistry.addShapelessRecipe(new ItemStack(charmTierIII), new Object[]{charmTierII, Item.netherQuartz, 
-			Item.netherQuartz, Item.netherQuartz, Item.netherQuartz});
-		GameRegistry.addShapelessRecipe(new ItemStack(charmTierIV), new Object[]{charmTierIII, Item.emerald, Item.emerald});
-		GameRegistry.addShapelessRecipe(new ItemStack(charmTierV), new Object[]{charmTierIV, Item.diamond});
+			Item.netherQuartz, Item.netherQuartz, Item.netherQuartz, new ItemStack(Item.dyePowder, 1, 0)});
+		GameRegistry.addShapelessRecipe(new ItemStack(charmTierIV), new Object[]{charmTierIII, Item.emerald, Item.emerald
+			, new ItemStack(Item.dyePowder, 1, 0)});
+		GameRegistry.addShapelessRecipe(new ItemStack(charmTierV), new Object[]{charmTierIV, Item.diamond
+			, new ItemStack(Item.dyePowder, 1, 0)});
 
 	}
 }
