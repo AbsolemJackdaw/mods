@@ -75,7 +75,7 @@ public class mod_Gravestone{
 	{
 		MinecraftForge.EVENT_BUS.register(new DeathEvent());
 
-		gravestone = new BlockGrave(ConfigClass.instance.graveBlock).setBlockUnbreakable().setResistance(5000f).setLightOpacity(0).setLightValue(0f).setUnlocalizedName("GraveStone");
+		gravestone = new BlockGrave(ConfigClass.instance.graveBlock).setBlockUnbreakable().setResistance(6000000.0F).setUnlocalizedName("GraveStone");
 		bones = new BlockBones(ConfigClass.instance.bonesBlock, Material.ground).setHardness(10f);
 		graveItem = new ItemGrave(ConfigClass.instance.grave).setUnlocalizedName("graveItem").setCreativeTab(CreativeTabs.tabDecorations);
 		bonesItem = new ItemSkulls(ConfigClass.instance.bones).setUnlocalizedName("bonesItem").setCreativeTab(CreativeTabs.tabDecorations);
@@ -116,9 +116,6 @@ public class mod_Gravestone{
 				y--;
 			}
 		}
-//		if(player.worldObj.getBlockId(x, y, z) == Block.lavaStill.blockID || player.worldObj.getBlockId(x, y, z) == Block.lavaMoving.blockID){
-//			return;
-//		}
 		int scanTime = 0;
 		while(scanTime < 100 && (!player.worldObj.getBlockMaterial(x, y, z).isSolid() || !player.worldObj.getBlockMaterial(x, y - 1, z).isSolid())){
 			scanTime++;
@@ -160,7 +157,6 @@ public class mod_Gravestone{
 				tegrave.setName(player.username);
 				tegrave.setMeta(proxy.getRenderID(player.username));
 				tegrave.setPlayer(player);
-				tegrave.dropItems();
 				if(stack != null)
 					tegrave.setItems(stack);
 
