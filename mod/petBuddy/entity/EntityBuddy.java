@@ -63,7 +63,7 @@ public class EntityBuddy extends BuddyBase
 		this.findsItemTimer = this.rand.nextInt(6000) + 9000;
 		//i hope to prevent any buddies going lost in portals.
 		this.timeUntilPortal = 6000;
-
+		
 		this.harvestsWithHeldItem = 12000;
 
 		happynessFactorCooldown = rand.nextInt(600) + 800;

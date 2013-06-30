@@ -76,7 +76,9 @@ public abstract class BuddyBase extends EntityTameable
 		this.tasks.addTask(9, new EntityAILookIdle(this));
 		this.setOwner(player.username);
 		this.slimeJumpDelay = this.rand.nextInt(20) + 10;
-
+		this.targetTasks.addTask(1, new EntityAIOwnerHurtByTarget(this));
+		this.targetTasks.addTask(2, new EntityAIOwnerHurtTarget(this));
+		this.targetTasks.addTask(3, new EntityAIHurtByTarget(this, true));
 	}
 
 	/**

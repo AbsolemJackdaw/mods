@@ -56,11 +56,11 @@ public class CharmHUD implements ITickHandler {
 
 	public void onRenderTick(int width, int height){
 		if(mc.thePlayer != null && !mc.thePlayer.capabilities.isCreativeMode && mc.isGuiEnabled()){
-			if(mc.thePlayer.inventory.mainInventory[8] != null && mc.thePlayer.inventory.mainInventory[8].getItem() instanceof Charm){
+			if(mc.thePlayer.inventory.mainInventory[ConfigClass.instance.slotID] != null && mc.thePlayer.inventory.mainInventory[ConfigClass.instance.slotID].getItem() instanceof Charm){
 				if(mc.currentScreen == null || mc.currentScreen instanceof GuiChat || mc.currentScreen instanceof GuiIngameMenu || mc.currentScreen instanceof GuiGameOver){
 
 					GuiIngame gui = this.mc.ingameGUI;
-					ItemStack stack = mc.thePlayer.inventory.mainInventory[8];
+					ItemStack stack = mc.thePlayer.inventory.mainInventory[ConfigClass.instance.slotID];
 
 					int yOffset = height-45-1;
 					int xOffset = width/2+10;
@@ -112,7 +112,7 @@ public class CharmHUD implements ITickHandler {
 					if(mc.currentScreen != null && !(mc.currentScreen instanceof GuiChat)){
 						GL11.glColor3f(0.2f,0.2f,0.2f);
 					}
-
+					
 					// foreground which diminishes as the charm looses value
 					GL11.glColor3f(1,1,1);
 					if(mc.currentScreen != null && !(mc.currentScreen instanceof GuiChat)){

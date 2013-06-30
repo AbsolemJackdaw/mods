@@ -50,9 +50,10 @@ public class CharmRes {
 						charm.cooldown = 0;
 					}
 				}
+				FMLLog.getLogger().info(event.entityLiving.getEntityName() + " got reseructed.");
+				event.setCanceled(true);
 			}
-			FMLLog.getLogger().info(event.entityLiving.getEntityName() + " got reseructed.");
-			event.setCanceled(true);
+
 		}
 	}
 
