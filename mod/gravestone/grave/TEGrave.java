@@ -120,15 +120,6 @@ public class TEGrave extends TileEntity // implements IInventory
 
 	}
 
-	public void dropItems()
-	{
-		List<EntityItem> nearbyItems = thePlayer.worldObj.getEntitiesWithinAABB(EntityItem.class, thePlayer.boundingBox.copy().expand(50.0D, 50.0D, 50.0D));
-
-		for(EntityItem droppeditem: nearbyItems){
-			droppeditem.setDead();
-		}
-	}
-
 	public String getInvName()
 	{
 		return this.isInvNameLocalized() ? this.field_94045_s : "container.chest";
