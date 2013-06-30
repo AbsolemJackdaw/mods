@@ -4,11 +4,18 @@ import gravestone.mod_Gravestone;
 
 import java.util.Random;
 
+import cpw.mods.fml.common.FMLLog;
+
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
@@ -20,6 +27,7 @@ public class BlockGrave extends BlockContainer{
 		super(par1, Material.rock);
 		this.setBlockBounds(0.4f, 0.0F, 0.4F, 0.6f, 1.0f, 0.6f);
 		this.setTickRandomly(true);
+		this.setBlockUnbreakable();
 	}
 
 	@Override
@@ -35,8 +43,10 @@ public class BlockGrave extends BlockContainer{
 	@Override
 	public int quantityDropped(Random par1Random)
 	{
+
 		return 0;
 	}
+
 	@Override
 	public int idDropped(int par1, Random par2Random, int par3)
 	{
@@ -148,8 +158,50 @@ public class BlockGrave extends BlockContainer{
 		}
 	}
 
+	@Override
 	public void breakBlock(World world, int x, int y, int z, int par5, int par6) {
+		
+		TEGrave tileentityfurnace = (TEGrave)world.getBlockTileEntity(x,y,z);
 
-		world.removeBlockTileEntity(x,y,z);
+		if (tileentityfurnace != null)
+		{
+			for (int j1 = 0; j1 < tileentityfurnace.getSizeInventory(); ++j1)
+			{
+				ItemStack itemstack = tileentityfurnace.getStackInSlot(j1);
+
+				if (itemstack != null)
+				{
+					float f = this.rand.nextFloat() * 0.8F + 0.1F;
+					float f1 = this.rand.nextFloat() * 0.8F + 0.1F;
+					float f2 = this.rand.nextFloat() * 0.8F + 0.1F;
+
+					while (itemstack.stackSize > 0)
+					{
+						int k1 = this.rand.nextInt(21) + 10;
+
+						if (k1 > itemstack.stackSize)
+						{
+							k1 = itemstack.stackSize;
+						}
+
+						itemstack.stackSize -= k1;
+						EntityItem entityitem = new EntityItem(world, (double)((float)x + f), (double)((float)y + f1), (double)((float)z + f2), new ItemStack(itemstack.itemID, k1, itemstack.getItemDamage()));
+
+						if (itemstack.hasTagCompound())
+						{
+							entityitem.getEntityItem().setTagCompound((NBTTagCompound)itemstack.getTagCompound().copy());
+						}
+
+						float f3 = 0.05F;
+						entityitem.motionX = (double)((float)this.rand.nextGaussian() * f3);
+						entityitem.motionY = (double)((float)this.rand.nextGaussian() * f3 + 0.2F);
+						entityitem.motionZ = (double)((float)this.rand.nextGaussian() * f3);
+						world.spawnEntityInWorld(entityitem);
+					}
+				}
+			}
+			world.func_96440_m(x,y,z, par5);
+		}
+		super.breakBlock(world, x,y,z, par5, par6);
 	}
 }
