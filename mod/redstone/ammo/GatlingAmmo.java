@@ -57,25 +57,31 @@ public class GatlingAmmo extends EntityThrowable
 		if (par1MovingObjectPosition.entityHit != null)
 		{
 			par1MovingObjectPosition.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), damage);
-		}
-		else
-		{
-			if(!this.worldObj.isRemote && this.getThrower() != null && !((EntityPlayer)this.getThrower()).capabilities.isCreativeMode){
 
-				if(blockType == 1){
-					this.dropItem(Block.dirt.blockID,1);
-
-				}
-				if(blockType == 2){
-					this.dropItem(Block.cobblestone.blockID,1);
-
+			if(par1MovingObjectPosition.entityHit instanceof EntityLiving){
+				if(!(par1MovingObjectPosition.entityHit instanceof EntityPlayer)){
+					((EntityLiving)par1MovingObjectPosition.entityHit).hurtTime = 0;
+					((EntityLiving)par1MovingObjectPosition.entityHit).hurtResistantTime = 0;
 				}
 			}
-		}
+			else
+			{
+				if(!this.worldObj.isRemote && this.getThrower() != null && !((EntityPlayer)this.getThrower()).capabilities.isCreativeMode){
 
-		if (!this.worldObj.isRemote)
-		{
-			this.setDead();
+					if(blockType == 1){
+						this.dropItem(Block.dirt.blockID,1);
+
+					}
+					if(blockType == 2){
+						this.dropItem(Block.cobblestone.blockID,1);
+
+					}
+				}
+			}
+
+			if (!this.worldObj.isRemote)
+			{
+				this.setDead();
+			}
 		}
 	}
-}
