@@ -64,24 +64,25 @@ public class GatlingAmmo extends EntityThrowable
 					((EntityLiving)par1MovingObjectPosition.entityHit).hurtResistantTime = 0;
 				}
 			}
-			else
-			{
-				if(!this.worldObj.isRemote && this.getThrower() != null && !((EntityPlayer)this.getThrower()).capabilities.isCreativeMode){
+		}
+		else
+		{
+			if(!this.worldObj.isRemote && this.getThrower() != null && !((EntityPlayer)this.getThrower()).capabilities.isCreativeMode){
 
-					if(blockType == 1){
-						this.dropItem(Block.dirt.blockID,1);
+				if(blockType == 1){
+					this.dropItem(Block.dirt.blockID,1);
 
-					}
-					if(blockType == 2){
-						this.dropItem(Block.cobblestone.blockID,1);
+				}
+				if(blockType == 2){
+					this.dropItem(Block.cobblestone.blockID,1);
 
-					}
 				}
 			}
+		}
 
-			if (!this.worldObj.isRemote)
-			{
-				this.setDead();
-			}
+		if (!this.worldObj.isRemote)
+		{
+			this.setDead();
 		}
 	}
+}
