@@ -53,27 +53,40 @@ public class ItemGrave extends Item{
 	public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int x, int y, int z, int par7, float par8, float par9, float par10)
 	{
 		NBTTagCompound nbt = par1ItemStack.getTagCompound();
-		par3World.setBlock(x, y+1, z, mod_Gravestone.gravestone.blockID);
-		TileEntity te = par3World.getBlockTileEntity(x,y+1,z);
-		if(te != null)
-		{
-			TEGrave grave = (TEGrave)te;
-			if(nbt != null)
-			{
-				if(nbt.hasKey("Message") && nbt.hasKey("Meta")&& nbt.hasKey("Name") && nbt.hasKey("Message2"))
-				{
-					grave.setName(nbt.getString("Name"));
-					grave.setMeta(nbt.getInteger("Meta"));
-					grave.setDeathMessage(nbt.getString("Message"), nbt.getString("Message2"));
-					par3World.setBlockTileEntity(x, y+1, z, te);
-				}
-			}
-			else
-				par2EntityPlayer.sendChatToPlayer("Arguments missing !");
-		}	
-		else
-			par2EntityPlayer.sendChatToPlayer("te == null");
+		if(par3World.getBlockId(x, y+1, z) == 0){
+			par3World.setBlock(x, y+1, z, mod_Gravestone.gravestone.blockID);	
 
+			TileEntity te = par3World.getBlockTileEntity(x,y+1,z);
+			if(te != null)
+			{
+				TEGrave grave = (TEGrave)te;
+				if(nbt != null)
+				{
+					if(nbt.hasKey("Message"))
+						grave.setDeathMessage(nbt.getString("Message"));
+					else
+						par2EntityPlayer.sendChatToPlayer("Message 1 missing.");
+					if(nbt.hasKey("Meta"))
+						grave.setMeta(nbt.getInteger("Meta"));
+					else
+						par2EntityPlayer.sendChatToPlayer("Meta missing.");
+					if(nbt.hasKey("Name"))
+						grave.setName(nbt.getString("Name"));
+					else
+						par2EntityPlayer.sendChatToPlayer("Name missing.");
+					if(nbt.hasKey("Message2"))
+						grave.setDeathMessage(nbt.getString("Message2"));
+					else
+						par2EntityPlayer.sendChatToPlayer("Message 2 missing.");
+					par3World.setBlockTileEntity(x, y+1, z, te);
+
+				}
+				else
+					par2EntityPlayer.sendChatToPlayer("Arguments missing !");
+			}	
+			else
+				par2EntityPlayer.sendChatToPlayer("te == null");
+		}
 		return false;
 	}
 }

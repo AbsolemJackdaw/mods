@@ -40,12 +40,14 @@ public class TEGrave extends TileEntity // implements IInventory
 		thePlayer = player;
 		return player;
 	}
-	public void setDeathMessage(String message, String message2)
+	public void setDeathMessage(String message)
 	{
 		message1 = message;
-		this.message2 = message2;
 	}
-
+	public void setDeathMessage2(String message)
+	{
+		message2 = message;
+	}
 	public void setMeta(int i)
 	{
 		theMeta = i;
