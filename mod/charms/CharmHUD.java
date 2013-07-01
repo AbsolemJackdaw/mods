@@ -69,27 +69,27 @@ public class CharmHUD implements ITickHandler {
 					boolean showHearts  = ConfigClass.instance.showHearts;
 					boolean halfHearts = ConfigClass.instance.halfHearts;
 
-					boolean noHero = mc.thePlayer.getMaxHealth() > 20;
-					boolean noHero2 = mc.thePlayer.getMaxHealth() > 40;
+					//					boolean noHero = mc.thePlayer.getMaxHealth() > 20;
+					//					boolean noHero2 = mc.thePlayer.getMaxHealth() > 40;
 
 					if(leftyFlip == true){
 						xOffset -= 101;
-						if(noHero == true){
-							yOffset -= 10;
-							if(noHero2 == true){
-								yOffset -= 10;
-							}
-						}
-						for(int i =0; i<4; i++){
-							if(mc.thePlayer.inventory.armorItemInSlot(i) != null){
-								yOffset = height-55;
-								if(noHero == true){
-									yOffset = height-55- 10;
-									if(noHero2 == true){
-										yOffset = height-55- 20;
-									}
-								}
-							}
+						//						if(noHero == true){
+						//							yOffset -= 10;
+						//							if(noHero2 == true){
+						//								yOffset -= 10;
+						//							}
+					}
+					for(int i =0; i<4; i++){
+						if(mc.thePlayer.inventory.armorItemInSlot(i) != null){
+							yOffset = height-55;
+							//								if(noHero == true){
+							//									yOffset = height-55- 10;
+							//									if(noHero2 == true){
+							//										yOffset = height-55- 20;
+							//									}
+							//						}
+							//					}
 						}
 					}
 
@@ -112,7 +112,7 @@ public class CharmHUD implements ITickHandler {
 					if(mc.currentScreen != null && !(mc.currentScreen instanceof GuiChat)){
 						GL11.glColor3f(0.2f,0.2f,0.2f);
 					}
-					
+
 					// foreground which diminishes as the charm looses value
 					GL11.glColor3f(1,1,1);
 					if(mc.currentScreen != null && !(mc.currentScreen instanceof GuiChat)){
@@ -130,7 +130,7 @@ public class CharmHUD implements ITickHandler {
 
 					if(showHearts == true){
 						int h = halfHearts ? 5:9;
-						
+
 						GL11.glColor3f(1,1,1);
 						if(mc.currentScreen != null && !(mc.currentScreen instanceof GuiChat)){
 							GL11.glColor3f(0.2f,0.2f,0.2f);

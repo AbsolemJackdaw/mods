@@ -110,11 +110,11 @@ public class Charm extends Item{
 
 		String[] charm = {"Luck","Faith","Protection","Wisdom","Prosperity"};
 		
-		list.add(StatCollector.translateToLocal("Heal : " + heartsToHeal/ (ConfigClass.instance.halfHearts? 1 : 2)));
-		list.add(StatCollector.translateToLocal("Heals : " + (heartsToHeal-stack.getItemDamage())/(ConfigClass.instance.halfHearts? 1 : 2)));
+		list.add(StatCollector.translateToLocal("-"+charm[TIER-1]+"-"));
+		list.add(StatCollector.translateToLocal("Total : " + heartsToHeal/ (ConfigClass.instance.halfHearts? 1 : 2)));
+		list.add(StatCollector.translateToLocal("Left : " + (heartsToHeal-stack.getItemDamage())/(ConfigClass.instance.halfHearts? 1 : 2)));
 		list.add(StatCollector.translateToLocal("CoolDown : "+(cooldown/20)+" s"));
 		list.add(StatCollector.translateToLocal("Equip in slot "+SLOT_ID+" !"));
-		list.add(StatCollector.translateToLocal("-"+charm[TIER-1]+"-"));
 
 	}
 
