@@ -40,6 +40,7 @@ import threeDitems.models.painting;
 import threeDitems.models.paper;
 import threeDitems.models.pick;
 import threeDitems.models.saddle;
+import threeDitems.models.scisor;
 import threeDitems.models.sign;
 import threeDitems.models.smallSword;
 import threeDitems.models.spade;
@@ -54,7 +55,13 @@ public class RenderItem
 		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(new ingot(), texture,
 				0.25F, 0.2F, 0.0F, 40.0F, 80.0F, 90.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, scale, inWorldScale));
 	}
-
+	
+	public void addScisor(Item item, String texture, float scale, float inWorldScale)
+	{
+		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(new scisor(), texture,
+				0.25F, 0.2F, -0.05F, 20.0F, -10.0F, -90.0F, -0.1F, 0.3F, 0.1F, 90.0F, 10.0F, 0.0F, scale, inWorldScale));
+	}
+	
 	public void addBread(Item item, String texture, float scale, float inWorldScale)
 	{
 		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(new bread(), texture, 
@@ -131,7 +138,7 @@ public class RenderItem
 	public void addPick(Item item, String texture, float scale, float inWorldScale)
 	{
 		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(new pick(), texture, 
-				0.55F, 0.06F, -0.03F, 80.0F, -100.0F, 70.0F, -0.3f,0.3f,-0.2f, -90f,70f,0f, scale, inWorldScale));
+				0.55F, 0.06F, 0.03F, 120.0F, -20.0F, 40.0F, -0.3f,0.3f,-0.2f, -90f,70f,0f, scale, inWorldScale));
 	}
 
 	public void addFish(Item item, String texture, float scale, float inWorldScale)

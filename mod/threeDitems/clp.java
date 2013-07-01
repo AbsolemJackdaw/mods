@@ -196,6 +196,8 @@ public class clp extends cmp
 
 		RenderItem.inst.addArrow(Item.arrow, "/subaraki/3d/arrows.png", 0.7f, 1.0f);
 
+		RenderItem.inst.addScisor(Item.shears, "/subaraki/3d/scisor.png", 1.2f, 1.2f);
+
 		RenderItem.inst.addSkull(Item.skull, 0.7f, 1.0f);
 
 		RenderItem.inst.addSpawner(Item.monsterPlacer, 0.6f, 0.6f);

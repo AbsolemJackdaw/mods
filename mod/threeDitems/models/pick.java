@@ -42,13 +42,13 @@ public class pick extends ModelBase
 	      Shape4.setTextureSize(32, 16);
 	      Shape4.mirror = true;
 	      setRotation(Shape4, 0F, -0.1745329F, 0F);
-	      Shape5 = new ModelRenderer(this, 0, 3);
+	      Shape5 = new ModelRenderer(this, 0, 0);
 	      Shape5.addBox(0F, 0F, 0F, 3, 1, 1);
 	      Shape5.setRotationPoint(-6.6F, 0F, 9.8F);
 	      Shape5.setTextureSize(32, 16);
 	      Shape5.mirror = true;
 	      setRotation(Shape5, 0F, -0.4363323F, 0F);
-	      Shape6 = new ModelRenderer(this, 0, 3);
+	      Shape6 = new ModelRenderer(this, 0, 0);
 	      Shape6.addBox(0F, 0F, 0F, 3, 1, 1);
 	      Shape6.setRotationPoint(5F, 0F, 11F);
 	      Shape6.setTextureSize(32, 16);
