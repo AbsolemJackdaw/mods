@@ -4,18 +4,16 @@ import gravestone.mod_Gravestone;
 
 import java.util.Random;
 
-import cpw.mods.fml.common.FMLLog;
-
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityFurnace;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
@@ -40,6 +38,20 @@ public class BlockGrave extends BlockContainer{
 		return new TEGrave();
 	}
 
+    @Override
+    public float getExplosionResistance(Entity par1Entity, World world, int x, int y, int z, double explosionX, double explosionY, double explosionZ) {
+        return getExplosionResistance(par1Entity);
+    }
+
+    @Override
+    public float getExplosionResistance(Entity par1Entity) {
+        return 18000000F;
+    }
+    
+    public void onBlockExploded(World world, int x, int y, int z, Explosion explosion) {
+        //DO NOTHING, prevents creeper griefing of gravestones.
+    }
+    
 	@Override
 	public int quantityDropped(Random par1Random)
 	{
