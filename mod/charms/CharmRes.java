@@ -28,17 +28,17 @@ public class CharmRes {
 					//if the charm has less hearts to heal then the player has actual health 
 					//> case can be for noHero's more health mod
 					//example for 30 hearts and iron charm. 
-					if(hearts > charm.heartsToHeal){ //30-15 > 10
+					if(event.ammount > charm.heartsToHeal){ //30-15 > 10
 						p.heal(-hearts +charm.heartsToHeal);     //heal 10
-						stack.damageItem(charm.heartsToHeal, p); //damage item 10 > meaning it would deplete it immediatly
+						stack.damageItem(event.ammount, p); //damage item 10 > meaning it would deplete it immediatly
 						p.renderBrokenItemStack(stack);    //rendering.
 						p.inventory.setInventorySlotContents(ConfigClass.instance.slotID, (ItemStack) null); //making sure it's gone.
 					}
 					//if the charm has less uses left then the player needs to heal hearts.
 					//example> fall down and take 8 hearts of damage with golden charm that has 5 charges left
-					else if(hearts > (charm.heartsToHeal - stack.getItemDamage())){ //8 > 5
+					else if(event.ammount > (charm.heartsToHeal - stack.getItemDamage())){ //8 > 5
 						p.heal(- hearts + (charm.heartsToHeal - stack.getItemDamage())); 		  //heal 5
-						stack.damageItem((charm.heartsToHeal - stack.getItemDamage()), p); //damage item 5
+						stack.damageItem(event.ammount, p); //damage item 5
 						//again, this would mean it breaks immediatly. making sure it does.
 						p.renderBrokenItemStack(stack);    //rendering.
 						p.inventory.setInventorySlotContents(ConfigClass.instance.slotID, (ItemStack) null); //making sure it's gone.
@@ -46,14 +46,13 @@ public class CharmRes {
 					//in any other cases, use the health difference to heal.
 					else{
 						p.heal(maxHearts);
-						stack.damageItem(maxHearts, p);
+						stack.damageItem(event.ammount, p);
 						charm.cooldown = 0;
 					}
 				}
 				FMLLog.getLogger().info(event.entityLiving.getEntityName() + " got reseructed.");
 				event.setCanceled(true);
 			}
-
 		}
 	}
 
