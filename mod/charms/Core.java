@@ -9,8 +9,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Init;
-import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -45,7 +45,7 @@ public class Core {
 	public static DynamicTexture charmBar;
 	
 
-	@PreInit
+	@EventHandler
 	public void load (FMLPreInitializationEvent e){
 
 		ConfigClass.instance.loadConfig(e.getSuggestedConfigurationFile());
@@ -59,10 +59,6 @@ public class Core {
 		}
 		MinecraftForge.EVENT_BUS.register(new CharmRes());
 		
-	}
-
-	@Init
-	public void load (FMLInitializationEvent e){
 		charmTierI = new Charm(845, 10*2,0xc1c1c1,1).setUnlocalizedName("charmTierI");
 		charmTierII = new Charm(846, 15*2, 0xffe083,2).setUnlocalizedName("charmTierII");
 		charmTierIII = new Charm(847, 30*2, 0xdfd8cf,3).setUnlocalizedName("charmTierIII");
@@ -74,6 +70,11 @@ public class Core {
 		LanguageRegistry.addName(charmTierIII, "Quartz Charm");
 		LanguageRegistry.addName(charmTierIV, "Emerald Charm");
 		LanguageRegistry.addName(charmTierV, "Diamond Charm");
+	}
+
+	@EventHandler
+	public void load (FMLInitializationEvent e){
+		
 
 		GameRegistry.addShapelessRecipe(new ItemStack(charmTierI), new Object[]{Item.paper, new ItemStack(Item.dyePowder, 1, 0), 
 			Item.ingotIron, Item.ingotIron, Item.ingotIron});
