@@ -2,6 +2,7 @@ package redstone.ammo;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.item.Item;
@@ -23,7 +24,7 @@ public class PlasmaAmmo extends EntityThrowable
 		super(par1World);
 	}
 
-	public PlasmaAmmo(World par1World, EntityLiving par2EntityLiving)
+	public PlasmaAmmo(World par1World, EntityLivingBase par2EntityLiving)
 	{
 		super(par1World, par2EntityLiving);
 

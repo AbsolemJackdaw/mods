@@ -43,7 +43,7 @@ public class ItemSkulls extends Item{
 				world.setBlockTileEntity(x, y+1, z, bones);
 			}	
 			else
-				par2EntityPlayer.sendChatToPlayer("te ==null");
+				par2EntityPlayer.addChatMessage("te ==null");
 		}
 		return false;
 

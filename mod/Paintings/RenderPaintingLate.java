@@ -3,6 +3,7 @@ package Paintings;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderPainting;
+import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityPainting;
 import net.minecraft.util.EnumArt;
@@ -31,16 +32,16 @@ public class RenderPaintingLate extends RenderPainting
 		GL11.glRotatef(par8, 0.0F, 1.0F, 0.0F);
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 		if(tiny && !Insane && !sphax && !gib){
-			this.loadTexture("/subaraki/art/tiny.png");
+			this.renderManager.renderEngine.func_110577_a(new ResourceLocation("/subaraki/art/tiny.png"));
 			size = 512.0f;
 		}else if(!tiny && Insane && sphax && !gib){
-			this.loadTexture("/subaraki/art/insane.png");
+			this.renderManager.renderEngine.func_110577_a(new ResourceLocation("/subaraki/art/insane.png"));
 			size = 512.0f;
 		}else if(!tiny && !Insane && sphax && !gib ){
-			this.loadTexture("/subaraki/art/sphax.png");
+			this.renderManager.renderEngine.func_110577_a(new ResourceLocation("/subaraki/art/sphax.png"));
 			size = 256.0f;
 		}else if( !tiny && !Insane && !sphax && gib){
-			this.loadTexture("/subaraki/art/gib.png");
+			this.renderManager.renderEngine.func_110577_a(new ResourceLocation("/subaraki/art/gib.png"));
 			size = 256.0f;
 		}
 		EnumArt enumart = par1EntityPainting.art;

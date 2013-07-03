@@ -7,6 +7,8 @@ import java.io.ObjectOutput;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.renderer.texture.DynamicTexture;
+import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.ai.EntityAIFollowOwner;
@@ -27,6 +29,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import petBuddy.PetBuddyMain;
+import petBuddy.handelers.BuddyClientProxy;
 import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -50,10 +53,9 @@ public abstract class BuddyBase extends EntityTameable
 	{
 		super(par1World);
 		this.setSize(0.2F, 0.8F);
-		this.moveSpeed = 0.3F;
 		this.getNavigator().setAvoidsWater(true);
 		this.tasks.addTask(1, new EntityAISwimming(this));
-		this.tasks.addTask(5, new EntityAIFollowOwner(this, this.moveSpeed, 10.0F, 2.0F));
+		this.tasks.addTask(5, new EntityAIFollowOwner(this, 1.0d, 10.0F, 2.0F));
 		this.tasks.addTask(9, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
 		this.tasks.addTask(6, new EntityAIWatchClosest(this, Entity.class, 8.0F));
 		this.tasks.addTask(9, new EntityAILookIdle(this));
@@ -62,16 +64,16 @@ public abstract class BuddyBase extends EntityTameable
 		this.targetTasks.addTask(2, new EntityAIOwnerHurtTarget(this));
 		this.targetTasks.addTask(3, new EntityAIHurtByTarget(this, true));
 		this.slimeJumpDelay = this.rand.nextInt(20) + 10;
+		setEntityHealth(666);
 
 	}
 	public BuddyBase(World par1World, EntityPlayer player)
 	{
 		super(par1World);
 		this.setSize(0.8F, 0.8F);
-		this.moveSpeed = 0.3F;
 		this.getNavigator().setAvoidsWater(true);
 		this.tasks.addTask(1, new EntityAISwimming(this));
-		this.tasks.addTask(5, new EntityAIFollowOwner(this, this.moveSpeed, 10.0F, 2.0F));
+		this.tasks.addTask(5, new EntityAIFollowOwner(this, 1.0d, 10.0F, 2.0F));
 		this.tasks.addTask(9, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
 		this.tasks.addTask(9, new EntityAILookIdle(this));
 		this.setOwner(player.username);
@@ -79,6 +81,7 @@ public abstract class BuddyBase extends EntityTameable
 		this.targetTasks.addTask(1, new EntityAIOwnerHurtByTarget(this));
 		this.targetTasks.addTask(2, new EntityAIOwnerHurtTarget(this));
 		this.targetTasks.addTask(3, new EntityAIHurtByTarget(this, true));
+		setEntityHealth(666);
 	}
 
 	/**
@@ -89,26 +92,22 @@ public abstract class BuddyBase extends EntityTameable
 		return true;
 	}
 
-	public int getMaxHealth()
-	{
-		return 666;
-	}
-
 	/**retrieve the buddy's model based on the integer passed down by the buttons of the Gui.*/
 	@SideOnly(Side.CLIENT)
 	public abstract ModelBase getModel();
 
-	@Override
-	public abstract String getTexture();
+	//	@Override
+	public abstract ResourceLocation getTexture();
 
-	/**retrieve the buddy's mounted offset based on the integer passed down by the buttons of the Gui.*/
+	/**retrieve the buddy's mounted offset based on/switched trough the integer passed down by the buttons of the Gui.*/
 	public abstract float getMountedOffset();
 
-	protected void entityInit()
-	{
-		super.entityInit();
-		this.dataWatcher.addObject(18, new Integer(this.getHealth()));
-	}
+	//	protected void entityInit()
+	//	{
+	//		super.entityInit();
+	//		this.dataWatcher.addObject(18, new Integer(this.getHealth()));
+	//	}
+
 	public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
 	{
 		super.writeEntityToNBT(par1NBTTagCompound);
@@ -131,7 +130,8 @@ public abstract class BuddyBase extends EntityTameable
 	/**
 	 * Called when the entity is attacked.
 	 */
-	public boolean attackEntityFrom(DamageSource par1DamageSource, int par2)
+	@Override
+	public boolean attackEntityFrom(DamageSource par1DamageSource, float par2)
 	{
 		return false;
 	}
@@ -276,6 +276,7 @@ public abstract class BuddyBase extends EntityTameable
 		this.field_70813_a *= 0.6F;
 	}
 
+	@Override
 	public boolean attackEntityAsMob(Entity par1Entity)
 	{
 		int i = 1;
@@ -286,6 +287,7 @@ public abstract class BuddyBase extends EntityTameable
 	/**
 	 * Called when a player interacts with a mob. e.g. gets milk from a cow, gets into the saddle on a pig.
 	 */
+	@Override
 	public boolean interact(EntityPlayer player)
 	{
 		if(player.inventory.getCurrentItem() != null){
@@ -384,8 +386,10 @@ public abstract class BuddyBase extends EntityTameable
 				player.addStat(PetBuddyMain.mooshroom, 1);
 			}
 			if(item.equals(Item.dyePowder) && is.getItemDamage() == 0){
-				sendPacket(24, 24, "squid");
-				player.addStat(PetBuddyMain.squid, 1);
+				if(PetBuddyMain.proxy.getGuiId() != 19 && PetBuddyMain.proxy.getGuiId() != 14){
+					sendPacket(24, 24, "squid");
+					player.addStat(PetBuddyMain.squid, 1);
+				}
 			}
 			if(item instanceof ItemBook){
 				sendPacket(25, 25, "villager");
@@ -449,7 +453,7 @@ public abstract class BuddyBase extends EntityTameable
 
 	public double[] getMovementOffsets(int par1, float par2)
 	{
-		if (this.health <= 0)
+		if (this.func_110143_aJ() <= 0)
 		{
 			par2 = 0.0F;
 		}

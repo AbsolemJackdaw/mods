@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainerCreative;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -52,7 +53,7 @@ public class RenderGatling implements IItemRenderer {
 		switch(type){
 		case  EQUIPPED:
 			GL11.glPushMatrix();
-			Minecraft.getMinecraft().renderEngine.bindTexture("/subaraki/gatling.png");
+			Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation("/subaraki/gatling.png"));
 			if(item.getTagCompound() != null && item.getTagCompound().hasKey("EnergyCharge")){
 				float red = item.getTagCompound().getFloat("EnergyCharge")/192;
 				GL11.glColor4f(1.0f, 1.0f-red, 1.0f-red, 0.5f);
@@ -89,7 +90,7 @@ public class RenderGatling implements IItemRenderer {
 			break;
 //		case  EQUIPPED_FIRST_PERSON:
 //			GL11.glPushMatrix();
-//			Minecraft.getMinecraft().renderEngine.bindTexture("/subaraki/gatling.png");
+//			Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation("/subaraki/gatling.png");
 //			if(item.getTagCompound() != null && item.getTagCompound().hasKey("EnergyCharge")){
 //				float red = item.getTagCompound().getFloat("EnergyCharge")/192;
 //				GL11.glColor4f(1.0f, 1.0f-red, 1.0f-red, 0.5f);
@@ -126,7 +127,7 @@ public class RenderGatling implements IItemRenderer {
 //			break;
 		case ENTITY:
 			GL11.glPushMatrix();
-			Minecraft.getMinecraft().renderEngine.bindTexture("/subaraki/gatling.png");
+			Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation("/subaraki/gatling.png"));
 			GL11.glScalef(2f, 2f, 2f);
 			GL11.glRotatef(0, 0.0f, 0.0f, 1.0f);
 			GL11.glRotatef(0, 0.0f, 1.0f, 0.0f);
@@ -139,7 +140,7 @@ public class RenderGatling implements IItemRenderer {
 		default:
                     if("EQUIPPED_FIRST_PERSON".equals(type.name())){
                         GL11.glPushMatrix();
-			Minecraft.getMinecraft().renderEngine.bindTexture("/subaraki/gatling.png");
+			Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation("/subaraki/gatling.png"));
 			if(item.getTagCompound() != null && item.getTagCompound().hasKey("EnergyCharge")){
 				float red = item.getTagCompound().getFloat("EnergyCharge")/192;
 				GL11.glColor4f(1.0f, 1.0f-red, 1.0f-red, 0.5f);

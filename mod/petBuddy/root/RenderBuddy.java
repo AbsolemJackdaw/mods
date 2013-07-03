@@ -1,26 +1,28 @@
 package petBuddy.root;
 
+import java.io.IOException;
 import java.util.Random;
+
+import javax.imageio.ImageIO;
 
 import net.minecraft.client.model.ModelCow;
 import net.minecraft.client.model.ModelEnderman;
 import net.minecraft.client.model.ModelSlime;
-import net.minecraft.client.renderer.ImageBufferDownload;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.RenderLiving;
+import net.minecraft.client.renderer.texture.DynamicTexture;
+import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.Potion;
-import net.minecraft.util.StringUtils;
 
 import org.lwjgl.opengl.GL11;
 
 import petBuddy.PetBuddyMain;
 import petBuddy.entity.EntityBuddy;
 import petBuddy.entity.model.DragonsModel;
-import petBuddy.entity.model.ModelMagmaCube;
 import petBuddy.entity.model.SheepBody;
-import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -29,14 +31,15 @@ public class RenderBuddy extends RenderLiving
 {
 	private float scaleBuddy;
 	public Random rand = new Random();
-
+	private DynamicTexture renderPassTexture;
 	public RenderBuddy(float par2, float scale)
 	{
 		super(new ModelCow(), par2);
 		scaleBuddy = scale;
 	}
 
-	protected void preRenderCallback(EntityLiving pet, float par2) {
+	@Override
+	protected void preRenderCallback(EntityLivingBase pet, float par2) {
 		GL11.glScalef(scaleBuddy, scaleBuddy, scaleBuddy);
 		if(PetBuddyMain.proxy.getGuiId() == 13){
 			GL11.glTranslatef(0f, -1.5f, 0f);
@@ -82,7 +85,12 @@ public class RenderBuddy extends RenderLiving
 	{
 		if (par2 == 0 && PetBuddyMain.proxy.getGuiId() == 14){
 			this.setRenderPassModel(modelBody);
-			this.loadTexture("/mob/sheep_fur.png");
+			try {
+				renderPassTexture = new DynamicTexture(ImageIO.read(getClass().getResourceAsStream("/assets/minecraft/textures/entity/sheep/sheep_fur.png")));
+			} catch (IOException c) {
+				c.printStackTrace();
+			}
+			renderPassTexture.func_110564_a();
 			float f1 = 1.0F;
 			GL11.glColor3f(((EntityBuddy)buddy).getColor(),((EntityBuddy)buddy).getColor2(),((EntityBuddy)buddy).getColor3());
 			return 1;
@@ -90,7 +98,12 @@ public class RenderBuddy extends RenderLiving
 
 		if (par2 == 0 && PetBuddyMain.proxy.getGuiId() == 19){
 			this.setRenderPassModel(modelDragon);
-			this.loadTexture("/subaraki/mobs/ender.png");
+			try {
+				renderPassTexture = new DynamicTexture(ImageIO.read(getClass().getResourceAsStream("/subaraki/mobs/ender.png")));
+			} catch (IOException c) {
+				c.printStackTrace();
+			}
+			renderPassTexture.func_110564_a();
 			float f1 = 1.0F;
 			GL11.glColor3f(((EntityBuddy)buddy).getDragonColor(),((EntityBuddy)buddy).getDragonColor2(),((EntityBuddy)buddy).getDragonColor3());
 			return 1;
@@ -98,8 +111,12 @@ public class RenderBuddy extends RenderLiving
 
 		if(par2 == 0 && PetBuddyMain.proxy.getGuiId() == 15){
 			this.setRenderPassModel(model);
-			this.loadTexture("/mob/enderman_eyes.png");
-			float f1 = 1.0F;
+			try {
+				renderPassTexture = new DynamicTexture(ImageIO.read(getClass().getResourceAsStream("/assets/minecraft/textures/entity/enderman/enderman_eyes.png")));
+			} catch (IOException c) {
+				c.printStackTrace();
+			}
+			renderPassTexture.func_110564_a();			float f1 = 1.0F;
 			GL11.glEnable(GL11.GL_BLEND);
 			GL11.glDisable(GL11.GL_ALPHA_TEST);
 			GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE);
@@ -137,7 +154,6 @@ public class RenderBuddy extends RenderLiving
 				return -1;
 			}
 		}
-
 		return -1;
 	}
 
@@ -148,40 +164,44 @@ public class RenderBuddy extends RenderLiving
 		super.doRenderLiving(buddy, par2, par4, par6, par8, par9);
 	}
 
+	@Override
 	public void doRenderLiving(EntityLiving par1EntityLiving, double par2, double par4, double par6, float par8, float par9)
 	{
 		BuddyBase pet = (BuddyBase)par1EntityLiving;
 		this.renderCow(pet, par2, par4, par6, par8, par9);
 	}
 
-	protected int shouldRenderPass(EntityLiving par1EntityLiving, int par2, float par3)
+	@Override
+	protected int shouldRenderPass(EntityLivingBase par1EntityLiving, int par2, float par3)
 	{
 		return this.sheepTexturing((BuddyBase)par1EntityLiving, par2, par3);
 	}
 
-	protected void getDownloadableTexture(EntityLiving living)
-	{    	
-		//		FMLLog.getLogger().info(PetBuddyMain.proxy.getGuiId()+"");
-		if(PetBuddyMain.proxy.getGuiId() == 3){
-			String s1 = "http://skins.minecraft.net/MinecraftSkins/" + PetBuddyMain.proxy.getSkinName() + ".png";
-			if (!renderManager.renderEngine.hasImageData(s1))
-			{
-				renderManager.renderEngine.obtainImageData(s1, new ImageBufferDownload());
+//	protected void getDownloadableTexture(EntityLiving living)
+//	{    	
+//		//		FMLLog.getLogger().info(PetBuddyMain.proxy.getGuiId()+"");
+//		if(PetBuddyMain.proxy.getGuiId() == 3){
+//			String s1 = "http://skins.minecraft.net/MinecraftSkins/" + PetBuddyMain.proxy.getSkinName() + ".png";
+//			if (!renderManager.renderEngine.hasImageData(s1))
+//			{
+//				renderManager.renderEngine.obtainImageData(s1, new ImageBufferDownload());
+//
+//			}
+//			this.loadDownloadableImageTexture(s1, living.getTexture());		
+//		}
+//		else{
+//			this.loadDownloadableImageTexture(((BuddyBase)living).getOwner().skinUrl+"BuddySubstitute", living.getTexture());
+//		}
+//	}
 
-			}
-			this.loadDownloadableImageTexture(s1, living.getTexture());		
-		}
-		else{
-			this.loadDownloadableImageTexture(((BuddyBase)living).getOwner().skinUrl+"BuddySubstitute", living.getTexture());
-		}
-	}
+//	@Override
+//	protected void func_98190_a(EntityLiving living)
+//	{
+//		this.getDownloadableTexture((BuddyBase)living);
+//	}
 
+	
 	@Override
-	protected void func_98190_a(EntityLiving living)
-	{
-		this.getDownloadableTexture((BuddyBase)living);
-	}
-
 	public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9)
 	{
 		BuddyBase pet = (BuddyBase)par1Entity;
@@ -192,6 +212,11 @@ public class RenderBuddy extends RenderLiving
 			this.renderLivingLabel(pet, petname , par2, par4-pet.getHeight() -1f, par6, 32);
 		else
 			this.renderLivingLabel(pet, petname , par2, par4-pet.getHeight() , par6, 32);
+	}
+
+	@Override
+	protected ResourceLocation func_110775_a(Entity entity) {
+		return ((BuddyBase)entity).getTexture();
 	}
 
 

@@ -117,7 +117,7 @@ public class PacketHandler implements IPacketHandler {
 					{
 						if(!world.isRemote)
 							if(world.getPlayerEntityByName(te.playername)!= null)
-								world.getPlayerEntityByName(te.playername).sendChatToPlayer(dis.readUTF()+" requests you to salvage your grave.");
+								world.getPlayerEntityByName(te.playername).addChatMessage(dis.readUTF()+" requests you to salvage your grave.");
 					}
 				}
 			}

@@ -104,7 +104,7 @@ public class CommandPanel extends CommandBase {
 					}
 					else
 					{
-						player.sendChatToPlayer("You need to hold a Grave item.");
+						player.addChatMessage("You need to hold a Grave item.");
 					}
 				}	
 				else if (args[1].matches("message"))
@@ -128,7 +128,7 @@ public class CommandPanel extends CommandBase {
 					}
 					else
 					{
-						player.sendChatToPlayer("You need to hold a Grave item.");
+						player.addChatMessage("You need to hold a Grave item.");
 					}
 				}
 				else if (args[1].matches("message2"))
@@ -152,7 +152,7 @@ public class CommandPanel extends CommandBase {
 					}
 					else
 					{
-						player.sendChatToPlayer("You need to hold a Grave item.");
+						player.addChatMessage("You need to hold a Grave item.");
 					}
 				}
 				else if (args[1].matches("meta")) {
@@ -177,7 +177,7 @@ public class CommandPanel extends CommandBase {
 					}
 					else
 					{
-						player.sendChatToPlayer("You need to hold a Grave item.");
+						player.addChatMessage("You need to hold a Grave item.");
 					}
 
 				}	

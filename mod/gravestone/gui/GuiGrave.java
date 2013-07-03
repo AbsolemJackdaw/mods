@@ -14,6 +14,7 @@ import java.io.ObjectOutput;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.Packet250CustomPayload;
@@ -166,7 +167,7 @@ public class GuiGrave extends GuiScreen {
 
 		try
 		{
-			this.mc.renderEngine.bindTexture("/gui/demo_bg.png");
+			this.mc.renderEngine.func_110577_a(new ResourceLocation("/gui/demo_bg.png"));
 			GL11.glColor4f(0.0F, 0.0F, 0.0F, 5.0F);
 			int posX = (this.width - xSize) / 2;
 			int posY = (this.height - ySize) / 2;
@@ -191,56 +192,56 @@ public class GuiGrave extends GuiScreen {
 		{
 		case 1:
 			grave.showBasic(true);
-			this.mc.renderEngine.bindTexture("/subaraki/gravestone.png");
+			this.mc.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravestone.png"));
 			break;
 		case 2:
 			grave.showZerk(true);
 			try{
-				this.mc.renderEngine.bindTexture("/subaraki/gravezerk.png");	
+				this.mc.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravezerk.png"));	
 			}catch(Throwable e){}
 
 			break;
 		case 3 :
 			grave.showTomb(true);
 			try{
-				this.mc.renderEngine.bindTexture("/subaraki/gravestone.png");
+				this.mc.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravestone.png"));
 			}catch(Throwable e){}
 			break;
 		case 4:
 			grave.showPillar(true);
 			grave.renderSkeleton(true);
 			try{
-				this.mc.renderEngine.bindTexture("/subaraki/gravepillar.png");
+				this.mc.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravepillar.png"));
 			}catch(Throwable e){}
 			break;
 		case 5:
 			grave.showPillar(true);
 			try{
-				this.mc.renderEngine.bindTexture("/subaraki/gravepillar.png");
+				this.mc.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravepillar.png"));
 			}catch(Throwable e){}
 
 			break;
 		case 6:
 			grave.renderCross(true);try{
-				this.mc.renderEngine.bindTexture("/subaraki/gravewood.png");
+				this.mc.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravewood.png"));
 			}catch(Throwable e){}
 			break;
 		case 7:
 			grave.showPillar(true);
 			try{
-				this.mc.renderEngine.bindTexture("/subaraki/gravepillar.png");
+				this.mc.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravepillar.png"));
 			}catch(Throwable e){}
 			break;
 		case 8:
 			grave.renderAngel(true);
 			try{
-				this.mc.renderEngine.bindTexture("/subaraki/Angel.png");
+				this.mc.renderEngine.func_110577_a(new ResourceLocation("/subaraki/Angel.png"));
 			}catch(Throwable e){}
 			break;
 		case 9:
 			grave.renderKnight(true);
 			try{
-				this.mc.renderEngine.bindTexture("/subaraki/knight.png");
+				this.mc.renderEngine.func_110577_a(new ResourceLocation("/subaraki/knight.png"));
 			}catch(Throwable e){}
 			break;
 		default :
@@ -252,7 +253,7 @@ public class GuiGrave extends GuiScreen {
 			grave.renderAngel(false);
 			grave.renderKnight(false);
 			try{
-				this.mc.renderEngine.bindTexture("/subaraki/gravestone.png");
+				this.mc.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravestone.png"));
 			}catch(Throwable e){}
 			break;
 		}
@@ -310,7 +311,8 @@ public class GuiGrave extends GuiScreen {
 			grave.renderSkeleton(false);
 			grave.renderCross(false);
 			try{
-				GL11.glBindTexture(GL11.GL_TEXTURE_2D, mc.renderEngine.getTextureForDownloadableImage("http://skins.minecraft.net/MinecraftSkins/" + StringUtils.stripControlCodes(te.playername) + ".png", "/mob/char.png"));
+				//GL11.glBindTexture(GL11.GL_TEXTURE_2D, mc.renderEngine.getTextureForDownloadableImage("http://skins.minecraft.net/MinecraftSkins/" + StringUtils.stripControlCodes(te.playername) + ".png", "/mob/char.png"));
+				System.out.println("MISSING TEXTURE. FIX IT !!! guiGraveChoice");
 			}catch(Throwable e){}
 
 			GL11.glTranslatef(this.width / 2-150, this.height / 2-40, 40);
@@ -390,11 +392,11 @@ public class GuiGrave extends GuiScreen {
 				}
 				clicks = 100;
 			}
-			
+
 			else if(clicks <= 100){
 				clicks-=1;
 			}
-			
+
 		}
 	}
 }

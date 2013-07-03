@@ -43,7 +43,6 @@ public class EntitySheep5 extends EntityAnimal
 	public EntitySheep5(World par1World)
 	{
 		super(par1World);
-		this.texture = "/mob/sheep.png";
 		this.setSize(0.9F, 1.3F);
 		float var2 = 0.23F;
 		this.getNavigator().setAvoidsWater(true);

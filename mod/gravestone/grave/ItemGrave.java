@@ -65,27 +65,27 @@ public class ItemGrave extends Item{
 					if(nbt.hasKey("Message"))
 						grave.setDeathMessage(nbt.getString("Message"));
 					else
-						par2EntityPlayer.sendChatToPlayer("Message 1 missing.");
+						par2EntityPlayer.addChatMessage("Message 1 missing.");
 					if(nbt.hasKey("Meta"))
 						grave.setMeta(nbt.getInteger("Meta"));
 					else
-						par2EntityPlayer.sendChatToPlayer("Meta missing.");
+						par2EntityPlayer.addChatMessage("Meta missing.");
 					if(nbt.hasKey("Name"))
 						grave.setName(nbt.getString("Name"));
 					else
-						par2EntityPlayer.sendChatToPlayer("Name missing.");
+						par2EntityPlayer.addChatMessage("Name missing.");
 					if(nbt.hasKey("Message2"))
 						grave.setDeathMessage(nbt.getString("Message2"));
 					else
-						par2EntityPlayer.sendChatToPlayer("Message 2 missing.");
+						par2EntityPlayer.addChatMessage("Message 2 missing.");
 					par3World.setBlockTileEntity(x, y+1, z, te);
 
 				}
 				else
-					par2EntityPlayer.sendChatToPlayer("Arguments missing !");
+					par2EntityPlayer.addChatMessage("Arguments missing !");
 			}	
 			else
-				par2EntityPlayer.sendChatToPlayer("te == null");
+				par2EntityPlayer.addChatMessage("te == null");
 		}
 		return false;
 	}

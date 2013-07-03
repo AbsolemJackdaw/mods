@@ -1,10 +1,8 @@
 package betterbreeds.entity;
-import betterbreeds.ModBreeds;
-import betterbreeds.entity.ai.EntityAIBeg6;
-import betterbreeds.entity.ai.EntityAITamed;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIAttackOnCollide;
 import net.minecraft.entity.ai.EntityAIFollowOwner;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
@@ -29,6 +27,9 @@ import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import betterbreeds.ModBreeds;
+import betterbreeds.entity.ai.EntityAIBeg6;
+import betterbreeds.entity.ai.EntityAITamed;
 
 public class EntityWolf6 extends EntityTameable
 {
@@ -39,6 +40,7 @@ public class EntityWolf6 extends EntityTameable
 	private boolean isShaking;
 	private boolean field_70928_h;
 
+	private final float moveSpeed = 0.4f;
 	/**
 	 * This time increases while wolf is shaking and emitting water particles.
 	 */
@@ -48,9 +50,7 @@ public class EntityWolf6 extends EntityTameable
 	public EntityWolf6(World par1World)
 	{
 		super(par1World);
-		this.texture = "/mob/wolf.png";
 		this.setSize(0.6F, 0.8F);
-		this.moveSpeed = 0.4F;
 		this.getNavigator().setAvoidsWater(true);
 		this.tasks.addTask(1, new EntityAISwimming(this));
 		this.tasks.addTask(2, this.aiSit);
@@ -65,15 +65,12 @@ public class EntityWolf6 extends EntityTameable
 		this.targetTasks.addTask(1, new EntityAIOwnerHurtByTarget(this));
 		this.targetTasks.addTask(2, new EntityAIOwnerHurtTarget(this));
 		this.targetTasks.addTask(3, new EntityAIHurtByTarget(this, true));
-		this.targetTasks.addTask(4, new EntityAITamed(this, EntitySheep.class, 16.0F, 1, false));
-		this.targetTasks.addTask(5, new EntityAITamed(this, EntitySheep2.class, 16.0F, 1, false));
-		this.targetTasks.addTask(6, new EntityAITamed(this, EntitySheep3.class, 16.0F, 1, false));
-		this.targetTasks.addTask(7, new EntityAITamed(this, EntitySheep4.class, 16.0F, 1, false));
+		this.targetTasks.addTask(4, new EntityAITamed(this, EntitySheep.class,  1, false));
+		this.targetTasks.addTask(5, new EntityAITamed(this, EntitySheep2.class, 1, false));
+		this.targetTasks.addTask(6, new EntityAITamed(this, EntitySheep3.class, 1, false));
+		this.targetTasks.addTask(7, new EntityAITamed(this, EntitySheep4.class, 1, false));
 
-
-		Name = "";
 	}
-	String Name;
 
 	@Override
 	public EntityAgeable createChild(EntityAgeable entityageable) {
@@ -91,7 +88,8 @@ public class EntityWolf6 extends EntityTameable
 	/**
 	 * Sets the active target the Task system uses for tracking
 	 */
-	public void setAttackTarget(EntityLiving par1EntityLiving)
+	@Override
+	public void setAttackTarget(EntityLivingBase par1EntityLiving)
 	{
 		super.setAttackTarget(par1EntityLiving);
 
@@ -106,7 +104,7 @@ public class EntityWolf6 extends EntityTameable
 	 */
 	protected void updateAITick()
 	{
-		this.dataWatcher.updateObject(18, Integer.valueOf(this.getHealth()));
+		this.dataWatcher.updateObject(18, Float.valueOf(this.func_110143_aJ()));
 	}
 
 	public int getMaxHealth()
@@ -117,7 +115,7 @@ public class EntityWolf6 extends EntityTameable
 	protected void entityInit()
 	{
 		super.entityInit();
-		this.dataWatcher.addObject(18, new Integer(this.getHealth()));
+		this.dataWatcher.addObject(18, new Float(this.func_110143_aJ()));
 		this.dataWatcher.addObject(19, new Byte((byte)0));
 		this.dataWatcher.addObject(23, "");
 	}
@@ -135,14 +133,6 @@ public class EntityWolf6 extends EntityTameable
 	protected boolean canTriggerWalking()
 	{
 		return false;
-	}
-
-	/**
-	 * Returns the texture's file path as a String.
-	 */
-	public String getTexture()
-	{
-		return this.isTamed() ? "/subaraki/snowolf.png" : (this.isAngry() ? "/mob/wolf_angry.png" : super.getTexture());
 	}
 
 	/**
@@ -427,17 +417,7 @@ public class EntityWolf6 extends EntityTameable
 				this.setPathToEntity((PathEntity)null);
 			}
 		}
-		if (var2 != null && var2.itemID == ModBreeds.Dogtag.itemID)
-		{ 
-
-			if(worldObj.isRemote)
-			{   
-				ModBreeds.proxy.openGUI(par1EntityPlayer,6,this.entityId);
-
-			}     
-
-			return true;
-		}
+		
 		else if (var2 != null && var2.itemID == Item.bone.itemID && !this.isAngry())
 		{
 			if (!par1EntityPlayer.capabilities.isCreativeMode)

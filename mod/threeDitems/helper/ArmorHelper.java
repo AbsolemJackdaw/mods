@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.entity.RenderBiped;
 import net.minecraft.client.renderer.entity.RenderPlayer;
+import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
@@ -32,7 +33,7 @@ public class ArmorHelper {
 			if (item instanceof ItemArmor)
 			{
 				ItemArmor itemarmor = (ItemArmor)item;
-				Minecraft.getMinecraft().renderEngine.bindTexture(ForgeHooksClient.getArmorTexture(itemstack, "/armor/" + armor + "_" + (par2 == 2 ? 2 : 1) + ".png"));
+				Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation(ForgeHooksClient.getArmorTexture(null, itemstack, "/armor/" + armor + "_" + (par2 == 2 ? 2 : 1) + ".png", par2, par2, armor)));
 				boolean for0 = par2 == 0;
 				boolean for1 = par2 == 1;
 				boolean for2 = par2 == 2;

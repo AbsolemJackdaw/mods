@@ -167,25 +167,25 @@ public class RenderItem
 
 	public void addArmorHelm(Item item, float scale, float inWorldScale)
 	{
-		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(new ModelBiped(), "", 
+		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(new ModelBiped(), "/subaraki/3d/stick.png", 
 				0.1F, 0.7F, -0.25F, 0.0F, 0.0F, 0.0F, 0.0F, -0.5F, 0.0F, 0.0F, 0.0F, 0.0F, scale, inWorldScale));
 	}
 
 	public void addArmorPlateBody(Item item, float scale, float inWorldScale)
 	{
-		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(new ModelBiped(), "", 
+		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(new ModelBiped(), "/subaraki/3d/stick.png", 
 				-0.1F, 1.0F, -0.6F, 0.0F, 0.0F, 0.0F, 0.0F, -1.0F, 0.0F, 0.0F, 0.0F, 0.0F, scale, inWorldScale));
 	}
 
 	public void addArmorLegs(Item item, float scale, float inWorldScale)
 	{
-		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(new ModelBiped(), "", 
+		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(new ModelBiped(), "/subaraki/3d/stick.png", 
 				-0.1F, 1.0F, -0.6F, 0.0F, 0.0F, 0.0F, 0.0F, -1.2F, 0.0F, 0.0F, 0.0F, 0.0F, scale, inWorldScale));
 	}
 
 	public void addArmorBoots(Item item, float scale, float inWorldScale)
 	{
-		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(new ModelBiped(), "", 
+		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(new ModelBiped(), "/subaraki/3d/stick.png", 
 				-0.2F, 1.3F, -0.8F, 0.0F, 0.0F, 0.0F, 0.0F, -1.5F, 0.0F, 0.0F, 0.0F, 0.0F, scale, inWorldScale));
 	}
 
@@ -198,13 +198,13 @@ public class RenderItem
 	}
 
 	public void addFrame(Item item, float scale, float inWorldScale) {
-		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(new Nihil(), "", 
+		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(new Nihil(), "/subaraki/3d/stick.png", 
 				-0.2F, 0.3F, 0.0F, -30.0F, 10.0F, 90.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, scale, inWorldScale));
 	}
 
 	public void addCart(Item item, float scale, float inWorldScale)
 	{
-		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(new ModelMinecart(), "",
+		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(new ModelMinecart(), "/subaraki/3d/stick.png",
 				0.25F, 0.2F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, scale, inWorldScale));
 	}
 
@@ -313,7 +313,7 @@ public class RenderItem
 	
 	public void addSkull(Item item, float scale, float inWorldScale)
 	{		
-		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(new head(),"",
+		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(new head(),"/subaraki/3d/stick.png",
 				0.3F, 0.1F, 0F, 0.0F, 120.0F, -40.0F, -0.1F, 0.1F, -0.1F, -10.0F, 50.0F, 1.0F, scale, inWorldScale));
 	}
 	

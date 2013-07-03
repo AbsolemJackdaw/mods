@@ -1,18 +1,10 @@
 package betterbreeds;
-import java.io.File;
-
-import threeDitems.Render3d;
-import threeDitems.RenderItem;
-import threeDitems.models.bucket;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelChicken;
 import net.minecraft.client.model.ModelCow;
 import net.minecraft.client.model.ModelPig;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.src.ModLoader;
-import net.minecraftforge.client.MinecraftForgeClient;
 import betterbreeds.entity.EntityChicken2;
 import betterbreeds.entity.EntityChicken3;
 import betterbreeds.entity.EntityChicken4;
@@ -72,11 +64,6 @@ import betterbreeds.entity.render.RenderWolf3;
 import betterbreeds.entity.render.RenderWolf4;
 import betterbreeds.entity.render.RenderWolf5;
 import betterbreeds.entity.render.RenderWolf6;
-import betterbreeds.gui.GuiName;
-import betterbreeds.gui.GuiName2;
-import betterbreeds.gui.GuiName3;
-import betterbreeds.gui.GuiName4;
-import betterbreeds.gui.GuiName5;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLLog;
 
@@ -86,8 +73,6 @@ public class ClientProxy extends CommonProxy
 	{
 		Minecraft mc = ModLoader.getMinecraftInstance();
 
-		mc.installResource("sound3/xmasbb/bells.ogg", new File(mc.mcDataDir, "resources/xmasbb/bells.ogg"));
-		mc.installResource("sound3/xmasbb/song.ogg", new File(mc.mcDataDir, "resources/xmasbb/song.ogg"));
 		RenderingRegistry.registerEntityRenderingHandler(EntityPig2.class, new RenderPig2(new ModelPig(), null, 0.2F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityPig3.class, new RenderPig3(new ModelPig(), null, 0.2F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityPig4.class, new RenderPig4(new ModelPig(), null, 0.2F));
@@ -134,27 +119,27 @@ public class ClientProxy extends CommonProxy
 
 	public boolean render = false;
 
-	public void openGUI(EntityPlayer p1,int id,int wolfid)
-	{
-		if(id == 2)
-		{
-			Minecraft.getMinecraft().displayGuiScreen(new GuiName(p1,wolfid));
-		}
-		if(id == 3)
-		{
-			Minecraft.getMinecraft().displayGuiScreen(new GuiName2(p1,wolfid));
-		}
-		if(id == 4)
-		{
-			Minecraft.getMinecraft().displayGuiScreen(new GuiName3(p1,wolfid));
-		}
-		if(id == 5)
-		{
-			Minecraft.getMinecraft().displayGuiScreen(new GuiName4(p1,wolfid));
-		}
-		if(id == 6)
-		{
-			Minecraft.getMinecraft().displayGuiScreen(new GuiName5(p1,wolfid));
-		}
-	}
+//	public void openGUI(EntityPlayer p1,int id,int wolfid)
+//	{
+//		if(id == 2)
+//		{
+//			Minecraft.getMinecraft().displayGuiScreen(new GuiName(p1,wolfid));
+//		}
+//		if(id == 3)
+//		{
+//			Minecraft.getMinecraft().displayGuiScreen(new GuiName2(p1,wolfid));
+//		}
+//		if(id == 4)
+//		{
+//			Minecraft.getMinecraft().displayGuiScreen(new GuiName3(p1,wolfid));
+//		}
+//		if(id == 5)
+//		{
+//			Minecraft.getMinecraft().displayGuiScreen(new GuiName4(p1,wolfid));
+//		}
+//		if(id == 6)
+//		{
+//			Minecraft.getMinecraft().displayGuiScreen(new GuiName5(p1,wolfid));
+//		}
+//	}
 }

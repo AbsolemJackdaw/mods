@@ -13,7 +13,7 @@ public class CharmRes {
 	@ForgeSubscribe
 	public void onPlayerHurt(LivingHurtEvent event) {
 
-		if (event.entityLiving instanceof EntityPlayer && event.entityLiving.getHealth() - event.ammount <= 0)
+		if (event.entityLiving instanceof EntityPlayer && event.entityLiving.func_110143_aJ() - event.ammount <= 0)
 		{
 			EntityPlayer p = (EntityPlayer)event.entityLiving;
 			ItemStack stack = p.inventory.mainInventory[ConfigClass.instance.slotID];
@@ -21,8 +21,8 @@ public class CharmRes {
 			if(stack != null && stack.getItem() instanceof Charm)
 			{
 				Charm charm = (Charm)stack.getItem();
-				int hearts = p.getHealth();
-				int maxHearts = p.getMaxHealth();
+				int hearts = (int)p.func_110143_aJ(); // p.getHealth(); PLayers current health
+				int maxHearts =(int) p.func_110138_aP();// p.getMaxHealth(); Players MAX health
 
 				if(charm.cooldown == 30*20){
 					//if the charm has less hearts to heal then the player has actual health 
@@ -30,7 +30,7 @@ public class CharmRes {
 					//example for 30 hearts and iron charm. 
 					if(event.ammount > charm.heartsToHeal){ //30-15 > 10
 						p.heal(-hearts +charm.heartsToHeal);     //heal 10
-						stack.damageItem(event.ammount, p); //damage item 10 > meaning it would deplete it immediatly
+						stack.damageItem((int)event.ammount, p); //damage item 10 > meaning it would deplete it immediatly
 						p.renderBrokenItemStack(stack);    //rendering.
 						p.inventory.setInventorySlotContents(ConfigClass.instance.slotID, (ItemStack) null); //making sure it's gone.
 					}
@@ -38,7 +38,7 @@ public class CharmRes {
 					//example> fall down and take 8 hearts of damage with golden charm that has 5 charges left
 					else if(event.ammount > (charm.heartsToHeal - stack.getItemDamage())){ //8 > 5
 						p.heal(- hearts + (charm.heartsToHeal - stack.getItemDamage())); 		  //heal 5
-						stack.damageItem(event.ammount, p); //damage item 5
+						stack.damageItem((int)event.ammount, p); //damage item 5
 						//again, this would mean it breaks immediatly. making sure it does.
 						p.renderBrokenItemStack(stack);    //rendering.
 						p.inventory.setInventorySlotContents(ConfigClass.instance.slotID, (ItemStack) null); //making sure it's gone.
@@ -46,7 +46,7 @@ public class CharmRes {
 					//in any other cases, use the health difference to heal.
 					else{
 						p.heal(maxHearts);
-						stack.damageItem(event.ammount, p);
+						stack.damageItem((int)event.ammount, p);
 						charm.cooldown = 0;
 					}
 				}

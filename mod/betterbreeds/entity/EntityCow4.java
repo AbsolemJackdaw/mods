@@ -22,7 +22,6 @@ public class EntityCow4 extends EntityAnimal
     {
         super(par1World);
         this.isImmuneToFire =true;
-        this.texture = "/subaraki/hotcow.png";
         this.setSize(0.9F, 1.3F);
         this.getNavigator().setAvoidsWater(true);
         this.tasks.addTask(0, new EntityAISwimming(this));

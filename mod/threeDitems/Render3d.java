@@ -4,8 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.client.renderer.entity.RenderBiped;
-import net.minecraft.client.renderer.entity.RenderPlayer;
+import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -15,13 +14,15 @@ import net.minecraftforge.client.IItemRenderer;
 
 import org.lwjgl.opengl.GL11;
 
-import com.google.common.collect.ObjectArrays;
-
 import threeDitems.helper.CaseEntity;
 import threeDitems.helper.CaseEquipped;
 import threeDitems.helper.FrameHelper;
 import threeDitems.helper.MinecartHelper;
 import threeDitems.models.bottle;
+
+import com.google.common.collect.ObjectArrays;
+
+import cpw.mods.fml.common.FMLLog;
 
 public class Render3d implements IItemRenderer {
 
@@ -54,7 +55,7 @@ public class Render3d implements IItemRenderer {
 	/**
 	 * 
 	 * @param model     the model to be rendered
-	 * @param texture   the texture to be applied. Must be in /subaraki/3d
+	 * @param texture   the texture to be applied.
 	 * @param posX3p    translation X of model in 3th person
 	 * @param posY3p	translation Y of model in 3th person
 	 * @param posZ3p	translation Z of model in 3th person
@@ -179,7 +180,7 @@ public class Render3d implements IItemRenderer {
 	public void potionContent(Entity p, ItemStack item)
 	{
 		Minecraft mc = Minecraft.getMinecraft();
-		mc.renderEngine.bindTexture("/subaraki/3d/bottle.png");
+		mc.renderEngine.func_110581_b(new ResourceLocation("/subaraki/3d/bottle.png"));
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);

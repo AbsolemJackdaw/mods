@@ -2,12 +2,30 @@ package betterbreeds.entity.render;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderLiving;
+import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.passive.EntityWolf;
+import betterbreeds.entity.EntitySheep3;
 import betterbreeds.entity.EntityWolf2;
 
 public class RenderWolf2 extends RenderLiving
 {
+	private static final ResourceLocation texture = new ResourceLocation("subaraki/GreyWolf.png");
+	private static final ResourceLocation field_110917_a = new ResourceLocation("textures/entity/wolf/wolf.png");
+	private static final ResourceLocation field_110916_g = new ResourceLocation("textures/entity/wolf/wolf_angry.png");
+
+	protected ResourceLocation func_110914_a(EntityWolf2 par1EntityWolf)
+	{
+		return par1EntityWolf.isTamed() ? texture : (par1EntityWolf.isAngry() ? field_110916_g : field_110917_a);
+	}
+
+	@Override
+	protected ResourceLocation func_110775_a(Entity par1Entity)
+	{
+		return this.func_110914_a((EntityWolf2)par1Entity);
+	}
+
 	public RenderWolf2(ModelBase par1ModelBase, float par2)
 	{
 		super(par1ModelBase, par2);
@@ -18,7 +36,7 @@ public class RenderWolf2 extends RenderLiving
 		super.doRenderLiving(b, par2, par4, par6, par8, par9);
 
 		if(b.getName().length() >= 0){
-		this.renderLivingLabel(b, b.getName(), par2, par4, par6, 32);
+			this.renderLivingLabel(b, b.getName(), par2, par4, par6, 32);
 		}
 
 	}

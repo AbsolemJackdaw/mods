@@ -114,7 +114,7 @@ public class BlockGrave extends BlockContainer{
 					{
 						te.theMeta = 1;
 						if(!par1World.isRemote)
-							par5EntityPlayer.sendChatToPlayer("You didn't set a grave Model! Repairing...");
+							par5EntityPlayer.addChatMessage("You didn't set a grave Model! Repairing...");
 					}
 				}
 				else

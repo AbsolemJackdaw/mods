@@ -6,6 +6,7 @@ import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.util.AxisAlignedBB;
@@ -26,7 +27,7 @@ public class FrameHelper extends Render
 	public void renderFrameItemAsBlock(RenderBlocks renderBlocksInstance, Item item)
 	{
 		GL11.glPushMatrix();
-		Minecraft.getMinecraft().renderEngine.bindTexture("/terrain.png");
+		Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation("/terrain.png"));
 		//textures/blocks/itemframe_back.png
 		Block block = Block.planks;
 		float f = 0.0625F;
@@ -34,7 +35,7 @@ public class FrameHelper extends Render
 		float f2 = f1 / 2.0F;
 
 		GL11.glPushMatrix();
-		Minecraft.getMinecraft().renderEngine.bindTexture("/textures/blocks/itemframe_back.png");
+		Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation("/textures/blocks/itemframe_back.png"));
 		GL11.glRotatef(0, 0.0f, 0.0f, 1.0f);
 		GL11.glRotatef(90, 0.0f, 1.0f, 0.0f);
 		GL11.glRotatef(0, 1.0f, 0.0f, 0.0f);
@@ -47,7 +48,7 @@ public class FrameHelper extends Render
 	}
 
 	public void renderFrame(Block block, float f2, float f){
-		Minecraft.getMinecraft().renderEngine.bindTexture("/terrain.png");
+		Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation("/terrain.png"));
 		renderBlocksInstance.setOverrideBlockTexture(Block.planks.getIcon(1, 2));
 		GL11.glPushMatrix();
 		renderBlocksInstance.overrideBlockBounds(0.0D, (double)(0.5F - f2), (double)(0.5F - f2), (double)(f + 1.0E-4F), (double)(f + 0.5F - f2), (double)(0.5F + f2));
@@ -83,5 +84,11 @@ public class FrameHelper extends Render
 	@Override
 	public void doRender(Entity entity, double d0, double d1, double d2,
 			float f, float f1) {		
+	}
+
+	@Override
+	protected ResourceLocation func_110775_a(Entity entity) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

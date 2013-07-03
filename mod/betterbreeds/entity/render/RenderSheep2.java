@@ -2,15 +2,31 @@ package betterbreeds.entity.render;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderLiving;
+import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 
 import org.lwjgl.opengl.GL11;
 
+import betterbreeds.entity.EntityPig3;
 import betterbreeds.entity.EntitySheep2;
 
 public class RenderSheep2 extends RenderLiving
 {
+	
+	private static final ResourceLocation texture = new ResourceLocation("subaraki/milksheep.png");
+
+	protected ResourceLocation func_110919_a(EntitySheep2 par1EntityChicken)
+	{
+		return texture;
+	}
+
+	@Override
+	protected ResourceLocation func_110775_a(Entity par1Entity)
+	{
+		return this.func_110919_a((EntitySheep2)par1Entity);
+	}
+	
     public RenderSheep2(ModelBase par1ModelBase, ModelBase par2ModelBase, float par3)
     {
         super(par1ModelBase, par3);
@@ -21,7 +37,7 @@ public class RenderSheep2 extends RenderLiving
     {
         if (par2 == 0 && !par1EntitySheep.getSheared())
         {
-            this.loadTexture("/mob/sheep_fur.png");
+            this.func_110776_a(new ResourceLocation("textures/entity/sheep/sheep_fur.png"));
             float var4 = 1.0F;
             int var5 = par1EntitySheep.getFleeceColor();
             GL11.glColor3f(var4 * EntitySheep2.fleeceColorTable[var5][0], var4 * EntitySheep2.fleeceColorTable[var5][1], var4 * EntitySheep2.fleeceColorTable[var5][2]);

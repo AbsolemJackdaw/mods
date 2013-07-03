@@ -1,6 +1,7 @@
 package redstone.ammo;
 
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.item.Item;
@@ -19,7 +20,7 @@ public class EndAmmo extends EntityThrowable
 		super(par1World);
 	}
 
-	public EndAmmo(World par1World, EntityLiving par2EntityLiving)
+	public EndAmmo(World par1World, EntityLivingBase par2EntityLiving)
 	{
 		super(par1World, par2EntityLiving);
 	}

@@ -1,18 +1,33 @@
 package betterbreeds.entity.render;
 
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.renderer.entity.RenderLiving;
+import net.minecraft.client.resources.ResourceLocation;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+
+import org.lwjgl.opengl.GL11;
+
 import betterbreeds.entity.EntityJelly;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.renderer.entity.RenderLiving;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.monster.EntitySlime;
-import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
 public class RenderJelly extends RenderLiving
 {
+	private static final ResourceLocation texture = new ResourceLocation("subaraki/Jelly.png");
 
+	protected ResourceLocation func_110919_a(EntityJelly par1EntityChicken)
+	{
+		return texture;
+	}
+
+	@Override
+	protected ResourceLocation func_110775_a(Entity par1Entity)
+	{
+		return this.func_110919_a((EntityJelly)par1Entity);
+	}
+	
 	public RenderJelly(ModelBase par1ModelBase, float par3)
 	{
 		super(par1ModelBase, par3);

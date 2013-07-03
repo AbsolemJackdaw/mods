@@ -12,6 +12,7 @@ import java.io.ObjectOutput;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.packet.Packet250CustomPayload;
@@ -82,7 +83,7 @@ public class GuiGraveChoice extends GuiScreen {
 		this.ySize_lo = (float) par2;
 		super.drawScreen(par1, par2, par3);
 
-		this.mc.renderEngine.bindTexture("/gui/demo_bg.png");
+		this.mc.renderEngine.func_110577_a(new ResourceLocation(("/gui/demo_bg.png")));
 		GL11.glColor4f(0.0F, 0.0F, 0.0F, 5.0F);
 		int posX = (this.width - xSize) / 2;
 		int posY = (this.height - ySize) / 2;
@@ -173,56 +174,56 @@ public class GuiGraveChoice extends GuiScreen {
 		{
 		case 1:
 			grave.showBasic(true);
-			mc.renderEngine.bindTexture("/subaraki/gravestone.png");
+			mc.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravestone.png"));
 			break;
 		case 2:
 			grave.showZerk(true);
 			try{
-				mc.renderEngine.bindTexture("/subaraki/gravezerk.png");	
+				mc.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravezerk.png"));	
 			}catch(Throwable e){}
 
 			break;
 		case 3 :
 			grave.showTomb(true);
 			try{
-				mc.renderEngine.bindTexture("/subaraki/gravestone.png");
+				mc.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravestone.png"));
 			}catch(Throwable e){}
 			break;
 		case 4:
 			grave.showPillar(true);
 			grave.renderSkeleton(true);
 			try{
-				mc.renderEngine.bindTexture("/subaraki/gravepillar.png");
+				mc.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravepillar.png"));
 			}catch(Throwable e){}
 			break;
 		case 5:
 			grave.showPillar(true);
 			try{
-				mc.renderEngine.bindTexture("/subaraki/gravepillar.png");
+				mc.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravepillar.png"));
 			}catch(Throwable e){}
 
 			break;
 		case 6:
 			grave.renderCross(true);try{
-				mc.renderEngine.bindTexture("/subaraki/gravewood.png");
+				mc.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravewood.png"));
 			}catch(Throwable e){}
 			break;
 		case 7:
 			grave.showPillar(true);
 			try{
-				mc.renderEngine.bindTexture("/subaraki/gravepillar.png");
+				mc.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravepillar.png"));
 			}catch(Throwable e){}
 			break;
 		case 8:
 			grave.renderAngel(true);
 			try{
-				mc.renderEngine.bindTexture("/subaraki/Angel.png");
+				mc.renderEngine.func_110577_a(new ResourceLocation("/subaraki/Angel.png"));
 			}catch(Throwable e){}
 			break;
 		case 9:
 			grave.renderKnight(true);
 			try{
-				mc.renderEngine.bindTexture("/subaraki/knight.png");
+				mc.renderEngine.func_110577_a(new ResourceLocation("/subaraki/knight.png"));
 			}catch(Throwable e){}
 			break;
 		default :
@@ -234,7 +235,7 @@ public class GuiGraveChoice extends GuiScreen {
 			grave.renderAngel(false);
 			grave.renderKnight(false);
 			try{
-				mc.renderEngine.bindTexture("/subaraki/gravestone.png");
+				mc.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravestone.png"));
 			}catch(Throwable e){}
 			break;
 		}
@@ -292,7 +293,9 @@ public class GuiGraveChoice extends GuiScreen {
 			grave.renderSkeleton(false);
 			grave.renderCross(false);
 			try{
-				GL11.glBindTexture(GL11.GL_TEXTURE_2D, mc.renderEngine.getTextureForDownloadableImage("http://skins.minecraft.net/MinecraftSkins/" + StringUtils.stripControlCodes(thePlayer.username) + ".png", "/mob/char.png"));
+//				GL11.glBindTexture(GL11.GL_TEXTURE_2D, mc.renderEngine.getTextureForDownloadableImage("http://skins.minecraft.net/MinecraftSkins/" + StringUtils.stripControlCodes(thePlayer.username) + ".png", "/mob/char.png"));
+				System.out.println("MISSING TEXTURE. FIX IT !!! guiGraveChoice");
+				//TODO
 			}catch(Throwable e){}
 
 			GL11.glTranslatef(width / 2-150, height / 2-40, 40);

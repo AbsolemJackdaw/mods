@@ -12,7 +12,7 @@ public class EntityAITamed2 extends EntityAINearestAttackableTarget
     private Class targetClass;
     public EntityAITamed2(EntityTameable par1EntityTameable, Class par2Class, float par3, int par4, boolean par5)
     {
-        super(par1EntityTameable, par2Class, par3, par4, par5);
+        super(par1EntityTameable, par2Class, par4, par5);
         this.theTameable = par1EntityTameable;
         this.setTargetClass(EntityEnderman.class);
 

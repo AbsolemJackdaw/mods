@@ -2,12 +2,28 @@ package betterbreeds.entity.render;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderLiving;
+import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import betterbreeds.entity.EntityWolf2;
 import betterbreeds.entity.EntityWolf5;
 
 public class RenderWolf5 extends RenderLiving
 {
+	private static final ResourceLocation texture = new ResourceLocation("subaraki/DeadDog.png");
+	private static final ResourceLocation field_110917_a = new ResourceLocation("textures/entity/wolf/wolf.png");
+	private static final ResourceLocation field_110916_g = new ResourceLocation("textures/entity/wolf/wolf_angry.png");
+
+	protected ResourceLocation func_110914_a(EntityWolf5 par1EntityWolf)
+	{
+		return par1EntityWolf.isTamed() ? texture : (par1EntityWolf.isAngry() ? field_110916_g : field_110917_a);
+	}
+
+	@Override
+	protected ResourceLocation func_110775_a(Entity par1Entity)
+	{
+		return this.func_110914_a((EntityWolf5)par1Entity);
+	}
     public RenderWolf5(ModelBase par1ModelBase, float par2)
     {
         super(par1ModelBase, par2);

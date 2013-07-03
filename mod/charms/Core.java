@@ -1,5 +1,10 @@
 package charms;
 
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -35,23 +40,35 @@ public class Core {
 	public static Item charmTierIII;
 	public static Item charmTierIV;
 	public static Item charmTierV;
+	
+	public static DynamicTexture icons;
+	public static DynamicTexture charmBar;
+	
 
 	@PreInit
 	public void load (FMLPreInitializationEvent e){
 
 		ConfigClass.instance.loadConfig(e.getSuggestedConfigurationFile());
-		MinecraftForge.EVENT_BUS.register(new CharmRes());
+		
 		proxy.register();
+		try {
+			icons = new DynamicTexture(ImageIO.read(getClass().getResourceAsStream("/assets/minecraft/textures/gui/icons.png")));
+			charmBar = new DynamicTexture(ImageIO.read(getClass().getResourceAsStream("/charms/hud.png")));
+		} catch (IOException c) {
+			c.printStackTrace();
+		}
+		MinecraftForge.EVENT_BUS.register(new CharmRes());
+		
 	}
 
 	@Init
 	public void load (FMLInitializationEvent e){
-		charmTierI = new Charm(845, 10*2,0xc1c1c1,1).setUnlocalizedName("charmTierI.map");
-		charmTierII = new Charm(846, 15*2, 0xffe083,2).setUnlocalizedName("charmTierII.map");
-		charmTierIII = new Charm(847, 30*2, 0xdfd8cf,3).setUnlocalizedName("charmTierIII.map");
-		charmTierIV = new Charm(848, 70*2, 0xd1fbf3,4).setUnlocalizedName("charmTierIV.map");
-		charmTierV = new Charm(849, 100*2, 0x9bffcc,5).setUnlocalizedName("charmTierV.map");
-
+		charmTierI = new Charm(845, 10*2,0xc1c1c1,1).setUnlocalizedName("charmTierI");
+		charmTierII = new Charm(846, 15*2, 0xffe083,2).setUnlocalizedName("charmTierII");
+		charmTierIII = new Charm(847, 30*2, 0xdfd8cf,3).setUnlocalizedName("charmTierIII");
+		charmTierIV = new Charm(848, 70*2, 0xd1fbf3,4).setUnlocalizedName("charmTierIV");
+		charmTierV = new Charm(849, 100*2, 0x9bffcc,5).setUnlocalizedName("charmTierV");
+		
 		LanguageRegistry.addName(charmTierI, "Iron Charm");
 		LanguageRegistry.addName(charmTierII, "Gold Charm");
 		LanguageRegistry.addName(charmTierIII, "Quartz Charm");

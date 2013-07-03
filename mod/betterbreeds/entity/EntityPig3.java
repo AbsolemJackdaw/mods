@@ -24,7 +24,6 @@ public class EntityPig3 extends EntityAnimal
 	public EntityPig3(World par1World)
 	{
 		super(par1World);
-		this.texture = "/subaraki/pig3.png";
 		this.setSize(0.9F, 0.9F);
 		this.getNavigator().setAvoidsWater(true);
 		float var2 = 0.25F;

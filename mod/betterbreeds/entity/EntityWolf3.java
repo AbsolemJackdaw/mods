@@ -1,11 +1,9 @@
 package betterbreeds.entity;
-import betterbreeds.ModBreeds;
-import betterbreeds.entity.ai.EntityAIBeg3;
-import betterbreeds.entity.ai.EntityAITamed;
-import net.minecraft.block.BlockCloth;
+import net.minecraft.block.BlockColored;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIAttackOnCollide;
 import net.minecraft.entity.ai.EntityAIFollowOwner;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
@@ -30,6 +28,9 @@ import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import betterbreeds.ModBreeds;
+import betterbreeds.entity.ai.EntityAIBeg3;
+import betterbreeds.entity.ai.EntityAITamed;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -48,14 +49,12 @@ public class EntityWolf3 extends EntityTameable
 	private float timeWolfIsShaking;
 	private float prevTimeWolfIsShaking;
 
-	public static String Name;
+	private final float moveSpeed = 0.3f;
 
 	public EntityWolf3(World par1World)
 	{
 		super(par1World);
-		this.texture = "/mob/wolf.png";
 		this.setSize(0.6F, 0.8F);
-		this.moveSpeed = 0.4F;
 		this.getNavigator().setAvoidsWater(true);
 		this.tasks.addTask(1, new EntityAISwimming(this));
 		this.tasks.addTask(2, this.aiSit);
@@ -70,14 +69,14 @@ public class EntityWolf3 extends EntityTameable
 		this.targetTasks.addTask(1, new EntityAIOwnerHurtByTarget(this));
 		this.targetTasks.addTask(2, new EntityAIOwnerHurtTarget(this));
 		this.targetTasks.addTask(3, new EntityAIHurtByTarget(this, true));
-		this.targetTasks.addTask(4, new EntityAITamed(this, EntitySheep.class, 16.0F, 1, false));
-		this.targetTasks.addTask(5, new EntityAITamed(this, EntitySheep2.class, 16.0F, 1, false));
-		this.targetTasks.addTask(6, new EntityAITamed(this, EntitySheep3.class, 16.0F, 1, false));
-		this.targetTasks.addTask(7, new EntityAITamed(this, EntitySheep4.class, 16.0F, 1, false));
+		this.targetTasks.addTask(4, new EntityAITamed(this, EntitySheep.class,  1, false));
+		this.targetTasks.addTask(5, new EntityAITamed(this, EntitySheep2.class, 1, false));
+		this.targetTasks.addTask(6, new EntityAITamed(this, EntitySheep3.class, 1, false));
+		this.targetTasks.addTask(7, new EntityAITamed(this, EntitySheep4.class, 1, false));
 
 
-		Name = "";
 	}
+	
 	@Override
 	public EntityAgeable createChild(EntityAgeable entityageable) {
 		// TODO Auto-generated method stub
@@ -91,7 +90,7 @@ public class EntityWolf3 extends EntityTameable
 	/**
 	 * Sets the active target the Task system uses for tracking
 	 */
-	public void setAttackTarget(EntityLiving par1EntityLiving)
+	public void setAttackTarget(EntityLivingBase par1EntityLiving)
 	{
 		super.setAttackTarget(par1EntityLiving);
 
@@ -106,7 +105,7 @@ public class EntityWolf3 extends EntityTameable
 	 */
 	protected void updateAITick()
 	{
-		this.dataWatcher.updateObject(18, Integer.valueOf(this.getHealth()));
+		this.dataWatcher.updateObject(18, Float.valueOf(this.func_110143_aJ()));
 	}
 
 	public int getMaxHealth()
@@ -117,9 +116,9 @@ public class EntityWolf3 extends EntityTameable
 	protected void entityInit()
 	{
 		super.entityInit();
-		this.dataWatcher.addObject(18, new Integer(this.getHealth()));
+		this.dataWatcher.addObject(18, new Float(this.func_110143_aJ()));
 		this.dataWatcher.addObject(19, new Byte((byte)0));
-		this.dataWatcher.addObject(20, new Byte((byte)BlockCloth.getBlockFromDye(1)));
+		this.dataWatcher.addObject(20, new Byte((byte)BlockColored.getBlockFromDye(1)));
 		this.dataWatcher.addObject(23, "");
 	}
 	public String getName(){
@@ -137,15 +136,6 @@ public class EntityWolf3 extends EntityTameable
 		this.playSound("mob.wolf.step", 0.15F, 1.0F);
 	}
 
-	@SideOnly(Side.CLIENT)
-
-	/**
-	 * Returns the texture's file path as a String.
-	 */
-	public String getTexture()
-	{
-		return this.isTamed() ? "/subaraki/BlackWolf.png" : (this.isAngry() ? "/mob/wolf_angry.png" : super.getTexture());
-	}
 
 	/**
 	 * (abstract) Protected helper method to write subclass entity data to NBT.
@@ -415,7 +405,7 @@ public class EntityWolf3 extends EntityTameable
 				}
 				else if (var2.itemID == Item.dyePowder.itemID)
 				{
-					int var4 = BlockCloth.getBlockFromDye(var2.getItemDamage());
+					int var4 = BlockColored.getBlockFromDye(var2.getItemDamage());
 
 					if (var4 != this.getCollarColor())
 					{
@@ -447,17 +437,7 @@ public class EntityWolf3 extends EntityTameable
 
 				return true;
 			}
-			if (var2 != null && var2.itemID == ModBreeds.Dogtag.itemID)
-			{ 
 
-				if(worldObj.isRemote)
-				{   
-					ModBreeds.proxy.openGUI(par1EntityPlayer,3,this.entityId);
-
-				}     
-
-				return true;
-			}
 			if (par1EntityPlayer.username.equalsIgnoreCase(this.getOwnerName()) && !this.worldObj.isRemote && !this.isBreedingItem(var2))
 			{
 				this.aiSit.setSitting(!this.isSitting());
@@ -656,5 +636,5 @@ public class EntityWolf3 extends EntityTameable
 		return this.dataWatcher.getWatchableObjectByte(19) == 1;
 	}
 
-	
+
 }

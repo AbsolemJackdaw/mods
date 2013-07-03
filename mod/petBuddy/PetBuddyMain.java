@@ -1,8 +1,12 @@
 package petBuddy;
 
+import java.io.IOException;
 import java.util.HashMap;
 
+import javax.imageio.ImageIO;
+
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
@@ -82,10 +86,13 @@ public class PetBuddyMain {
 	
 
 	public static AchievementPage page1;
-	public static HashMap<String, Integer> playersWithPets = new HashMap();
-
+	public static HashMap<String, Integer> playersWithPets = new HashMap();	
+	
 	@PreInit
 	public void load (FMLPreInitializationEvent e){
+		
+		
+
 		findBuddy = new Achievement(s(), "startBuddy", -1, 0, new ItemStack(Item.skull,1,3), null).setIndependent().registerAchievement();
 		nameBuddy = new Achievement(s(), "name", -1, -2, Item.stick, findBuddy).registerAchievement();
 		pigAchieve = new Achievement(s(), "pigBuddy", 2, -1, Item.porkRaw, findBuddy).registerAchievement();

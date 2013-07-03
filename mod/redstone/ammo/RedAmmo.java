@@ -1,6 +1,6 @@
 package redstone.ammo;
 
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.item.Item;
@@ -13,12 +13,13 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class RedAmmo extends EntityThrowable
 {
 	public int damage = 3;
+	
 	public RedAmmo(World par1World)
 	{
 		super(par1World);
 	}
 
-	public RedAmmo(World par1World, EntityLiving par2EntityLiving)
+	public RedAmmo(World par1World, EntityLivingBase par2EntityLiving)
 	{
 		super(par1World, par2EntityLiving);
 

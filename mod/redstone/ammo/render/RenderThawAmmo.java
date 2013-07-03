@@ -7,6 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.AxisAlignedBB;
 
@@ -22,6 +23,7 @@ public class RenderThawAmmo extends Render
 {
 	private RenderBlocks blockRenderer = new RenderBlocks();
 
+	
 	public void doRender(Entity theEntity, double par2, double par4, double par6, float par8, float par9)
 	{
 		//##########  at this point theEntity.blockId has already been reset to 0 by a call to constructor #1 of the entity
@@ -49,7 +51,7 @@ public class RenderThawAmmo extends Render
 		GL11.glRotatef((new Random()).nextInt(360), 1, 1, 1);
 		int size = 1;
 		GL11.glScalef(0.0F + (size * 0.3F), 0.0F + (size * 0.3F), 0.0F + (size * 0.3F));
-		Minecraft.getMinecraft().renderEngine.bindTexture("/subaraki/empty.png");
+		Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation("/subaraki/empty.png"));
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -91,6 +93,12 @@ public class RenderThawAmmo extends Render
 		tess.addVertexWithUV(par0AxisAlignedBB.maxX, par0AxisAlignedBB.maxY, par0AxisAlignedBB.maxZ, 1, 1);
 		tess.addVertexWithUV(par0AxisAlignedBB.maxX, par0AxisAlignedBB.minY, par0AxisAlignedBB.maxZ, 1, 0);
 		tess.draw();
+	}
+
+	@Override
+	protected ResourceLocation func_110775_a(Entity entity) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
 

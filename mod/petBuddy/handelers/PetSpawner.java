@@ -23,7 +23,7 @@ public class PetSpawner implements IPlayerTracker{
 
 	@Override
 	public void onPlayerLogin(EntityPlayer player) {
-		player.sendChatToPlayer(player.username + " found his Buddy");
+		player.addChatMessage(player.username + " found his Buddy");
 		spawnPet(player);
 	}
 

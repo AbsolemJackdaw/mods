@@ -7,6 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.AxisAlignedBB;
 
@@ -42,7 +43,7 @@ public class RenderGatlingAmmo extends Render
 		GL11.glRotatef((new Random()).nextInt(360), 1,0,1);
 		int size = 1;
 		GL11.glScalef(0.0F + (size * 0.3F), 0.0F + (size * 0.3F), 0.0F + (size * 0.3F));
-		Minecraft.getMinecraft().renderEngine.bindTexture("/textures/blocks/"+fx+".png");
+		Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation("/textures/blocks/"+fx+".png"));
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -86,6 +87,11 @@ public class RenderGatlingAmmo extends Render
 		tess.addVertexWithUV(par0AxisAlignedBB.maxX, par0AxisAlignedBB.maxY, par0AxisAlignedBB.maxZ, i, i);
 		tess.addVertexWithUV(par0AxisAlignedBB.maxX, par0AxisAlignedBB.minY, par0AxisAlignedBB.maxZ, i, i2);
 		tess.draw();
+	}
+
+	@Override
+	protected ResourceLocation func_110775_a(Entity entity) {
+		return null;
 	}
 }
 

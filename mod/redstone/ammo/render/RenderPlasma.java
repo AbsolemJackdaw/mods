@@ -1,7 +1,9 @@
 package redstone.ammo.render;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.Icon;
 
@@ -24,9 +26,15 @@ public class RenderPlasma extends Render
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 		GL11.glScalef(0.5F, 0.5F, 0.5F);
 		GL11.glColor3f(0f,1f,1f);
-		this.loadTexture("/subaraki/plasma.png");
+		Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation("/subaraki/plasma.png"));
 		base.render(par1Entity, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0625f);
 		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
 		GL11.glPopMatrix();
+	}
+
+	@Override
+	protected ResourceLocation func_110775_a(Entity entity) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainerCreative;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -48,7 +49,7 @@ public class RenderCannon implements IItemRenderer {
 		switch(type){
 		case  EQUIPPED:
 			GL11.glPushMatrix();
-			Minecraft.getMinecraft().renderEngine.bindTexture("/subaraki/aran.png");
+			Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation("subaraki/aran.png"));
 			GL11.glRotatef(15, 0.0f, 0.0f, 1.0f);
 			GL11.glRotatef(12, 0.0f, 1.0f, 0.0f);
 			GL11.glRotatef(195, 1.0f, 0.0f, 0.0f);
@@ -117,7 +118,7 @@ public class RenderCannon implements IItemRenderer {
 			
 		case ENTITY:
 			GL11.glPushMatrix();
-			Minecraft.getMinecraft().renderEngine.bindTexture("/subaraki/aran.png");
+			Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation("/subaraki/aran.png"));
 			GL11.glScalef(3f, 3f, 3f);
 			GL11.glRotatef(0, 0.0f, 0.0f, 1.0f);
 			GL11.glRotatef(0, 0.0f, 1.0f, 0.0f);
@@ -130,7 +131,7 @@ public class RenderCannon implements IItemRenderer {
 		default:
                     if("EQUIPPED_FIRST_PERSON".equals(type.name())){
                         GL11.glPushMatrix();
-			Minecraft.getMinecraft().renderEngine.bindTexture("/subaraki/aran.png");
+			Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation("/subaraki/aran.png"));
 			GL11.glRotatef(15, 0.0f, 0.0f, 1.0f);
 			GL11.glRotatef(12, 0.0f, 1.0f, 0.0f);
 			GL11.glRotatef(195, 1.0f, 0.0f, 0.0f);

@@ -1,13 +1,26 @@
 package betterbreeds.entity.render;
 
-import betterbreeds.entity.EntityPig2;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderLiving;
+import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import betterbreeds.entity.EntityPig2;
 
 public class RenderPig2 extends RenderLiving
 {
+	private static final ResourceLocation texture = new ResourceLocation("subaraki/pig2.png");
+
+	protected ResourceLocation func_110919_a(EntityPig2 par1EntityChicken)
+	{
+		return texture;
+	}
+
+	@Override
+	protected ResourceLocation func_110775_a(Entity par1Entity)
+	{
+		return this.func_110919_a((EntityPig2)par1Entity);
+	}
     public RenderPig2(ModelBase par1ModelBase, ModelBase par2ModelBase, float par3)
     {
         super(par1ModelBase, par3);
@@ -16,7 +29,7 @@ public class RenderPig2 extends RenderLiving
 
     protected int renderSaddledPig(EntityPig2 par1EntityPig, int par2, float par3)
     {
-        this.loadTexture("/mob/saddle.png");
+		this.func_110776_a(new ResourceLocation("textures/entity/pig/pig_saddle.png"));
         return par2 == 0 && par1EntityPig.getSaddled() ? 1 : -1;
     }
 

@@ -65,7 +65,6 @@ public class ModBreeds{
 	public static  Item SheppardsPie ;
 	public static  Item PastryDough;
 	public static  Item EasterEgg ;
-	public static  Item Dogtag ;
 	public static  Item ChocolatePie ;
 	public static  Item SweetBread ;
 	public static  Item jelly ;
@@ -103,7 +102,6 @@ public class ModBreeds{
 		SheppardsPie = new ItemSheppardPie(BreedsConfig.instance.meatpie).setUnlocalizedName("pie").setCreativeTab(BBT);
 		PastryDough = new ItemDough(BreedsConfig.instance.dough).setUnlocalizedName("a.clay").setCreativeTab(BBT);
 		EasterEgg = new ItemCEgg(BreedsConfig.instance.Cegg).setUnlocalizedName("a.egg").setCreativeTab(BBT);
-		Dogtag = new ItemDogTag(BreedsConfig.instance.tag).setUnlocalizedName("dogTag").setCreativeTab(BBT);
 		ChocolatePie = new ItemChocolatPie(BreedsConfig.instance.pieC).setUnlocalizedName("pieCocoa").setCreativeTab(BBT);
 		SweetBread = new ItemSubsFood(BreedsConfig.instance.bread,  6 , 0.8F, false).setUnlocalizedName("breadSweet").setCreativeTab(BBT);
 		BlackBread = new ItemSubsFood(BreedsConfig.instance.breadB, 10, 1.5F,true).setUnlocalizedName("breadBlack").setCreativeTab(BBT);
@@ -134,9 +132,8 @@ public class ModBreeds{
 
 		GameRegistry.addRecipe(new ItemStack (SheppardsPie,1), new Object [] { "MMM","PPP", 'P',PastryDough, 'M',Sheepcooked});
 		GameRegistry.addRecipe(new ItemStack (ChocolatePie,1), new Object [] { "MMM","PPP", 'P',PastryDough, 'M',EasterEgg});
-		GameRegistry.addRecipe(new ItemStack (Dogtag,1), new Object [] { "LD","LL", 'L',Item.leather, 'D',Item.diamond});
-		GameRegistry.addRecipe(new ItemStack (XmasSpecial,1,4), new Object [] { "PS","PS", 'P',Block.planks, 'S',Item.stick});
-		GameRegistry.addRecipe(new ItemStack (XmasSpecial,1,5), new Object [] { "FRF","RSR","FRF", 'F',new ItemStack(Block.tallGrass,1,2), 'S',Item.sugar,'R', new ItemStack(Item.dyePowder,1,1)});
+//		GameRegistry.addRecipe(new ItemStack (XmasSpecial,1,4), new Object [] { "PS","PS", 'P',Block.planks, 'S',Item.stick});
+//		GameRegistry.addRecipe(new ItemStack (XmasSpecial,1,5), new Object [] { "FRF","RSR","FRF", 'F',new ItemStack(Block.tallGrass,1,2), 'S',Item.sugar,'R', new ItemStack(Item.dyePowder,1,1)});
 		GameRegistry.addRecipe(new ItemStack (jelly,1), new Object [] { "DSD","SSS","DSD", 'S',Item.sugar, 'D',new ItemStack(Item.dyePowder,1,9)});
 
 		LanguageRegistry.addName(Sheepmilk   ,"Sheeps Milk");
@@ -145,7 +142,6 @@ public class ModBreeds{
 		LanguageRegistry.addName(SheppardsPie,"Sheppards Pie");
 		LanguageRegistry.addName(PastryDough ,"Pastry Dough");
 		LanguageRegistry.addName(EasterEgg   ,"Chocolat Egg");
-		LanguageRegistry.addName(Dogtag      ,"Pet Collar");
 		LanguageRegistry.addName(SweetBread  ,"Sweet Bread");
 		LanguageRegistry.addName(ChocolatePie,"Easter Pie ");
 		LanguageRegistry.addName(BlackBread  ,"Black_Eye's Meat Sandwich");
@@ -157,12 +153,12 @@ public class ModBreeds{
 		LanguageRegistry.addName(horsemeatCooked  ,"Horse Meat");
 
 
-		LanguageRegistry.addName(new ItemStack(XmasSpecial,1,0),"PepperMinth Egg");
-		LanguageRegistry.addName(new ItemStack(XmasSpecial,1,1) ,"Honey Glazed Ham");
-		LanguageRegistry.addName(new ItemStack(XmasSpecial,1,2)  ,"Hot Chocolat");
-		LanguageRegistry.addName(new ItemStack(XmasSpecial,1,3)  ,"Magic Meat");
-		LanguageRegistry.addName(new ItemStack(XmasSpecial,1,4)  ,"Empty Mug");
-		LanguageRegistry.addName(new ItemStack(XmasSpecial,1,5)  ,"The Spirit of Christmas");
+//		LanguageRegistry.addName(XmasSpecial,"PepperMinth Egg");
+//		LanguageRegistry.addName(new ItemStack(XmasSpecial,1,1) ,"Honey Glazed Ham");
+//		LanguageRegistry.addName(new ItemStack(XmasSpecial,1,2)  ,"Hot Chocolat");
+//		LanguageRegistry.addName(new ItemStack(XmasSpecial,1,3)  ,"Magic Meat");
+//		LanguageRegistry.addName(new ItemStack(XmasSpecial,1,4)  ,"Empty Mug");
+//		LanguageRegistry.addName(new ItemStack(XmasSpecial,1,5)  ,"The Spirit of Christmas");
 
 		LanguageRegistry.instance().addNameForObject(Sheepmilk, "fr_FR", "Lait Mouton");
 		LanguageRegistry.instance().addNameForObject(Sheepraw    , "fr_FR","Jambe de Mouton");
@@ -170,18 +166,17 @@ public class ModBreeds{
 		LanguageRegistry.instance().addNameForObject(SheppardsPie, "fr_FR","Gateau de Berger");
 		LanguageRegistry.instance().addNameForObject(PastryDough , "fr_FR","Pate a Cuire");
 		LanguageRegistry.instance().addNameForObject(EasterEgg   , "fr_FR", "Oeuf en Chocolat");
-		LanguageRegistry.instance().addNameForObject(Dogtag      , "fr_FR", "Chaine d'animaux");
 		LanguageRegistry.instance().addNameForObject(SweetBread  , "fr_FR", "Pain Sucre");
 		LanguageRegistry.instance().addNameForObject(ChocolatePie, "fr_FR", "Gateau de Paque ");
 		LanguageRegistry.instance().addNameForObject(BlackBread, "fr_FR", "Sandwich Viande de Black_Eye ");
 		LanguageRegistry.instance().addNameForObject(Sandwich, "fr_FR", "Sandwich a l'Oeuf ");
 		LanguageRegistry.instance().addNameForObject(ChocoBrood, "fr_FR", "Sandwich au Chocolat ");
-		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,5),"fr_FR"  ,"L'esprit de Noel");
-		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,4),"fr_FR"  ,"Tasse Vide");
-		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,3),"fr_FR"  ,"Viande Serene");
-		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,2),"fr_FR"  ,"Chocolat Chaud");
-		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,1),"fr_FR"  ,"Jambon au Bain de Miel");
-		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,0),"fr_FR"  ,"Oeuf A La Menthe");
+//		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,5),"fr_FR"  ,"L'esprit de Noel");
+//		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,4),"fr_FR"  ,"Tasse Vide");
+//		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,3),"fr_FR"  ,"Viande Serene");
+//		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,2),"fr_FR"  ,"Chocolat Chaud");
+//		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,1),"fr_FR"  ,"Jambon au Bain de Miel");
+//		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,0),"fr_FR"  ,"Oeuf A La Menthe");
 
 		LanguageRegistry.instance().addNameForObject(Sheepmilk, "de_DE", "Schafsmilch");
 		LanguageRegistry.instance().addNameForObject(Sheepraw    , "de_DE","Lammkeule");
@@ -189,18 +184,17 @@ public class ModBreeds{
 		LanguageRegistry.instance().addNameForObject(SheppardsPie, "de_DE","Kuchen des Schafers");
 		LanguageRegistry.instance().addNameForObject(PastryDough , "de_DE","Teig");
 		LanguageRegistry.instance().addNameForObject(EasterEgg   , "de_DE", "Osterei");
-		LanguageRegistry.instance().addNameForObject(Dogtag      , "de_DE", "Halsband");
 		LanguageRegistry.instance().addNameForObject(SweetBread  , "de_DE", "Susses Brot");
 		LanguageRegistry.instance().addNameForObject(ChocolatePie, "de_DE", "Schokoladenkuchen");
 		LanguageRegistry.instance().addNameForObject(BlackBread, "de_DE", "Black_Eye's Fleish Brotchen");
 		LanguageRegistry.instance().addNameForObject(Sandwich, "de_DE", "Brotchen mit Ei");
 		LanguageRegistry.instance().addNameForObject(ChocoBrood, "de_DE", "Schokoladenbrotchen");      
-		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,5),"de_DE"  ,"Der Geist der Weihnacht");
-		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,4),"de_DE"  ,"Leere Tasse");
-		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,3),"de_DE"  ,"Viande Serene");
-		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,2),"de_DE"  ,"Heisse Schokolade");
-		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,1),"de_DE"  ,"Schinken mit Honigglasur");
-		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,0),"de_DE"  ,"Minz-Ei");
+//		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,5),"de_DE"  ,"Der Geist der Weihnacht");
+//		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,4),"de_DE"  ,"Leere Tasse");
+//		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,3),"de_DE"  ,"Viande Serene");
+//		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,2),"de_DE"  ,"Heisse Schokolade");
+//		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,1),"de_DE"  ,"Schinken mit Honigglasur");
+//		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,0),"de_DE"  ,"Minz-Ei");
 
 		LanguageRegistry.instance().addStringLocalization("entity.Superpig2.name", "fr_FR", "2eme Race");
 		LanguageRegistry.instance().addStringLocalization("entity.Superpig3.name", "fr_FR", "3eme Race");

@@ -1,6 +1,9 @@
 package petBuddy.entity;
 
+import java.io.IOException;
 import java.util.HashMap;
+
+import javax.imageio.ImageIO;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.model.ModelBase;
@@ -16,6 +19,9 @@ import net.minecraft.client.model.ModelSnowMan;
 import net.minecraft.client.model.ModelSpider;
 import net.minecraft.client.model.ModelVillager;
 import net.minecraft.client.model.ModelZombie;
+import net.minecraft.client.renderer.texture.DynamicTexture;
+import net.minecraft.client.resources.ResourceLocation;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
@@ -57,13 +63,15 @@ public class EntityBuddy extends BuddyBase
 	private HashMap<String, String> itemInventory = new HashMap();
 	private int harvestsWithHeldItem;
 
+	public static DynamicTexture buddyTexture;
+
 	public EntityBuddy(World par1World)
 	{
 		super(par1World);
 		this.findsItemTimer = this.rand.nextInt(6000) + 9000;
 		//i hope to prevent any buddies going lost in portals.
 		this.timeUntilPortal = 6000;
-		
+
 		this.harvestsWithHeldItem = 12000;
 
 		happynessFactorCooldown = rand.nextInt(600) + 800;
@@ -183,72 +191,76 @@ public class EntityBuddy extends BuddyBase
 		}
 	}
 
-	@Override
-	public String getTexture() {
+	//	@Override
+	//TODO
+	public ResourceLocation getTexture(){
+		String s = "textures/entity";
+
 		switch(getGuiId()){
 		case 2:
-			return "/mob/pig.png";
-		case 3:
-			return "/mob/char.png";
-		case 4:
-			return "/mob/creeper.png";
-		case 5:
-			return "/mob/cow.png";
-		case 6:
-			return "/mob/fire.png";
-		case 7:
-			return "/mob/spider.png";
-		case 8:
-			return "/mob/wither.png";
-		case 9:
-			return "/subaraki/mobs/spider.png";
-		case 10:
-			return "/mob/skeleton.png";
-		case 11:
-			return "/mob/skeleton_wither.png";
-		case 12:
-			return "/mob/zombie_villager.png";
-		case 13:
-			return "/mob/ghast.png";
-		case 14:
-			return "/mob/sheep.png";
-		case 15:
-			return "/mob/enderman.png";
-		case 16:
-			return "/mob/silverfish.png";
-		case 17:
-			return "/mob/snowman.png";
-		case 18:
-			return "/mob/villager_golem.png";
-		case 19:
-			return "/mob/enderdragon/ender.png";
-		case 20:
-			return "/mob/bat.png";
-		case 21:
-			return "/mob/chicken.png";
-		case 22:
-			return "/mob/redcow.png";
-		case 23:
-			return "/mob/ozelot.png";
-		case 24:
-			return "/mob/squid.png";
-		case 25:
-			return "/mob/villager/smith.png";
-		case 26:
-			return "/mob/wolf.png";
-		case 27:
-			return "/mob/pigzombie.png";
-		case 28:
-			return "/subaraki/mobs/bull.png";
-		case 29:
-			return "/subaraki/mobs/boar.png";
-		case 30:
-			return "/mob/lava.png";
-		case 31:
-			return "/mob/slime.png";
-		default :
-			return "/mob/char.png";
+			return new ResourceLocation(s+"/pig/pig.png");
+		case 3://you
+			return new ResourceLocation(s+"/steve.png");
+		case 4://Creeper
+			return new ResourceLocation(s+"/creeper/creeper.png");
+		case 5://cow
+			return new ResourceLocation( s+"/cow/cow.png");
+		case 6://fire>blaze
+			return new ResourceLocation( s+"/blaze.png");
+		case 7://spider
+			return new ResourceLocation( s+"/spider/spider.png");
+		case 8://wither
+			return new ResourceLocation( s+"/wither/wither.png");
+		case 9://rpg spider
+			return new ResourceLocation( "subaraki/mobs/spider.png");
+		case 10://skeleton
+			return new ResourceLocation( s+"/skeleton/skeleton.png");
+		case 11://wither skeleton
+			return new ResourceLocation( s+"/skeleton/skeleton_wither.png");
+		case 12://zombie villager
+			return new ResourceLocation(s+ "/zombie/zombie_villager.png");
+		case 13://ghast
+			return new ResourceLocation( s+"/ghast/ghast.png");
+		case 14://sheep
+			return new ResourceLocation( s+"/sheep/sheep.png");
+		case 15://enderman
+			return new ResourceLocation( s+"/enderman/enderman.png");
+		case 16://silverfish
+			return new ResourceLocation( s+"/silverfish.png");
+		case 17://snowman
+			return new ResourceLocation( s+"/snowman.png");
+		case 18://golem iron
+			return new ResourceLocation( s+"/iron_golem.png");
+		case 19://ender D
+			return new ResourceLocation( s+"/enderdragon/dragon.png");
+		case 20://bat
+			return new ResourceLocation( s+"/bat.png");
+		case 21://chicken
+			return new ResourceLocation( s+"/chicken.png");
+		case 22://redcow
+			return new ResourceLocation( s+"/cow/mooshroom.png");
+		case 23://ozelot
+			return new ResourceLocation( s+"/cat/ocelot.png");
+		case 24://squid
+			return new ResourceLocation( s+"/squid.png");
+		case 25://villager smith
+			return new ResourceLocation( s+"/villager/smith.png");
+		case 26://wolf
+			return new ResourceLocation( s+"/wolf/wolf.png");
+		case 27://pigzombie
+			return new ResourceLocation( s+"/zombie_pigman.png");
+		case 28://rpg bull 
+			return new ResourceLocation( "subaraki/mobs/bull.png");
+		case 29://rpg boar
+			return new ResourceLocation( "subaraki/mobs/boar.png");
+		case 30://lava slime
+			return new ResourceLocation( s+"/slime/magmacube.png");
+		case 31://slime
+			return new ResourceLocation( s+"/slime/slime.png");
+		default ://Default steve.png
+			return new ResourceLocation( s+"/steve.png");
 		}
+
 	}
 
 	protected String getLivingSound()
@@ -370,9 +382,9 @@ public class EntityBuddy extends BuddyBase
 			if(player.getCurrentEquippedItem().getItem() instanceof ItemFood){
 				ItemFood food = (ItemFood) player.getCurrentEquippedItem().getItem();
 				float f = (float) 0.4f/food.getHealAmount(); // 0.4/8 = 0.05; beaf should add 0.05 happiness
-//				this.HappynessFactor += f;
+				//				this.HappynessFactor += f;
 			}
-			
+
 			//colors the pet with 3 types of dye.
 			if(player.getCurrentEquippedItem().getItem() instanceof ItemDye){
 				ItemStack item = player.getCurrentEquippedItem();
@@ -441,7 +453,7 @@ public class EntityBuddy extends BuddyBase
 			this.ridingEntity = player;
 		}
 		else if(!this.worldObj.isRemote && this.ridingEntity == player && hasItem == false){
-			this.unmountEntity(player);
+			this.mountEntity(player);
 			this.ridingEntity = null;
 		}
 		if(player.inventory.getCurrentItem() == null && hasItem == true){
@@ -511,9 +523,9 @@ public class EntityBuddy extends BuddyBase
 		findsItemTimer = 6000 + rand.nextInt(9000);
 	}
 
-	public void buddySpeak(EntityLiving player , String text){
-		if(player instanceof EntityPlayer){
-			((EntityPlayer)getOwner()).sendChatToPlayer("<"+getName()+">" + text);
+	public void buddySpeak(Entity entity , String text){
+		if(entity instanceof EntityPlayer){
+			((EntityPlayer)getOwner()).addChatMessage("<"+getName()+">" + text);
 		}
 	}
 
@@ -527,6 +539,6 @@ public class EntityBuddy extends BuddyBase
 	public float color(float f){
 		return f/255;
 	}
-	
-	
+
+
 }

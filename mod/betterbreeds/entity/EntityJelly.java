@@ -20,13 +20,11 @@ public class EntityJelly extends EntityTameable
 	public EntityJelly(World par1World)
 	{
 		super(par1World);
-		this.texture = "/subaraki/Jelly.png";
 		this.setSize(0.6F, 0.8F);
-		this.moveSpeed = 0.3F;
 		this.getNavigator().setAvoidsWater(true);
 		this.tasks.addTask(1, new EntityAISwimming(this));
 		this.tasks.addTask(2, this.aiSit);
-		this.tasks.addTask(5, new EntityAIFollowOwner(this, this.moveSpeed, 10.0F, 2.0F));
+		this.tasks.addTask(5, new EntityAIFollowOwner(this, 0.5d, 10.0F, 2.0F));
 		this.tasks.addTask(9, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
 		this.tasks.addTask(9, new EntityAILookIdle(this));
 	}
@@ -44,7 +42,7 @@ public class EntityJelly extends EntityTameable
 	 */
 	protected void updateAITick()
 	{
-		this.dataWatcher.updateObject(18, Integer.valueOf(this.getHealth()));
+		this.dataWatcher.updateObject(18, Float.valueOf(this.func_110143_aJ()));
 	}
 
 	public int getMaxHealth()
@@ -55,7 +53,7 @@ public class EntityJelly extends EntityTameable
 	protected void entityInit()
 	{
 		super.entityInit();
-		this.dataWatcher.addObject(18, new Integer(this.getHealth()));
+		this.dataWatcher.addObject(18, new Float(this.func_110143_aJ()));
 		this.dataWatcher.addObject(19, new Byte((byte)0));
 	}
 

@@ -2,20 +2,19 @@ package charms;
 
 import java.util.List;
 
-import cpw.mods.fml.common.FMLLog;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+import cpw.mods.fml.common.FMLLog;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class Charm extends Item{
 
@@ -37,12 +36,18 @@ public class Charm extends Item{
 		SLOT_ID = ConfigClass.instance.slotID;
 		TIER = tier;
 		cooldownMAX= cooldown;
+		this.func_111206_d("map_filled");
 	}
 
-	@Override
-	public void registerIcons(IconRegister par1IconRegister) {
-		String texture = getUnlocalizedName().substring(getUnlocalizedName().lastIndexOf(".") + 1);
-		this.itemIcon = par1IconRegister.registerIcon(texture);
+	@Override @SideOnly(Side.CLIENT)
+	public void registerIcons(IconRegister i) {
+		super.registerIcons(i);
+//		String texture = getUnlocalizedName().substring(getUnlocalizedName().lastIndexOf(".") + 1);
+		this.itemIcon = i.registerIcon("map_filled");
+//		FMLLog.getLogger().info("ICON"+itemIcon.toString());
+//		FMLLog.getLogger().info("ICON"+itemIcon);
+//		FMLLog.getLogger().info("ICON"+texture);
+
 	}
 
 	public void cooldown(){
@@ -57,11 +62,11 @@ public class Charm extends Item{
 		if(ent instanceof EntityPlayer){
 
 			EntityPlayer p = (EntityPlayer)ent;
-
+			EntityLivingBase el = (EntityLivingBase)ent;
 			if(p.inventory.mainInventory[SLOT_ID]!= null && p.inventory.mainInventory[SLOT_ID].equals(is)){
 
-				int hearts = p.getHealth();
-				int maxHearts = p.getMaxHealth();
+				int hearts = (int)p.func_110143_aJ(); // p.getHealth(); PLayers current health
+				int maxHearts =(int) p.func_110138_aP();// p.getMaxHealth(); Players MAX health
 				int healthDif = maxHearts-hearts;
 
 				if(hearts <= maxHearts/2){
@@ -109,7 +114,7 @@ public class Charm extends Item{
 	public void addInformation(ItemStack stack, EntityPlayer p1, List list, boolean yesno) {
 
 		String[] charm = {"Luck","Faith","Protection","Wisdom","Prosperity"};
-		
+
 		list.add(StatCollector.translateToLocal("-"+charm[TIER-1]+"-"));
 		list.add(StatCollector.translateToLocal("Total : " + heartsToHeal/ (ConfigClass.instance.halfHearts? 1 : 2)));
 		list.add(StatCollector.translateToLocal("Left : " + (heartsToHeal-stack.getItemDamage())/(ConfigClass.instance.halfHearts? 1 : 2)));

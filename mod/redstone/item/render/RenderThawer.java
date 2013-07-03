@@ -4,12 +4,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainerCreative;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.IItemRenderer;
-import static net.minecraftforge.client.IItemRenderer.ItemRenderType.ENTITY;
-import static net.minecraftforge.client.IItemRenderer.ItemRenderType.EQUIPPED;
 
 import org.lwjgl.opengl.GL11;
 
@@ -52,11 +51,11 @@ public class RenderThawer implements IItemRenderer {
 			GL11.glPushMatrix();
 
 			if(ItemGun.thaw == 1)
-				Minecraft.getMinecraft().renderEngine.bindTexture("/subaraki/gunLava.png");
+				Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation("/subaraki/gunLava.png"));
 			else if(ItemGun.thaw == 0)
-				Minecraft.getMinecraft().renderEngine.bindTexture("/subaraki/gunIce.png");
+				Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation("/subaraki/gunIce.png"));
 			else
-				Minecraft.getMinecraft().renderEngine.bindTexture("/subaraki/gunLava.png");
+				Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation("/subaraki/gunLava.png"));
 
 			if(ItemGun.thaw == 1 &&item.getTagCompound() != null && item.getTagCompound().hasKey("EnergyCharge")){
 				float red = item.getTagCompound().getFloat("EnergyCharge")/300;
@@ -101,11 +100,11 @@ public class RenderThawer implements IItemRenderer {
 //			GL11.glPushMatrix();
 //
 //			if(ItemGun.thaw == 1)
-//				Minecraft.getMinecraft().renderEngine.bindTexture("/subaraki/gunLava.png");
+//				Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation("/subaraki/gunLava.png");
 //			else if(ItemGun.thaw == 0)
-//				Minecraft.getMinecraft().renderEngine.bindTexture("/subaraki/gunIce.png");
+//				Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation("/subaraki/gunIce.png");
 //			else
-//				Minecraft.getMinecraft().renderEngine.bindTexture("/subaraki/gunLava.png");
+//				Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation("/subaraki/gunLava.png");
 //
 //			if(ItemGun.thaw == 1 &&item.getTagCompound() != null && item.getTagCompound().hasKey("EnergyCharge")){
 //				float red = item.getTagCompound().getFloat("EnergyCharge")/300;
@@ -148,7 +147,7 @@ public class RenderThawer implements IItemRenderer {
 //			break;
 		case ENTITY:
 			GL11.glPushMatrix();
-			Minecraft.getMinecraft().renderEngine.bindTexture("/subaraki/gunIce.png");
+			Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation("/subaraki/gunIce.png"));
 			GL11.glScalef(2f, 2f, 2f);
 			GL11.glRotatef(0, 0.0f, 0.0f, 1.0f);
 			GL11.glRotatef(0, 0.0f, 1.0f, 0.0f);
@@ -163,11 +162,11 @@ public class RenderThawer implements IItemRenderer {
                         GL11.glPushMatrix();
 
 			if(ItemGun.thaw == 1)
-				Minecraft.getMinecraft().renderEngine.bindTexture("/subaraki/gunLava.png");
+				Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation("/subaraki/gunLava.png"));
 			else if(ItemGun.thaw == 0)
-				Minecraft.getMinecraft().renderEngine.bindTexture("/subaraki/gunIce.png");
+				Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation("/subaraki/gunIce.png"));
 			else
-				Minecraft.getMinecraft().renderEngine.bindTexture("/subaraki/gunLava.png");
+				Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation("/subaraki/gunLava.png"));
 
 			if(ItemGun.thaw == 1 &&item.getTagCompound() != null && item.getTagCompound().hasKey("EnergyCharge")){
 				float red = item.getTagCompound().getFloat("EnergyCharge")/300;

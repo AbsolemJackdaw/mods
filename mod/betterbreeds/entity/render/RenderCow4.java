@@ -1,13 +1,29 @@
 package betterbreeds.entity.render;
 
+import betterbreeds.entity.EntityCow3;
 import betterbreeds.entity.EntityCow4;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderLiving;
+import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 
 public class RenderCow4 extends RenderLiving
 {
+	
+	private static final ResourceLocation texture = new ResourceLocation("subaraki/hotcow.png");
+
+	protected ResourceLocation func_110919_a(EntityCow4 par1EntityChicken)
+	{
+		return texture;
+	}
+
+	@Override
+	protected ResourceLocation func_110775_a(Entity par1Entity)
+	{
+		return this.func_110919_a((EntityCow4)par1Entity);
+	}
+	
     public RenderCow4(ModelBase par1ModelBase, float par2)
     {
         super(par1ModelBase, par2);

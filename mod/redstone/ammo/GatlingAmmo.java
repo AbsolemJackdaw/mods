@@ -2,6 +2,7 @@ package redstone.ammo;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.item.Item;
@@ -23,7 +24,7 @@ public class GatlingAmmo extends EntityThrowable
 		world = par1World;
 	}
 
-	public GatlingAmmo(World par1World, EntityLiving par2EntityLiving, int parser)
+	public GatlingAmmo(World par1World, EntityLivingBase par2EntityLiving, int parser)
 	{
 		super(par1World, par2EntityLiving);
 		world = par1World;

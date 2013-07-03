@@ -1,5 +1,8 @@
 package charms;
+import java.io.IOException;
 import java.util.EnumSet;
+
+import javax.imageio.ImageIO;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -9,6 +12,8 @@ import net.minecraft.client.gui.GuiIngame;
 import net.minecraft.client.gui.GuiIngameMenu;
 import net.minecraft.client.gui.GuiNewChat;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.texture.DynamicTexture;
+import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.item.ItemStack;
 
 import org.lwjgl.opengl.GL11;
@@ -25,6 +30,7 @@ public class CharmHUD implements ITickHandler {
 
 	public CharmHUD() {
 		this.mc = Minecraft.getMinecraft();
+
 	}
 
 	@Override
@@ -100,7 +106,9 @@ public class CharmHUD implements ITickHandler {
 					int healAmount = ((Charm)stack.getItem()).heartsToHeal - stack.getItemDamage();
 					mc.fontRenderer.drawString(""+(healAmount/c), xOffset+34, yOffset-2, mc.currentScreen == null || mc.currentScreen instanceof GuiChat ? 0xffffff : 0x555555);
 
-					this.mc.renderEngine.bindTexture("/charms/hud.png");
+					//binds the texture
+					if(Core.charmBar != null)
+						Core.charmBar.func_110564_a();
 
 					GL11.glColor3f(0,1,1);
 					if(mc.currentScreen != null && !(mc.currentScreen instanceof GuiChat)){
@@ -120,7 +128,8 @@ public class CharmHUD implements ITickHandler {
 					}
 					gui.drawTexturedModalRect(xOffset, yOffset, 0, 0,scaleCharmBar(stack) ,5);
 
-					this.mc.renderEngine.bindTexture("white.png");
+					//texture should not be found !
+					this.mc.renderEngine.func_110577_a(new ResourceLocation("white.png"));
 					GL11.glColor3f(0.7f,0f,0.7f);
 					if(mc.currentScreen != null && !(mc.currentScreen instanceof GuiChat)){
 						GL11.glColor3f(0.3f,0f,0.3f);
@@ -135,7 +144,8 @@ public class CharmHUD implements ITickHandler {
 						if(mc.currentScreen != null && !(mc.currentScreen instanceof GuiChat)){
 							GL11.glColor3f(0.2f,0.2f,0.2f);
 						}
-						this.mc.renderEngine.bindTexture("/gui/icons.png");
+						if(Core.icons != null)
+							Core.icons.func_110564_a();
 						gui.drawTexturedModalRect(xOffset+24, yOffset-2, 16, 0, h ,9);
 						gui.drawTexturedModalRect(xOffset+24, yOffset-2, 52, 0, h ,9);
 

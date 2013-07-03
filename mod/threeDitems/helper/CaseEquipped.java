@@ -1,5 +1,9 @@
 package threeDitems.helper;
 
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainerCreative;
@@ -8,6 +12,8 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.texture.DynamicTexture;
+import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -19,7 +25,6 @@ import net.minecraft.item.ItemMonsterPlacer;
 import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemSkull;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.StringUtils;
 import net.minecraftforge.client.IItemRenderer;
 
 import org.lwjgl.opengl.GL11;
@@ -28,10 +33,10 @@ import threeDitems.models.bottle;
 import threeDitems.models.bow;
 import threeDitems.models.enderball;
 import threeDitems.models.head;
-import cpw.mods.fml.common.FMLLog;
 
 public class CaseEquipped
 {
+	DynamicTexture icon;
 	public void render(IItemRenderer.ItemRenderType type, ItemStack item, float x, float y, float z, 
 			float rotZ, float rotY, float rotX, float X, float Y, float Z, float fpsX, float fpsY, 
 			float fpsZ, float scale, String name, RenderBlocks render, FrameHelper frame, 
@@ -51,18 +56,18 @@ public class CaseEquipped
 				name = "/mob/zombie.png";
 				break;
 			case 3: 
-				if(item.getTagCompound() != null){
-					if (item.getTagCompound().hasKey("SkullOwner")){
-						try{
-							GL11.glBindTexture(GL11.GL_TEXTURE_2D,
-									Minecraft.getMinecraft().
-									renderEngine.getTextureForDownloadableImage("http://skins.minecraft.net/MinecraftSkins/" + 
-											StringUtils.stripControlCodes(item.getTagCompound().getString("SkullOwner")) +
-											".png", "/mob/char.png"));
-						}catch(Throwable e){}
-					}else
-						name = "/mob/char.png";
-				}else
+//				if(item.getTagCompound() != null){
+//					if (item.getTagCompound().hasKey("SkullOwner")){
+//						try{
+//							GL11.glBindTexture(GL11.GL_TEXTURE_2D,
+//									Minecraft.getMinecraft().
+//									renderEngine.getTextureForDownloadableImage("http://skins.minecraft.net/MinecraftSkins/" + 
+//											StringUtils.stripControlCodes(item.getTagCompound().getString("SkullOwner")) +
+//											".png", "/mob/char.png"));
+//						}catch(Throwable e){}
+//					}else
+//						name = "/mob/char.png";
+//				}else
 					name = "/mob/char.png";
 				break;
 			case 4:
@@ -71,8 +76,13 @@ public class CaseEquipped
 			}
 		}
 
-		Minecraft.getMinecraft().renderEngine.bindTexture(name);
-
+		try {
+			icon = new DynamicTexture(ImageIO.read(getClass().getResourceAsStream(name)));
+		} catch (IOException c) {
+			c.printStackTrace();
+		}
+		icon.func_110564_a();
+		
 
 		if(data[1] != null && data[1] instanceof EntityPlayer)
 		{
@@ -112,9 +122,9 @@ public class CaseEquipped
 			frame.renderFrameItemAsBlock(render, item.getItem());
 		}
 		if(item.getItem() instanceof ItemArmor){
-			ArmorHelper ah= new ArmorHelper();
-			ah.setArmorModel((ModelBiped)theItem, item, 
-					((ItemArmor)item.getItem()).armorType, armorFilenamePrefix[((ItemArmor)item.getItem()).renderIndex]);
+//			ArmorHelper ah= new ArmorHelper();
+//			ah.setArmorModel((ModelBiped)theItem, item, 
+//					((ItemArmor)item.getItem()).armorType, armorFilenamePrefix[((ItemArmor)item.getItem()).renderIndex]);
 		}
 
 		if(item.getItem() instanceof ItemSkull){
@@ -262,7 +272,7 @@ public class CaseEquipped
 	public void potionContent(Entity p, ItemStack item, ModelBase theItem)
 	{
 		Minecraft mc = Minecraft.getMinecraft();
-		mc.renderEngine.bindTexture("/subaraki/3d/bottle.png");
+		mc.renderEngine.func_110581_b(new ResourceLocation("/subaraki/3d/bottle.png"));
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -292,7 +302,7 @@ public class CaseEquipped
 	public void renderDots(Entity p, ItemStack item, ModelBase theItem, int colorParser)
 	{
 		Minecraft mc = Minecraft.getMinecraft();
-		mc.renderEngine.bindTexture("/subaraki/3d/eggSpawnSpots.png");
+		mc.renderEngine.func_110581_b(new ResourceLocation("/subaraki/3d/eggSpawnSpots.png"));
 		if( p instanceof EntityPlayer)
 		{
 			EntityPlayer player = (EntityPlayer) p;

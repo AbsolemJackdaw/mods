@@ -23,7 +23,6 @@ public class EntityCow3 extends EntityAnimal
 	public EntityCow3(World par1World)
 	{
 		super(par1World);
-		this.texture = "/subaraki/cow3.png";
 		this.setSize(0.9F, 1.3F);
 		this.getNavigator().setAvoidsWater(true);
 		this.tasks.addTask(0, new EntityAISwimming(this));

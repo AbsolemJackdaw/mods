@@ -1,6 +1,7 @@
 package redstone.ammo;
 
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.item.Item;
@@ -21,7 +22,7 @@ public class AranAmmo extends EntityThrowable
 		world = par1World;
 	}
 
-	public AranAmmo(World par1World, EntityLiving par2EntityLiving)
+	public AranAmmo(World par1World, EntityLivingBase par2EntityLiving)
 	{
 		super(par1World, par2EntityLiving);
 		world = par1World;

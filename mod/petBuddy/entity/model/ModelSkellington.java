@@ -41,7 +41,7 @@ public class ModelSkellington extends ModelZombie
      */
     public void setLivingAnimations(EntityLiving par1EntityLiving, float par2, float par3, float par4)
     {
-        this.aimedBow = ((BuddyBase)par1EntityLiving).getTexture().equals("/mob/skeleton_wither.png");
+        this.aimedBow = false ; //((BuddyBase)par1EntityLiving).getTexture().equals("/mob/skeleton_wither.png");
         super.setLivingAnimations(par1EntityLiving, par2, par3, par4);
     }
 

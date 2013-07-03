@@ -8,6 +8,7 @@ import java.io.ObjectOutput;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.network.packet.Packet250CustomPayload;
@@ -17,7 +18,6 @@ import org.lwjgl.opengl.GL11;
 
 import petBuddy.PetBuddyMain;
 import petBuddy.entity.EntityBuddy;
-import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class PetInterface extends GuiScreen {
@@ -149,7 +149,7 @@ public class PetInterface extends GuiScreen {
 
 		try
 		{
-			this.mc.renderEngine.bindTexture("/gui/demo_bg.png");
+			this.mc.renderEngine.func_110581_b(new ResourceLocation("/gui/demo_bg.png"));
 			GL11.glColor4f(0.0F, 0.0F, 0.0F, 5.0F);
 			int posX = (this.width ) / 2;
 			int posY = (this.height) / 2;

@@ -2,6 +2,7 @@ package gravestone.grave;
 import net.minecraft.client.renderer.ImageBufferDownload;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.StringUtils;
 
@@ -90,21 +91,21 @@ public class TEGraveSpecial extends TileEntitySpecialRenderer // because your bl
 		GL11.glScalef(0.7F, -0.7F, -0.7F);
 		if(tile != null)
 		{
-			if (tile.playername != null && tile.playername.length() > 0)
-			{
-				String s1 = "http://skins.minecraft.net/MinecraftSkins/" + StringUtils.stripControlCodes(tile.playername) + ".png";
-
-				if (!teRender.tileEntityRenderer.renderEngine.hasImageData(s1))
-				{
-					teRender.tileEntityRenderer.renderEngine.obtainImageData(s1, new ImageBufferDownload());
-				}
-
-				this.bindTextureByURL(s1, "/mob/char.png");
-			}
-			else
-			{
-				this.bindTextureByName("/mob/char.png");
-			}		
+//			if (tile.playername != null && tile.playername.length() > 0)
+//			{
+//				String s1 = "http://skins.minecraft.net/MinecraftSkins/" + StringUtils.stripControlCodes(tile.playername) + ".png";
+//
+//				if (!teRender.tileEntityRenderer.renderEngine.hasImageData(s1))
+//				{
+//					teRender.tileEntityRenderer.renderEngine.obtainImageData(s1, new ImageBufferDownload());
+//				}
+//
+//				this.bindTextureByURL(s1, "/mob/char.png"));
+//			}
+//			else
+//			{
+//				this.tileEntityRenderer.renderEngine.func_110577_a(new ResourceLocation("/mob/char.png"));
+//			}		
 			switch(tile.theMeta)
 			{
 			case 5:
@@ -143,34 +144,34 @@ public class TEGraveSpecial extends TileEntitySpecialRenderer // because your bl
 		switch(theMeta)
 		{
 		case 1:
-			this.bindTextureByName("/subaraki/gravestone.png");
+			this.tileEntityRenderer.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravestone.png"));
 			break;
 		case 2:
-			this.bindTextureByName("/subaraki/gravezerk.png");
+			this.tileEntityRenderer.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravezerk.png"));
 			break;
 		case 3 :
-			this.bindTextureByName("/subaraki/gravestone.png");
+			this.tileEntityRenderer.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravestone.png"));
 			break;
 		case 4:
-			this.bindTextureByName("/subaraki/gravepillar.png");
+			this.tileEntityRenderer.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravepillar.png"));
 			break;
 		case 5:
-			this.bindTextureByName("/subaraki/gravepillar.png");
+			this.tileEntityRenderer.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravepillar.png"));
 			break;
 		case 6:
-			this.bindTextureByName("/subaraki/gravewood.png");
+			this.tileEntityRenderer.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravewood.png"));
 			break;
 		case 7:
-			this.bindTextureByName("/subaraki/gravepillar.png");
+			this.tileEntityRenderer.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravepillar.png"));
 			break;
 		case 8:
-			this.bindTextureByName("/subaraki/Angel.png");
+			this.tileEntityRenderer.renderEngine.func_110577_a(new ResourceLocation("/subaraki/Angel.png"));
 			break;
 		case 9:
-			this.bindTextureByName("/subaraki/knight.png");
+			this.tileEntityRenderer.renderEngine.func_110577_a(new ResourceLocation("/subaraki/knight.png"));
 			break;
 		default:
-			this.bindTextureByName("/subaraki/gravestone.png");
+			this.tileEntityRenderer.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravestone.png"));
 			break;
 		}
 	}

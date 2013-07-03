@@ -8,14 +8,12 @@ public class EntityAITamed extends EntityAINearestAttackableTarget
     private EntityTameable theTameable;
     private Class creep;
     private Class targetClass;
-    public EntityAITamed(EntityTameable par1EntityTameable, Class par2Class, float par3, int par4, boolean par5)
+    public EntityAITamed(EntityTameable par1EntityTameable, Class par2Class, int par4, boolean par5)
     {
-        super(par1EntityTameable, par2Class, par3, par4, par5);
+        super(par1EntityTameable, par2Class, par4, par5);
         this.theTameable = par1EntityTameable;
         this.setTargetClass(EntityZombie.class);
 
-        
-      
     }
     public Class getTargetClass() {
 		return targetClass;

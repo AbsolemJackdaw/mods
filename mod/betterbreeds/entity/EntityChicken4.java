@@ -31,7 +31,6 @@ public class EntityChicken4 extends EntityAnimal
     public EntityChicken4(World par1World)
     {
         super(par1World);
-        this.texture = "/subaraki/awechick.png";
         this.setSize(0.3F, 0.7F);
         this.timeUntilNextEgg = this.rand.nextInt(3000) + 6000;
         float var2 = 0.25F;

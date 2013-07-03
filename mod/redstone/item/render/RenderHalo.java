@@ -4,16 +4,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainerCreative;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.IItemRenderer;
-import static net.minecraftforge.client.IItemRenderer.ItemRenderType.ENTITY;
-import static net.minecraftforge.client.IItemRenderer.ItemRenderType.EQUIPPED;
 
 import org.lwjgl.opengl.GL11;
 
-import redstone.models.ModelGunBlue;
 import redstone.models.ModelHalo;
 
 public class RenderHalo implements IItemRenderer {
@@ -50,7 +48,7 @@ public class RenderHalo implements IItemRenderer {
 		switch(type){
 		case  EQUIPPED:
 			GL11.glPushMatrix();
-			Minecraft.getMinecraft().renderEngine.bindTexture("/subaraki/type25.png");
+			Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation("/subaraki/type25.png"));
 			
 			if(item.getTagCompound() != null && item.getTagCompound().hasKey("EnergyCharge")){
 				float red = item.getTagCompound().getFloat("EnergyCharge")/30;
@@ -89,7 +87,7 @@ public class RenderHalo implements IItemRenderer {
 			break;
 //		case  EQUIPPED_FIRST_PERSON:
 //			GL11.glPushMatrix();
-//			Minecraft.getMinecraft().renderEngine.bindTexture("/subaraki/type25.png");
+//			Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation("/subaraki/type25.png");
 //			
 //			if(item.getTagCompound() != null && item.getTagCompound().hasKey("EnergyCharge")){
 //				float red = item.getTagCompound().getFloat("EnergyCharge")/30;
@@ -128,7 +126,7 @@ public class RenderHalo implements IItemRenderer {
 //			break;
 		case ENTITY:
 			GL11.glPushMatrix();
-			Minecraft.getMinecraft().renderEngine.bindTexture("/subaraki/type25.png");
+			Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation("/subaraki/type25.png"));
 			GL11.glScalef(3f, 3f, 3f);
 			GL11.glRotatef(0, 0.0f, 0.0f, 1.0f);
 			GL11.glRotatef(0, 0.0f, 1.0f, 0.0f);
@@ -141,7 +139,7 @@ public class RenderHalo implements IItemRenderer {
 		default:
                     if("EQUIPPED_FIRST_PERSON".equals(type.name())){
                         GL11.glPushMatrix();
-			Minecraft.getMinecraft().renderEngine.bindTexture("/subaraki/type25.png");
+			Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation("/subaraki/type25.png"));
 			
 			if(item.getTagCompound() != null && item.getTagCompound().hasKey("EnergyCharge")){
 				float red = item.getTagCompound().getFloat("EnergyCharge")/30;

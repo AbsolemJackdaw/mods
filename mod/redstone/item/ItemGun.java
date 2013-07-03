@@ -230,7 +230,7 @@ public class ItemGun extends Item {
 		else if (meta == 5 && !helper.findBucket(par3EntityPlayer,1)
 				||meta == 6 && !helper.findBucket(par3EntityPlayer, 2)){
 			if(!par2World.isRemote)
-				par3EntityPlayer.sendChatToPlayer("You dont have ammo in your hotbar");
+				par3EntityPlayer.addChatMessage("You dont have ammo in your hotbar");
 		}
 		else if (meta == 2 &&  Loaded <5)
 		{
@@ -250,12 +250,12 @@ public class ItemGun extends Item {
 					if(!par2World.isRemote){
 						if(nbt != null){
 							if(nbt.hasKey("load")){
-								par3EntityPlayer.sendChatToPlayer("You still need "+(5-nbt.getInteger("load"))+" Rotten Flesh to fully charge");
+								par3EntityPlayer.addChatMessage("You still need "+(5-nbt.getInteger("load"))+" Rotten Flesh to fully charge");
 							}else{
-								par3EntityPlayer.sendChatToPlayer("You still need "+5+" Rotten Flesh to fully charge");
+								par3EntityPlayer.addChatMessage("You still need "+5+" Rotten Flesh to fully charge");
 							}
 						}else{
-							par3EntityPlayer.sendChatToPlayer("You still need "+5+" Rotten Flesh to fully charge");
+							par3EntityPlayer.addChatMessage("You still need "+5+" Rotten Flesh to fully charge");
 						}
 					}
 				}

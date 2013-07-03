@@ -1,10 +1,16 @@
 package threeDitems.helper;
 
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.RenderBlocks;
+import net.minecraft.client.renderer.texture.DynamicTexture;
+import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -30,6 +36,8 @@ import threeDitems.models.head;
 
 public class CaseEntity
 {
+	DynamicTexture icon;
+
 	public void render(ItemRenderType type, ItemStack item, float x, float y, float z, float rotZ, float rotY, float rotX, 
 			float X, float Y, float Z, float fpsX, float fpsY, float fpsZ, float scale, 
 			String name, RenderBlocks render, FrameHelper frame, ModelBase theItem, MinecartHelper helper, 
@@ -48,26 +56,32 @@ public class CaseEntity
 				name = "/mob/zombie.png";
 				break;
 			case 3: 
-				if(item.getTagCompound() != null){
-					if (item.getTagCompound().hasKey("SkullOwner")){
-						try{
-							GL11.glBindTexture(GL11.GL_TEXTURE_2D,
-									Minecraft.getMinecraft().
-									renderEngine.getTextureForDownloadableImage("http://skins.minecraft.net/MinecraftSkins/" + 
-											StringUtils.stripControlCodes(item.getTagCompound().getString("SkullOwner")) +
-											".png", "/mob/char.png"));
-						}catch(Throwable e){}
-					}else
-						name = "/mob/char.png";
-				}else
-					name = "/mob/char.png";
+				//				if(item.getTagCompound() != null){
+				//					if (item.getTagCompound().hasKey("SkullOwner")){
+				//						try{
+				//							GL11.glBindTexture(GL11.GL_TEXTURE_2D,
+				//									Minecraft.getMinecraft().
+				//									renderEngine.getTextureForDownloadableImage("http://skins.minecraft.net/MinecraftSkins/" + 
+				//											StringUtils.stripControlCodes(item.getTagCompound().getString("SkullOwner")) +
+				//											".png", "/mob/char.png"));
+				//						}catch(Throwable e){}
+				//					}else
+				//						name = "/mob/char.png";
+				//				}else
+				name = "/mob/char.png";
 				break;
 			case 4:
 				name = "/mob/creeper.png";
 				break;
 			}
 		}
-		Minecraft.getMinecraft().renderEngine.bindTexture(name);
+		try {
+			icon = new DynamicTexture(ImageIO.read(getClass().getResourceAsStream(name)));
+		} catch (IOException c) {
+			c.printStackTrace();
+		}
+		icon.func_110564_a();
+
 		GL11.glScalef(3f, 3f,3f);
 		GL11.glRotatef(0, 0.0f, 0.0f, 1.0f);
 		GL11.glRotatef(0, 0.0f, 1.0f, 0.0f);
@@ -85,21 +99,21 @@ public class CaseEntity
 		}
 
 		if(item.getItem() instanceof ItemArmor){
-			ArmorHelper ah= new ArmorHelper();
-			int c =((ItemArmor)item.getItem()).armorType;
-			ah.setArmorModel((ModelBiped)theItem, item, c, armorFilenamePrefix[((ItemArmor)item.getItem()).renderIndex]);
-			if(c == 0){
-				GL11.glTranslatef(0f, -0.5f ,0F);
-			}if(c == 1){
-				GL11.glTranslatef(0f, 0f ,-0.8F);
-				GL11.glRotatef(90f, 1.0f,0.0f,0.0f);
-			}if(c == 2){
-				GL11.glTranslatef(0f, 0f,-1.2F);
-				GL11.glRotatef(90f, 1.0f,0.0f,0.0f);
-			}if(c == 3){
-				GL11.glTranslatef(0f, 0f ,-1.4F);
-				GL11.glRotatef(90f, 1.0f,0.0f,0.0f);
-			}
+			//			ArmorHelper ah= new ArmorHelper();
+			//			int c =((ItemArmor)item.getItem()).armorType;
+			//			ah.setArmorModel((ModelBiped)theItem, item, c, armorFilenamePrefix[((ItemArmor)item.getItem()).renderIndex]);
+			//			if(c == 0){
+			//				GL11.glTranslatef(0f, -0.5f ,0F);
+			//			}if(c == 1){
+			//				GL11.glTranslatef(0f, 0f ,-0.8F);
+			//				GL11.glRotatef(90f, 1.0f,0.0f,0.0f);
+			//			}if(c == 2){
+			//				GL11.glTranslatef(0f, 0f,-1.2F);
+			//				GL11.glRotatef(90f, 1.0f,0.0f,0.0f);
+			//			}if(c == 3){
+			//				GL11.glTranslatef(0f, 0f ,-1.4F);
+			//				GL11.glRotatef(90f, 1.0f,0.0f,0.0f);
+			//			}
 		}
 		if(item.getItem() instanceof ItemMinecart){
 			GL11.glTranslatef(0f,-0.2f,0F);
@@ -132,7 +146,7 @@ public class CaseEntity
 		if(item.getItem().equals(Item.bow)){
 			FMLLog.getLogger().info("" +item.getItemSpriteNumber());
 		}
-		
+
 		if(item.getItem() instanceof ItemMonsterPlacer){
 			if(item.getItem().equals(Item.monsterPlacer))
 			{
@@ -203,7 +217,7 @@ public class CaseEntity
 	public void potionContent(Entity p, ItemStack item, ModelBase theItem)
 	{
 		Minecraft mc = Minecraft.getMinecraft();
-		mc.renderEngine.bindTexture("/subaraki/3d/bottle.png");
+		mc.renderEngine.func_110581_b(new ResourceLocation("/subaraki/3d/bottle.png"));
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -229,7 +243,7 @@ public class CaseEntity
 	public void renderDots(Entity p, ItemStack item, ModelBase theItem, int colorParser)
 	{
 		Minecraft mc = Minecraft.getMinecraft();
-		mc.renderEngine.bindTexture("/subaraki/3d/eggSpawnSpots.png");
+		mc.renderEngine.func_110581_b(new ResourceLocation("/subaraki/3d/eggSpawnSpots.png"));
 		if(item.getItem() != null)
 		{
 			if(item.getItem().equals(Item.monsterPlacer))
