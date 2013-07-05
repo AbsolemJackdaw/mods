@@ -37,6 +37,7 @@ import petBuddy.entity.model.Boar;
 import petBuddy.entity.model.Bull;
 import petBuddy.entity.model.Chicken;
 import petBuddy.entity.model.DragonsModel;
+import petBuddy.entity.model.Harpy;
 import petBuddy.entity.model.IronGolem;
 import petBuddy.entity.model.ModelMagmaCube;
 import petBuddy.entity.model.ModelSkellington;
@@ -186,6 +187,8 @@ public class EntityBuddy extends BuddyBase
 			return new ModelMagmaCube();
 		case 31:
 			return new ModelSlime(16); // model from petbuddy, not from vanilla
+		case 32:
+			return new Harpy();
 		default :
 			return new ModelBiped();
 		}
@@ -212,7 +215,7 @@ public class EntityBuddy extends BuddyBase
 		case 8://wither
 			return new ResourceLocation( s+"/wither/wither.png");
 		case 9://rpg spider
-			return new ResourceLocation( "subaraki/mobs/spider.png");
+			return new ResourceLocation( "subaraki","mobs/spider.png");
 		case 10://skeleton
 			return new ResourceLocation( s+"/skeleton/skeleton.png");
 		case 11://wither skeleton
@@ -250,13 +253,15 @@ public class EntityBuddy extends BuddyBase
 		case 27://pigzombie
 			return new ResourceLocation( s+"/zombie_pigman.png");
 		case 28://rpg bull 
-			return new ResourceLocation( "subaraki/mobs/bull.png");
+			return new ResourceLocation( "subaraki","mobs/bull.png");
 		case 29://rpg boar
-			return new ResourceLocation( "subaraki/mobs/boar.png");
+			return new ResourceLocation( "subaraki","mobs/boar.png");
 		case 30://lava slime
 			return new ResourceLocation( s+"/slime/magmacube.png");
 		case 31://slime
 			return new ResourceLocation( s+"/slime/slime.png");
+		case 32://rpg bull 
+			return new ResourceLocation( "subaraki","mobs/harpy.png");
 		default ://Default steve.png
 			return new ResourceLocation( s+"/steve.png");
 		}
@@ -534,11 +539,5 @@ public class EntityBuddy extends BuddyBase
 	public int s (int i){
 		return rand.nextInt(i)+1;
 	}
-
-	//returns a value that can be used in coloring.
-	public float color(float f){
-		return f/255;
-	}
-
 
 }

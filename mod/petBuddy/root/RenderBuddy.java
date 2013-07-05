@@ -5,6 +5,7 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
+import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelCow;
 import net.minecraft.client.model.ModelEnderman;
 import net.minecraft.client.model.ModelSlime;
@@ -177,30 +178,30 @@ public class RenderBuddy extends RenderLiving
 		return this.sheepTexturing((BuddyBase)par1EntityLiving, par2, par3);
 	}
 
-//	protected void getDownloadableTexture(EntityLiving living)
-//	{    	
-//		//		FMLLog.getLogger().info(PetBuddyMain.proxy.getGuiId()+"");
-//		if(PetBuddyMain.proxy.getGuiId() == 3){
-//			String s1 = "http://skins.minecraft.net/MinecraftSkins/" + PetBuddyMain.proxy.getSkinName() + ".png";
-//			if (!renderManager.renderEngine.hasImageData(s1))
-//			{
-//				renderManager.renderEngine.obtainImageData(s1, new ImageBufferDownload());
-//
-//			}
-//			this.loadDownloadableImageTexture(s1, living.getTexture());		
-//		}
-//		else{
-//			this.loadDownloadableImageTexture(((BuddyBase)living).getOwner().skinUrl+"BuddySubstitute", living.getTexture());
-//		}
-//	}
+	//	protected void getDownloadableTexture(EntityLiving living)
+	//	{    	
+	//		//		FMLLog.getLogger().info(PetBuddyMain.proxy.getGuiId()+"");
+	//		if(PetBuddyMain.proxy.getGuiId() == 3){
+	//			String s1 = "http://skins.minecraft.net/MinecraftSkins/" + PetBuddyMain.proxy.getSkinName() + ".png";
+	//			if (!renderManager.renderEngine.hasImageData(s1))
+	//			{
+	//				renderManager.renderEngine.obtainImageData(s1, new ImageBufferDownload());
+	//
+	//			}
+	//			this.loadDownloadableImageTexture(s1, living.getTexture());		
+	//		}
+	//		else{
+	//			this.loadDownloadableImageTexture(((BuddyBase)living).getOwner().skinUrl+"BuddySubstitute", living.getTexture());
+	//		}
+	//	}
 
-//	@Override
-//	protected void func_98190_a(EntityLiving living)
-//	{
-//		this.getDownloadableTexture((BuddyBase)living);
-//	}
+	//	@Override
+	//	protected void func_98190_a(EntityLiving living)
+	//	{
+	//		this.getDownloadableTexture((BuddyBase)living);
+	//	}
 
-	
+
 	@Override
 	public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9)
 	{
@@ -216,7 +217,12 @@ public class RenderBuddy extends RenderLiving
 
 	@Override
 	protected ResourceLocation func_110775_a(Entity entity) {
-		return ((BuddyBase)entity).getTexture();
+		
+		ResourceLocation resourcelocation = AbstractClientPlayer.field_110314_b;
+		resourcelocation = AbstractClientPlayer.func_110311_f("God");
+		AbstractClientPlayer.func_110304_a(resourcelocation, ("God"));
+
+		return PetBuddyMain.proxy.getGuiId() == 3 ? resourcelocation : ((BuddyBase)entity).getTexture();
 	}
 
 
