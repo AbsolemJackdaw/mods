@@ -1,10 +1,10 @@
 package betterbreeds;
 
-import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import betterbreeds.entity.EntityChicken2;
 import betterbreeds.entity.EntityChicken3;
 import betterbreeds.entity.EntityChicken4;
@@ -29,7 +29,6 @@ import betterbreeds.entity.EntityWolf5;
 import betterbreeds.entity.EntityWolf6;
 import betterbreeds.item.ItemCEgg;
 import betterbreeds.item.ItemChocolatPie;
-import betterbreeds.item.ItemDogTag;
 import betterbreeds.item.ItemDough;
 import betterbreeds.item.ItemSheepsMilk;
 import betterbreeds.item.ItemSheppardPie;
@@ -294,5 +293,8 @@ public class ModBreeds{
 
 		TickRegistry.registerScheduledTickHandler(new AiReplacer(), Side.SERVER);
 		proxy.registerRenderInformation();
+		
+		MinecraftForge.EVENT_BUS.register(new OnHorseDeath());
+
 	}
 }
