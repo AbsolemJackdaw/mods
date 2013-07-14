@@ -2,7 +2,7 @@ package gravestone.grave;
 import net.minecraft.client.renderer.ImageBufferDownload;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.client.resources.ResourceLocation;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.StringUtils;
 

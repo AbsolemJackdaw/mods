@@ -42,11 +42,7 @@ public class Charm extends Item{
 	@Override @SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister i) {
 		super.registerIcons(i);
-		//		String texture = getUnlocalizedName().substring(getUnlocalizedName().lastIndexOf(".") + 1);
 		this.itemIcon = i.registerIcon("map_filled");
-		//		FMLLog.getLogger().info("ICON"+itemIcon.toString());
-		//		FMLLog.getLogger().info("ICON"+itemIcon);
-		//		FMLLog.getLogger().info("ICON"+texture);
 
 	}
 

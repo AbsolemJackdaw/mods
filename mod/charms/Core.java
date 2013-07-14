@@ -59,6 +59,11 @@ public class Core {
 		}
 		MinecraftForge.EVENT_BUS.register(new CharmRes());
 		
+	}
+
+	@EventHandler
+	public void load (FMLInitializationEvent e){
+		
 		charmTierI = new Charm(845, 10*2,0xc1c1c1,1).setUnlocalizedName("charmTierI");
 		charmTierII = new Charm(846, 15*2, 0xffe083,2).setUnlocalizedName("charmTierII");
 		charmTierIII = new Charm(847, 30*2, 0xdfd8cf,3).setUnlocalizedName("charmTierIII");
@@ -70,11 +75,6 @@ public class Core {
 		LanguageRegistry.addName(charmTierIII, "Quartz Charm");
 		LanguageRegistry.addName(charmTierIV, "Emerald Charm");
 		LanguageRegistry.addName(charmTierV, "Diamond Charm");
-	}
-
-	@EventHandler
-	public void load (FMLInitializationEvent e){
-		
 
 		GameRegistry.addShapelessRecipe(new ItemStack(charmTierI), new Object[]{Item.paper, new ItemStack(Item.dyePowder, 1, 0), 
 			Item.ingotIron, Item.ingotIron, Item.ingotIron});

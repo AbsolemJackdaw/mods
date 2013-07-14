@@ -6,6 +6,7 @@ import java.util.HashMap;
 import javax.imageio.ImageIO;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelBlaze;
@@ -20,7 +21,7 @@ import net.minecraft.client.model.ModelSpider;
 import net.minecraft.client.model.ModelVillager;
 import net.minecraft.client.model.ModelZombie;
 import net.minecraft.client.renderer.texture.DynamicTexture;
-import net.minecraft.client.resources.ResourceLocation;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLiving;
@@ -56,7 +57,6 @@ public class EntityBuddy extends BuddyBase
 {
 	private float happynessFactorCooldown;
 
-	private boolean hasItem = false;
 	private int findsItemTimer;
 	private Object[][] foundItems;
 	private int[][] foundItemsStackSize;
@@ -69,7 +69,7 @@ public class EntityBuddy extends BuddyBase
 	public EntityBuddy(World par1World)
 	{
 		super(par1World);
-		this.findsItemTimer = this.rand.nextInt(6000) + 9000;
+		this.findsItemTimer = this.rand.nextInt(12000) + 12000;
 		//i hope to prevent any buddies going lost in portals.
 		this.timeUntilPortal = 6000;
 
@@ -82,7 +82,7 @@ public class EntityBuddy extends BuddyBase
 	public EntityBuddy(World par1World, EntityPlayer player)
 	{
 		super(par1World, player);
-		this.findsItemTimer = this.rand.nextInt(6000) + 9000;
+		this.findsItemTimer = this.rand.nextInt(12000) + 12000;
 		this.timeUntilPortal = 6000;
 
 		this.harvestsWithHeldItem = 12000;
@@ -194,8 +194,7 @@ public class EntityBuddy extends BuddyBase
 		}
 	}
 
-	//	@Override
-	//TODO
+	@Override
 	public ResourceLocation getTexture(){
 		String s = "textures/entity";
 
@@ -263,7 +262,7 @@ public class EntityBuddy extends BuddyBase
 		case 32://rpg bull 
 			return new ResourceLocation( "subaraki","mobs/harpy.png");
 		default ://Default steve.png
-			return new ResourceLocation( s+"/steve.png");
+			return new ResourceLocation( s+"/ghast/ghast.png");
 		}
 
 	}
@@ -345,7 +344,7 @@ public class EntityBuddy extends BuddyBase
 
 	@Override
 	public void onLivingUpdate() {
-		if(!this.isRiding() && !this.worldObj.isRemote && this.findsItemTimer >=0){		        
+		if(!(this.ridingEntity instanceof EntityPlayer) && !this.worldObj.isRemote && this.findsItemTimer >=0){		        
 			findsItemTimer --;
 		}else{
 			getEntityData().setInteger("itemTimer", findsItemTimer);
@@ -357,7 +356,7 @@ public class EntityBuddy extends BuddyBase
 				buddySpeak(getOwner(), "Hey, I think I found something !");
 			}
 		}
-		if(findsItemTimer + rand.nextInt(6000)  == 5000){
+		if(findsItemTimer + rand.nextInt(6000)  == 5000 && this.ridingEntity == null){
 			if(!worldObj.isRemote){
 				buddySpeak(getOwner(), "I'm tired... I want to sit on your head...");
 			}
@@ -525,7 +524,7 @@ public class EntityBuddy extends BuddyBase
 		}
 
 		hasItem = false;
-		findsItemTimer = 6000 + rand.nextInt(9000);
+		findsItemTimer =  this.rand.nextInt(12000) + 12000;
 	}
 
 	public void buddySpeak(Entity entity , String text){

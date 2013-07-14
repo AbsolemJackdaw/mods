@@ -85,7 +85,7 @@ public class EntityWolf2 extends EntityTameable
 
     /**
      * Sets the active target the Task system uses for tracking
-     */
+     */ @Override
     public void setAttackTarget(EntityLivingBase par1EntityLiving)
     {
         super.setAttackTarget(par1EntityLiving);
@@ -98,17 +98,19 @@ public class EntityWolf2 extends EntityTameable
 
     /**
      * main AI tick function, replaces updateEntityActionState
-     */
+     */@Override
     protected void updateAITick()
     {
         this.dataWatcher.updateObject(18, Float.valueOf(this.func_110143_aJ()));
     }
-
-    public int getMaxHealth()
-    {
-        return this.isTamed() ? 20 : 8;
-    }
-
+     
+//     @Override
+//    public int getMaxHealth()
+//    {
+//        return this.isTamed() ? 20 : 8;
+//    }
+     
+     @Override
     protected void entityInit()
     {
         super.entityInit();
@@ -117,9 +119,11 @@ public class EntityWolf2 extends EntityTameable
         this.dataWatcher.addObject(20, new Byte((byte)BlockColored.getBlockFromDye(1)));
         this.dataWatcher.addObject(23, "");
     }
+    
 	public String getName(){
 		return this.dataWatcher.getWatchableObjectString(23);
 	}
+	
 	public void setName(String name){
 	this.dataWatcher.updateObject(23,name);
 	}

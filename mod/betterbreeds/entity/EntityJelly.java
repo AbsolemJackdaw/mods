@@ -24,7 +24,7 @@ public class EntityJelly extends EntityTameable
 		this.getNavigator().setAvoidsWater(true);
 		this.tasks.addTask(1, new EntityAISwimming(this));
 		this.tasks.addTask(2, this.aiSit);
-		this.tasks.addTask(5, new EntityAIFollowOwner(this, 0.5d, 10.0F, 2.0F));
+		this.tasks.addTask(5, new EntityAIFollowOwner(this, 0.5f, 10.0F, 2.0F));
 		this.tasks.addTask(9, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
 		this.tasks.addTask(9, new EntityAILookIdle(this));
 	}

@@ -8,7 +8,7 @@ import java.io.ObjectOutput;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
-import net.minecraft.client.resources.ResourceLocation;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.network.packet.Packet250CustomPayload;
@@ -137,7 +137,7 @@ public class PetInterface extends GuiScreen {
 				else if (thePlayer.getCurrentEquippedItem().getItem().equals(Item.leather))
 					skinfield = new GuiTextField(fontRenderer, (posX-posX/2) + 70/2 , posY-50, 150, 20);
 				if(skinfield != null){
-					skinfield.setText(skin);
+					skinfield.setText("BROKEN"); //TODO rechange
 					skinfield.setMaxStringLength(32);
 				}
 

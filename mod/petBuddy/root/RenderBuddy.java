@@ -12,11 +12,11 @@ import net.minecraft.client.model.ModelSlime;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.texture.DynamicTexture;
-import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.Potion;
+import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
@@ -117,7 +117,8 @@ public class RenderBuddy extends RenderLiving
 			} catch (IOException c) {
 				c.printStackTrace();
 			}
-			renderPassTexture.func_110564_a();			float f1 = 1.0F;
+			renderPassTexture.func_110564_a();			
+			float f1 = 1.0F;
 			GL11.glEnable(GL11.GL_BLEND);
 			GL11.glDisable(GL11.GL_ALPHA_TEST);
 			GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE);
@@ -178,6 +179,61 @@ public class RenderBuddy extends RenderLiving
 		return this.sheepTexturing((BuddyBase)par1EntityLiving, par2, par3);
 	}
 
+//	protected void getDownloadableTexture(Entity living)
+//	{    	
+//		if(PetBuddyMain.proxy.getGuiId() == 3 && living instanceof BuddyBase){
+//			ResourceLocation resourcelocation = AbstractClientPlayer.field_110314_b;
+//			BuddyBase buddy = (BuddyBase)living;
+//			if(PetBuddyMain.proxy.getSkinName().equals(buddy.getOwnerName())){
+//				resourcelocation.func_110623_a();
+//			}else{
+//				if ( buddy.getOwnerName()!= null && buddy.getOwnerName().length() > 0)
+//				{
+//					resourcelocation = AbstractClientPlayer.func_110311_f(buddy.getOwnerName());
+//					AbstractClientPlayer.func_110304_a(resourcelocation, buddy.getOwnerName());
+//					this.applyDownloadTexture(resourcelocation);
+//				}
+//			}
+//		}
+//	}
+//
+//	private void applyDownloadTexture(ResourceLocation par1ResourceLocation)
+//	{
+//		TextureManager texturemanager = this.renderManager.renderEngine;
+//
+//		if (texturemanager != null)
+//		{
+//			texturemanager.func_110577_a(par1ResourceLocation);
+//		}
+//	}
+
+	//	@Override
+	//	protected void func_98190_a(EntityLiving living)
+	//	{
+	//		this.getDownloadableTexture((BuddyBase)living);
+	//	}
+
+	
+	@Override
+	public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9)
+	{
+		BuddyBase pet = (BuddyBase)par1Entity;
+		this.renderCow((BuddyBase)par1Entity, par2, par4, par6, par8, par9);
+		String petname = ((EntityBuddy)pet).getName().equals("null")?pet.getOwnerName()+ "'s Buddy" : ((EntityBuddy)pet).getName();
+
+		if(pet.isRiding())
+			this.renderLivingLabel(pet, petname , par2, par4-pet.getHeight() -1f, par6, 32);
+		else
+			this.renderLivingLabel(pet, petname , par2, par4-pet.getHeight() , par6, 32);
+	}
+
+	@Override
+	protected ResourceLocation func_110775_a(Entity entity) {
+		
+		BuddyBase pet = (BuddyBase)entity;
+		return PetBuddyMain.proxy.getGuiId() ==3 ? AbstractClientPlayer.func_110311_f(pet.getOwnerName()): pet.getTexture();
+	}
+
 	//	protected void getDownloadableTexture(EntityLiving living)
 	//	{    	
 	//		//		FMLLog.getLogger().info(PetBuddyMain.proxy.getGuiId()+"");
@@ -196,35 +252,10 @@ public class RenderBuddy extends RenderLiving
 	//	}
 
 	//	@Override
-	//	protected void func_98190_a(EntityLiving living)
-	//	{
-	//		this.getDownloadableTexture((BuddyBase)living);
-	//	}
-
-
-	@Override
-	public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9)
-	{
-		BuddyBase pet = (BuddyBase)par1Entity;
-		this.renderCow((BuddyBase)par1Entity, par2, par4, par6, par8, par9);
-		String petname = ((EntityBuddy)pet).getName().equals("null")?pet.getOwnerName()+ "'s Buddy" : ((EntityBuddy)pet).getName();
-
-		if(pet.isRiding())
-			this.renderLivingLabel(pet, petname , par2, par4-pet.getHeight() -1f, par6, 32);
-		else
-			this.renderLivingLabel(pet, petname , par2, par4-pet.getHeight() , par6, 32);
-	}
-
-	@Override
-	protected ResourceLocation func_110775_a(Entity entity) {
-		
-		ResourceLocation resourcelocation = AbstractClientPlayer.field_110314_b;
-		resourcelocation = AbstractClientPlayer.func_110311_f("God");
-		AbstractClientPlayer.func_110304_a(resourcelocation, ("God"));
-
-		return PetBuddyMain.proxy.getGuiId() == 3 ? resourcelocation : ((BuddyBase)entity).getTexture();
-	}
-
+	//		protected void func_98190_a(EntityLiving living)
+	//		{
+	//			this.getDownloadableTexture((BuddyBase)living);
+	//		}
 
 
 }

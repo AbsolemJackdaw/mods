@@ -95,11 +95,11 @@ public class ModBreeds{
 	{
 		BBT = new BBTab(CreativeTabs.getNextID(), "BreedTab");
 
-		Sheepmilk = new ItemSheepsMilk(BreedsConfig.instance.milk, 6, 0.3F, false).setUnlocalizedName("a.milk").setContainerItem(Item.bucketEmpty).setCreativeTab(BBT);
+		Sheepmilk = new ItemSheepsMilk(BreedsConfig.instance.milk, 6, 0.3F, false).setUnlocalizedName("a.bucket_milk").setContainerItem(Item.bucketEmpty).setCreativeTab(BBT);
 		Sheepraw =  new ItemSubsFood(BreedsConfig.instance.sheepraw, 2, 0.2F, false).setUnlocalizedName("sheepRaw").setCreativeTab(BBT);
 		Sheepcooked = new ItemSubsFood(BreedsConfig.instance.sheep,6,  1F, true).setUnlocalizedName("sheepCooked").setCreativeTab(BBT);
 		SheppardsPie = new ItemSheppardPie(BreedsConfig.instance.meatpie).setUnlocalizedName("pie").setCreativeTab(BBT);
-		PastryDough = new ItemDough(BreedsConfig.instance.dough).setUnlocalizedName("a.clay").setCreativeTab(BBT);
+		PastryDough = new ItemDough(BreedsConfig.instance.dough).setUnlocalizedName("a.clay_ball").setCreativeTab(BBT);
 		EasterEgg = new ItemCEgg(BreedsConfig.instance.Cegg).setUnlocalizedName("a.egg").setCreativeTab(BBT);
 		ChocolatePie = new ItemChocolatPie(BreedsConfig.instance.pieC).setUnlocalizedName("pieCocoa").setCreativeTab(BBT);
 		SweetBread = new ItemSubsFood(BreedsConfig.instance.bread,  6 , 0.8F, false).setUnlocalizedName("breadSweet").setCreativeTab(BBT);

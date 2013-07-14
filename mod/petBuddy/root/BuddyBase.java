@@ -8,7 +8,7 @@ import java.io.ObjectOutput;
 import net.minecraft.block.Block;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.texture.DynamicTexture;
-import net.minecraft.client.resources.ResourceLocation;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.ai.EntityAIFollowOwner;
@@ -47,6 +47,8 @@ public abstract class BuddyBase extends EntityTameable
 	public float field_70811_b;
 	public float field_70812_c;
 	private int slimeJumpDelay = 0;
+
+	protected boolean hasItem = false;
 
 	//	private int guiID;
 	public BuddyBase(World par1World)
@@ -290,7 +292,7 @@ public abstract class BuddyBase extends EntityTameable
 	@Override
 	public boolean interact(EntityPlayer player)
 	{
-		if(player.inventory.getCurrentItem() != null){
+		if(player.inventory.getCurrentItem() != null && !player.capabilities.isCreativeMode && hasItem == false){
 			ItemStack is = player.inventory.getCurrentItem();
 			Item item = is.getItem();
 
@@ -420,7 +422,6 @@ public abstract class BuddyBase extends EntityTameable
 				player.addStat(PetBuddyMain.slime, 1);
 			}
 		}
-
 		return super.interact(player);
 	}
 
