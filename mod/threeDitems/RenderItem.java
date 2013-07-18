@@ -204,7 +204,7 @@ public class RenderItem
 
 	public void addCart(Item item, float scale, float inWorldScale)
 	{
-		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(new ModelMinecart(), "/subaraki/3d/stick.png",
+		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(new ModelMinecart(), "/assets/minecraft/textures/entity/minecart.png",
 				0.25F, 0.2F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, scale, inWorldScale));
 	}
 

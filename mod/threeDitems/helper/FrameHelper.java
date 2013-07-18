@@ -1,10 +1,15 @@
 package threeDitems.helper;
 
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.entity.Entity;
@@ -17,25 +22,29 @@ import org.lwjgl.opengl.GL11;
 public class FrameHelper extends Render
 {
 	private final RenderBlocks renderBlocksInstance = new RenderBlocks();
-	private Icon icon;
-
-	public void updateIcons(IconRegister par1IconRegister)
-	{
-		this.icon = par1IconRegister.registerIcon("itemframe_back");
-	} 
+	DynamicTexture icon;
 
 	public void renderFrameItemAsBlock(RenderBlocks renderBlocksInstance, Item item)
 	{
 		GL11.glPushMatrix();
-		Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation("/terrain.png"));
-		//textures/blocks/itemframe_back.png
+		try {
+			icon = new DynamicTexture(ImageIO.read(getClass().getResourceAsStream("/assets/minecraft/textures/blocks/planks_oak.png")));
+		} catch (IOException c) {
+			c.printStackTrace();
+		}
+		icon.func_110564_a();
 		Block block = Block.planks;
 		float f = 0.0625F;
 		float f1 = 0.75F;
 		float f2 = f1 / 2.0F;
 
 		GL11.glPushMatrix();
-		Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation("/textures/blocks/itemframe_back.png"));
+		try {
+			icon = new DynamicTexture(ImageIO.read(getClass().getResourceAsStream("/assets/minecraft/textures/blocks/itemframe_background.png")));
+		} catch (IOException c) {
+			c.printStackTrace();
+		}
+		icon.func_110564_a();	
 		GL11.glRotatef(0, 0.0f, 0.0f, 1.0f);
 		GL11.glRotatef(90, 0.0f, 1.0f, 0.0f);
 		GL11.glRotatef(0, 1.0f, 0.0f, 0.0f);
@@ -48,8 +57,12 @@ public class FrameHelper extends Render
 	}
 
 	public void renderFrame(Block block, float f2, float f){
-		Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation("/terrain.png"));
-		renderBlocksInstance.setOverrideBlockTexture(Block.planks.getIcon(1, 2));
+		try {
+			icon = new DynamicTexture(ImageIO.read(getClass().getResourceAsStream("/assets/minecraft/textures/blocks/planks_birch.png")));
+		} catch (IOException c) {
+			c.printStackTrace();
+		}
+		icon.func_110564_a();		
 		GL11.glPushMatrix();
 		renderBlocksInstance.overrideBlockBounds(0.0D, (double)(0.5F - f2), (double)(0.5F - f2), (double)(f + 1.0E-4F), (double)(f + 0.5F - f2), (double)(0.5F + f2));
 		renderBlocksInstance.renderBlockAsItem(block, 0, 1.0F);
@@ -88,7 +101,6 @@ public class FrameHelper extends Render
 
 	@Override
 	protected ResourceLocation func_110775_a(Entity entity) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

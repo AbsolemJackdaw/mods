@@ -1,4 +1,6 @@
 package gravestone.grave;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.ImageBufferDownload;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -85,27 +87,23 @@ public class TEGraveSpecial extends TileEntitySpecialRenderer // because your bl
 
 		model.renderModel(0.0625F); //renders and 0.0625F is exactly 1/16. every block has 16 entities/pixels. if you make the number 1, every pixel will be as big as a block. make it 0.03125 and your block will be half as big as a normal one.
 		GL11.glPopMatrix(); //end
-		
+
 		GL11.glPushMatrix();
 		GL11.glTranslatef((float)d + 0.5F, (float)d1 + 1.5F, (float)d2 + 0.5F); 
 		GL11.glScalef(0.7F, -0.7F, -0.7F);
 		if(tile != null)
-		{
-//			if (tile.playername != null && tile.playername.length() > 0)
-//			{
-//				String s1 = "http://skins.minecraft.net/MinecraftSkins/" + StringUtils.stripControlCodes(tile.playername) + ".png";
-//
-//				if (!teRender.tileEntityRenderer.renderEngine.hasImageData(s1))
-//				{
-//					teRender.tileEntityRenderer.renderEngine.obtainImageData(s1, new ImageBufferDownload());
-//				}
-//
-//				this.bindTextureByURL(s1, "/mob/char.png"));
-//			}
-//			else
-//			{
-//				this.tileEntityRenderer.renderEngine.func_110577_a(new ResourceLocation("/mob/char.png"));
-//			}		
+		{			
+			ResourceLocation resourcelocation = AbstractClientPlayer.field_110314_b;
+			if (tile.playername != null && tile.playername.length() > 0)
+			{
+				resourcelocation = AbstractClientPlayer.func_110305_h(tile.playername);
+				AbstractClientPlayer.func_110304_a(resourcelocation, tile.playername);
+
+			}else{
+				resourcelocation = new ResourceLocation( "textures/entity/steve.png");
+			}
+			Minecraft.getMinecraft().renderEngine.func_110577_a(resourcelocation);
+			
 			switch(tile.theMeta)
 			{
 			case 5:
@@ -141,39 +139,42 @@ public class TEGraveSpecial extends TileEntitySpecialRenderer // because your bl
 	}
 
 	private void switchTexture(int theMeta) {
+		ResourceLocation resourcelocation = null;
 		switch(theMeta)
 		{
 		case 1:
-			this.tileEntityRenderer.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravestone.png"));
+			resourcelocation =new ResourceLocation("subaraki","/gravestone.png");
 			break;
 		case 2:
-			this.tileEntityRenderer.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravezerk.png"));
+			resourcelocation =new ResourceLocation("subaraki","/gravezerk.png");
 			break;
 		case 3 :
-			this.tileEntityRenderer.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravestone.png"));
+			resourcelocation =new ResourceLocation("subaraki","/gravestone.png");
 			break;
 		case 4:
-			this.tileEntityRenderer.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravepillar.png"));
+			resourcelocation =new ResourceLocation("subaraki","/gravepillar.png");
 			break;
 		case 5:
-			this.tileEntityRenderer.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravepillar.png"));
+			resourcelocation =new ResourceLocation("subaraki","/gravepillar.png");
 			break;
 		case 6:
-			this.tileEntityRenderer.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravewood.png"));
+			resourcelocation =new ResourceLocation("subaraki","/gravewood.png");
 			break;
 		case 7:
-			this.tileEntityRenderer.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravepillar.png"));
+			resourcelocation =new ResourceLocation("subaraki","/gravepillar.png");
 			break;
 		case 8:
-			this.tileEntityRenderer.renderEngine.func_110577_a(new ResourceLocation("/subaraki/Angel.png"));
+			resourcelocation =new ResourceLocation("subaraki","/Angel.png");
 			break;
 		case 9:
-			this.tileEntityRenderer.renderEngine.func_110577_a(new ResourceLocation("/subaraki/knight.png"));
+			resourcelocation =new ResourceLocation("subaraki","/knight.png");
 			break;
 		default:
-			this.tileEntityRenderer.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravestone.png"));
+			resourcelocation =new ResourceLocation("subaraki","/gravestone.png");
 			break;
 		}
+		this.func_110628_a(resourcelocation);
+
 	}
 
 	@Override

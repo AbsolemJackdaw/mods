@@ -1,9 +1,14 @@
 package threeDitems.helper;
 
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.entity.RenderBiped;
 import net.minecraft.client.renderer.entity.RenderPlayer;
+import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.Item;
@@ -19,7 +24,7 @@ import com.google.common.collect.ObjectArrays;
 
 public class ArmorHelper {
 
-
+	DynamicTexture icon;
 	/**
 	 * Set the specified armor model as the player model. Args: player, armorSlot, partialTick
 	 */
@@ -33,7 +38,8 @@ public class ArmorHelper {
 			if (item instanceof ItemArmor)
 			{
 				ItemArmor itemarmor = (ItemArmor)item;
-				Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation(ForgeHooksClient.getArmorTexture(null, itemstack, "/armor/" + armor + "_" + (par2 == 2 ? 2 : 1) + ".png", par2, par2, armor)));
+				Minecraft.getMinecraft().renderEngine.func_110577_a(RenderBiped.getArmorResource(null, itemstack, par2, null));
+				
 				boolean for0 = par2 == 0;
 				boolean for1 = par2 == 1;
 				boolean for2 = par2 == 2;

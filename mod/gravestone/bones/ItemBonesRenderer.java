@@ -18,15 +18,12 @@ public class ItemBonesRenderer implements IItemRenderer {
 	public boolean handleRenderType(ItemStack item, ItemRenderType type) {
 		switch(type)
 		{
-                    case  EQUIPPED: return true;
-//                  case  EQUIPPED_FIRST_PERSON: return true; 1.5.2 Enum
-                    case ENTITY: return true;
-                    case INVENTORY: return true;
-                    default: 
-                        if("EQUIPPED_FIRST_PERSON".equals(type.name())){
-                            return true;
-                        }
-                    return false;
+		case  EQUIPPED: return true;
+		case  EQUIPPED_FIRST_PERSON: return true;
+		case ENTITY: return true;
+		case INVENTORY: return true;
+		default: 
+			return false;
 		}
 	}
 
@@ -54,15 +51,15 @@ public class ItemBonesRenderer implements IItemRenderer {
 
 			GL11.glPopMatrix();
 			break;
-//		case  EQUIPPED_FIRST_PERSON: //new 1.5.2 feature added 1.5.1 compat
-//			GL11.glPushMatrix();
-//			GL11.glRotatef(45, 0.0f, 0.0f, 1.0f);
-//			GL11.glRotatef(-10, 1.0f, 0.0f, 0.0f);
-//			GL11.glTranslatef(0.5F, 0.0F, -0.5F);
-//			TileEntityRenderer.instance.renderTileEntityAt(te, 0.0D, 0.0D, 0.0D, 0.0F);
-//
-//			GL11.glPopMatrix();
-//			break;
+		case  EQUIPPED_FIRST_PERSON:
+			GL11.glPushMatrix();
+			GL11.glRotatef(45, 0.0f, 0.0f, 1.0f);
+			GL11.glRotatef(-10, 1.0f, 0.0f, 0.0f);
+			GL11.glTranslatef(0.5F, 0.0F, -0.5F);
+			TileEntityRenderer.instance.renderTileEntityAt(te, 0.0D, 0.0D, 0.0D, 0.0F);
+
+			GL11.glPopMatrix();
+			break;
 		case ENTITY:
 			TileEntityRenderer.instance.renderTileEntityAt(te, 0.0D, 0.0D, 0.0D, 0.0F);
 			break;
@@ -75,15 +72,6 @@ public class ItemBonesRenderer implements IItemRenderer {
 			GL11.glPopMatrix();
 			break;
 		default:
-                        if("EQUIPPED_FIRST_PERSON".equals(type.name())){
-                                GL11.glPushMatrix();
-                                GL11.glRotatef(45, 0.0f, 0.0f, 1.0f);
-                                GL11.glRotatef(-10, 1.0f, 0.0f, 0.0f);
-                                GL11.glTranslatef(0.5F, 0.0F, -0.5F);
-                                TileEntityRenderer.instance.renderTileEntityAt(te, 0.0D, 0.0D, 0.0D, 0.0F);
-
-                                GL11.glPopMatrix();
-                        }
 			break;
 
 		}		

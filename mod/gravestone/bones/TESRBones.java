@@ -31,7 +31,7 @@ public class TESRBones extends TileEntitySpecialRenderer {
 		GL11.glTranslatef((float)d + 0.5F, (float)d1 + 1.5F, (float)d2 + 0.5F); 
 		GL11.glScalef(1.0F, -1.0F, -1.0F);
 		GL11.glRotatef(0+rot, 0.0F, 1.0F, 0.0F);
-			this.tileEntityRenderer.renderEngine.func_110577_a(new ResourceLocation("/subaraki/skull.png"));
+			this.tileEntityRenderer.renderEngine.func_110577_a(new ResourceLocation("subaraki","/skull.png"));
 		bones.render(0.0625f);
 		GL11.glPopMatrix();
 
@@ -44,9 +44,9 @@ public class TESRBones extends TileEntitySpecialRenderer {
 			
 			icon = bone.texture;
 			if(icon.length() >0)
-					this.tileEntityRenderer.renderEngine.func_110577_a(new ResourceLocation("/textures/blocks/"+icon+".png"));
+					this.tileEntityRenderer.renderEngine.func_110577_a(new ResourceLocation("textures/blocks/"+icon+".png"));
 			else
-					this.tileEntityRenderer.renderEngine.func_110577_a(new ResourceLocation("/textures/blocks/dirt.png"));
+					this.tileEntityRenderer.renderEngine.func_110577_a(new ResourceLocation("textures/blocks/dirt.png"));
 		}
 
 		

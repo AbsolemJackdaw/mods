@@ -144,15 +144,15 @@ public class clp extends cmp
 		RenderItem.inst.addFish(Item.fishRaw,"/subaraki/3d/fish.png",0.5f,0.5f);
 		RenderItem.inst.addFish(Item.fishCooked,"/subaraki/3d/fishCooked.png",0.5f,0.5f);
 
-		RenderItem.inst.addBlock(Item.cake,Block.cake,"/terrain.png",0.5f,1.0f);
-		RenderItem.inst.addBlock(Item.reed,Block.reed,"/terrain.png",0.5f,1.0f);
+		RenderItem.inst.addBlock(Item.cake,Block.cake,"/assets/minecraft/textures/blocks/cake_top.png",0.5f,1.0f);
+		RenderItem.inst.addBlock(Item.reed,Block.reed,"/assets/minecraft/textures/blocks/reeds.png",0.5f,1.0f);
 
 		//broke for some odd reason.
-		//				RenderItem.inst.addBlock(Item.cauldron,Block.cauldron,"/terrain.png",1.0f,1.0f);
-		//				RenderItem.inst.addBlock(Item.redstoneRepeater,Block.redstoneRepeaterIdle,"/terrain.png",1.0f,1.0f);
-		//				RenderItem.inst.addBlock(Item.comparator,Block.redstoneComparatorIdle,"/terrain.png",1.0f,1.0f);
-		//				RenderItem.inst.addBlock(Item.brewingStand,Block.brewingStand,"/terrain.png",1.0f,1.0f);
-		//		RenderItem.inst.addBlock(Item.flowerPot,Block.flowerPot,"/terrain.png",1.0f,1.0f);
+		//		RenderItem.inst.addBlock(Item.cauldron,Block.cauldron,"/assets/minecraft/textures/blocks/reeds.png",1.0f,1.0f);
+		//		RenderItem.inst.addBlock(Item.redstoneRepeater,Block.redstoneRepeaterIdle,"/assets/minecraft/textures/blocks/reeds.png",1.0f,1.0f);
+		//		RenderItem.inst.addBlock(Item.comparator,Block.redstoneComparatorIdle,"/assets/minecraft/textures/blocks/reeds.png",1.0f,1.0f);
+		//		RenderItem.inst.addBlock(Item.brewingStand,Block.brewingStand,"/assets/minecraft/textures/blocks/reeds.png",1.0f,1.0f);
+		//		RenderItem.inst.addBlock(Item.flowerPot,Block.flowerPot,"/assets/minecraft/textures/blocks/reeds.png",1.0f,1.0f);
 
 		RenderItem.inst.addDoor(Item.doorWood, "/subaraki/3d/doorWood.png",2,2);
 		RenderItem.inst.addDoor(Item.doorIron, "/subaraki/3d/doorIron.png",2,2);
@@ -176,20 +176,20 @@ public class clp extends cmp
 
 		RenderItem.inst.addBriquet(Item.flintAndSteel, "/subaraki/3d/flintNSteel.png", 0.7f,1.0f);
 
-		RenderItem.inst.addSign(Item.sign, "/item/sign.png", 0.5f,0.9f);
+		RenderItem.inst.addSign(Item.sign, "/assets/minecraft/textures/entity/sign.png", 0.5f,0.9f);
 
 		RenderItem.inst.addPainting(Item.painting, "/subaraki/3d/painting.png", 0.6f, 1.0f);
 
 		RenderItem.inst.addStraightStick(Item.blazeRod, "/subaraki/3d/BlazeRod.png", 1.2f, 1.5f);
-		
+
 		RenderItem.inst.addCoal(Item.coal, "/subaraki/3d/coal.png", 0.7f, 1.0f);
 
 		RenderItem.inst.addEgg(Item.egg,"/subaraki/3d/egg.png", 0.6f,0.6f);
 
-		RenderItem.inst.addBoat(Item.boat,"/item/boat.png", 0.5f,1.0f);
+		RenderItem.inst.addBoat(Item.boat,"/assets/minecraft/textures/entity/boat.png", 0.5f,1.0f);
 
 		RenderItem.inst.addFrame(Item.itemFrame, 1,1);
-		
+
 		RenderItem.inst.addBed(Item.bed,"/subaraki/3d/bed.png",0.5f,1.0f);
 
 		RenderItem.inst.addBone(Item.bone,"/subaraki/3d/bone.png",1,1);

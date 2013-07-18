@@ -4,12 +4,12 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
 
 import org.lwjgl.opengl.GL11;
@@ -21,8 +21,6 @@ import threeDitems.helper.MinecartHelper;
 import threeDitems.models.bottle;
 
 import com.google.common.collect.ObjectArrays;
-
-import cpw.mods.fml.common.FMLLog;
 
 public class Render3d implements IItemRenderer {
 

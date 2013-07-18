@@ -28,7 +28,7 @@ public class BuddyClientProxy extends BuddyCommonProxy{
 	private float HappynessFactor;
 
 
-	String name = "null";
+	String name = "MyPetBuddy";
 	public String getName(){
 		return name;
 	}
@@ -36,7 +36,7 @@ public class BuddyClientProxy extends BuddyCommonProxy{
 		name = n;
 	}
 
-	String skin = "null";
+	String skin = "-none-";
 	public String getSkinName(){
 		return skin;
 	}
@@ -127,7 +127,7 @@ public class BuddyClientProxy extends BuddyCommonProxy{
 					PETNBT.setFloat("pet_dragon_color1:"+username, 0);
 					PETNBT.setFloat("pet_dragon_color2:"+username, 0);
 					PETNBT.setFloat("pet_dragon_color3:"+username, 0);
-					PETNBT.setString("pet_name:"+username, "null");
+					PETNBT.setString("pet_name:"+username, "MyPetBuddy");
 					return PETNBT;
 				}
 			}
@@ -167,7 +167,7 @@ public class BuddyClientProxy extends BuddyCommonProxy{
 					PETNBT.setFloat("pet_dragon_color1:"+username, 0);
 					PETNBT.setFloat("pet_dragon_color2:"+username, 0);
 					PETNBT.setFloat("pet_dragon_color3:"+username, 0);
-					PETNBT.setString("pet_name:"+username, "null");
+					PETNBT.setString("pet_name:"+username, "MyPetBuddy");
 					PETNBT.setString("pet_skin:"+username, "no skin selected");
 
 					return PETNBT;
@@ -204,8 +204,8 @@ public class BuddyClientProxy extends BuddyCommonProxy{
 					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_dragon_color1:"+username, 0);
 					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_dragon_color2:"+username, 0);
 					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_dragon_color3:"+username, 0);
-					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setString("pet_name:"+username, "null");
-					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setString("pet_skin:"+username, "no skin");
+					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setString("pet_name:"+username, "MyPetBuddy");
+					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setString("pet_skin:"+username, "-none-");
 
 				}
 			}
@@ -234,8 +234,8 @@ public class BuddyClientProxy extends BuddyCommonProxy{
 					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_dragon_color1:"+username, 0);
 					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_dragon_color2:"+username, 0);
 					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setFloat("pet_dragon_color3:"+username, 0);
-					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setString("pet_name:"+username, "null");
-					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setString("pet_skin:"+username, "no skin");
+					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setString("pet_name:"+username, "MyPetBuddy");
+					player.getEntityData().getCompoundTag(player.PERSISTED_NBT_TAG).setString("pet_skin:"+username, "-none-");
 
 				}
 			}

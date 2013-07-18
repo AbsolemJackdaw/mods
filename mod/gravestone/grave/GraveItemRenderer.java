@@ -20,15 +20,12 @@ public class GraveItemRenderer implements IItemRenderer {
 	public boolean handleRenderType(ItemStack item, ItemRenderType type) {
 		switch(type)
 		{
-                    case  EQUIPPED: return true;
-//		case  EQUIPPED_FIRST_PERSON: return true; 1.5.2 feature
-                    case ENTITY: return true;
-                    case INVENTORY: return true;
-                    default: 
-                        if("EQUIPPED_FIRST_PERSON".equals(type.name())){
-                            return true;
-                        }
-                        return false;
+		case  EQUIPPED: return true;
+		case  EQUIPPED_FIRST_PERSON: return true;
+		case ENTITY: return true;
+		case INVENTORY: return true;
+		default: 
+			return false;
 		}
 	}
 
@@ -66,25 +63,25 @@ public class GraveItemRenderer implements IItemRenderer {
 
 			GL11.glPopMatrix();
 			break;
-//		case  EQUIPPED_FIRST_PERSON:
-//			GL11.glPushMatrix();
-//			grave.showBasic(true);
-//			grave.showZerk(false);
-//			grave.showTomb(false);
-//			grave.showPillar(false);
-//			grave.renderSkeleton(false);
-//			grave.renderCross(false);
-//			grave.renderAngel(false);
-//			grave.renderKnight(false);
-//
-//			GL11.glRotatef(30, 0.0f, 0.0f, 1.0f);
-//			GL11.glRotatef(-10, 1.0f, 0.0f, 0.0f);
-//
-//			GL11.glTranslatef(0.1F, -0.2F, -0.6F);
-//			TileEntityRenderer.instance.renderTileEntityAt(new TEGrave(), 0.0D, 0.0D, 0.0D, 0.0F);
-//
-//			GL11.glPopMatrix();
-//			break;
+			//		case  EQUIPPED_FIRST_PERSON:
+			//			GL11.glPushMatrix();
+			//			grave.showBasic(true);
+			//			grave.showZerk(false);
+			//			grave.showTomb(false);
+			//			grave.showPillar(false);
+			//			grave.renderSkeleton(false);
+			//			grave.renderCross(false);
+			//			grave.renderAngel(false);
+			//			grave.renderKnight(false);
+			//
+			//			GL11.glRotatef(30, 0.0f, 0.0f, 1.0f);
+			//			GL11.glRotatef(-10, 1.0f, 0.0f, 0.0f);
+			//
+			//			GL11.glTranslatef(0.1F, -0.2F, -0.6F);
+			//			TileEntityRenderer.instance.renderTileEntityAt(new TEGrave(), 0.0D, 0.0D, 0.0D, 0.0F);
+			//
+			//			GL11.glPopMatrix();
+			//			break;
 		case ENTITY:
 			TileEntityRenderer.instance.renderTileEntityAt(new TEGrave(), 0.0D, 0.0D, 0.0D, 0.0F);
 			break;
@@ -104,25 +101,25 @@ public class GraveItemRenderer implements IItemRenderer {
 			GL11.glPopMatrix();
 			break;
 		default:
-                        if("EQUIPPED_FIRST_PERSON".equals(type.name())){
-                            GL11.glPushMatrix();
-                            grave.showBasic(true);
-                            grave.showZerk(false);
-                            grave.showTomb(false);
-                            grave.showPillar(false);
-                            grave.renderSkeleton(false);
-                            grave.renderCross(false);
-                            grave.renderAngel(false);
-                            grave.renderKnight(false);
+			if("EQUIPPED_FIRST_PERSON".equals(type.name())){
+				GL11.glPushMatrix();
+				grave.showBasic(true);
+				grave.showZerk(false);
+				grave.showTomb(false);
+				grave.showPillar(false);
+				grave.renderSkeleton(false);
+				grave.renderCross(false);
+				grave.renderAngel(false);
+				grave.renderKnight(false);
 
-                            GL11.glRotatef(30, 0.0f, 0.0f, 1.0f);
-                            GL11.glRotatef(-10, 1.0f, 0.0f, 0.0f);
+				GL11.glRotatef(30, 0.0f, 0.0f, 1.0f);
+				GL11.glRotatef(-10, 1.0f, 0.0f, 0.0f);
 
-                            GL11.glTranslatef(0.1F, -0.2F, -0.6F);
-                            TileEntityRenderer.instance.renderTileEntityAt(new TEGrave(), 0.0D, 0.0D, 0.0D, 0.0F);
+				GL11.glTranslatef(0.1F, -0.2F, -0.6F);
+				TileEntityRenderer.instance.renderTileEntityAt(new TEGrave(), 0.0D, 0.0D, 0.0D, 0.0F);
 
-                            GL11.glPopMatrix();
-                        }
+				GL11.glPopMatrix();
+			}
 
 		}		
 	}

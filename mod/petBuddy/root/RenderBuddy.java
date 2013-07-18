@@ -5,6 +5,7 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelCow;
 import net.minecraft.client.model.ModelEnderman;
@@ -225,13 +226,30 @@ public class RenderBuddy extends RenderLiving
 			this.renderLivingLabel(pet, petname , par2, par4-pet.getHeight() -1f, par6, 32);
 		else
 			this.renderLivingLabel(pet, petname , par2, par4-pet.getHeight() , par6, 32);
+		
+		
 	}
 
 	@Override
 	protected ResourceLocation func_110775_a(Entity entity) {
-		
 		BuddyBase pet = (BuddyBase)entity;
-		return PetBuddyMain.proxy.getGuiId() ==3 ? AbstractClientPlayer.func_110311_f(pet.getOwnerName()): pet.getTexture();
+		
+		if(PetBuddyMain.proxy.getGuiId() ==3){
+			ResourceLocation resourcelocation = AbstractClientPlayer.field_110314_b;
+			if (PetBuddyMain.proxy.getSkinName() != null && PetBuddyMain.proxy.getSkinName().length() > 0)
+			{
+				resourcelocation = AbstractClientPlayer.func_110305_h(PetBuddyMain.proxy.getSkinName());
+				AbstractClientPlayer.func_110304_a(resourcelocation, PetBuddyMain.proxy.getSkinName());
+
+			}else{
+				resourcelocation = new ResourceLocation( "textures/entity/steve.png");
+			}
+			Minecraft.getMinecraft().renderEngine.func_110577_a(resourcelocation);
+			return resourcelocation;
+		}
+		else{
+			return pet.getTexture();
+		}
 	}
 
 	//	protected void getDownloadableTexture(EntityLiving living)

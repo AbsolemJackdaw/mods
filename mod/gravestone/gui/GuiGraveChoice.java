@@ -10,13 +10,13 @@ import java.io.IOException;
 import java.io.ObjectOutput;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.packet.Packet250CustomPayload;
-import net.minecraft.util.StringUtils;
+import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
@@ -50,7 +50,7 @@ public class GuiGraveChoice extends GuiScreen {
 			render = mod_Gravestone.proxy.getRenderID(player.username);
 			sendPacket(render, 3);
 		}catch(Throwable e){
-			FMLLog.getLogger().info("render id corrupt. switching to default render ID");
+			FMLLog.getLogger().info("render id corrupt or missing. Switching to default render ID");
 			render = 6;
 			sendPacket(render, 3);
 		}
@@ -174,56 +174,56 @@ public class GuiGraveChoice extends GuiScreen {
 		{
 		case 1:
 			grave.showBasic(true);
-			mc.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravestone.png"));
+			mc.renderEngine.func_110577_a(new ResourceLocation("subaraki","/gravestone.png"));
 			break;
 		case 2:
 			grave.showZerk(true);
 			try{
-				mc.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravezerk.png"));	
+				mc.renderEngine.func_110577_a(new ResourceLocation("subaraki","/gravezerk.png"));	
 			}catch(Throwable e){}
 
 			break;
 		case 3 :
 			grave.showTomb(true);
 			try{
-				mc.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravestone.png"));
+				mc.renderEngine.func_110577_a(new ResourceLocation("subaraki","/gravestone.png"));
 			}catch(Throwable e){}
 			break;
 		case 4:
 			grave.showPillar(true);
 			grave.renderSkeleton(true);
 			try{
-				mc.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravepillar.png"));
+				mc.renderEngine.func_110577_a(new ResourceLocation("subaraki","/gravepillar.png"));
 			}catch(Throwable e){}
 			break;
 		case 5:
 			grave.showPillar(true);
 			try{
-				mc.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravepillar.png"));
+				mc.renderEngine.func_110577_a(new ResourceLocation("subaraki","/gravepillar.png"));
 			}catch(Throwable e){}
 
 			break;
 		case 6:
 			grave.renderCross(true);try{
-				mc.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravewood.png"));
+				mc.renderEngine.func_110577_a(new ResourceLocation("subaraki","/gravewood.png"));
 			}catch(Throwable e){}
 			break;
 		case 7:
 			grave.showPillar(true);
 			try{
-				mc.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravepillar.png"));
+				mc.renderEngine.func_110577_a(new ResourceLocation("subaraki","/gravepillar.png"));
 			}catch(Throwable e){}
 			break;
 		case 8:
 			grave.renderAngel(true);
 			try{
-				mc.renderEngine.func_110577_a(new ResourceLocation("/subaraki/Angel.png"));
+				mc.renderEngine.func_110577_a(new ResourceLocation("subaraki","/Angel.png"));
 			}catch(Throwable e){}
 			break;
 		case 9:
 			grave.renderKnight(true);
 			try{
-				mc.renderEngine.func_110577_a(new ResourceLocation("/subaraki/knight.png"));
+				mc.renderEngine.func_110577_a(new ResourceLocation("subaraki","/knight.png"));
 			}catch(Throwable e){}
 			break;
 		default :
@@ -235,7 +235,7 @@ public class GuiGraveChoice extends GuiScreen {
 			grave.renderAngel(false);
 			grave.renderKnight(false);
 			try{
-				mc.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravestone.png"));
+				mc.renderEngine.func_110577_a(new ResourceLocation("subaraki/gravestone.png"));
 			}catch(Throwable e){}
 			break;
 		}
@@ -293,9 +293,16 @@ public class GuiGraveChoice extends GuiScreen {
 			grave.renderSkeleton(false);
 			grave.renderCross(false);
 			try{
-//				GL11.glBindTexture(GL11.GL_TEXTURE_2D, mc.renderEngine.getTextureForDownloadableImage("http://skins.minecraft.net/MinecraftSkins/" + StringUtils.stripControlCodes(thePlayer.username) + ".png", "/mob/char.png"));
-				System.out.println("MISSING TEXTURE. FIX IT !!! guiGraveChoice");
-				//TODO
+				ResourceLocation resourcelocation = AbstractClientPlayer.field_110314_b;
+				if (thePlayer.username != null && thePlayer.username.length() > 0)
+				{
+					resourcelocation = AbstractClientPlayer.func_110305_h(thePlayer.username);
+					AbstractClientPlayer.func_110304_a(resourcelocation, thePlayer.username);
+
+				}else{
+					resourcelocation = new ResourceLocation( "textures/entity/steve.png");
+				}
+				Minecraft.getMinecraft().renderEngine.func_110577_a(resourcelocation);
 			}catch(Throwable e){}
 
 			GL11.glTranslatef(width / 2-150, height / 2-40, 40);

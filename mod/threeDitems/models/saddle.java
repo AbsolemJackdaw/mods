@@ -26,7 +26,7 @@ import net.minecraft.entity.Entity;
 /*  25 */     this.textureHeight = 9;
 /*     */ 
 /*  27 */     this.Shape1 = new ModelRenderer(this, 0, 0);
-/*  28 */     this.Shape1.addBox(-2.0F, -1.0F, -4.0F, 4, 1, 8);
+/*  28 */     this.Shape1.addBox(-5.0F, 0.0F, -4.0F, 4, 1, 8);
 /*  29 */     this.Shape1.setRotationPoint(0.0F, 0.0F, 0.0F);
 /*  30 */     this.Shape1.setTextureSize(24, 9);
 /*  31 */     this.Shape1.mirror = true;

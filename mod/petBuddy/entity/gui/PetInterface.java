@@ -137,7 +137,7 @@ public class PetInterface extends GuiScreen {
 				else if (thePlayer.getCurrentEquippedItem().getItem().equals(Item.leather))
 					skinfield = new GuiTextField(fontRenderer, (posX-posX/2) + 70/2 , posY-50, 150, 20);
 				if(skinfield != null){
-					skinfield.setText("BROKEN"); //TODO rechange
+					skinfield.setText(PetBuddyMain.proxy.getSkinName()); //TODO rechange
 					skinfield.setMaxStringLength(32);
 				}
 

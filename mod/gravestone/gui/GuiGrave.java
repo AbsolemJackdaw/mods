@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.ObjectOutput;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
@@ -192,56 +193,56 @@ public class GuiGrave extends GuiScreen {
 		{
 		case 1:
 			grave.showBasic(true);
-			this.mc.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravestone.png"));
+			this.mc.renderEngine.func_110577_a(new ResourceLocation("subaraki","/gravestone.png"));
 			break;
 		case 2:
 			grave.showZerk(true);
 			try{
-				this.mc.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravezerk.png"));	
+				this.mc.renderEngine.func_110577_a(new ResourceLocation("subaraki","/gravezerk.png"));	
 			}catch(Throwable e){}
 
 			break;
 		case 3 :
 			grave.showTomb(true);
 			try{
-				this.mc.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravestone.png"));
+				this.mc.renderEngine.func_110577_a(new ResourceLocation("subaraki","/gravestone.png"));
 			}catch(Throwable e){}
 			break;
 		case 4:
 			grave.showPillar(true);
 			grave.renderSkeleton(true);
 			try{
-				this.mc.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravepillar.png"));
+				this.mc.renderEngine.func_110577_a(new ResourceLocation("subaraki","/gravepillar.png"));
 			}catch(Throwable e){}
 			break;
 		case 5:
 			grave.showPillar(true);
 			try{
-				this.mc.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravepillar.png"));
+				this.mc.renderEngine.func_110577_a(new ResourceLocation("subaraki","/gravepillar.png"));
 			}catch(Throwable e){}
 
 			break;
 		case 6:
 			grave.renderCross(true);try{
-				this.mc.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravewood.png"));
+				this.mc.renderEngine.func_110577_a(new ResourceLocation("subaraki","/gravewood.png"));
 			}catch(Throwable e){}
 			break;
 		case 7:
 			grave.showPillar(true);
 			try{
-				this.mc.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravepillar.png"));
+				this.mc.renderEngine.func_110577_a(new ResourceLocation("subaraki","/gravepillar.png"));
 			}catch(Throwable e){}
 			break;
 		case 8:
 			grave.renderAngel(true);
 			try{
-				this.mc.renderEngine.func_110577_a(new ResourceLocation("/subaraki/Angel.png"));
+				this.mc.renderEngine.func_110577_a(new ResourceLocation("subaraki","/Angel.png"));
 			}catch(Throwable e){}
 			break;
 		case 9:
 			grave.renderKnight(true);
 			try{
-				this.mc.renderEngine.func_110577_a(new ResourceLocation("/subaraki/knight.png"));
+				this.mc.renderEngine.func_110577_a(new ResourceLocation("subaraki","/knight.png"));
 			}catch(Throwable e){}
 			break;
 		default :
@@ -253,7 +254,7 @@ public class GuiGrave extends GuiScreen {
 			grave.renderAngel(false);
 			grave.renderKnight(false);
 			try{
-				this.mc.renderEngine.func_110577_a(new ResourceLocation("/subaraki/gravestone.png"));
+				this.mc.renderEngine.func_110577_a(new ResourceLocation("subaraki","/gravestone.png"));
 			}catch(Throwable e){}
 			break;
 		}
@@ -311,8 +312,16 @@ public class GuiGrave extends GuiScreen {
 			grave.renderSkeleton(false);
 			grave.renderCross(false);
 			try{
-				//GL11.glBindTexture(GL11.GL_TEXTURE_2D, mc.renderEngine.getTextureForDownloadableImage("http://skins.minecraft.net/MinecraftSkins/" + StringUtils.stripControlCodes(te.playername) + ".png", "/mob/char.png"));
-				System.out.println("MISSING TEXTURE. FIX IT !!! guiGraveChoice");
+				ResourceLocation resourcelocation = AbstractClientPlayer.field_110314_b;
+				if (playerName != null && playerName.length() > 0)
+				{
+					resourcelocation = AbstractClientPlayer.func_110305_h(playerName);
+					AbstractClientPlayer.func_110304_a(resourcelocation, playerName);
+
+				}else{
+					resourcelocation = new ResourceLocation( "textures/entity/steve.png");
+				}
+				Minecraft.getMinecraft().renderEngine.func_110577_a(resourcelocation);
 			}catch(Throwable e){}
 
 			GL11.glTranslatef(this.width / 2-150, this.height / 2-40, 40);
