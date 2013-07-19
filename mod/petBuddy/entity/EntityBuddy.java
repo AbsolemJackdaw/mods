@@ -64,6 +64,11 @@ public class EntityBuddy extends BuddyBase
 	private HashMap<String, String> itemInventory = new HashMap();
 	private int harvestsWithHeldItem;
 
+	private int rand2Text ;
+	private int rand3Text ;
+	private int rand4Text ;
+	private int rand5Text ;
+
 	public static DynamicTexture buddyTexture;
 
 	public EntityBuddy(World par1World)
@@ -76,7 +81,10 @@ public class EntityBuddy extends BuddyBase
 		this.harvestsWithHeldItem = 12000;
 
 		happynessFactorCooldown = rand.nextInt(600) + 800;
-
+		rand2Text = rand.nextInt(1);
+		rand3Text = rand.nextInt(2);
+		rand4Text = rand.nextInt(3);
+		rand5Text = rand.nextInt(5);
 	}
 
 	public EntityBuddy(World par1World, EntityPlayer player)
@@ -86,6 +94,11 @@ public class EntityBuddy extends BuddyBase
 		this.timeUntilPortal = 6000;
 
 		this.harvestsWithHeldItem = 12000;
+		
+		rand2Text = rand.nextInt(1);
+		rand3Text = rand.nextInt(2);
+		rand4Text = rand.nextInt(3);
+		rand5Text = rand.nextInt(5);
 	}
 
 	@Override
@@ -210,7 +223,7 @@ public class EntityBuddy extends BuddyBase
 		case 6://fire>blaze
 			return new ResourceLocation( s+"/blaze.png");
 		case 7://spider
-			return new ResourceLocation( s+"/spider/spider.png");
+			return new ResourceLocation( s+"/spider/"+(rand2Text == 0 ? "cave_":"")+"spider.png");
 		case 8://wither
 			return new ResourceLocation( s+"/wither/wither.png");
 		case 9://rpg spider
@@ -218,9 +231,9 @@ public class EntityBuddy extends BuddyBase
 		case 10://skeleton
 			return new ResourceLocation( s+"/skeleton/skeleton.png");
 		case 11://wither skeleton
-			return new ResourceLocation( s+"/skeleton/skeleton_wither.png");
+			return new ResourceLocation( s+"/skeleton/wither_skeleton.png");
 		case 12://zombie villager
-			return new ResourceLocation(s+ "/zombie/zombie_villager.png");
+			return new ResourceLocation(s+ "/zombie/" + (rand2Text == 0 ? "zombie_villager" : "zombie")+".png");
 		case 13://ghast
 			return new ResourceLocation( s+"/ghast/ghast.png");
 		case 14://sheep
@@ -242,11 +255,18 @@ public class EntityBuddy extends BuddyBase
 		case 22://redcow
 			return new ResourceLocation( s+"/cow/mooshroom.png");
 		case 23://ozelot
-			return new ResourceLocation( s+"/cat/ocelot.png");
+			return new ResourceLocation( s+"/cat/"+(rand4Text == 0 ? "black" :
+				rand4Text == 1 ? "ocelot" :
+					rand4Text == 2 ? "red" :"siamese")+".png");
 		case 24://squid
 			return new ResourceLocation( s+"/squid.png");
-		case 25://villager smith
-			return new ResourceLocation( s+"/villager/smith.png");
+		case 25://villager
+			return new ResourceLocation( s+"/villager/"+ 
+		(rand5Text == 0 ? "smith" :
+			rand5Text == 1 ? "butcher" :
+				rand5Text == 2 ? "farmer" :
+					rand5Text == 3 ? "priest" :
+						rand5Text == 4 ? "librarian" : "villager")+ ".png");
 		case 26://wolf
 			return new ResourceLocation( s+"/wolf/wolf.png");
 		case 27://pigzombie
@@ -311,6 +331,9 @@ public class EntityBuddy extends BuddyBase
 		case 23:
 			int x =rand.nextInt(4);
 			return x == 0 ? "mob.cat.purreow" : x == 1 ? "mob.cat.meow" : "mob.cat.purr";
+		case 25 :
+			int y =rand.nextInt(2);
+			return y == 0 ?"mob.villager.haggle" : "mob.villager.idle";
 		case 26:
 			return "mob.wolf.bark";
 		case 27:

@@ -160,7 +160,6 @@ public class RenderBuddy extends RenderLiving
 		return -1;
 	}
 
-
 	public void renderCow(BuddyBase buddy, double par2, double par4, double par6, float par8, float par9)
 	{
 		this.mainModel = buddy.getModel();
@@ -179,41 +178,6 @@ public class RenderBuddy extends RenderLiving
 	{
 		return this.sheepTexturing((BuddyBase)par1EntityLiving, par2, par3);
 	}
-
-//	protected void getDownloadableTexture(Entity living)
-//	{    	
-//		if(PetBuddyMain.proxy.getGuiId() == 3 && living instanceof BuddyBase){
-//			ResourceLocation resourcelocation = AbstractClientPlayer.field_110314_b;
-//			BuddyBase buddy = (BuddyBase)living;
-//			if(PetBuddyMain.proxy.getSkinName().equals(buddy.getOwnerName())){
-//				resourcelocation.func_110623_a();
-//			}else{
-//				if ( buddy.getOwnerName()!= null && buddy.getOwnerName().length() > 0)
-//				{
-//					resourcelocation = AbstractClientPlayer.func_110311_f(buddy.getOwnerName());
-//					AbstractClientPlayer.func_110304_a(resourcelocation, buddy.getOwnerName());
-//					this.applyDownloadTexture(resourcelocation);
-//				}
-//			}
-//		}
-//	}
-//
-//	private void applyDownloadTexture(ResourceLocation par1ResourceLocation)
-//	{
-//		TextureManager texturemanager = this.renderManager.renderEngine;
-//
-//		if (texturemanager != null)
-//		{
-//			texturemanager.func_110577_a(par1ResourceLocation);
-//		}
-//	}
-
-	//	@Override
-	//	protected void func_98190_a(EntityLiving living)
-	//	{
-	//		this.getDownloadableTexture((BuddyBase)living);
-	//	}
-
 	
 	@Override
 	public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9)

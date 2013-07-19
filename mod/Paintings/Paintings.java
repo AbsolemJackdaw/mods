@@ -6,6 +6,7 @@ import net.minecraftforge.common.EnumHelper;
 import Paintings.config.ConfigFile;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.SidedProxy;
@@ -28,12 +29,12 @@ public class Paintings {
 	@SidedProxy(serverSide = "Paintings.CommonProxy", clientSide = "Paintings.ClientProxy")
 	public static CommonProxy proxy;
 
-	@PreInit
+	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 
 		ConfigFile.instance.loadConfig(event.getSuggestedConfigurationFile());
 	}
-	@Init
+	@EventHandler
 	public void load(FMLInitializationEvent init){
 
 		boolean Insane = ConfigFile.instance.Insane;
