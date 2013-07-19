@@ -72,11 +72,20 @@ public class clp extends cmp
 		RenderItem.inst.addIngot(Item.brick,"/subaraki/3d/brick.png",1,1);
 		RenderItem.inst.addIngot(Item.netherrackBrick,"/subaraki/3d/brickNether.png",1,1);
 
-		RenderItem.inst.addSword(Item.swordDiamond,"/subaraki/3d/swordDiamond.png",1,1);
-		RenderItem.inst.addSword(Item.swordGold,"/subaraki/3d/swordGold.png",1,1);
-		RenderItem.inst.addSword(Item.swordIron,"/subaraki/3d/swordSteel.png",1,1);
-		RenderItem.inst.addSword(Item.swordStone,"/subaraki/3d/swordStone.png",1,1);
-		RenderItem.inst.addSword(Item.swordWood,"/subaraki/3d/swordWood.png",1,1);
+		if(Config3D.instance.SwordModel){
+			RenderItem.inst.addSword(Item.swordDiamond,"/subaraki/3d/swordDiamond.png",1,1);
+			RenderItem.inst.addSword(Item.swordGold,"/subaraki/3d/swordGold.png",1,1);
+			RenderItem.inst.addSword(Item.swordIron,"/subaraki/3d/swordSteel.png",1,1);
+			RenderItem.inst.addSword(Item.swordStone,"/subaraki/3d/swordStone.png",1,1);
+			RenderItem.inst.addSword(Item.swordWood,"/subaraki/3d/swordWood.png",1,1);
+		}else{
+			RenderItem.inst.addSword(Item.swordDiamond,"/subaraki/3d/PlainSwordDiamond.png",1,1);
+			RenderItem.inst.addSword(Item.swordGold,"/subaraki/3d/swordGold.png",1,1);
+			RenderItem.inst.addSword(Item.swordIron,"/subaraki/3d/PlainSwordSteel.png",1,1);
+			RenderItem.inst.addSword(Item.swordStone,"/subaraki/3d/PlainSwordStone.png",1,1);
+			RenderItem.inst.addSword(Item.swordWood,"/subaraki/3d/PlainSwordWood.png",1,1);
+		}
+		
 
 		RenderItem.inst.addPick(Item.pickaxeDiamond,"/subaraki/3d/pickDiamond.png",1,1);
 		RenderItem.inst.addPick(Item.pickaxeGold,"/subaraki/3d/pickGold.png",1,1);
@@ -98,7 +107,7 @@ public class clp extends cmp
 
 		RenderItem.inst.addHoe(Item.hoeDiamond,"/subaraki/3d/hoeDiamond.png",1,1);
 		RenderItem.inst.addHoe(Item.hoeGold,"/subaraki/3d/hoeGold.png",1,1);
-		RenderItem.inst.addHoe(Item.hoeIron,"/subaraki/3d/hoeSteel.png",1,1);
+		RenderItem.inst.addHoe(Item.hoeIron,"/subaraki/3d/hoeIron.png",1,1);
 		RenderItem.inst.addHoe(Item.hoeStone,"/subaraki/3d/hoeStone.png",1,1);
 		RenderItem.inst.addHoe(Item.hoeWood,"/subaraki/3d/hoeWood.png",1,1);
 
@@ -204,6 +213,7 @@ public class clp extends cmp
 
 		RenderItem.inst.addBow(Item.bow, "/subaraki/3d/bow.png", 0.7f, 1.0f);
 
+		RenderItem.inst.addPie(Item.pumpkinPie, 1.0f, 1.0f, "/subaraki/3d/pie.png");
 	}
 
 }

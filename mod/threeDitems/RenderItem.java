@@ -1,6 +1,7 @@
 package threeDitems;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelBoat;
 import net.minecraft.client.model.ModelMinecart;
@@ -39,6 +40,7 @@ import threeDitems.models.nugget;
 import threeDitems.models.painting;
 import threeDitems.models.paper;
 import threeDitems.models.pick;
+import threeDitems.models.pie;
 import threeDitems.models.saddle;
 import threeDitems.models.scisor;
 import threeDitems.models.sign;
@@ -55,13 +57,13 @@ public class RenderItem
 		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(new ingot(), texture,
 				0.25F, 0.2F, 0.0F, 40.0F, 80.0F, 90.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, scale, inWorldScale));
 	}
-	
+
 	public void addScisor(Item item, String texture, float scale, float inWorldScale)
 	{
 		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(new scisor(), texture,
 				0.25F, 0.2F, -0.05F, 20.0F, -10.0F, -90.0F, -0.1F, 0.3F, 0.1F, 90.0F, 10.0F, 0.0F, scale, inWorldScale));
 	}
-	
+
 	public void addBread(Item item, String texture, float scale, float inWorldScale)
 	{
 		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(new bread(), texture, 
@@ -113,7 +115,13 @@ public class RenderItem
 
 	public void addSword(Item item, String texture, float scale, float inWorldScale)
 	{
-		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(new smallSword(), texture,
+		ModelBase model;
+		if(Config3D.instance.SwordModel){
+			model = new smallSword();
+		}else{
+			model = new smallSwordPlain();
+		}
+		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(model, texture,
 				0.5F, 0.25F, -0.05F, -50.0F, -10.0F, -70.0F, -0.1F, 0.3F, -0.5F, -75.0F, 90.0F, 50.0F, scale, inWorldScale));
 	}
 
@@ -249,37 +257,37 @@ public class RenderItem
 		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(new meat(), texture, 
 				0.25F, 0.2F, 0.0F, 40.0F, 80.0F, 90.0F, -0.2F, 0.2F, 0.3F, -60.0F, 0.0F, 50.0F, scale, inWorldScale));
 	}
-	
+
 	public void addCookie(Item item, String texture, float scale, float inWorldScale)
 	{
 		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(new cookie(), texture,
 				0.2F, 0.3F, 0.1F, 40.0F, 80.0F, 90.0F, 0.0F, 0.0F, 0F, -60.0F, 0.0F, 50.0F, scale, inWorldScale));
 	}
-	
+
 	public void addSpiderEye(Item item, String texture, float scale, float inWorldScale)
 	{
 		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(new spidereye(), texture,
 				0.25F, 0.2F, 0.0F, 40.0F, 80.0F, 90.0F, 0.1F, 0F, -0.5F, 0.0F, 0.0F, -90.0F, scale, inWorldScale));
 	}
-	
+
 	public void addNugget(Item item, String texture, float scale, float inWorldScale)
 	{
 		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(new nugget(), texture,
 				0.25F, 0.2F, 0.0F, 40.0F, 80.0F, 90.0F, 0.1F, 0.0F, 0.1F, -60.0F, 0.0F, 50.0F, scale, inWorldScale));
 	}
-	
+
 	public void addDoor(Item item, String texture, float scale, float inWorldScale)
 	{
 		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(new door(), texture,
 				0.25F, 0.2F, 0.0F, 40.0F, 80.0F, 90.0F, -0.35F, 0.3F, -0.4F, -70.0F, 0.0F, 90.0F, scale, inWorldScale));
 	}
-	
+
 	public void addBriquet(Item item, String texture, float scale, float inWorldScale)
 	{
 		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(new flintNSteel(), texture,
 				0.2F, 0.1F, -0.05F, -70.0F, -90.0F, 20.0F, 0.45F, 0F, -0.4F, -100.0F, 0.0F, -90.0F, scale, inWorldScale));
 	}
-	
+
 	public void addStraightStick(Item item, String texture, float scale, float inWorldScale)
 	{
 		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(new brod(), texture,
@@ -290,7 +298,7 @@ public class RenderItem
 		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(new sign(), texture,
 				0.25F, 0.2F, 0.0F, 40.0F, 80.0F, 90.0F, -0.2F, 0.4F, 0.1F, -70.0F, 0.0F, 50.0F, scale, inWorldScale));
 	}
-	
+
 	public void addPainting(Item item, String texture, float scale, float inWorldScale) {
 		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(new painting(), texture, 
 				0.2F, 0.3F, 0.2F, 180.0F, 90.0F, 60.0F, 0.4F, 0.1F, 0.3F, -70.0F, 0.0F, 0.0F, scale, inWorldScale));
@@ -299,24 +307,24 @@ public class RenderItem
 		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(new paper(), texture, 
 				0.3F, 0F, 0.1F, 100.0F, 180.0F, 0.0F, 0F, 0.2F, 0.3F, 0.0F, 0.0F, 40.0F, scale, inWorldScale));
 	}
-	
+
 	public void addArrow(Item item, String texture, float scale, float inWorldScale) {
 		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(new arrow(), texture, 
 				0.4F,0f,0f, 50.0F, -50.0F, 100.0F, 0.5F, 0.5F, 0F, -110.0F, -50.0F, 0.0F, scale, inWorldScale));
 	}
-	
+
 	public void addCoal(Item item, String texture, float scale, float inWorldScale)
 	{
 		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(new coal(), texture,
 				0.3F, 0.1F, 0F, 50.0F, 0.0F, 0.0F, -0.1F, 0.1F, 0F, 0.0F, 0.0F, 0.0F, scale, inWorldScale));
 	}
-	
+
 	public void addSkull(Item item, float scale, float inWorldScale)
 	{		
 		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(new head(),"/subaraki/3d/stick.png",
 				0.3F, 0.1F, 0F, 0.0F, 120.0F, -40.0F, -0.1F, 0.1F, -0.1F, -10.0F, 50.0F, 1.0F, scale, inWorldScale));
 	}
-	
+
 	public void addSpawner(Item item, float scale, float inWorldScale)
 	{
 		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(new egg(), "/subaraki/3d/eggSpawn.png", 
@@ -326,5 +334,10 @@ public class RenderItem
 	{
 		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(new bow(), texture, 
 				0.4F, 0.4F, -0.06F, -40.0F, 55.0F, -60.0F, 0.5F, 0F, -0.5F, 0F, 180.0F, 10.0F, scale, inWorldScale));
+	}
+
+	public void addPie(Item item, float scale, float inWorldScale, String texture){
+		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(new pie(), texture, 
+				0,0,0,0,0,0,0,0,0,0,0,0, scale, inWorldScale));
 	}
 }
