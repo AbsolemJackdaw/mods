@@ -23,11 +23,13 @@ import net.minecraft.item.ItemMonsterPlacer;
 import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemSkull;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemSword;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer.ItemRenderType;
 
 import org.lwjgl.opengl.GL11;
 
+import threeDitems.Config3D;
 import threeDitems.models.bottle;
 import threeDitems.models.bow;
 import threeDitems.models.enderball;
@@ -206,6 +208,10 @@ public class CaseEntity
 				float blue = (float)(color & 255) / 255.0F;					
 				GL11.glColor4f(red, green,blue, 1.0F);
 			}
+		}
+		if(item.getItem() instanceof ItemSword && !Config3D.instance.SwordModel){
+			GL11.glRotatef(90, 1.0f, 0.0f, 0.0f);
+
 		}
 		theItem.render((Entity)data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
 

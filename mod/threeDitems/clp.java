@@ -14,7 +14,7 @@ public class clp extends cmp
 
 	public void render() {
 		instance = this;
-		Render3d.hastoRenderOnTick = false;
+		Render3d.hastoRenderOnTick = true;
 
 		MinecraftForgeClient.registerItemRenderer(Item.stick.itemID, new Render3d(new stick(),"/subaraki/3d/stick.png", 0.5f,0.2f,0.0f,40f,90f,10f,0f,0f,0f,0f,0f,0f,1,1));
 		MinecraftForgeClient.registerItemRenderer(Item.fishingRod.itemID, new Render3d(new rod(),"/subaraki/3d/rod.png", 0.5f,0.2f, -0.05f, -50f,-110f,0f,0.1f,-0.2f,0.4f,0f,0f,-30f,1,1));
@@ -79,11 +79,11 @@ public class clp extends cmp
 			RenderItem.inst.addSword(Item.swordStone,"/subaraki/3d/swordStone.png",1,1);
 			RenderItem.inst.addSword(Item.swordWood,"/subaraki/3d/swordWood.png",1,1);
 		}else{
-			RenderItem.inst.addSword(Item.swordDiamond,"/subaraki/3d/PlainSwordDiamond.png",1,1);
-			RenderItem.inst.addSword(Item.swordGold,"/subaraki/3d/swordGold.png",1,1);
-			RenderItem.inst.addSword(Item.swordIron,"/subaraki/3d/PlainSwordSteel.png",1,1);
-			RenderItem.inst.addSword(Item.swordStone,"/subaraki/3d/PlainSwordStone.png",1,1);
-			RenderItem.inst.addSword(Item.swordWood,"/subaraki/3d/PlainSwordWood.png",1,1);
+			RenderItem.inst.addSword(Item.swordDiamond,"/subaraki/3d/PlainSwordDiamond.png",0.7f,1);
+			RenderItem.inst.addSword(Item.swordGold,"/subaraki/3d/PlainSwordGold.png",0.7f,1);
+			RenderItem.inst.addSword(Item.swordIron,"/subaraki/3d/PlainSwordIron.png",0.7f,1);
+			RenderItem.inst.addSword(Item.swordStone,"/subaraki/3d/PlainSwordStone.png",0.7f,1);
+			RenderItem.inst.addSword(Item.swordWood,"/subaraki/3d/PlainSwordWood.png",0.7f,1);
 		}
 		
 

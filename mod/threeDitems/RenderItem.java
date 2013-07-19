@@ -118,11 +118,13 @@ public class RenderItem
 		ModelBase model;
 		if(Config3D.instance.SwordModel){
 			model = new smallSword();
+			MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(model, texture,
+					0.5F, 0.25F, -0.05F, -50.0F, -10.0F, -70.0F, -0.1F, 0.3F, -0.5F, -75.0F, 90.0F, 50.0F, scale, inWorldScale));
 		}else{
 			model = new smallSwordPlain();
+			MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(model, texture,
+					0f,0f,0f,0f,0f,0f,-0.2f,0.2f,-0.2f,0f,70f,0f, scale, inWorldScale));
 		}
-		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(model, texture,
-				0.5F, 0.25F, -0.05F, -50.0F, -10.0F, -70.0F, -0.1F, 0.3F, -0.5F, -75.0F, 90.0F, 50.0F, scale, inWorldScale));
 	}
 
 	public void addHatchet(Item item, String texture, float scale, float inWorldScale)
