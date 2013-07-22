@@ -83,22 +83,22 @@ public class PetBuddyMain {
 	public static Achievement endPearl ;
 	public static Achievement endPortal ;
 	public static Achievement endDragon ;
-	
+
 
 	public static AchievementPage page1;
 	public static HashMap<String, Integer> playersWithPets = new HashMap();	
-	
+
 	@PreInit
 	public void load (FMLPreInitializationEvent e){
-		
-		
+
+
 
 		findBuddy = new Achievement(s(), "startBuddy", -1, 0, new ItemStack(Item.skull,1,3), null).setIndependent().registerAchievement();
 		nameBuddy = new Achievement(s(), "name", -1, -2, Item.stick, findBuddy).registerAchievement();
 		pigAchieve = new Achievement(s(), "pigBuddy", 2, -1, Item.porkRaw, findBuddy).registerAchievement();
 		tinyYou = new Achievement(s(), "tinyBuddy", 3, 2, Item.bread, pigAchieve).registerAchievement();
 		zombie = new Achievement(s(), "zombie", 10, 1, Item.rottenFlesh, tinyYou).registerAchievement();
-		
+
 		rpgSpider = new Achievement(s(), "rpgSpin", 1, -2, Item.fermentedSpiderEye, pigAchieve).registerAchievement();
 		rpgBull = new Achievement(s(), "rpgBull", 3, -2, Item.beefCooked, pigAchieve).registerAchievement();
 		rpgBoar = new Achievement(s(), "rpgBoar", 2, -3, Item.porkCooked, pigAchieve).registerAchievement();
@@ -135,14 +135,14 @@ public class PetBuddyMain {
 		slime = new Achievement(s(), "slime", 11, 4, Item.slimeBall, zombie).registerAchievement();
 		spider = new Achievement(s(), "spider", 9, 5, Item.spiderEye, zombie).registerAchievement();
 		skelet = new Achievement(s(), "skelet", 11, 6, Item.arrow, zombie).registerAchievement();
-		
+
 		this.addAchievementLocalizations();
-		
+
 		page1 = new AchievementPage("Buddy", findBuddy, nameBuddy,pigAchieve,tinyYou,zombie, portalNether,
 				ghast,pigZombie, wither, witherSkelly, ghost, rpgSpider, rpgBull, rpgBoar, magma, bat, 
 				endPearl, endPortal, endDragon, skin, slime, sheep, cat, silverfish, golem ,snow, creeper,
 				cow, mooshroom, spider, skelet, chicken, villager, squid, wolf);
-		
+
 		AchievementPage.registerAchievementPage(page1);
 	}
 
@@ -150,6 +150,7 @@ public class PetBuddyMain {
 	public void load (FMLInitializationEvent e){
 
 		EntityRegistry.registerGlobalEntityID(EntityBuddy.class, "TinyClone", EntityRegistry.findGlobalUniqueEntityId());
+
 		this.proxy.render();
 
 		GameRegistry.registerPlayerTracker(new PetSpawner());
@@ -159,7 +160,7 @@ public class PetBuddyMain {
 	private int s(){
 		return AchievementList.achievementList.size() + 1;
 	}
-	
+
 	private void addAchievementLocalizations()
 	{
 		addAchievName("startBuddy", "A Friend !");
@@ -176,55 +177,55 @@ public class PetBuddyMain {
 
 		addAchievName("zombie", "Oh Dear ...");
 		addAchievMouseOver("zombie", "Change Tiny You to a Zombie");
-		
+
 		addAchievName("portal", "Gathering Materials");
 		addAchievMouseOver("portal", "Go to the nether to find more Buddy material");
-		
+
 		addAchievName("ghast", "A Tear For A Friend");
 		addAchievMouseOver("ghast", "Change your Buddy into a Ghast");
-		
+
 		addAchievName("zombPig", "Walking Bacon Friend II");
 		addAchievMouseOver("zombPig", "Change your Buddy into a Ghast");
-		
+
 		addAchievName("witherSkel", "Carbonized Skeleton");
 		addAchievMouseOver("witherSkel", "Change your Buddy into a Wither Skeleton");
-		
+
 		addAchievName("wither", "Foes For Friends I");
 		addAchievMouseOver("wither", "Change your Buddy into Wither");
-		
+
 		addAchievName("ghost", "All Fired Up");
 		addAchievMouseOver("ghost", "Change your Buddy into a Blaze");
-		
+
 		addAchievName("magma", "Hot Ooze");
 		addAchievMouseOver("magma", "Change your Buddy into a Magma Cube");
-		
+
 		addAchievName("bat", "Stay Low, Keep High");
 		addAchievMouseOver("bat", "Change your Buddy into a .. Bat ?");
-		
+
 		addAchievName("rpgSpin", "Rpg Offspring");
 		addAchievMouseOver("rpgSpin", "Change your Buddy into the Rpg Spider");
-		
+
 		addAchievName("rpgBull", "Rpg Offspring");
 		addAchievMouseOver("rpgBull", "Change your Buddy into the Rpg Bull");
-		
+
 		addAchievName("rpgBoar", "Rpg Offspring");
 		addAchievMouseOver("rpgBoar", "Change your Buddy into the Rpg Boar");
-		
+
 		addAchievName("skin", "Esthetic Changes");
 		addAchievMouseOver("skin", "Get your buddy a new skin");
-		
+
 		addAchievName("endPearl", "The Truth Is Out There");
 		addAchievMouseOver("endPearl", "Change your Buddy into an Enderman");
-		
+
 		addAchievName("endPortal", "Trough the Portal And the Frames");
 		addAchievMouseOver("endPortal", "Go to the end to find more Buddy material");
-		
+
 		addAchievName("endDragon", "Foes For Friends II");
 		addAchievMouseOver("endDragon", "Change your Buddy in the EnderDragon");
-		
+
 		addAchievName("slime", "Sticky Friend");
 		addAchievMouseOver("slime", "Change your Buddy into a Slime");
-		
+
 		addAchievName("sheep", "Colorful Friends");
 		addAchievMouseOver("sheep", "Change your Buddy into a Sheep");
 
@@ -267,7 +268,7 @@ public class PetBuddyMain {
 		addAchievName("wolf", "Cuteness Overload");
 		addAchievMouseOver("wolf", "Change your Buddy into a Wolf");
 
-		
+
 	}
 
 	private void addAchievName(String ach, String name)

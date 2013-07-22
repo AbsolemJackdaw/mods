@@ -122,9 +122,9 @@ public class PetSpawner implements IPlayerTracker{
 		buddy.writeEntityToNBT(nbt);
 
 		try{
-			if(!player.worldObj.isRemote){
+			//if(!player.worldObj.isRemote){
 				player.worldObj.spawnEntityInWorld(buddy);
-			}
+			//}
 		}finally{
 			bud = (EntityBuddy) player.worldObj.getEntityByID(buddy.entityId);		
 			PetBuddyMain.playersWithPets.put(buddy.getOwnerName(), buddy.entityId);

@@ -1,8 +1,14 @@
 package Paintings;
 
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderPainting;
+import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityPainting;
@@ -13,6 +19,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import Paintings.config.ConfigFile;
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -24,32 +31,44 @@ public class RenderPaintingLate extends RenderPainting
 	boolean tiny = ConfigFile.instance.TinyPics ;
 	boolean gib = ConfigFile.instance.Gibea;
 
+	protected ResourceLocation art = new ResourceLocation("subaraki:art/"+
+	(tiny ? "tiny" : Insane ? "insane" : sphax? "sphax": "gib")+".png");
 	float size;
 	public void renderThePainting(EntityPainting par1EntityPainting, double par2, double par4, double par6, float par8, float par9)
 	{
+		if(tiny && !Insane && !sphax && !gib){
+			size = 512.0f;
+		}else if(!tiny && Insane && !sphax && !gib){
+			size = 512.0f;
+		}else if(!tiny && !Insane && sphax && !gib ){
+			size = 256.0f;
+		}else if( !tiny && !Insane && !sphax && gib){
+			size = 256.0f;
+		}
 		GL11.glPushMatrix();
 		GL11.glTranslatef((float)par2, (float)par4, (float)par6);
 		GL11.glRotatef(par8, 0.0F, 1.0F, 0.0F);
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-		if(tiny && !Insane && !sphax && !gib){
-			this.renderManager.renderEngine.func_110577_a(new ResourceLocation("subaraki","/art/tiny.png"));
-			size = 512.0f;
-		}else if(!tiny && Insane && !sphax && !gib){
-			this.renderManager.renderEngine.func_110577_a(new ResourceLocation("subaraki","/art/insane.png"));
-			size = 512.0f;
-		}else if(!tiny && !Insane && sphax && !gib ){
-			this.renderManager.renderEngine.func_110577_a(new ResourceLocation("subaraki","/art/sphax.png"));
-			size = 256.0f;
-		}else if( !tiny && !Insane && !sphax && gib){
-			this.renderManager.renderEngine.func_110577_a(new ResourceLocation("subaraki","/art/gib.png"));
-			size = 256.0f;
-		}
+		Minecraft.getMinecraft().renderEngine.func_110577_a(art);
 		EnumArt enumart = par1EntityPainting.art;
 		float f2 = 0.0625F;
 		GL11.glScalef(f2, f2, f2);
 		this.func_77010_a(par1EntityPainting, enumart.sizeX, enumart.sizeY, enumart.offsetX, enumart.offsetY);
 		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
 		GL11.glPopMatrix();
+		
+		/** 
+		GL11.glPushMatrix();
+        GL11.glTranslatef((float)par2, (float)par4, (float)par6);
+        GL11.glRotatef(par8, 0.0F, 1.0F, 0.0F);
+        GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+        this.func_110777_b(par1EntityPainting);
+        EnumArt enumart = par1EntityPainting.art;
+        float f2 = 0.0625F;
+        GL11.glScalef(f2, f2, f2);
+        this.func_77010_a(par1EntityPainting, enumart.sizeX, enumart.sizeY, enumart.offsetX, enumart.offsetY);
+        GL11.glDisable(GL12.GL_RESCALE_NORMAL);
+        GL11.glPopMatrix();*/
 	}
 
 
