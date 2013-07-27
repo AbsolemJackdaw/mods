@@ -18,6 +18,8 @@ public class RenderGunBlue implements IItemRenderer {
 
 	private ModelGunBlue gun;
 
+	private static final ResourceLocation LOC = new ResourceLocation("subaraki:/gunB.png");
+
 	public RenderGunBlue() {
 		gun = new ModelGunBlue();
 	}
@@ -27,13 +29,10 @@ public class RenderGunBlue implements IItemRenderer {
 		switch(type)
 		{
 		case  EQUIPPED: return true;
-//		case  EQUIPPED_FIRST_PERSON: return true;
+		case  EQUIPPED_FIRST_PERSON: return true;
 		case ENTITY: return true;
 		default:
-                    if("EQUIPPED_FIRST_PERSON".equals(type.name())){
-                            return true;
-                    }
-                    return false;
+			return false;
 		}
 	}
 
@@ -47,74 +46,14 @@ public class RenderGunBlue implements IItemRenderer {
 
 		switch(type){
 		case  EQUIPPED:
-			GL11.glPushMatrix();
-			Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation("/subaraki/gunB.png"));
-			GL11.glRotatef(15, 0.0f, 0.0f, 1.0f);
-			GL11.glRotatef(12, 0.0f, 1.0f, 0.0f);
-			GL11.glRotatef(195, 1.0f, 0.0f, 0.0f);
-
-			if(data[1] != null && data[1] instanceof EntityPlayer)
-			{
-				if(!((EntityPlayer)data[1] == Minecraft.getMinecraft().renderViewEntity && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0 && !((Minecraft.getMinecraft().currentScreen instanceof GuiInventory || Minecraft.getMinecraft().currentScreen instanceof GuiContainerCreative) && RenderManager.instance.playerViewY == 180.0F)))
-				{
-					GL11.glScalef(2.2f, 2.2f, 2.2f);
-					GL11.glTranslatef(0.04F, -0.2F, -0.2F);
-				}
-				else
-				{
-					GL11.glScalef(3f, 3f, 3f);
-					GL11.glRotatef(80F, 1.0f, 0.0f, 0.0f);
-					GL11.glRotatef(0F, 1.0f, 0.0f, 1.0f);
-					GL11.glRotatef(-100F, 0.0f, 1.0f, 0.0f);
-					GL11.glRotatef(95F, 0.0f, 0.0f, 1.0f);
-					GL11.glTranslatef(-0.5f ,-0.1f,-0.8F);
-				}
-			}
-			else
-			{
-				GL11.glScalef(2.2f, 2.2f, 2.2f);
-				GL11.glTranslatef(0F, 0.0F, 0F);
-			}
-			gun.render((Entity)data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
-
-			GL11.glPopMatrix();
+		caseEq(type, item, data);
 			break;
-//		case  EQUIPPED_FIRST_PERSON:
-//			GL11.glPushMatrix();
-//			Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation("/subaraki/gunB.png");
-//			GL11.glRotatef(15, 0.0f, 0.0f, 1.0f);
-//			GL11.glRotatef(12, 0.0f, 1.0f, 0.0f);
-//			GL11.glRotatef(195, 1.0f, 0.0f, 0.0f);
-//
-//			if(data[1] != null && data[1] instanceof EntityPlayer)
-//			{
-//				if(!((EntityPlayer)data[1] == Minecraft.getMinecraft().renderViewEntity && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0 && !((Minecraft.getMinecraft().currentScreen instanceof GuiInventory || Minecraft.getMinecraft().currentScreen instanceof GuiContainerCreative) && RenderManager.instance.playerViewY == 180.0F)))
-//				{
-//					GL11.glScalef(2.2f, 2.2f, 2.2f);
-//					GL11.glTranslatef(0.04F, -0.2F, -0.2F);
-//				}
-//				else
-//				{
-//					GL11.glScalef(3f, 3f, 3f);
-//					GL11.glRotatef(80F, 1.0f, 0.0f, 0.0f);
-//					GL11.glRotatef(0F, 1.0f, 0.0f, 1.0f);
-//					GL11.glRotatef(-100F, 0.0f, 1.0f, 0.0f);
-//					GL11.glRotatef(95F, 0.0f, 0.0f, 1.0f);
-//					GL11.glTranslatef(-0.5f ,-0.1f,-0.8F);
-//				}
-//			}
-//			else
-//			{
-//				GL11.glScalef(2.2f, 2.2f, 2.2f);
-//				GL11.glTranslatef(0F, 0.0F, 0F);
-//			}
-//			gun.render((Entity)data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
-//
-//			GL11.glPopMatrix();
-//			break;
+		case  EQUIPPED_FIRST_PERSON:
+			caseEq(type, item, data);
+				break;
 		case ENTITY:
 			GL11.glPushMatrix();
-			Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation("/subaraki/gunB.png"));
+			Minecraft.getMinecraft().renderEngine.func_110577_a(LOC);
 			GL11.glScalef(3f, 3f, 3f);
 			GL11.glRotatef(0, 0.0f, 0.0f, 1.0f);
 			GL11.glRotatef(0, 0.0f, 1.0f, 0.0f);
@@ -125,40 +64,42 @@ public class RenderGunBlue implements IItemRenderer {
 			GL11.glPopMatrix();
 			break;
 		default:
-                    if("EQUIPPED_FIRST_PERSON".equals(type.name())){
-                        GL11.glPushMatrix();
-			Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation("/subaraki/gunB.png"));
-			GL11.glRotatef(15, 0.0f, 0.0f, 1.0f);
-			GL11.glRotatef(12, 0.0f, 1.0f, 0.0f);
-			GL11.glRotatef(195, 1.0f, 0.0f, 0.0f);
+			
+			break;
+		}		
+	}
+	
+	public void caseEq(ItemRenderType type, ItemStack item, Object... data){
+		GL11.glPushMatrix();
+		Minecraft.getMinecraft().renderEngine.func_110577_a(LOC);
+		GL11.glRotatef(15, 0.0f, 0.0f, 1.0f);
+		GL11.glRotatef(12, 0.0f, 1.0f, 0.0f);
+		GL11.glRotatef(195, 1.0f, 0.0f, 0.0f);
 
-			if(data[1] != null && data[1] instanceof EntityPlayer)
+		if(data[1] != null && data[1] instanceof EntityPlayer)
+		{
+			if(!((EntityPlayer)data[1] == Minecraft.getMinecraft().renderViewEntity && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0 && !((Minecraft.getMinecraft().currentScreen instanceof GuiInventory || Minecraft.getMinecraft().currentScreen instanceof GuiContainerCreative) && RenderManager.instance.playerViewY == 180.0F)))
 			{
-				if(!((EntityPlayer)data[1] == Minecraft.getMinecraft().renderViewEntity && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0 && !((Minecraft.getMinecraft().currentScreen instanceof GuiInventory || Minecraft.getMinecraft().currentScreen instanceof GuiContainerCreative) && RenderManager.instance.playerViewY == 180.0F)))
-				{
-					GL11.glScalef(2.2f, 2.2f, 2.2f);
-					GL11.glTranslatef(0.04F, -0.2F, -0.2F);
-				}
-				else
-				{
-					GL11.glScalef(3f, 3f, 3f);
-					GL11.glRotatef(80F, 1.0f, 0.0f, 0.0f);
-					GL11.glRotatef(0F, 1.0f, 0.0f, 1.0f);
-					GL11.glRotatef(-100F, 0.0f, 1.0f, 0.0f);
-					GL11.glRotatef(95F, 0.0f, 0.0f, 1.0f);
-					GL11.glTranslatef(-0.5f ,-0.1f,-0.8F);
-				}
+				GL11.glScalef(2.2f, 2.2f, 2.2f);
+				GL11.glTranslatef(0.04F, -0.2F, -0.2F);
 			}
 			else
 			{
-				GL11.glScalef(2.2f, 2.2f, 2.2f);
-				GL11.glTranslatef(0F, 0.0F, 0F);
+				GL11.glScalef(3f, 3f, 3f);
+				GL11.glRotatef(80F, 1.0f, 0.0f, 0.0f);
+				GL11.glRotatef(0F, 1.0f, 0.0f, 1.0f);
+				GL11.glRotatef(-100F, 0.0f, 1.0f, 0.0f);
+				GL11.glRotatef(95F, 0.0f, 0.0f, 1.0f);
+				GL11.glTranslatef(-0.5f ,-0.1f,-0.8F);
 			}
-			gun.render((Entity)data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
+		}
+		else
+		{
+			GL11.glScalef(2.2f, 2.2f, 2.2f);
+			GL11.glTranslatef(0F, 0.0F, 0F);
+		}
+		gun.render((Entity)data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
 
-			GL11.glPopMatrix();
-                    }
-                    break;
-		}		
+		GL11.glPopMatrix();
 	}
 }

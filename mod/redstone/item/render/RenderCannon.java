@@ -4,13 +4,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainerCreative;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
-import static net.minecraftforge.client.IItemRenderer.ItemRenderType.ENTITY;
-import static net.minecraftforge.client.IItemRenderer.ItemRenderType.EQUIPPED;
 
 import org.lwjgl.opengl.GL11;
 
@@ -20,6 +18,8 @@ public class RenderCannon implements IItemRenderer {
 
 	private ModelCannon gun;
 
+	private static final ResourceLocation LOC = new ResourceLocation("subaraki:/aran.png");
+
 	public RenderCannon() {
 		gun = new ModelCannon();
 	}
@@ -28,13 +28,10 @@ public class RenderCannon implements IItemRenderer {
 		switch(type)
 		{
 		case  EQUIPPED: return true;
-//		case  EQUIPPED_FIRST_PERSON: return true;
+		case  EQUIPPED_FIRST_PERSON: return true;
 		case ENTITY: return true;
 		default:
-                    if("EQUIPPED_FIRST_PERSON".equals(type.name())){
-                            return true;
-                    }
-                    return false;
+			return false;
 		}
 	}
 
@@ -48,78 +45,15 @@ public class RenderCannon implements IItemRenderer {
 	public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
 		switch(type){
 		case  EQUIPPED:
-			GL11.glPushMatrix();
-			Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation("subaraki/aran.png"));
-			GL11.glRotatef(15, 0.0f, 0.0f, 1.0f);
-			GL11.glRotatef(12, 0.0f, 1.0f, 0.0f);
-			GL11.glRotatef(195, 1.0f, 0.0f, 0.0f);
-
-			if(data[1] != null && data[1] instanceof EntityPlayer)
-			{
-				if(!((EntityPlayer)data[1] == Minecraft.getMinecraft().renderViewEntity && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0 && !((Minecraft.getMinecraft().currentScreen instanceof GuiInventory || Minecraft.getMinecraft().currentScreen instanceof GuiContainerCreative) && RenderManager.instance.playerViewY == 180.0F)))
-				{
-					float f = 1.65f;
-					GL11.glScalef(f,f,f);
-					GL11.glTranslatef(0.13F, -0.1F, -0F);
-				}
-				else
-				{
-					GL11.glScalef(3f, 3f, 3f);
-					GL11.glRotatef(80F, 1.0f, 0.0f, 0.0f);
-					GL11.glRotatef(0F, 1.0f, 0.0f, 1.0f);
-					GL11.glRotatef(-100F, 0.0f, 1.0f, 0.0f);
-					GL11.glRotatef(95F, 0.0f, 0.0f, 1.0f);
-					GL11.glTranslatef(-0.5f ,-0.1f,-0.8F);
-				}
-			}
-			else
-			{
-				GL11.glScalef(2.2f, 2.2f, 2.2f);
-				GL11.glTranslatef(0F, 0.0F, 0F);
-			}
-			gun.render((Entity)data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
-
-			GL11.glPopMatrix();
+			caseEq(type, item, data);
 			break;
-//		case  EQUIPPED_FIRST_PERSON:
-//			GL11.glPushMatrix();
-//			Minecraft.getMinecraft().renderEngine.bindTexture("/subaraki/aran.png");
-//			GL11.glRotatef(15, 0.0f, 0.0f, 1.0f);
-//			GL11.glRotatef(12, 0.0f, 1.0f, 0.0f);
-//			GL11.glRotatef(195, 1.0f, 0.0f, 0.0f);
-//
-//			if(data[1] != null && data[1] instanceof EntityPlayer)
-//			{
-//				if(!((EntityPlayer)data[1] == Minecraft.getMinecraft().renderViewEntity && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0 && !((Minecraft.getMinecraft().currentScreen instanceof GuiInventory || Minecraft.getMinecraft().currentScreen instanceof GuiContainerCreative) && RenderManager.instance.playerViewY == 180.0F)))
-//				{
-//					float f = 1.65f;
-//					GL11.glScalef(f,f,f);
-//					GL11.glTranslatef(0.13F, -0.1F, -0F);
-//				}
-//				else
-//				{
-//					GL11.glScalef(3f, 3f, 3f);
-//					GL11.glRotatef(80F, 1.0f, 0.0f, 0.0f);
-//					GL11.glRotatef(0F, 1.0f, 0.0f, 1.0f);
-//					GL11.glRotatef(-100F, 0.0f, 1.0f, 0.0f);
-//					GL11.glRotatef(95F, 0.0f, 0.0f, 1.0f);
-//					GL11.glTranslatef(-0.5f ,-0.1f,-0.8F);
-//				}
-//			}
-//			else
-//			{
-//				GL11.glScalef(2.2f, 2.2f, 2.2f);
-//				GL11.glTranslatef(0F, 0.0F, 0F);
-//			}
-//			gun.render((Entity)data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
-//
-//			GL11.glPopMatrix();
-//			break;
-			
+		case  EQUIPPED_FIRST_PERSON:
+			caseEq(type, item, data);
+			break;
 		case ENTITY:
 			GL11.glPushMatrix();
-			Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation("/subaraki/aran.png"));
-			GL11.glScalef(3f, 3f, 3f);
+			Minecraft.getMinecraft().renderEngine.func_110577_a(LOC);
+			GL11.glScalef(2f,2f,2f);
 			GL11.glRotatef(0, 0.0f, 0.0f, 1.0f);
 			GL11.glRotatef(0, 0.0f, 1.0f, 0.0f);
 			GL11.glRotatef(-180, 1.0f, 0.0f, 0.0f);
@@ -129,41 +63,43 @@ public class RenderCannon implements IItemRenderer {
 			GL11.glPopMatrix();
 			break;
 		default:
-                    if("EQUIPPED_FIRST_PERSON".equals(type.name())){
-                        GL11.glPushMatrix();
-			Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation("/subaraki/aran.png"));
-			GL11.glRotatef(15, 0.0f, 0.0f, 1.0f);
-			GL11.glRotatef(12, 0.0f, 1.0f, 0.0f);
-			GL11.glRotatef(195, 1.0f, 0.0f, 0.0f);
+			break;
+		}		
 
-			if(data[1] != null && data[1] instanceof EntityPlayer)
+	}
+
+	public void caseEq(ItemRenderType type, ItemStack item, Object... data){
+		GL11.glPushMatrix();
+		Minecraft.getMinecraft().renderEngine.func_110577_a(LOC);
+		GL11.glRotatef(15, 0.0f, 0.0f, 1.0f);
+		GL11.glRotatef(12, 0.0f, 1.0f, 0.0f);
+		GL11.glRotatef(195, 1.0f, 0.0f, 0.0f);
+
+		if(data[1] != null && data[1] instanceof EntityPlayer)
+		{
+			if(!((EntityPlayer)data[1] == Minecraft.getMinecraft().renderViewEntity && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0 && !((Minecraft.getMinecraft().currentScreen instanceof GuiInventory || Minecraft.getMinecraft().currentScreen instanceof GuiContainerCreative) && RenderManager.instance.playerViewY == 180.0F)))
 			{
-				if(!((EntityPlayer)data[1] == Minecraft.getMinecraft().renderViewEntity && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0 && !((Minecraft.getMinecraft().currentScreen instanceof GuiInventory || Minecraft.getMinecraft().currentScreen instanceof GuiContainerCreative) && RenderManager.instance.playerViewY == 180.0F)))
-				{
-					float f = 1.65f;
-					GL11.glScalef(f,f,f);
-					GL11.glTranslatef(0.13F, -0.1F, -0F);
-				}
-				else
-				{
-					GL11.glScalef(3f, 3f, 3f);
-					GL11.glRotatef(80F, 1.0f, 0.0f, 0.0f);
-					GL11.glRotatef(0F, 1.0f, 0.0f, 1.0f);
-					GL11.glRotatef(-100F, 0.0f, 1.0f, 0.0f);
-					GL11.glRotatef(95F, 0.0f, 0.0f, 1.0f);
-					GL11.glTranslatef(-0.5f ,-0.1f,-0.8F);
-				}
+				float f = 1.65f;
+				GL11.glScalef(f,f,f);
+				GL11.glTranslatef(0.13F, -0.1F, -0F);
 			}
 			else
 			{
-				GL11.glScalef(2.2f, 2.2f, 2.2f);
-				GL11.glTranslatef(0F, 0.0F, 0F);
+				GL11.glScalef(3f, 3f, 3f);
+				GL11.glRotatef(80F, 1.0f, 0.0f, 0.0f);
+				GL11.glRotatef(0F, 1.0f, 0.0f, 1.0f);
+				GL11.glRotatef(-100F, 0.0f, 1.0f, 0.0f);
+				GL11.glRotatef(95F, 0.0f, 0.0f, 1.0f);
+				GL11.glTranslatef(-0.5f ,-0.1f,-0.8F);
 			}
-			gun.render((Entity)data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
+		}
+		else
+		{
+			GL11.glScalef(2.2f, 2.2f, 2.2f);
+			GL11.glTranslatef(0F, 0.0F, 0F);
+		}
+		gun.render((Entity)data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
 
-			GL11.glPopMatrix();
-                    }
-			break;
-		}		
+		GL11.glPopMatrix();
 	}
 }

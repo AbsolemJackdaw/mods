@@ -73,7 +73,7 @@ public class ItemGun extends Item {
 	public void registerIcons(IconRegister par1IconRegister) {
 
 		String itemName = getUnlocalizedName().substring(getUnlocalizedName().lastIndexOf(".") + 1);
-		this.itemIcon = par1IconRegister.registerIcon("RedStoneHandGuns:" + itemName);
+		this.itemIcon = par1IconRegister.registerIcon("redstonehandguns:" + itemName);
 
 	}
 

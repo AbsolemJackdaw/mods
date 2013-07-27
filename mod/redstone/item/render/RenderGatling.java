@@ -23,6 +23,8 @@ public class RenderGatling implements IItemRenderer {
 
 	private ModelGatling gun;
 
+	private static final ResourceLocation LOC = new ResourceLocation("subaraki:/gatling.png");
+
 	public RenderGatling() {
 		gun = new ModelGatling();
 	}
@@ -32,13 +34,13 @@ public class RenderGatling implements IItemRenderer {
 		switch(type)
 		{
 		case  EQUIPPED: return true;
-//		case  EQUIPPED_FIRST_PERSON: return true;
+		//		case  EQUIPPED_FIRST_PERSON: return true;
 		case ENTITY: return true;
 		default:
-                    if("EQUIPPED_FIRST_PERSON".equals(type.name())){
-                            return true;
-                    }
-                    return false;
+			if("EQUIPPED_FIRST_PERSON".equals(type.name())){
+				return true;
+			}
+			return false;
 		}
 	}
 
@@ -52,82 +54,14 @@ public class RenderGatling implements IItemRenderer {
 
 		switch(type){
 		case  EQUIPPED:
-			GL11.glPushMatrix();
-			Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation("/subaraki/gatling.png"));
-			if(item.getTagCompound() != null && item.getTagCompound().hasKey("EnergyCharge")){
-				float red = item.getTagCompound().getFloat("EnergyCharge")/192;
-				GL11.glColor4f(1.0f, 1.0f-red, 1.0f-red, 0.5f);
-			}
-			GL11.glRotatef(15, 0.0f, 0.0f, 1.0f);
-			GL11.glRotatef(12, 0.0f, 1.0f, 0.0f);
-			GL11.glRotatef(195, 1.0f, 0.0f, 0.0f);
-
-			if(data[1] != null && data[1] instanceof EntityPlayer)
-			{
-				if(!((EntityPlayer)data[1] == Minecraft.getMinecraft().renderViewEntity && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0 && !((Minecraft.getMinecraft().currentScreen instanceof GuiInventory || Minecraft.getMinecraft().currentScreen instanceof GuiContainerCreative) && RenderManager.instance.playerViewY == 180.0F)))
-				{
-					GL11.glScalef(2f, 2f, 2f);
-					GL11.glTranslatef(0.09F, -0.05F, -0.0F);
-				}
-				else
-				{
-					GL11.glScalef(2f, 2f, 2f);
-					GL11.glRotatef(80F, 1.0f, 0.0f, 0.0f);
-					GL11.glRotatef(0F, 1.0f, 0.0f, 1.0f);
-					GL11.glRotatef(-110F, 0.0f, 1.0f, 0.0f);
-					GL11.glRotatef(95F, 0.0f, 0.0f, 1.0f);
-					GL11.glTranslatef(-0.5f ,-0f,-0.5F);
-				}
-			}
-			else
-			{
-				GL11.glScalef(2f, 2f, 2f);
-				GL11.glTranslatef(0.09F, -0.05F, -0.0F);
-			}
-			gun.render((Entity)data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
-
-			GL11.glPopMatrix();
+		caseEq(type, item, data);
 			break;
-//		case  EQUIPPED_FIRST_PERSON:
-//			GL11.glPushMatrix();
-//			Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation("/subaraki/gatling.png");
-//			if(item.getTagCompound() != null && item.getTagCompound().hasKey("EnergyCharge")){
-//				float red = item.getTagCompound().getFloat("EnergyCharge")/192;
-//				GL11.glColor4f(1.0f, 1.0f-red, 1.0f-red, 0.5f);
-//			}
-//			GL11.glRotatef(15, 0.0f, 0.0f, 1.0f);
-//			GL11.glRotatef(12, 0.0f, 1.0f, 0.0f);
-//			GL11.glRotatef(195, 1.0f, 0.0f, 0.0f);
-//
-//			if(data[1] != null && data[1] instanceof EntityPlayer)
-//			{
-//				if(!((EntityPlayer)data[1] == Minecraft.getMinecraft().renderViewEntity && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0 && !((Minecraft.getMinecraft().currentScreen instanceof GuiInventory || Minecraft.getMinecraft().currentScreen instanceof GuiContainerCreative) && RenderManager.instance.playerViewY == 180.0F)))
-//				{
-//					GL11.glScalef(2f, 2f, 2f);
-//					GL11.glTranslatef(0.09F, -0.05F, -0.0F);
-//				}
-//				else
-//				{
-//					GL11.glScalef(2f, 2f, 2f);
-//					GL11.glRotatef(80F, 1.0f, 0.0f, 0.0f);
-//					GL11.glRotatef(0F, 1.0f, 0.0f, 1.0f);
-//					GL11.glRotatef(-110F, 0.0f, 1.0f, 0.0f);
-//					GL11.glRotatef(95F, 0.0f, 0.0f, 1.0f);
-//					GL11.glTranslatef(-0.5f ,-0f,-0.5F);
-//				}
-//			}
-//			else
-//			{
-//				GL11.glScalef(2f, 2f, 2f);
-//				GL11.glTranslatef(0.09F, -0.05F, -0.0F);
-//			}
-//			gun.render((Entity)data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
-//
-//			GL11.glPopMatrix();
-//			break;
+		case  EQUIPPED_FIRST_PERSON:
+			caseEq(type, item, data);
+				break;
 		case ENTITY:
 			GL11.glPushMatrix();
-			Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation("/subaraki/gatling.png"));
+			Minecraft.getMinecraft().renderEngine.func_110577_a(LOC);
 			GL11.glScalef(2f, 2f, 2f);
 			GL11.glRotatef(0, 0.0f, 0.0f, 1.0f);
 			GL11.glRotatef(0, 0.0f, 1.0f, 0.0f);
@@ -138,45 +72,47 @@ public class RenderGatling implements IItemRenderer {
 			GL11.glPopMatrix();
 			break;
 		default:
-                    if("EQUIPPED_FIRST_PERSON".equals(type.name())){
-                        GL11.glPushMatrix();
-			Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation("/subaraki/gatling.png"));
-			if(item.getTagCompound() != null && item.getTagCompound().hasKey("EnergyCharge")){
-				float red = item.getTagCompound().getFloat("EnergyCharge")/192;
-				GL11.glColor4f(1.0f, 1.0f-red, 1.0f-red, 0.5f);
-			}
-			GL11.glRotatef(15, 0.0f, 0.0f, 1.0f);
-			GL11.glRotatef(12, 0.0f, 1.0f, 0.0f);
-			GL11.glRotatef(195, 1.0f, 0.0f, 0.0f);
 
-			if(data[1] != null && data[1] instanceof EntityPlayer)
-			{
-				if(!((EntityPlayer)data[1] == Minecraft.getMinecraft().renderViewEntity && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0 && !((Minecraft.getMinecraft().currentScreen instanceof GuiInventory || Minecraft.getMinecraft().currentScreen instanceof GuiContainerCreative) && RenderManager.instance.playerViewY == 180.0F)))
-				{
-					GL11.glScalef(2f, 2f, 2f);
-					GL11.glTranslatef(0.09F, -0.05F, -0.0F);
-				}
-				else
-				{
-					GL11.glScalef(2f, 2f, 2f);
-					GL11.glRotatef(80F, 1.0f, 0.0f, 0.0f);
-					GL11.glRotatef(0F, 1.0f, 0.0f, 1.0f);
-					GL11.glRotatef(-110F, 0.0f, 1.0f, 0.0f);
-					GL11.glRotatef(95F, 0.0f, 0.0f, 1.0f);
-					GL11.glTranslatef(-0.5f ,-0f,-0.5F);
-				}
-			}
-			else
+			break;
+		}
+	}	
+
+	public void caseEq(ItemRenderType type, ItemStack item, Object... data){
+		GL11.glPushMatrix();
+		Minecraft.getMinecraft().renderEngine.func_110577_a(LOC);
+		if(item.getTagCompound() != null && item.getTagCompound().hasKey("EnergyCharge")){
+			float red = item.getTagCompound().getFloat("EnergyCharge")/192;
+			GL11.glColor4f(1.0f, 1.0f-red, 1.0f-red, 0.5f);
+		}
+		GL11.glRotatef(15, 0.0f, 0.0f, 1.0f);
+		GL11.glRotatef(12, 0.0f, 1.0f, 0.0f);
+		GL11.glRotatef(195, 1.0f, 0.0f, 0.0f);
+
+		if(data[1] != null && data[1] instanceof EntityPlayer)
+		{
+			if(!((EntityPlayer)data[1] == Minecraft.getMinecraft().renderViewEntity && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0 && !((Minecraft.getMinecraft().currentScreen instanceof GuiInventory || Minecraft.getMinecraft().currentScreen instanceof GuiContainerCreative) && RenderManager.instance.playerViewY == 180.0F)))
 			{
 				GL11.glScalef(2f, 2f, 2f);
 				GL11.glTranslatef(0.09F, -0.05F, -0.0F);
 			}
-			gun.render((Entity)data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
+			else
+			{
+				GL11.glScalef(2f, 2f, 2f);
+				GL11.glRotatef(80F, 1.0f, 0.0f, 0.0f);
+				GL11.glRotatef(0F, 1.0f, 0.0f, 1.0f);
+				GL11.glRotatef(-110F, 0.0f, 1.0f, 0.0f);
+				GL11.glRotatef(95F, 0.0f, 0.0f, 1.0f);
+				GL11.glTranslatef(-0.5f ,-0f,-0.5F);
+			}
+		}
+		else
+		{
+			GL11.glScalef(2f, 2f, 2f);
+			GL11.glTranslatef(0.09F, -0.05F, -0.0F);
+		}
+		gun.render((Entity)data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
 
-			GL11.glPopMatrix();
-			break;
-                    }
-                    break;
-		}		
+		GL11.glPopMatrix();
 	}
 }
+
