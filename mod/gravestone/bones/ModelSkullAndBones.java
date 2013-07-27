@@ -4,12 +4,12 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
-public class ModelABlock extends ModelBase
+public class ModelSkullAndBones extends ModelBase
 {
 	//fields
 	ModelRenderer bone1;
 
-	public ModelABlock()
+	public ModelSkullAndBones()
 	{
 		textureWidth = 16;
 		textureHeight = 16;

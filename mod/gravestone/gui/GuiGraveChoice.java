@@ -83,7 +83,7 @@ public class GuiGraveChoice extends GuiScreen {
 		this.ySize_lo = (float) par2;
 		super.drawScreen(par1, par2, par3);
 
-		this.mc.renderEngine.func_110577_a(new ResourceLocation(("/gui/demo_bg.png")));
+//		this.mc.renderEngine.func_110577_a(new ResourceLocation(("/gui/demo_bg.png")));
 		GL11.glColor4f(0.0F, 0.0F, 0.0F, 5.0F);
 		int posX = (this.width - xSize) / 2;
 		int posY = (this.height - ySize) / 2;
@@ -102,7 +102,7 @@ public class GuiGraveChoice extends GuiScreen {
 
 	@Override
 	// whenever a button is clicked, this is called.
-	// sets the render Integer, the nbt to a new one or buys a grave.
+	// sets the render Integer, the nbt to a new one.
 	public void actionPerformed(GuiButton button) {
 		EntityPlayer p = Minecraft.getMinecraft().thePlayer;
 
@@ -151,6 +151,8 @@ public class GuiGraveChoice extends GuiScreen {
 	}
 
 	// sets an integer to an always reseting nbt tag
+	// old name for an old used code. mainly unused
+	@Deprecated
 	public void buyGrave()
 	{
 		nbt.setInteger("shop", render);
@@ -174,56 +176,56 @@ public class GuiGraveChoice extends GuiScreen {
 		{
 		case 1:
 			grave.showBasic(true);
-			mc.renderEngine.func_110577_a(new ResourceLocation("subaraki","/gravestone.png"));
+			mc.renderEngine.func_110577_a(new ResourceLocation("subaraki:gravestone.png"));
 			break;
 		case 2:
 			grave.showZerk(true);
 			try{
-				mc.renderEngine.func_110577_a(new ResourceLocation("subaraki","/gravezerk.png"));	
+				mc.renderEngine.func_110577_a(new ResourceLocation("subaraki:gravezerk.png"));	
 			}catch(Throwable e){}
 
 			break;
 		case 3 :
 			grave.showTomb(true);
 			try{
-				mc.renderEngine.func_110577_a(new ResourceLocation("subaraki","/gravestone.png"));
+				mc.renderEngine.func_110577_a(new ResourceLocation("subaraki:gravestone.png"));
 			}catch(Throwable e){}
 			break;
 		case 4:
 			grave.showPillar(true);
 			grave.renderSkeleton(true);
 			try{
-				mc.renderEngine.func_110577_a(new ResourceLocation("subaraki","/gravepillar.png"));
+				mc.renderEngine.func_110577_a(new ResourceLocation("subaraki:gravepillar.png"));
 			}catch(Throwable e){}
 			break;
 		case 5:
 			grave.showPillar(true);
 			try{
-				mc.renderEngine.func_110577_a(new ResourceLocation("subaraki","/gravepillar.png"));
+				mc.renderEngine.func_110577_a(new ResourceLocation("subaraki:gravepillar.png"));
 			}catch(Throwable e){}
 
 			break;
 		case 6:
 			grave.renderCross(true);try{
-				mc.renderEngine.func_110577_a(new ResourceLocation("subaraki","/gravewood.png"));
+				mc.renderEngine.func_110577_a(new ResourceLocation("subaraki:gravewood.png"));
 			}catch(Throwable e){}
 			break;
 		case 7:
 			grave.showPillar(true);
 			try{
-				mc.renderEngine.func_110577_a(new ResourceLocation("subaraki","/gravepillar.png"));
+				mc.renderEngine.func_110577_a(new ResourceLocation("subaraki:gravepillar.png"));
 			}catch(Throwable e){}
 			break;
 		case 8:
 			grave.renderAngel(true);
 			try{
-				mc.renderEngine.func_110577_a(new ResourceLocation("subaraki","/Angel.png"));
+				mc.renderEngine.func_110577_a(new ResourceLocation("subaraki:Angel.png"));
 			}catch(Throwable e){}
 			break;
 		case 9:
 			grave.renderKnight(true);
 			try{
-				mc.renderEngine.func_110577_a(new ResourceLocation("subaraki","/knight.png"));
+				mc.renderEngine.func_110577_a(new ResourceLocation("subaraki:knight.png"));
 			}catch(Throwable e){}
 			break;
 		default :

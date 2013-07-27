@@ -1,8 +1,8 @@
 package gravestone.bones;
 
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
@@ -10,7 +10,7 @@ public class TESRBones extends TileEntitySpecialRenderer {
 
 
 	private ModelBones bones = new ModelBones();
-	private ModelABlock block = new ModelABlock();
+	private ModelSkullAndBones block = new ModelSkullAndBones();
 	
 	@Override
 	public void renderTileEntityAt(TileEntity tile, double d, double d1,
@@ -31,7 +31,7 @@ public class TESRBones extends TileEntitySpecialRenderer {
 		GL11.glTranslatef((float)d + 0.5F, (float)d1 + 1.5F, (float)d2 + 0.5F); 
 		GL11.glScalef(1.0F, -1.0F, -1.0F);
 		GL11.glRotatef(0+rot, 0.0F, 1.0F, 0.0F);
-			this.tileEntityRenderer.renderEngine.func_110577_a(new ResourceLocation("subaraki","/skull.png"));
+			this.tileEntityRenderer.renderEngine.func_110577_a(new ResourceLocation("subaraki:skull.png"));
 		bones.render(0.0625f);
 		GL11.glPopMatrix();
 

@@ -65,24 +65,30 @@ public class ItemGrave extends Item{
 					if(nbt.hasKey("Message"))
 						grave.setDeathMessage(nbt.getString("Message"));
 					else
-						par2EntityPlayer.addChatMessage("Message 1 missing.");
-					if(nbt.hasKey("Meta"))
-						grave.setMeta(nbt.getInteger("Meta"));
-					else
-						par2EntityPlayer.addChatMessage("Meta missing.");
-					if(nbt.hasKey("Name"))
-						grave.setName(nbt.getString("Name"));
-					else
-						par2EntityPlayer.addChatMessage("Name missing.");
+						if(!par3World.isRemote)
+							par2EntityPlayer.addChatMessage("Message 1 missing.");
 					if(nbt.hasKey("Message2"))
 						grave.setDeathMessage(nbt.getString("Message2"));
 					else
-						par2EntityPlayer.addChatMessage("Message 2 missing.");
+						if(!par3World.isRemote)
+							par2EntityPlayer.addChatMessage("Message 2 missing.");
+					if(nbt.hasKey("Meta"))
+						grave.setMeta(nbt.getInteger("Meta"));
+					else
+						if(!par3World.isRemote)
+							par2EntityPlayer.addChatMessage("Meta missing.");
+					if(nbt.hasKey("Name"))
+						grave.setName(nbt.getString("Name"));
+					else
+						if(!par3World.isRemote)
+							par2EntityPlayer.addChatMessage("Name missing.");
+
 					par3World.setBlockTileEntity(x, y+1, z, te);
 
 				}
 				else
-					par2EntityPlayer.addChatMessage("Arguments missing !");
+					if(!par3World.isRemote)
+						par2EntityPlayer.addChatMessage("Arguments missing !");
 			}	
 			else
 				par2EntityPlayer.addChatMessage("te == null");
