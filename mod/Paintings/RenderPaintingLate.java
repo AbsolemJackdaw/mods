@@ -1,19 +1,14 @@
 package Paintings;
 
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.entity.RenderPainting;
-import net.minecraft.client.renderer.texture.DynamicTexture;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityPainting;
 import net.minecraft.util.EnumArt;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
@@ -24,27 +19,32 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class RenderPaintingLate extends RenderPainting
+public class RenderPaintingLate extends Render
 {
-	boolean Insane = ConfigFile.instance.Insane;
-	boolean sphax = ConfigFile.instance.Sphax;
-	boolean tiny = ConfigFile.instance.TinyPics ;
-	boolean gib = ConfigFile.instance.Gibea;
+	static boolean Insane = ConfigFile.instance.Insane;
+	static boolean sphax = ConfigFile.instance.Sphax;
+	static boolean tiny = ConfigFile.instance.TinyPics ;
+	static boolean gib = ConfigFile.instance.Gibea;
 
-	protected ResourceLocation art = new ResourceLocation("subaraki:art/"+
-	(tiny ? "tiny" : Insane ? "insane" : sphax? "sphax": "gib")+".png");
-	float size;
+	protected static final ResourceLocation art = new ResourceLocation("subaraki:art/"+
+			(tiny ? "tiny" : Insane ? "insane" : sphax? "sphax": "gib")+".png");
+
+
+	private float getSize(){
+		if(Insane && !tiny && !gib && !sphax){
+			return 512.0f;
+		}if(!Insane && tiny && !gib && !sphax){
+			return 512.0f;
+		}if(!Insane && !tiny && gib && !sphax){
+			return 256.0f;
+		}if(!Insane && !tiny && !gib && sphax){
+			return 256.0f;
+		}
+		return 256.0f;
+	}
 	public void renderThePainting(EntityPainting par1EntityPainting, double par2, double par4, double par6, float par8, float par9)
 	{
-		if(tiny && !Insane && !sphax && !gib){
-			size = 512.0f;
-		}else if(!tiny && Insane && !sphax && !gib){
-			size = 512.0f;
-		}else if(!tiny && !Insane && sphax && !gib ){
-			size = 256.0f;
-		}else if( !tiny && !Insane && !sphax && gib){
-			size = 256.0f;
-		}
+
 		GL11.glPushMatrix();
 		GL11.glTranslatef((float)par2, (float)par4, (float)par6);
 		GL11.glRotatef(par8, 0.0F, 1.0F, 0.0F);
@@ -56,21 +56,8 @@ public class RenderPaintingLate extends RenderPainting
 		this.func_77010_a(par1EntityPainting, enumart.sizeX, enumart.sizeY, enumart.offsetX, enumart.offsetY);
 		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
 		GL11.glPopMatrix();
-		
-		/** 
-		GL11.glPushMatrix();
-        GL11.glTranslatef((float)par2, (float)par4, (float)par6);
-        GL11.glRotatef(par8, 0.0F, 1.0F, 0.0F);
-        GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-        this.func_110777_b(par1EntityPainting);
-        EnumArt enumart = par1EntityPainting.art;
-        float f2 = 0.0625F;
-        GL11.glScalef(f2, f2, f2);
-        this.func_77010_a(par1EntityPainting, enumart.sizeX, enumart.sizeY, enumart.offsetX, enumart.offsetY);
-        GL11.glDisable(GL12.GL_RESCALE_NORMAL);
-        GL11.glPopMatrix();*/
-	}
 
+	}
 
 	private void func_77010_a(EntityPainting par1EntityPainting, int par2, int par3, int par4, int par5)
 	{
@@ -99,10 +86,10 @@ public class RenderPaintingLate extends RenderPainting
 				float f17 = f1 + (float)((j1 + 1) * 16);
 				float f18 = f1 + (float)(j1 * 16);
 				this.func_77008_a(par1EntityPainting, (f15 + f16) / 2.0F, (f17 + f18) / 2.0F);
-				float f19 = (float)(par4 + par2 - i1 * 16) / size;
-				float f20 = (float)(par4 + par2 - (i1 + 1) * 16) / size;
-				float f21 = (float)(par5 + par3 - j1 * 16) / size;
-				float f22 = (float)(par5 + par3 - (j1 + 1) * 16) / size;
+				float f19 = (float)(par4 + par2 - i1 * 16) / getSize();
+				float f20 = (float)(par4 + par2 - (i1 + 1) * 16) / getSize();
+				float f21 = (float)(par5 + par3 - j1 * 16) / getSize();
+				float f22 = (float)(par5 + par3 - (j1 + 1) * 16) / getSize();
 				Tessellator tessellator = Tessellator.instance;
 				tessellator.startDrawingQuads();
 				tessellator.setNormal(0.0F, 0.0F, -1.0F);
@@ -173,14 +160,18 @@ public class RenderPaintingLate extends RenderPainting
 		GL11.glColor3f(1.0F, 1.0F, 1.0F);
 	}
 
-	/**
-	 * Actually renders the given argument. This is a synthetic bridge method, always casting down its argument and then
-	 * handing it off to a worker function which does the actual work. In all probabilty, the class Render is generic
-	 * (Render<T extends Entity) and this method has signature public void doRender(T entity, double d, double d1,
-	 * double d2, float f, float f1). But JAD is pre 1.5 so doesn't do that.
-	 */
 	public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9)
 	{
 		this.renderThePainting((EntityPainting)par1Entity, par2, par4, par6, par8, par9);
+	}
+
+	protected ResourceLocation func_110806_a(EntityPainting par1EntityPainting)
+	{
+		return art;
+	}
+
+	@Override
+	protected ResourceLocation func_110775_a(Entity entity) {
+		return this.func_110806_a((EntityPainting)entity);
 	}
 }

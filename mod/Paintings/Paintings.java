@@ -2,10 +2,6 @@ package Paintings;
 
 import java.lang.reflect.Field;
 
-import javax.imageio.ImageIO;
-
-import net.minecraft.client.renderer.texture.DynamicTexture;
-import net.minecraft.util.EnumArt;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.EnumHelper;
 import Paintings.config.ConfigFile;
@@ -16,14 +12,9 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
-import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
 
 @Mod(modid = "PaintingsMod", name = "Painitngs++", version = "1.5.2")
-@NetworkMod(clientSideRequired = true, serverSideRequired = false,
-clientPacketHandlerSpec =
-@SidedPacketHandler(channels = {"Paintings"}, packetHandler = PHandler.class),
-serverPacketHandlerSpec =
-@SidedPacketHandler(channels = {"Paintings"}, packetHandler = PHandler.class))
+@NetworkMod(clientSideRequired = true, serverSideRequired = false)
 
 
 public class Paintings {
@@ -32,6 +23,7 @@ public class Paintings {
 	@SidedProxy(serverSide = "Paintings.CommonProxy", clientSide = "Paintings.ClientProxy")
 	public static CommonProxy proxy;
 
+	private static final String CLASS_LOC = "com.mcf.davidee.paintinggui.gui.PaintingButton";
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 
@@ -50,7 +42,7 @@ public class Paintings {
 		if(tiny && !Insane && !sphax && !gib)
 		{
 			try {
-				Class altClass= Class.forName("com.mcf.davidee.paintinggui.gui.GuiPaintingButton");
+				Class altClass= Class.forName(CLASS_LOC);
 				paintingGuiTextureHelper(altClass, "TEXTURE", new ResourceLocation(("subaraki:art/tiny.png")));
 				paintingGuiHelper(altClass, "KZ_WIDTH", 512);
 				paintingGuiHelper(altClass, "KZ_HEIGHT", 512);
@@ -62,7 +54,7 @@ public class Paintings {
 		else if(!tiny && Insane && !sphax && !gib)
 		{
 			try {
-				Class altClass= Class.forName("com.mcf.davidee.paintinggui.gui.GuiPaintingButton");
+				Class altClass= Class.forName("CLASS_LOC");
 				paintingGuiTextureHelper(altClass, "TEXTURE", new ResourceLocation(("subaraki:art/insane.png")));
 				paintingGuiHelper(altClass, "KZ_WIDTH", 512);
 				paintingGuiHelper(altClass, "KZ_HEIGHT", 512);
@@ -72,7 +64,7 @@ public class Paintings {
 			}
 		}else if(!tiny && !Insane && sphax && !gib){
 			try {
-				Class altClass= Class.forName("com.mcf.davidee.paintinggui.gui.GuiPaintingButton");
+				Class altClass= Class.forName("CLASS_LOC");
 				paintingGuiTextureHelper(altClass, "TEXTURE", new ResourceLocation(("subaraki:art/sphax.png")));
 				paintingGuiHelper(altClass, "KZ_WIDTH", 256);
 				paintingGuiHelper(altClass, "KZ_HEIGHT", 256);
@@ -82,7 +74,7 @@ public class Paintings {
 			}
 		}else{
 			try {
-				Class altClass= Class.forName("com.mcf.davidee.paintinggui.gui.GuiPaintingButton");
+				Class altClass= Class.forName("CLASS_LOC");
 				paintingGuiTextureHelper(altClass, "TEXTURE", new ResourceLocation(("subaraki:art/gib.png")));
 				paintingGuiHelper(altClass, "KZ_WIDTH", 256);
 				paintingGuiHelper(altClass, "KZ_HEIGHT", 256);
