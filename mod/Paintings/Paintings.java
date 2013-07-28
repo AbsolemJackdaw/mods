@@ -38,12 +38,12 @@ public class Paintings {
 		boolean gib = ConfigFile.instance.Gibea;
 		proxy.registerRenderInformation();
 
-		//adds PaintingGui compatibilty
+		//adds PaintingGui compatibilty trough reflection
 		if(tiny && !Insane && !sphax && !gib)
 		{
 			try {
 				Class altClass= Class.forName(CLASS_LOC);
-				paintingGuiTextureHelper(altClass, "TEXTURE", new ResourceLocation(("subaraki:art/tiny.png")));
+				paintingGuiTextureHelper(altClass, "TEXTURE", new ResourceLocation("subaraki:art/tiny.png"));
 				paintingGuiHelper(altClass, "KZ_WIDTH", 512);
 				paintingGuiHelper(altClass, "KZ_HEIGHT", 512);
 			}
@@ -54,8 +54,8 @@ public class Paintings {
 		else if(!tiny && Insane && !sphax && !gib)
 		{
 			try {
-				Class altClass= Class.forName("CLASS_LOC");
-				paintingGuiTextureHelper(altClass, "TEXTURE", new ResourceLocation(("subaraki:art/insane.png")));
+				Class altClass= Class.forName(CLASS_LOC);
+				paintingGuiTextureHelper(altClass, "TEXTURE", new ResourceLocation("subaraki:art/insane.png"));
 				paintingGuiHelper(altClass, "KZ_WIDTH", 512);
 				paintingGuiHelper(altClass, "KZ_HEIGHT", 512);
 			}
@@ -64,8 +64,8 @@ public class Paintings {
 			}
 		}else if(!tiny && !Insane && sphax && !gib){
 			try {
-				Class altClass= Class.forName("CLASS_LOC");
-				paintingGuiTextureHelper(altClass, "TEXTURE", new ResourceLocation(("subaraki:art/sphax.png")));
+				Class altClass= Class.forName(CLASS_LOC);
+				paintingGuiTextureHelper(altClass, "TEXTURE", new ResourceLocation("subaraki:art/sphax.png"));
 				paintingGuiHelper(altClass, "KZ_WIDTH", 256);
 				paintingGuiHelper(altClass, "KZ_HEIGHT", 256);
 			}
@@ -74,8 +74,8 @@ public class Paintings {
 			}
 		}else{
 			try {
-				Class altClass= Class.forName("CLASS_LOC");
-				paintingGuiTextureHelper(altClass, "TEXTURE", new ResourceLocation(("subaraki:art/gib.png")));
+				Class altClass= Class.forName(CLASS_LOC);
+				paintingGuiTextureHelper(altClass, "TEXTURE", new ResourceLocation("subaraki:art/gib.png"));
 				paintingGuiHelper(altClass, "KZ_WIDTH", 256);
 				paintingGuiHelper(altClass, "KZ_HEIGHT", 256);
 			}
@@ -182,13 +182,6 @@ public class Paintings {
 		if(tiny && !Insane && !sphax && !gib)
 		{
 
-//			EnumHelper.addArt("EnumArt_"+i,"ptg_1x1_1",16,16,0,0); i++;
-//			EnumHelper.addArt("EnumArt_"+i,"ptg_1x1_2",16,16,16,0); i++;   Duplicates of original painintings
-//			EnumHelper.addArt("EnumArt_"+i,"ptg_1x1_3",16,16,32,0); i++;
-//			EnumHelper.addArt("EnumArt_"+i,"ptg_1x1_4",16,16,48,0); i++;
-//			EnumHelper.addArt("EnumArt_"+i,"ptg_1x1_5",16,16,64,0); i++;
-//			EnumHelper.addArt("EnumArt_"+i,"ptg_1x1_6",16,16,80,0); i++;
-//			EnumHelper.addArt("EnumArt_"+i,"ptg_1x1_7",16,16,96,0); i++;
 			EnumHelper.addArt("EnumArt_"+i,"ptg_1x1_8",16,16,112,0); i++;
 			EnumHelper.addArt("EnumArt_"+i,"ptg_1x1_9",16,16,128,0); i++;
 			EnumHelper.addArt("EnumArt_"+i,"ptg_1x1_10",16,16,144,0); i++;
