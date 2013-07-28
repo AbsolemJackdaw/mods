@@ -2,15 +2,14 @@ package betterbreeds.entity.render;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderLiving;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
-import betterbreeds.entity.EntityWolf2;
+import net.minecraft.util.ResourceLocation;
 import betterbreeds.entity.EntityWolf6;
 
 public class RenderWolf6 extends RenderLiving
 {
-	private static final ResourceLocation texture = new ResourceLocation("subaraki/snowolf.png");
+	private static final ResourceLocation texture = new ResourceLocation("subaraki:BB/snowolf.png");
 	private static final ResourceLocation field_110917_a = new ResourceLocation("textures/entity/wolf/wolf.png");
 	private static final ResourceLocation field_110916_g = new ResourceLocation("textures/entity/wolf/wolf_angry.png");
 
@@ -31,10 +30,7 @@ public class RenderWolf6 extends RenderLiving
 
 	public void renderWolf(EntityWolf6 b, double par2, double par4, double par6, float par8, float par9)
 	{
-		super.doRenderLiving(b, par2, par4, par6, par8, par9);
-		if(b.getName().length() >= 0){
-			this.renderLivingLabel(b, b.getName(), par2, par4, par6, 32);
-		}        
+		super.doRenderLiving(b, par2, par4, par6, par8, par9);     
 	}
 
 	protected float getTailRotation(EntityWolf6 par1EntityWolf, float par2)

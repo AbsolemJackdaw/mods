@@ -10,7 +10,7 @@ import net.minecraft.entity.passive.EntityChicken;
 
 public class RenderCow2 extends RenderLiving
 {
-	private static final ResourceLocation texture = new ResourceLocation("subaraki/cow2.png");
+	private static final ResourceLocation texture = new ResourceLocation("subaraki:BB/cow2.png");
 
 	protected ResourceLocation func_110919_a(EntityCow2 par1EntityChicken)
 	{

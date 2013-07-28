@@ -69,6 +69,6 @@ public class EntityAIBeg6 extends EntityAIBase
     private boolean func_75382_a(EntityPlayer par1EntityPlayer)
     {
         ItemStack var2 = par1EntityPlayer.inventory.getCurrentItem();
-        return var2 == null ? false : (!this.theWolf.isTamed() && var2.itemID == Item.bone.itemID ? true : this.theWolf.isWheat(var2));
+        return var2 == null ? false : (!this.theWolf.isTamed() && var2.itemID == Item.bone.itemID ? true : this.theWolf.isBreedingItem(var2));
     }
 }

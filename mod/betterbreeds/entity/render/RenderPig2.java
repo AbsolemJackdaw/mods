@@ -9,7 +9,7 @@ import betterbreeds.entity.EntityPig2;
 
 public class RenderPig2 extends RenderLiving
 {
-	private static final ResourceLocation texture = new ResourceLocation("subaraki/pig2.png");
+	private static final ResourceLocation texture = new ResourceLocation("subaraki:BB/pig2.png");
 
 	protected ResourceLocation func_110919_a(EntityPig2 par1EntityChicken)
 	{

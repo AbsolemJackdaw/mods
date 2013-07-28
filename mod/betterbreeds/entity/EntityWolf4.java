@@ -83,7 +83,7 @@ public class EntityWolf4 extends EntityTameable
 
 		if (this.isTamed())
 		{
-			this.func_110148_a(SharedMonsterAttributes.field_111267_a).func_111128_a(20.0D);
+			this.func_110148_a(SharedMonsterAttributes.field_111267_a).func_111128_a(28.0D);
 		}
 		else
 		{
@@ -369,7 +369,7 @@ public class EntityWolf4 extends EntityTameable
 
 	    public boolean attackEntityAsMob(Entity par1Entity)
 	    {
-	    	int var2 = this.isTamed() ? 4 : 2;
+	    	int var2 = this.isTamed() ? 10 : 2;
 	    	return par1Entity.attackEntityFrom(DamageSource.causeMobDamage(this), var2);
 	    }
 

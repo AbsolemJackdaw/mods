@@ -14,7 +14,7 @@ import betterbreeds.entity.EntitySheep2;
 public class RenderSheep2 extends RenderLiving
 {
 	
-	private static final ResourceLocation texture = new ResourceLocation("subaraki/milksheep.png");
+	private static final ResourceLocation texture = new ResourceLocation("subaraki:BB/milksheep.png");
 
 	protected ResourceLocation func_110919_a(EntitySheep2 par1EntityChicken)
 	{

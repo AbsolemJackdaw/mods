@@ -37,7 +37,7 @@ public class RenderSheep4 extends RenderLiving
     {
         if (par2 == 0 && !par1EntitySheep.getSheared())
         {
-        	this.func_110776_a(new ResourceLocation("/subaraki/scotish.png"));
+        	this.func_110776_a(new ResourceLocation("/subaraki:BB/scotish.png"));
             float var4 = 1.0F;
             int var5 = par1EntitySheep.getFleeceColor();
             GL11.glColor3f(var4 * EntitySheep4.fleeceColorTable[var5][0], var4 * EntitySheep4.fleeceColorTable[var5][1], var4 * EntitySheep4.fleeceColorTable[var5][2]);

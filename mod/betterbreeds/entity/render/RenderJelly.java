@@ -15,7 +15,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class RenderJelly extends RenderLiving
 {
-	private static final ResourceLocation texture = new ResourceLocation("subaraki/Jelly.png");
+	private static final ResourceLocation texture = new ResourceLocation("subaraki:BB/Jelly.png");
 
 	protected ResourceLocation func_110919_a(EntityJelly par1EntityChicken)
 	{

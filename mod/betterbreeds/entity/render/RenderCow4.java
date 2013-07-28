@@ -11,7 +11,7 @@ import net.minecraft.entity.EntityLiving;
 public class RenderCow4 extends RenderLiving
 {
 	
-	private static final ResourceLocation texture = new ResourceLocation("subaraki/hotcow.png");
+	private static final ResourceLocation texture = new ResourceLocation("subaraki:BB/hotcow.png");
 
 	protected ResourceLocation func_110919_a(EntityCow4 par1EntityChicken)
 	{

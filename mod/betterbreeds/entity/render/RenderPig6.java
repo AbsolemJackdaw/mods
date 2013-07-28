@@ -10,7 +10,7 @@ import net.minecraft.entity.EntityLiving;
 
 public class RenderPig6 extends RenderLiving
 {
-	private static final ResourceLocation texture = new ResourceLocation("subaraki/pighoney.png");
+	private static final ResourceLocation texture = new ResourceLocation("subaraki:BB/pighoney.png");
 
 	protected ResourceLocation func_110919_a(EntityPig6 par1EntityChicken)
 	{

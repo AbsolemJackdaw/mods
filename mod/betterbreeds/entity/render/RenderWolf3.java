@@ -10,7 +10,7 @@ import betterbreeds.entity.EntityWolf3;
 
 public class RenderWolf3 extends RenderLiving
 {
-	private static final ResourceLocation texture = new ResourceLocation("subaraki/BlackWolf.png");
+	private static final ResourceLocation texture = new ResourceLocation("subaraki:BB/BlackWolf.png");
 	private static final ResourceLocation field_110917_a = new ResourceLocation("textures/entity/wolf/wolf.png");
 	private static final ResourceLocation field_110916_g = new ResourceLocation("textures/entity/wolf/wolf_angry.png");
 

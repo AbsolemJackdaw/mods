@@ -12,7 +12,7 @@ import net.minecraft.util.MathHelper;
 public class RenderChicken5 extends RenderLiving
 {
 
-	private static final ResourceLocation texture = new ResourceLocation("subaraki/xchick.png");
+	private static final ResourceLocation texture = new ResourceLocation("subaraki:BB/xchick.png");
 
 	protected ResourceLocation func_110919_a(EntityChicken5 par1EntityChicken)
 	{
