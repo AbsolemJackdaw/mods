@@ -143,34 +143,34 @@ public class TEGraveSpecial extends TileEntitySpecialRenderer // because your bl
 		switch(theMeta)
 		{
 		case 1:
-			resourcelocation =new ResourceLocation("subaraki:gravestone.png");
+			resourcelocation =new ResourceLocation("subaraki:grave/gravestone.png");
 			break;
 		case 2:
-			resourcelocation =new ResourceLocation("subaraki:gravezerk.png");
+			resourcelocation =new ResourceLocation("subaraki:grave/gravezerk.png");
 			break;
 		case 3 :
-			resourcelocation =new ResourceLocation("subaraki:gravestone.png");
+			resourcelocation =new ResourceLocation("subaraki:grave/gravestone.png");
 			break;
 		case 4:
-			resourcelocation =new ResourceLocation("subaraki:gravepillar.png");
+			resourcelocation =new ResourceLocation("subaraki:grave/gravepillar.png");
 			break;
 		case 5:
-			resourcelocation =new ResourceLocation("subaraki:gravepillar.png");
+			resourcelocation =new ResourceLocation("subaraki:grave/gravepillar.png");
 			break;
 		case 6:
-			resourcelocation =new ResourceLocation("subaraki:gravewood.png");
+			resourcelocation =new ResourceLocation("subaraki:grave/gravewood.png");
 			break;
 		case 7:
-			resourcelocation =new ResourceLocation("subaraki:gravepillar.png");
+			resourcelocation =new ResourceLocation("subaraki:grave/gravepillar.png");
 			break;
 		case 8:
-			resourcelocation =new ResourceLocation("subaraki:Angel.png");
+			resourcelocation =new ResourceLocation("subaraki:grave/Angel.png");
 			break;
 		case 9:
-			resourcelocation =new ResourceLocation("subaraki:knight.png");
+			resourcelocation =new ResourceLocation("subaraki:grave/knight.png");
 			break;
 		default:
-			resourcelocation =new ResourceLocation("subaraki:gravestone.png");
+			resourcelocation =new ResourceLocation("subaraki:grave/gravestone.png");
 			break;
 		}
 		this.func_110628_a(resourcelocation);

@@ -193,56 +193,56 @@ public class GuiGrave extends GuiScreen {
 		{
 		case 1:
 			grave.showBasic(true);
-			this.mc.renderEngine.func_110577_a(new ResourceLocation("subaraki:gravestone.png"));
+			this.mc.renderEngine.func_110577_a(new ResourceLocation("subaraki:grave/gravestone.png"));
 			break;
 		case 2:
 			grave.showZerk(true);
 			try{
-				this.mc.renderEngine.func_110577_a(new ResourceLocation("subaraki:gravezerk.png"));	
+				this.mc.renderEngine.func_110577_a(new ResourceLocation("subaraki:grave/gravezerk.png"));	
 			}catch(Throwable e){}
 
 			break;
 		case 3 :
 			grave.showTomb(true);
 			try{
-				this.mc.renderEngine.func_110577_a(new ResourceLocation("subaraki:gravestone.png"));
+				this.mc.renderEngine.func_110577_a(new ResourceLocation("subaraki:grave/gravestone.png"));
 			}catch(Throwable e){}
 			break;
 		case 4:
 			grave.showPillar(true);
 			grave.renderSkeleton(true);
 			try{
-				this.mc.renderEngine.func_110577_a(new ResourceLocation("subaraki:gravepillar.png"));
+				this.mc.renderEngine.func_110577_a(new ResourceLocation("subaraki:grave/gravepillar.png"));
 			}catch(Throwable e){}
 			break;
 		case 5:
 			grave.showPillar(true);
 			try{
-				this.mc.renderEngine.func_110577_a(new ResourceLocation("subaraki:gravepillar.png"));
+				this.mc.renderEngine.func_110577_a(new ResourceLocation("subaraki:grave/gravepillar.png"));
 			}catch(Throwable e){}
 
 			break;
 		case 6:
 			grave.renderCross(true);try{
-				this.mc.renderEngine.func_110577_a(new ResourceLocation("subaraki:gravewood.png"));
+				this.mc.renderEngine.func_110577_a(new ResourceLocation("subaraki:grave/gravewood.png"));
 			}catch(Throwable e){}
 			break;
 		case 7:
 			grave.showPillar(true);
 			try{
-				this.mc.renderEngine.func_110577_a(new ResourceLocation("subaraki:gravepillar.png"));
+				this.mc.renderEngine.func_110577_a(new ResourceLocation("subaraki:grave/gravepillar.png"));
 			}catch(Throwable e){}
 			break;
 		case 8:
 			grave.renderAngel(true);
 			try{
-				this.mc.renderEngine.func_110577_a(new ResourceLocation("subaraki:Angel.png"));
+				this.mc.renderEngine.func_110577_a(new ResourceLocation("subaraki:grave/Angel.png"));
 			}catch(Throwable e){}
 			break;
 		case 9:
 			grave.renderKnight(true);
 			try{
-				this.mc.renderEngine.func_110577_a(new ResourceLocation("subaraki:knight.png"));
+				this.mc.renderEngine.func_110577_a(new ResourceLocation("subaraki:grave/knight.png"));
 			}catch(Throwable e){}
 			break;
 		default :
@@ -254,7 +254,7 @@ public class GuiGrave extends GuiScreen {
 			grave.renderAngel(false);
 			grave.renderKnight(false);
 			try{
-				this.mc.renderEngine.func_110577_a(new ResourceLocation("subaraki:gravestone.png"));
+				this.mc.renderEngine.func_110577_a(new ResourceLocation("subaraki:grave/gravestone.png"));
 			}catch(Throwable e){}
 			break;
 		}

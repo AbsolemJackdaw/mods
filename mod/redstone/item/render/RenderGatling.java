@@ -23,7 +23,7 @@ public class RenderGatling implements IItemRenderer {
 
 	private ModelGatling gun;
 
-	private static final ResourceLocation LOC = new ResourceLocation("subaraki:/gatling.png");
+	private static final ResourceLocation LOC = new ResourceLocation("subaraki:rhg/gatling.png");
 
 	public RenderGatling() {
 		gun = new ModelGatling();

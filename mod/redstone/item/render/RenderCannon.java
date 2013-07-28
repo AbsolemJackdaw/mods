@@ -18,7 +18,7 @@ public class RenderCannon implements IItemRenderer {
 
 	private ModelCannon gun;
 
-	private static final ResourceLocation LOC = new ResourceLocation("subaraki:/aran.png");
+	private static final ResourceLocation LOC = new ResourceLocation("subaraki:rhg/aran.png");
 
 	public RenderCannon() {
 		gun = new ModelCannon();

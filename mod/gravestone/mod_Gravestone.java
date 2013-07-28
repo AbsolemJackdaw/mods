@@ -8,7 +8,6 @@ import gravestone.grave.ItemGrave;
 import gravestone.grave.TEGrave;
 import gravestone.handelers.CommonProxy;
 import gravestone.handelers.DeathEvent;
-import gravestone.handelers.GuiHandler;
 import gravestone.handelers.PacketHandler;
 import gravestone.handelers.PlayerTracker;
 
@@ -36,7 +35,6 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
-import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
@@ -92,7 +90,6 @@ public class mod_Gravestone{
 
 		GameRegistry.registerTileEntity(TEGrave.class, "grave");
 		GameRegistry.registerTileEntity(TEBones.class, "playerbody");
-		NetworkRegistry.instance().registerGuiHandler(this, new GuiHandler());
 		GameRegistry.registerPlayerTracker(new PlayerTracker());
 		proxy.registerRender();
 	}

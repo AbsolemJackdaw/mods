@@ -227,7 +227,7 @@ public class EntityBuddy extends BuddyBase
 		case 8://wither
 			return new ResourceLocation( s+"/wither/wither.png");
 		case 9://rpg spider
-			return new ResourceLocation( "subaraki","mobs/spider.png");
+			return new ResourceLocation( "subaraki:mobs/spider.png");
 		case 10://skeleton
 			return new ResourceLocation( s+"/skeleton/skeleton.png");
 		case 11://wither skeleton
@@ -272,15 +272,15 @@ public class EntityBuddy extends BuddyBase
 		case 27://pigzombie
 			return new ResourceLocation( s+"/zombie_pigman.png");
 		case 28://rpg bull 
-			return new ResourceLocation( "subaraki","mobs/bull.png");
+			return new ResourceLocation( "subaraki:mobs/bull.png");
 		case 29://rpg boar
-			return new ResourceLocation( "subaraki","mobs/boar.png");
+			return new ResourceLocation( "subaraki:mobs/boar.png");
 		case 30://lava slime
 			return new ResourceLocation( s+"/slime/magmacube.png");
 		case 31://slime
 			return new ResourceLocation( s+"/slime/slime.png");
 		case 32://rpg bull 
-			return new ResourceLocation( "subaraki","mobs/harpy.png");
+			return new ResourceLocation( "subaraki:mobs/harpy.png");
 		default ://Default steve.png
 			return new ResourceLocation( s+"/ghast/ghast.png");
 		}

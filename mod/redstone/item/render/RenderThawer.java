@@ -20,8 +20,8 @@ public class RenderThawer implements IItemRenderer {
 
 	private ModelThawer gun;
 
-	private static final ResourceLocation LOC_LAVA = new ResourceLocation("subaraki:/gunLava.png");
-	private static final ResourceLocation LOC_ICE = new ResourceLocation("subaraki:/gunIce.png");
+	private static final ResourceLocation LOC_LAVA = new ResourceLocation("subaraki:rhg/gunLava.png");
+	private static final ResourceLocation LOC_ICE = new ResourceLocation("subaraki:rhg/gunIce.png");
 
 	public RenderThawer() {
 		gun = new ModelThawer();

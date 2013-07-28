@@ -18,7 +18,7 @@ public class RenderGunEnd implements IItemRenderer {
 
 	private ModelGunEnd gun ;
 
-	private static final ResourceLocation LOC = new ResourceLocation("subaraki:/gunE.png");
+	private static final ResourceLocation LOC = new ResourceLocation("subaraki:rhg/gunE.png");
 
 	public RenderGunEnd()
 	{

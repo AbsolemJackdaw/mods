@@ -178,7 +178,7 @@ public class RenderBuddy extends RenderLiving
 	{
 		return this.sheepTexturing((BuddyBase)par1EntityLiving, par2, par3);
 	}
-	
+
 	@Override
 	public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9)
 	{
@@ -190,14 +190,12 @@ public class RenderBuddy extends RenderLiving
 			this.renderLivingLabel(pet, petname , par2, par4-pet.getHeight() -1f, par6, 32);
 		else
 			this.renderLivingLabel(pet, petname , par2, par4-pet.getHeight() , par6, 32);
-		
-		
 	}
 
 	@Override
 	protected ResourceLocation func_110775_a(Entity entity) {
 		BuddyBase pet = (BuddyBase)entity;
-		
+
 		if(PetBuddyMain.proxy.getGuiId() ==3){
 			ResourceLocation resourcelocation = AbstractClientPlayer.field_110314_b;
 			if (PetBuddyMain.proxy.getSkinName() != null && PetBuddyMain.proxy.getSkinName().length() > 0)
@@ -215,29 +213,4 @@ public class RenderBuddy extends RenderLiving
 			return pet.getTexture();
 		}
 	}
-
-	//	protected void getDownloadableTexture(EntityLiving living)
-	//	{    	
-	//		//		FMLLog.getLogger().info(PetBuddyMain.proxy.getGuiId()+"");
-	//		if(PetBuddyMain.proxy.getGuiId() == 3){
-	//			String s1 = "http://skins.minecraft.net/MinecraftSkins/" + PetBuddyMain.proxy.getSkinName() + ".png";
-	//			if (!renderManager.renderEngine.hasImageData(s1))
-	//			{
-	//				renderManager.renderEngine.obtainImageData(s1, new ImageBufferDownload());
-	//
-	//			}
-	//			this.loadDownloadableImageTexture(s1, living.getTexture());		
-	//		}
-	//		else{
-	//			this.loadDownloadableImageTexture(((BuddyBase)living).getOwner().skinUrl+"BuddySubstitute", living.getTexture());
-	//		}
-	//	}
-
-	//	@Override
-	//		protected void func_98190_a(EntityLiving living)
-	//		{
-	//			this.getDownloadableTexture((BuddyBase)living);
-	//		}
-
-
 }

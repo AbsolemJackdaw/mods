@@ -19,7 +19,7 @@ public class RenderRedGun implements IItemRenderer {
 
 	private ModelGunRed gun;
 
-	private static final ResourceLocation LOC = new ResourceLocation("subaraki:/gun.png");
+	private static final ResourceLocation LOC = new ResourceLocation("subaraki:rhg/gun.png");
 
 	public RenderRedGun() {
 		gun = new ModelGunRed();

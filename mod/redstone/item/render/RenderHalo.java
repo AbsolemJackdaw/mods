@@ -19,7 +19,7 @@ public class RenderHalo implements IItemRenderer {
 
 	private ModelHalo gun;
 
-	private static final ResourceLocation LOC = new ResourceLocation("subaraki:/type25.png");
+	private static final ResourceLocation LOC = new ResourceLocation("subaraki:rhg/type25.png");
 
 	public RenderHalo() {
 		gun = new ModelHalo();
