@@ -47,6 +47,7 @@ import threeDitems.models.sign;
 import threeDitems.models.smallSword;
 import threeDitems.models.spade;
 import threeDitems.models.spidereye;
+import threeDitems.models.wheat;
 
 public class RenderItem
 {
@@ -341,5 +342,10 @@ public class RenderItem
 	public void addPie(Item item, float scale, float inWorldScale, String texture){
 		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(new pie(), texture, 
 				0,0,0,0,0,0,0,0,0,0,0,0, scale, inWorldScale));
+	}
+	
+	public void addWheat(Item item, float scale, float inWorldScale, String texture){
+		MinecraftForgeClient.registerItemRenderer(item.itemID, new Render3d(new wheat(), texture, 
+				0.35f,0.4f,-0.55f,40f,10f,0,0.5f,-0.1f,0.6f,0,0,0, scale, inWorldScale));
 	}
 }

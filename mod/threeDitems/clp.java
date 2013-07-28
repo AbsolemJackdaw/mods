@@ -214,6 +214,8 @@ public class clp extends cmp
 		RenderItem.inst.addBow(Item.bow, "/subaraki/3d/bow.png", 0.7f, 1.0f);
 
 		RenderItem.inst.addPie(Item.pumpkinPie, 1.0f, 1.0f, "/subaraki/3d/pie.png");
+		
+		RenderItem.inst.addWheat(Item.wheat, 1.0f, 1.0f, "/subaraki/3d/wheat.png");
 	}
 
 }
