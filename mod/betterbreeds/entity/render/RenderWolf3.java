@@ -32,9 +32,6 @@ public class RenderWolf3 extends RenderLiving
     public void renderWolf(EntityWolf3 b, double par2, double par4, double par6, float par8, float par9)
     {
         super.doRenderLiving(b, par2, par4, par6, par8, par9);
-        if(b.getName().length() >= 0){
-    		this.renderLivingLabel(b, b.getName(), par2, par4, par6, 32);
-    		}  
         
     }
 
