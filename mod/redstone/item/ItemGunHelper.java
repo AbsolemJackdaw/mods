@@ -142,37 +142,49 @@ public class ItemGunHelper {
 											meta == 7 ? true : false;
 	}
 	public boolean findBucket(EntityPlayer player, int parser){
-		for(int i = 0; i < player.inventory.mainInventory.length; i++){
-			if(i <9){
-				if(player.inventory.getStackInSlot(i) != null){
-					int objectID =player.inventory.getStackInSlot(i).itemID;
+		// apparently needed, or server will crash when used.
+		/**---- Minecraft Crash Report ----
+ 		Ouch. That hurt :(
 
-					if(parser == 1){
-						if(objectID == Item.bucketWater.itemID){
-							theGun.thaw = 0;
-							return true;
-						}
-						if(objectID == Item.bucketLava.itemID){
-							theGun.thaw = 1;
-							return true;
-						}
-					}
-					if( parser == 3){
-						if(objectID == Item.rottenFlesh.itemID){
-							theGun.block = 1;
-							return true;
-						}
-					}
-					if(parser == 2){
-						if(objectID == Block.dirt.blockID){
-							theGun.block = 1;
-							return true;
-						}
-						if(objectID == Block.cobblestone.blockID){
-							theGun.block = 2;
-							return true;
-						}
+			Time: 06/07/13 12:41 PM
+			Description: Exception in server tick loop
 
+			java.lang.NoSuchMethodError: net.minecraft.item.ItemStack.func_77954_c()Lnet/minecraft/util/Icon;
+			at redstone.item.ItemGunHelper.findBucket(ItemGunHelper.java:149)*/		
+
+		if(!player.worldObj.isRemote){ 
+			for(int i = 0; i < player.inventory.mainInventory.length; i++){
+				if(i <9){
+					if(player.inventory.getStackInSlot(i) != null){
+						int objectID =player.inventory.getStackInSlot(i).itemID;
+
+						if(parser == 1){
+							if(objectID == Item.bucketWater.itemID){
+								theGun.thaw = 0;
+								return true;
+							}
+							if(objectID == Item.bucketLava.itemID){
+								theGun.thaw = 1;
+								return true;
+							}
+						}
+						if( parser == 3){
+							if(objectID == Item.rottenFlesh.itemID){
+								theGun.block = 1;
+								return true;
+							}
+						}
+						if(parser == 2){
+							if(objectID == Block.dirt.blockID){
+								theGun.block = 1;
+								return true;
+							}
+							if(objectID == Block.cobblestone.blockID){
+								theGun.block = 2;
+								return true;
+							}
+
+						}
 					}
 				}
 			}
