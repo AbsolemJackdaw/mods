@@ -4,7 +4,6 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.model.ModelZombie;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
-import petBuddy.root.BuddyBase;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

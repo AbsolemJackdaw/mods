@@ -7,6 +7,7 @@ import java.util.List;
 
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.world.World;
@@ -40,20 +41,25 @@ public class BuddyPacketHandler implements IPacketHandler {
 			String buddyName = dis.readUTF();
 			BuddyBase myBuddy = null;
 
+			if(guiId == 1000){
+				int c = secondID;
+				String s = buddyName;
+						PetBuddyMain.playersWithPets.put(s, c);
+			}
 			if(guiId == 100){
 				EntityBuddy buddy = (EntityBuddy)world.getEntityByID(secondID);
 				String name = buddyName.equals("null") || buddyName.equals("") ? buddy.getOwnerName()+"'s Buddy" :
 					buddyName;
-				PetBuddyMain.proxy.setName(name);
-				p.addStat(PetBuddyMain.nameBuddy, 1);
+				buddy.setName(name);
+				p.addStat(PetBuddyMain.pa.nameBuddy, 1);
 				
 			}if(guiId == 101){
 				EntityBuddy buddy = (EntityBuddy)world.getEntityByID(secondID);
 				String skin = buddyName.equals("null") || buddyName.equals("")|| buddyName.toLowerCase().equals("me") ||
 						buddyName.toLowerCase().equals("i")? buddy.getOwnerName() :	buddyName;
-				PetBuddyMain.proxy.setSkinName(skin);
+				buddy.setSkinName(skin);
 				if(!skin.equals(buddy.getOwnerName())){
-					p.addStat(PetBuddyMain.skin, 1);
+					p.addStat(PetBuddyMain.pa.skin, 1);
 				}
 				
 			}else if (guiId < 100){
@@ -63,7 +69,7 @@ public class BuddyPacketHandler implements IPacketHandler {
 						if (el != null && el instanceof BuddyBase){
 							if(((BuddyBase)el).getOwnerName().equals(p.username)){
 								myBuddy = (BuddyBase)el;
-								PetBuddyMain.proxy.setGuiId(secondID);
+								myBuddy.setGuiId(secondID);
 							}
 						}
 					}

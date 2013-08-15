@@ -7,8 +7,6 @@ import java.io.ObjectOutput;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.renderer.texture.DynamicTexture;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.ai.EntityAIFollowOwner;
@@ -27,9 +25,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import petBuddy.PetBuddyMain;
-import petBuddy.handelers.BuddyClientProxy;
 import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -50,6 +48,52 @@ public abstract class BuddyBase extends EntityTameable
 
 	protected boolean hasItem = false;
 
+	public boolean toggled = false;
+
+	public final int NAME = 21;
+	public final int SKIN = 22;
+	public final int GUIID = 23;
+
+	/**used as defaults for datawatchers*/
+	String name = "MyPetBuddy";
+	String skin = "-none-";
+
+	private float randomColor;
+	private float randomColor2;
+	private float randomColor3;
+
+	public float getColor(){
+		return randomColor ;
+	}public float getColor2(){
+		return randomColor2 ;
+	}public float getColor3(){
+		return randomColor3;
+	}
+
+	public void setColor(float f, float g, float h){
+		randomColor  = f;
+		randomColor2 = g;
+		randomColor3 = h;
+	}
+
+	private float randomDragonColor;
+	private float randomDragonColor2;
+	private float randomDragonColor3;
+
+	public float getDragonColor(){
+		return randomDragonColor ;
+	}public float getDragonColor2(){
+		return randomDragonColor2 ;
+	}public float getDragonColor3(){
+		return randomDragonColor3;
+	}
+
+	public void setDragonColor(float f, float g, float h){
+		randomDragonColor  = f;
+		randomDragonColor2 = g;
+		randomDragonColor3 = h;
+	}
+
 	//	private int guiID;
 	public BuddyBase(World par1World)
 	{
@@ -57,10 +101,11 @@ public abstract class BuddyBase extends EntityTameable
 		this.setSize(0.2F, 0.8F);
 		this.getNavigator().setAvoidsWater(true);
 		this.tasks.addTask(1, new EntityAISwimming(this));
-		this.tasks.addTask(5, new EntityAIFollowOwner(this, 1.0d, 10.0F, 2.0F));
+		this.tasks.addTask(5, new EntityAIFollowOwner(this, 0.5d, 10.0F, 2.0F));
 		this.tasks.addTask(9, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
 		this.tasks.addTask(6, new EntityAIWatchClosest(this, Entity.class, 8.0F));
 		this.tasks.addTask(9, new EntityAILookIdle(this));
+
 		/**Later maybe*/
 		this.targetTasks.addTask(1, new EntityAIOwnerHurtByTarget(this));
 		this.targetTasks.addTask(2, new EntityAIOwnerHurtTarget(this));
@@ -71,19 +116,56 @@ public abstract class BuddyBase extends EntityTameable
 	}
 	public BuddyBase(World par1World, EntityPlayer player)
 	{
-		super(par1World);
-		this.setSize(0.8F, 0.8F);
-		this.getNavigator().setAvoidsWater(true);
-		this.tasks.addTask(1, new EntityAISwimming(this));
-		this.tasks.addTask(5, new EntityAIFollowOwner(this, 1.0d, 10.0F, 2.0F));
-		this.tasks.addTask(9, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
-		this.tasks.addTask(9, new EntityAILookIdle(this));
+		this(par1World);
+		//		this.setSize(0.8F, 0.8F);
+		//		this.getNavigator().setAvoidsWater(true);
+		//		this.tasks.addTask(1, new EntityAISwimming(this));
+		//		this.tasks.addTask(5, new EntityAIFollowOwner(this, 0.5d, 10.0F, 2.0F));
+		//		this.tasks.addTask(9, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
+		//		this.tasks.addTask(9, new EntityAILookIdle(this));
 		this.setOwner(player.username);
-		this.slimeJumpDelay = this.rand.nextInt(20) + 10;
-		this.targetTasks.addTask(1, new EntityAIOwnerHurtByTarget(this));
-		this.targetTasks.addTask(2, new EntityAIOwnerHurtTarget(this));
-		this.targetTasks.addTask(3, new EntityAIHurtByTarget(this, true));
-		setEntityHealth(666);
+		//		this.slimeJumpDelay = this.rand.nextInt(20) + 10;
+		//		this.targetTasks.addTask(1, new EntityAIOwnerHurtByTarget(this));
+		//		this.targetTasks.addTask(2, new EntityAIOwnerHurtTarget(this));
+		//		this.targetTasks.addTask(3, new EntityAIHurtByTarget(this, true));
+		//		setEntityHealth(666);
+		PetBuddyMain.playersWithPets.put(this.getOwnerName(), entityId);
+
+	}
+
+	@Override
+	protected void entityInit() {
+		super.entityInit();
+
+		this.dataWatcher.addObject(NAME, getOwnerName() + "'s Buddy");
+		this.dataWatcher.addObject(SKIN, "-none-");
+		this.dataWatcher.addObject(GUIID, (int) 3);
+	}
+
+	public String getName(){
+		return dataWatcher.getWatchableObjectString(NAME);
+	}
+	public void setName(String n){
+		dataWatcher.updateObject(NAME, n);
+	}
+
+	
+	public String getSkinName(){
+		return dataWatcher.getWatchableObjectString(SKIN);
+	}
+	public void setSkinName(String n){
+		dataWatcher.updateObject(SKIN, n);
+	}
+
+	public int getGuiId(){
+		return dataWatcher.getWatchableObjectInt(GUIID);
+	}
+	public void setGuiId(int guiId){
+		dataWatcher.updateObject(GUIID, guiId);
+	}
+	@Override
+	public boolean isBreedingItem(ItemStack par1ItemStack) {
+		return false;
 	}
 
 	/**
@@ -103,12 +185,6 @@ public abstract class BuddyBase extends EntityTameable
 
 	/**retrieve the buddy's mounted offset based on/switched trough the integer passed down by the buttons of the Gui.*/
 	public abstract float getMountedOffset();
-
-	//	protected void entityInit()
-	//	{
-	//		super.entityInit();
-	//		this.dataWatcher.addObject(18, new Integer(this.getHealth()));
-	//	}
 
 	public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
 	{
@@ -155,7 +231,7 @@ public abstract class BuddyBase extends EntityTameable
 			return;
 		}
 
-		if(PetBuddyMain.proxy.getGuiId() == 19){
+		if(getGuiId() == 19){
 			float f;
 			float f1;
 
@@ -201,22 +277,6 @@ public abstract class BuddyBase extends EntityTameable
 			double d3;
 			float f3;
 
-			//			if (this.worldObj.isRemote)
-			//			{
-			//				if (this.newPosRotationIncrements > 0)
-			//				{
-			//					d3 = this.posX + (this.newPosX - this.posX) / (double)this.newPosRotationIncrements;
-			//					d0 = this.posY + (this.newPosY - this.posY) / (double)this.newPosRotationIncrements;
-			//					d1 = this.posZ + (this.newPosZ - this.posZ) / (double)this.newPosRotationIncrements;
-			//					d2 = MathHelper.wrapAngleTo180_double(this.newRotationYaw - (double)this.rotationYaw);
-			//					this.rotationYaw = (float)((double)this.rotationYaw + d2 / (double)this.newPosRotationIncrements);
-			//					this.rotationPitch = (float)((double)this.rotationPitch + (this.newRotationPitch - (double)this.rotationPitch) / (double)this.newPosRotationIncrements);
-			//					--this.newPosRotationIncrements;
-			//					this.setPosition(d3, d0, d1);
-			//					this.setRotation(this.rotationYaw, this.rotationPitch);
-			//				}
-			//			}
-
 			this.renderYawOffset = this.rotationYaw;
 		}
 	}
@@ -232,7 +292,7 @@ public abstract class BuddyBase extends EntityTameable
 		}
 
 		//method copied from slimes
-		if(PetBuddyMain.proxy.getGuiId() == 30 || PetBuddyMain.proxy.getGuiId() == 31){
+		if(getGuiId() == 30 || getGuiId() == 31){
 			this.field_70811_b += (this.field_70813_a - this.field_70811_b) * 0.5F;
 			this.field_70812_c = this.field_70811_b;
 			boolean flag = this.onGround;
@@ -292,7 +352,16 @@ public abstract class BuddyBase extends EntityTameable
 	@Override
 	public boolean interact(EntityPlayer player)
 	{
-		if(player.inventory.getCurrentItem() != null && !player.capabilities.isCreativeMode && hasItem == false){
+		if(getOwner() instanceof EntityPlayer){
+			if(((EntityPlayer)getOwner()).isSneaking() && ((EntityPlayer)getOwner()).inventory.getCurrentItem().getItem().equals(Item.stick)){
+				if(toggled)
+					toggled = false;
+				else 
+					toggled = true;
+			}
+		}
+
+		if(player.inventory.getCurrentItem() != null && !player.capabilities.isCreativeMode && hasItem == false && toggled){
 			ItemStack is = player.inventory.getCurrentItem();
 			Item item = is.getItem();
 
@@ -300,126 +369,150 @@ public abstract class BuddyBase extends EntityTameable
 			// the proper entity without any hassle.
 			if(item.equals(Item.porkRaw)){
 				sendPacket(2, 2, "pig");
-				player.addStat(PetBuddyMain.pigAchieve, 1);
+				player.addStat(PetBuddyMain.pa.pigAchieve, 1);
 			}
 			if(item.equals(Item.bread)){
 				sendPacket(3, 3, "tiny you");
-				player.addStat(PetBuddyMain.tinyYou, 1);
+				player.addStat(PetBuddyMain.pa.tinyYou, 1);
 			}
 			if(item.equals(Item.gunpowder)){
 				sendPacket(4, 4, "creeper");
-				player.addStat(PetBuddyMain.creeper, 1);
+				player.addStat(PetBuddyMain.pa.creeper, 1);
 			}
 			if(item.equals(Item.beefRaw)){
 				sendPacket(5, 5, "cow");
-				player.addStat(PetBuddyMain.cow, 1);
+				player.addStat(PetBuddyMain.pa.cow, 1);
 			}
 			if(item.equals(Item.blazeRod) || item.equals(Item.blazePowder)){
-				player.addStat(PetBuddyMain.ghost, 1);
+				player.addStat(PetBuddyMain.pa.ghost, 1);
 				sendPacket(6, 6, "blaze");
 			}
-			if(item.equals(Item.spiderEye) || item.equals(Item.silk)){ // fermented eye is for rpg spider
+			if(item.equals(Item.spiderEye)){ // fermented eye is for rpg spider // silk for buddy to ride
 				sendPacket(7, 7, "spider");
-				player.addStat(PetBuddyMain.spider, 1);
+				player.addStat(PetBuddyMain.pa.spider, 1);
 			}
 			if(item.equals(Item.netherStar)){
-				player.addStat(PetBuddyMain.wither, 1);
+				player.addStat(PetBuddyMain.pa.wither, 1);
 				sendPacket(8, 8, "wither boss");
 			}
 			if(item.equals(Item.fermentedSpiderEye)){
-				player.addStat(PetBuddyMain.rpgSpider, 1);
+				player.addStat(PetBuddyMain.pa.rpgSpider, 1);
 				sendPacket(9, 9, "rpg spider");
 			}
 			if(item.equals(Item.arrow)){
 				sendPacket(10, 10, "skeleton");
-				player.addStat(PetBuddyMain.skelet, 1);
+				player.addStat(PetBuddyMain.pa.skelet, 1);
 			}
 			if(item.equals(Item.skull) && is.getItemDamage() == 1){
-				player.addStat(PetBuddyMain.witherSkelly, 1);
+				player.addStat(PetBuddyMain.pa.witherSkelly, 1);
 				sendPacket(11, 11, "skeleton w");
 			}
 			if(item.equals(Item.rottenFlesh)){
-				if(PetBuddyMain.proxy.getGuiId() == 3)
-					player.addStat(PetBuddyMain.zombie, 1);
+				if(getGuiId() == 3)
+					player.addStat(PetBuddyMain.pa.zombie, 1);
 				sendPacket(12, 12, "zombie");
 			}
 			if(item.equals(Item.ghastTear)){
-				player.addStat(PetBuddyMain.ghast, 1);
+				player.addStat(PetBuddyMain.pa.ghast, 1);
 				sendPacket(13, 13, "ghast");
 			}
 			if(is.itemID == Block.cloth.blockID){
 				sendPacket(14, 14, "sheep");
-				player.addStat(PetBuddyMain.sheep, 1);
+				player.addStat(PetBuddyMain.pa.sheep, 1);
 			}
 			if(item.equals(Item.enderPearl)){
-				player.addStat(PetBuddyMain.endPearl, 1);
+				player.addStat(PetBuddyMain.pa.endPearl, 1);
 				sendPacket(15, 15, "enderman");
 			}
 			if(item.equals(Item.fishCooked)){
 				sendPacket(16, 16, "silverfish");
-				player.addStat(PetBuddyMain.silverfish, 1);
+				player.addStat(PetBuddyMain.pa.silverfish, 1);
 			}
 			if(item.equals(Item.fishRaw)){
 				sendPacket(23, 23, "cat");
-				player.addStat(PetBuddyMain.cat, 1);
+				player.addStat(PetBuddyMain.pa.cat, 1);
 			}
 			if(item.equals(Item.snowball)){
 				sendPacket(17, 17, "snowman");
-				player.addStat(PetBuddyMain.snow, 1);
+				player.addStat(PetBuddyMain.pa.snow, 1);
 			}
 			if(is.itemID == Block.blockIron.blockID){
 				sendPacket(18, 18, "iron golem");
-				player.addStat(PetBuddyMain.golem, 1);
+				player.addStat(PetBuddyMain.pa.golem, 1);
 			}
 			if(is.itemID == Block.whiteStone.blockID){
-				player.addStat(PetBuddyMain.endDragon, 1);
+				player.addStat(PetBuddyMain.pa.endDragon, 1);
 				sendPacket(19, 19, "dragon");
 			}
 			if(item.equals(Item.netherStalkSeeds)){
-				player.addStat(PetBuddyMain.bat, 1);
+				player.addStat(PetBuddyMain.pa.bat, 1);
 				sendPacket(20, 20, "bat");
 			}
-			if(item.equals(Item.feather)){
+			if(item.equals(Item.chickenRaw)){
 				sendPacket(21, 21, "chicken");
-				player.addStat(PetBuddyMain.chicken, 1);
+				player.addStat(PetBuddyMain.pa.chicken, 1);
 			}
 			if(is.itemID == Block.mycelium.blockID){
 				sendPacket(22, 22, "mooshroom");
-				player.addStat(PetBuddyMain.mooshroom, 1);
+				player.addStat(PetBuddyMain.pa.mooshroom, 1);
 			}
 			if(item.equals(Item.dyePowder) && is.getItemDamage() == 0){
-				if(PetBuddyMain.proxy.getGuiId() != 19 && PetBuddyMain.proxy.getGuiId() != 14){
+				if(getGuiId() != 19 && getGuiId() != 14){
 					sendPacket(24, 24, "squid");
-					player.addStat(PetBuddyMain.squid, 1);
+					player.addStat(PetBuddyMain.pa.squid, 1);
 				}
 			}
 			if(item instanceof ItemBook){
 				sendPacket(25, 25, "villager");
-				player.addStat(PetBuddyMain.villager, 1);
+				player.addStat(PetBuddyMain.pa.villager, 1);
 			}
 			if(item.equals(Item.bone)){
 				sendPacket(26, 26, "wolf");
-				player.addStat(PetBuddyMain.wolf, 1);
+				player.addStat(PetBuddyMain.pa.wolf, 1);
 			}
 			if(item.equals(Item.netherQuartz)){
-				player.addStat(PetBuddyMain.pigZombie, 1);
+				player.addStat(PetBuddyMain.pa.pigZombie, 1);
 				sendPacket(27, 27, "pig zombie");
 			}
 			if(item.equals(Item.beefCooked)){
-				player.addStat(PetBuddyMain.rpgBull, 1);
+				player.addStat(PetBuddyMain.pa.rpgBull, 1);
 				sendPacket(28, 28, "rpg bull");
 			}
 			if(item.equals(Item.porkCooked)){
-				player.addStat(PetBuddyMain.rpgBoar, 1);
+				player.addStat(PetBuddyMain.pa.rpgBoar, 1);
 				sendPacket(29, 29, "rpg boar");
 			}
 			if(item.equals(Item.magmaCream)){
-				player.addStat(PetBuddyMain.magma, 1);
+				player.addStat(PetBuddyMain.pa.magma, 1);
 				sendPacket(30, 30, "MagmaCube");
 			}
 			if(item.equals(Item.slimeBall)){
 				sendPacket(31, 31, "Slime");
-				player.addStat(PetBuddyMain.slime, 1);
+				player.addStat(PetBuddyMain.pa.slime, 1);
+			}
+			if(item.equals(Item.feather)){ // turn a chicken into a harpy
+				if(getGuiId() == 21){
+					player.addStat(PetBuddyMain.pa.harpy, 1);
+					sendPacket(32, 32, "harpy");
+				}
+			}
+			if(item.equals(Item.wheat)){ // turn a chicken into a moa
+				if(getGuiId() == 21){
+					player.addStat(PetBuddyMain.pa.moa, 1);
+					sendPacket(33, 33, "moa");
+				}
+			}
+			if(item.equals(Item.pickaxeWood)){
+				player.addStat(PetBuddyMain.pa.dwarf, 1);
+				sendPacket(34, 34, "dwarf");
+			}
+			if(item.equals(Item.ingotGold)){
+				player.addStat(PetBuddyMain.pa.elf, 1);
+				sendPacket(35, 35, "elf");
+			}
+			if(item.equals(Block.obsidian)){
+				player.addStat(PetBuddyMain.pa.orc, 1);
+				sendPacket(36, 36, "orc");
 			}
 		}
 		return super.interact(player);
@@ -475,7 +568,7 @@ public abstract class BuddyBase extends EntityTameable
 
 	protected void updateEntityActionState()
 	{
-		if(PetBuddyMain.proxy.getGuiId() == 31){
+		if(getGuiId() == 31){
 
 			if (this.onGround && this.slimeJumpDelay-- <= 0)
 			{
@@ -502,7 +595,7 @@ public abstract class BuddyBase extends EntityTameable
 		}
 	}
 	public float getHeight(){
-		switch(PetBuddyMain.proxy.getGuiId()){
+		switch(getGuiId()){
 		case 2:
 			return 0.3f;
 		case 4:

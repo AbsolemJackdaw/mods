@@ -1,12 +1,10 @@
 package petBuddy.entity;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
-
-import javax.imageio.ImageIO;
+import java.util.List;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelBlaze;
@@ -20,17 +18,17 @@ import net.minecraft.client.model.ModelSnowMan;
 import net.minecraft.client.model.ModelSpider;
 import net.minecraft.client.model.ModelVillager;
 import net.minecraft.client.model.ModelZombie;
-import net.minecraft.client.renderer.texture.DynamicTexture;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import petBuddy.PetBuddyMain;
 import petBuddy.entity.model.Bat;
@@ -40,7 +38,11 @@ import petBuddy.entity.model.Chicken;
 import petBuddy.entity.model.DragonsModel;
 import petBuddy.entity.model.Harpy;
 import petBuddy.entity.model.IronGolem;
+import petBuddy.entity.model.Moa;
+import petBuddy.entity.model.ModelDwarfMale;
+import petBuddy.entity.model.ModelElfMale;
 import petBuddy.entity.model.ModelMagmaCube;
+import petBuddy.entity.model.ModelOrcMale;
 import petBuddy.entity.model.ModelSkellington;
 import petBuddy.entity.model.ModelSpiderRpg;
 import petBuddy.entity.model.Ocelot;
@@ -50,6 +52,7 @@ import petBuddy.entity.model.Squid;
 import petBuddy.entity.model.WitherModel;
 import petBuddy.entity.model.Wolf;
 import petBuddy.root.BuddyBase;
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -62,14 +65,13 @@ public class EntityBuddy extends BuddyBase
 	private int[][] foundItemsStackSize;
 
 	private HashMap<String, String> itemInventory = new HashMap();
-	private int harvestsWithHeldItem;
 
 	private int rand2Text ;
 	private int rand3Text ;
 	private int rand4Text ;
 	private int rand5Text ;
-
-	public static DynamicTexture buddyTexture;
+	
+	ArrayList<ItemStack> pickedupItems = new ArrayList<ItemStack>();
 
 	public EntityBuddy(World par1World)
 	{
@@ -78,13 +80,12 @@ public class EntityBuddy extends BuddyBase
 		//i hope to prevent any buddies going lost in portals.
 		this.timeUntilPortal = 6000;
 
-		this.harvestsWithHeldItem = 12000;
-
 		happynessFactorCooldown = rand.nextInt(600) + 800;
 		rand2Text = rand.nextInt(1);
 		rand3Text = rand.nextInt(2);
 		rand4Text = rand.nextInt(3);
 		rand5Text = rand.nextInt(5);
+
 	}
 
 	public EntityBuddy(World par1World, EntityPlayer player)
@@ -93,12 +94,11 @@ public class EntityBuddy extends BuddyBase
 		this.findsItemTimer = this.rand.nextInt(12000) + 12000;
 		this.timeUntilPortal = 6000;
 
-		this.harvestsWithHeldItem = 12000;
-		
 		rand2Text = rand.nextInt(1);
 		rand3Text = rand.nextInt(2);
 		rand4Text = rand.nextInt(3);
 		rand5Text = rand.nextInt(5);
+		
 	}
 
 	@Override
@@ -202,6 +202,14 @@ public class EntityBuddy extends BuddyBase
 			return new ModelSlime(16); // model from petbuddy, not from vanilla
 		case 32:
 			return new Harpy();
+		case 33 :
+			return new Moa();
+		case 34:
+			return new ModelDwarfMale(0f);
+		case 35:
+			return new ModelElfMale(0f);
+		case 36:
+			return new ModelOrcMale(0f);
 		default :
 			return new ModelBiped();
 		}
@@ -262,11 +270,11 @@ public class EntityBuddy extends BuddyBase
 			return new ResourceLocation( s+"/squid.png");
 		case 25://villager
 			return new ResourceLocation( s+"/villager/"+ 
-		(rand5Text == 0 ? "smith" :
-			rand5Text == 1 ? "butcher" :
-				rand5Text == 2 ? "farmer" :
-					rand5Text == 3 ? "priest" :
-						rand5Text == 4 ? "librarian" : "villager")+ ".png");
+					(rand5Text == 0 ? "smith" :
+						rand5Text == 1 ? "butcher" :
+							rand5Text == 2 ? "farmer" :
+								rand5Text == 3 ? "priest" :
+									rand5Text == 4 ? "librarian" : "villager")+ ".png");
 		case 26://wolf
 			return new ResourceLocation( s+"/wolf/wolf.png");
 		case 27://pigzombie
@@ -279,8 +287,16 @@ public class EntityBuddy extends BuddyBase
 			return new ResourceLocation( s+"/slime/magmacube.png");
 		case 31://slime
 			return new ResourceLocation( s+"/slime/slime.png");
-		case 32://rpg bull 
+		case 32://harpy
 			return new ResourceLocation( "subaraki:mobs/harpy.png");
+		case 33: //moa
+			return new ResourceLocation("subaraki:mobs/moa.png");
+		case 34: //dwarf
+			return new ResourceLocation("subaraki:mobs/mpmDwarf.png");
+		case 35: //elf
+			return new ResourceLocation("subaraki:mobs/mpmElf.png");
+		case 36: //orc
+			return new ResourceLocation("subaraki:mobs/mpmOrc.png");
 		default ://Default steve.png
 			return new ResourceLocation( s+"/ghast/ghast.png");
 		}
@@ -318,8 +334,6 @@ public class EntityBuddy extends BuddyBase
 			return "mob.endermen.idle";
 		case 16:
 			return "mob.silverfish.say";
-		case 17:
-			return "/mob/snowman.png";
 		case 19:
 			return "mob.enderdragon.growl";
 		case 20:
@@ -346,6 +360,8 @@ public class EntityBuddy extends BuddyBase
 			return "mob.magmacube.big";
 		case 31:
 			return "mob.slime.big";
+		case 33:
+			return "mob.chicken.say";
 		default :
 			return null;
 		}
@@ -354,19 +370,67 @@ public class EntityBuddy extends BuddyBase
 	public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
 	{
 		super.writeEntityToNBT(par1NBTTagCompound);
+		
+		NBTTagList nbttaglist = new NBTTagList();
+
+		for (int i = 0; i < this.pickedupItems.size(); ++i)
+		{
+			if (this.pickedupItems.get(i) != null)
+			{
+				NBTTagCompound nbttagcompound1 = new NBTTagCompound();
+				nbttagcompound1.setByte("Slot", (byte)i);
+				pickedupItems.get(i).writeToNBT(nbttagcompound1);
+				nbttaglist.appendTag(nbttagcompound1);
+			}
+		}
+		par1NBTTagCompound.setTag("Items", nbttaglist);
 	}
 
 	public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
 	{
 		super.readEntityFromNBT(par1NBTTagCompound);
+		
+		NBTTagList nbttaglist = par1NBTTagCompound.getTagList("Items");
+		this.pickedupItems =  new ArrayList<ItemStack>();
+
+		for (int i = 0; i < nbttaglist.tagCount(); ++i)
+		{
+			NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbttaglist.tagAt(i);
+			int j = nbttagcompound1.getByte("Slot") & 255;
+
+			this.pickedupItems.set(i,ItemStack.loadItemStackFromNBT(nbttagcompound1));
+			
+		}
 	}
 
-	public int getGuiId(){
-		return PetBuddyMain.proxy.getGuiId();
-	}
-
+	int sayItems = 600;
+	int delay = 10;
 	@Override
 	public void onLivingUpdate() {
+		
+		sayItems--;
+		if(sayItems == 0){
+			sayItems = 600;
+			if(pickedupItems.size() > 0){
+				this.buddySpeak(getOwner(), "I've got some picked up items master.");
+			}
+		}
+
+		List<EntityItem> xps = worldObj.getEntitiesWithinAABB(EntityItem.class, boundingBox.copy().expand(0.5D, 0.5D, 0.5D));
+		if (xps != null && xps.size() > 0) {
+			if(-- delay <= 0){
+				for (EntityItem xp : xps) {
+					delay = 10;
+					pickedupItems.add(xp.getEntityItem());
+					xp.setDead();
+
+					if(sayItems % 10 == 0){
+						buddySpeak(getOwner(), "I've picked up items master");
+					}
+				}
+			}
+		}
+
 		if(!(this.ridingEntity instanceof EntityPlayer) && !this.worldObj.isRemote && this.findsItemTimer >=0){		        
 			findsItemTimer --;
 		}else{
@@ -379,21 +443,22 @@ public class EntityBuddy extends BuddyBase
 				buddySpeak(getOwner(), "Hey, I think I found something !");
 			}
 		}
-		if(findsItemTimer + rand.nextInt(6000)  == 5000 && this.ridingEntity == null){
-			if(!worldObj.isRemote){
-				buddySpeak(getOwner(), "I'm tired... I want to sit on your head...");
-			}
-		}if(findsItemTimer + rand.nextInt(10000)  == 12000){
-			if(!worldObj.isRemote){
-				buddySpeak(getOwner(), "I feel a strong band between you and me " + getOwnerName() + ". Don't you ?");
-			}
-		}
+		//		if(findsItemTimer + rand.nextInt(6000)  == 5000 && this.ridingEntity == null){
+		//			if(!worldObj.isRemote){
+		//				buddySpeak(getOwner(), "I'm tired... I want to sit on your head...");
+		//			}
+		//		}if(findsItemTimer + rand.nextInt(10000)  == 12000){
+		//			if(!worldObj.isRemote){
+		//				buddySpeak(getOwner(), "I feel a strong band between you and me " + getOwnerName() + ". Don't you ?");
+		//			}
+		//		}
 		if(this.isBurning()){
 			extinguish();
 		}
 		if(!PetBuddyMain.playersWithPets.containsValue(this.entityId)){
 			this.setDead();
 		}
+		FMLLog.getLogger().info(""+ getGuiId());
 		super.onLivingUpdate();
 	}
 
@@ -402,7 +467,7 @@ public class EntityBuddy extends BuddyBase
 	 */
 	public boolean interact(EntityPlayer player)
 	{
-		player.addStat(PetBuddyMain.findBuddy, 1);
+		player.addStat(PetBuddyMain.pa.findBuddy, 1);
 
 		if(player.getCurrentEquippedItem() != null){
 			//adds happiness to pet.
@@ -417,9 +482,9 @@ public class EntityBuddy extends BuddyBase
 				ItemStack item = player.getCurrentEquippedItem();
 
 				if(getGuiId() == 14){
-					float fl= PetBuddyMain.proxy.getColor();
-					float flo= PetBuddyMain.proxy.getColor2();
-					float fla= PetBuddyMain.proxy.getColor3();
+					float fl= getColor();
+					float flo= getColor2();
+					float fla= getColor3();
 					if(item.getItemDamage() == 0){
 						fl -= 0.05; flo -= 0.05; fla-= 0.05;
 					}else if(item.getItemDamage() == 1){
@@ -438,13 +503,13 @@ public class EntityBuddy extends BuddyBase
 					if(fl < 0) fl =0;if (flo < 0) flo =0; if(fla < 0) fla =0;
 					if(fl > 1) fl =1;if (flo > 1) flo =1; if(fla > 1) fla =1;
 
-					PetBuddyMain.proxy.setColor(fl,flo,fla);
+					setColor(fl,flo,fla);
 					item.stackSize--;
 				}
 				if(getGuiId() == 19 ){
-					float fl= PetBuddyMain.proxy.getDragonColor();
-					float flo= PetBuddyMain.proxy.getDragonColor2();
-					float fla= PetBuddyMain.proxy.getDragonColor3();
+					float fl= getDragonColor();
+					float flo= getDragonColor2();
+					float fla= getDragonColor3();
 					if(item.getItemDamage() == 0){
 						fl -= 0.05; flo -= 0.05; fla-= 0.05;
 					}else if(item.getItemDamage() == 1){
@@ -463,7 +528,7 @@ public class EntityBuddy extends BuddyBase
 					if(fl < 0) fl =0;if (flo < 0) flo =0; if(fla < 0) fla =0;
 					if(fl > 1) fl =1;if (flo > 1) flo =1; if(fla > 1) fla =1;
 
-					PetBuddyMain.proxy.setDragonColor(fl,flo,fla);
+					setDragonColor(fl,flo,fla);
 					item.stackSize--;
 				}
 			}
@@ -473,37 +538,35 @@ public class EntityBuddy extends BuddyBase
 			if(player.inventory.getCurrentItem().getItem().equals(Item.stick)||
 					player.inventory.getCurrentItem().getItem().equals(Item.leather) && !player.capabilities.isCreativeMode){
 				PetBuddyMain.proxy.openGui(0, player, player.username, this.entityId, player.capabilities.isCreativeMode,player.inventory.getCurrentItem().getItem());
+
+				if(player.inventory.getCurrentItem().getItem() == Item.silk){
+					if (!this.worldObj.isRemote && hasItem == false){
+						if( this.ridingEntity == null ){
+							this.mountEntity(player);
+							this.ridingEntity = player;
+						}else{
+							this.mountEntity(player);
+							this.ridingEntity = null;
+						}
+					}
+				}
 			}
 		} 
-		else if (!this.worldObj.isRemote && this.ridingEntity == null && hasItem == false){
-			this.mountEntity(player);
-			this.ridingEntity = player;
-		}
-		else if(!this.worldObj.isRemote && this.ridingEntity == player && hasItem == false){
-			this.mountEntity(player);
-			this.ridingEntity = null;
-		}
-		if(player.inventory.getCurrentItem() == null && hasItem == true){
-			giveOwnerRandomItem(player);
-		}
 
+		if(player.inventory.getCurrentItem() == null ){
+			if(hasItem == true)
+				giveOwnerRandomItem(player);
+			if(pickedupItems.size()>0){
+				for(int c = 0; c < pickedupItems.size(); c++){
+					//				player.inventory.addItemStackToInventory(pickedupItems.get(c));
+					EntityItem item = new EntityItem(worldObj, getOwner().posX, getOwner().posY, getOwner().posZ, pickedupItems.get(c));
+					if(!worldObj.isRemote)
+						worldObj.spawnEntityInWorld(item);
+					pickedupItems.remove(c);
+				}
+			}
+		}
 		return super.interact(player);
-	}
-
-	public float getColor(){
-		return PetBuddyMain.proxy.getColor() ;
-	}public float getColor2(){
-		return PetBuddyMain.proxy.getColor2() ;
-	}public float getColor3(){
-		return PetBuddyMain.proxy.getColor3();
-	}
-
-	public float getDragonColor(){
-		return PetBuddyMain.proxy.getDragonColor() ;
-	}public float getDragonColor2(){
-		return PetBuddyMain.proxy.getDragonColor2() ;
-	}public float getDragonColor3(){
-		return PetBuddyMain.proxy.getDragonColor3();
 	}
 
 	/**
@@ -519,9 +582,6 @@ public class EntityBuddy extends BuddyBase
 		return this.spawnBabyAnimal(par1EntityAgeable);
 	}
 
-	public String getName(){
-		return PetBuddyMain.proxy.getName();
-	}
 
 	/**Gives the given player a random itemstack in his inventory. Does not have a weighted randomness.*/
 	public void giveOwnerRandomItem(EntityPlayer player){
