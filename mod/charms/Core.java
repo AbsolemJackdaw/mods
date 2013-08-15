@@ -1,16 +1,10 @@
 package charms;
 
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
-import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -23,12 +17,6 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 @Mod(modid = "Charms", name = "Health Charms", version = "5.0")
 
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
-/*,
-clientPacketHandlerSpec =
-@SidedPacketHandler(channels = {"charms"}, packetHandler = BuddyPacketHandler.class),
-serverPacketHandlerSpec =
-@SidedPacketHandler(channels = {"charms"}, packetHandler = BuddyPacketHandler.class))
- */
 
 public class Core {
 
@@ -41,9 +29,6 @@ public class Core {
 	public static Item charmTierIV;
 	public static Item charmTierV;
 	
-	public static DynamicTexture icons;
-	public static DynamicTexture charmBar;
-	
 
 	@EventHandler
 	public void load (FMLPreInitializationEvent e){
@@ -51,12 +36,7 @@ public class Core {
 		ConfigClass.instance.loadConfig(e.getSuggestedConfigurationFile());
 		
 		proxy.register();
-		try {
-			icons = new DynamicTexture(ImageIO.read(getClass().getResourceAsStream("/assets/minecraft/textures/gui/icons.png")));
-			charmBar = new DynamicTexture(ImageIO.read(getClass().getResourceAsStream("/charms/hud.png")));
-		} catch (IOException c) {
-			c.printStackTrace();
-		}
+		
 		MinecraftForge.EVENT_BUS.register(new CharmRes());
 		
 	}

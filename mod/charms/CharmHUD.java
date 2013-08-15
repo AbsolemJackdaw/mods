@@ -10,27 +10,32 @@ import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiGameOver;
 import net.minecraft.client.gui.GuiIngame;
 import net.minecraft.client.gui.GuiIngameMenu;
-import net.minecraft.client.gui.GuiNewChat;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.texture.DynamicTexture;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
-import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.TickType;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class CharmHUD implements ITickHandler {
 
 	public Minecraft mc;
 
+	public static DynamicTexture icons;
+	public static DynamicTexture charmBar;
+	
 	public CharmHUD() {
 		this.mc = Minecraft.getMinecraft();
 
+		try {
+			icons = new DynamicTexture(ImageIO.read(getClass().getResourceAsStream("/assets/minecraft/textures/gui/icons.png")));
+			charmBar = new DynamicTexture(ImageIO.read(getClass().getResourceAsStream("/charms/hud.png")));
+		} catch (IOException c) {
+			c.printStackTrace();
+		}
 	}
 
 	@Override
@@ -107,8 +112,8 @@ public class CharmHUD implements ITickHandler {
 					mc.fontRenderer.drawString(""+(healAmount/c), xOffset+34, yOffset-2, mc.currentScreen == null || mc.currentScreen instanceof GuiChat ? 0xffffff : 0x555555);
 
 					//binds the texture
-					if(Core.charmBar != null)
-						Core.charmBar.func_110564_a();
+					if(charmBar != null)
+						charmBar.func_110564_a();
 
 					GL11.glColor3f(0,1,1);
 					if(mc.currentScreen != null && !(mc.currentScreen instanceof GuiChat)){
@@ -144,8 +149,8 @@ public class CharmHUD implements ITickHandler {
 						if(mc.currentScreen != null && !(mc.currentScreen instanceof GuiChat)){
 							GL11.glColor3f(0.2f,0.2f,0.2f);
 						}
-						if(Core.icons != null)
-							Core.icons.func_110564_a();
+						if(icons != null)
+							icons.func_110564_a();
 						gui.drawTexturedModalRect(xOffset+24, yOffset-2, 16, 0, h ,9);
 						gui.drawTexturedModalRect(xOffset+24, yOffset-2, 52, 0, h ,9);
 
