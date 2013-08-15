@@ -1,6 +1,5 @@
 package gravestone.grave;
 
-import java.util.List;
 import java.util.Random;
 
 import net.minecraft.entity.Entity;

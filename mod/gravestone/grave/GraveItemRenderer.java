@@ -1,8 +1,6 @@
 package gravestone.grave;
 
-import cpw.mods.fml.common.FMLLog;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
-import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.IItemRenderer;
 

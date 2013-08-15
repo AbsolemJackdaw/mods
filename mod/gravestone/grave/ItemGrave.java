@@ -23,6 +23,7 @@ public class ItemGrave extends Item{
 		this.itemIcon = par1IconRegister.registerIcon("brick");
 	}
 
+	@Override
 	public void addInformation(ItemStack stack, EntityPlayer p1, List list, boolean yesno) {
 		NBTTagCompound tags = stack.getTagCompound();
 
