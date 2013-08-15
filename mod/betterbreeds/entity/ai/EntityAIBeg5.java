@@ -1,10 +1,10 @@
 package betterbreeds.entity.ai;
-import betterbreeds.entity.EntityWolf5;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import betterbreeds.entity.EntityWolf5;
 
 public class EntityAIBeg5 extends EntityAIBase
 {

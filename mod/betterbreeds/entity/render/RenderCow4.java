@@ -1,12 +1,11 @@
 package betterbreeds.entity.render;
 
-import betterbreeds.entity.EntityCow3;
-import betterbreeds.entity.EntityCow4;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderLiving;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.util.ResourceLocation;
+import betterbreeds.entity.EntityCow4;
 
 public class RenderCow4 extends RenderLiving
 {

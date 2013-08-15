@@ -1,9 +1,9 @@
 package betterbreeds.entity.model;
 
-import betterbreeds.entity.EntitySheep3;
 import net.minecraft.client.model.ModelQuadruped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.EntityLiving;
+import betterbreeds.entity.EntitySheep3;
 
 public class ModelSheep5 extends ModelQuadruped
 {

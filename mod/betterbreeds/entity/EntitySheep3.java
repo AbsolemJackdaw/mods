@@ -2,8 +2,6 @@ package betterbreeds.entity;
 
 import java.util.Random;
 
-import betterbreeds.ModBreeds;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
@@ -24,6 +22,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import betterbreeds.ModBreeds;
 
 public class EntitySheep3 extends EntityAnimal
 {

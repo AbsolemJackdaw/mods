@@ -1,4 +1,4 @@
-package betterbreeds;
+package betterbreeds.item;
 
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;

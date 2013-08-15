@@ -1,5 +1,4 @@
 package betterbreeds.entity;
-import betterbreeds.ModBreeds;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.ai.EntityAIFollowParent;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -18,6 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.stats.AchievementList;
 import net.minecraft.world.World;
+import betterbreeds.ModBreeds;
 public class EntityPig6 extends EntityAnimal
 {
 	public EntityPig6(World par1World)
@@ -84,7 +84,7 @@ public class EntityPig6 extends EntityAnimal
 	protected String getLivingSound()
 	{
 		int r = rand.nextInt(2);
-		return r == 0 ? "xmasbb.bells": "mob.pig.say";
+		return r == 0 ? "subaraki:bells": "mob.pig.say";
 	}
 
 	/**

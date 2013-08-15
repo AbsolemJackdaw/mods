@@ -1,7 +1,7 @@
 package betterbreeds.entity;
 
-import betterbreeds.ModBreeds;
 import net.minecraft.entity.EntityAgeable;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIFollowParent;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMate;
@@ -20,184 +20,145 @@ import net.minecraft.world.World;
 
 public class EntityCow2 extends EntityAnimal
 {
-	public EntityCow2(World par1World)
-	{
-		super(par1World);
-		this.setSize(0.9F, 1.3F);
-		this.getNavigator().setAvoidsWater(true);
-		this.tasks.addTask(0, new EntityAISwimming(this));
-		this.tasks.addTask(1, new EntityAIPanic(this, 0.38F));
-		this.tasks.addTask(2, new EntityAIMate(this, 0.2F));
-		this.tasks.addTask(3, new EntityAITempt(this, 0.25F, Item.wheat.itemID, false));
-		this.tasks.addTask(4, new EntityAIFollowParent(this, 0.25F));
-		this.tasks.addTask(5, new EntityAIWander(this, 0.2F));
-		this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
-		this.tasks.addTask(7, new EntityAILookIdle(this));
-	}
+    public EntityCow2(World par1World)
+    {
+        super(par1World);
+        this.setSize(0.9F, 1.3F);
+        this.getNavigator().setAvoidsWater(true);
+        this.tasks.addTask(0, new EntityAISwimming(this));
+        this.tasks.addTask(1, new EntityAIPanic(this, 2.0D));
+        this.tasks.addTask(2, new EntityAIMate(this, 1.0D));
+        this.tasks.addTask(3, new EntityAITempt(this, 1.25D, Item.wheat.itemID, false));
+        this.tasks.addTask(4, new EntityAIFollowParent(this, 1.25D));
+        this.tasks.addTask(5, new EntityAIWander(this, 1.0D));
+        this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
+        this.tasks.addTask(7, new EntityAILookIdle(this));
+    }
 
-	/**
-	 * 
-	 * Returns true if the newer Entity AI code should be run
-	 */
-	public boolean isAIEnabled()
-	{
-		return true;
-	}
+    /**
+     * Returns true if the newer Entity AI code should be run
+     */
+    public boolean isAIEnabled()
+    {
+        return true;
+    }
 
-	public int getMaxHealth()
-	{
-		return 15;
-	}
+    protected void func_110147_ax()
+    {
+        super.func_110147_ax();
+        this.func_110148_a(SharedMonsterAttributes.field_111267_a).func_111128_a(10.0D);
+        this.func_110148_a(SharedMonsterAttributes.field_111263_d).func_111128_a(0.20000000298023224D);
+    }
 
-	/**
-	 * Returns the sound this mob makes while it's alive.
-	 */
-	/**
-	 * Returns the sound this mob makes while it's alive.
-	 */
-	protected String getLivingSound()
-	{
-		return "mob.cow.say";
-	}
+    /**
+     * Returns the sound this mob makes while it's alive.
+     */
+    protected String getLivingSound()
+    {
+        return "mob.cow.say";
+    }
 
-	/**
-	 * Returns the sound this mob makes when it is hurt.
-	 */
-	protected String getHurtSound()
-	{
-		return "mob.cow.hurt";
-	}
+    /**
+     * Returns the sound this mob makes when it is hurt.
+     */
+    protected String getHurtSound()
+    {
+        return "mob.cow.hurt";
+    }
 
-	/**
-	 * Returns the sound this mob makes on death.
-	 */
-	protected String getDeathSound()
-	{
-		return "mob.cow.hurt";
-	}
-	/**
-	 * Returns the volume for the sounds this mob makes.
-	 */
-	protected float getSoundVolume()
-	{
-		return 0.4F;
-	}
+    /**
+     * Returns the sound this mob makes on death.
+     */
+    protected String getDeathSound()
+    {
+        return "mob.cow.hurt";
+    }
 
-	public boolean interact(EntityPlayer par1EntityPlayer)
-	{
+    /**
+     * Plays step sound at given x, y, z for the entity
+     */
+    protected void playStepSound(int par1, int par2, int par3, int par4)
+    {
+        this.playSound("mob.cow.step", 0.15F, 1.0F);
+    }
 
-		ItemStack var2 = par1EntityPlayer.inventory.getCurrentItem();
+    /**
+     * Returns the volume for the sounds this mob makes.
+     */
+    protected float getSoundVolume()
+    {
+        return 0.4F;
+    }
 
-		if (var2 != null && var2.itemID == ModBreeds.XmasSpecial.itemID && var2.getItemDamage() == 5&& !worldObj.isRemote)
-		{
-			EntityCow4 var21 = new EntityCow4(this.worldObj);             var21.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, this.rotationPitch);
+    /**
+     * Returns the item ID for the item the mob drops on death.
+     */
+    protected int getDropItemId()
+    {
+        return Item.leather.itemID;
+    }
 
-			this.worldObj.spawnEntityInWorld(var21);
-			this.setDead();
+    /**
+     * Drop 0-2 items of this living's type. @param par1 - Whether this entity has recently been hit by a player. @param
+     * par2 - Level of Looting used to kill this mob.
+     */
+    protected void dropFewItems(boolean par1, int par2)
+    {
+        int j = this.rand.nextInt(1) + this.rand.nextInt(1 + par2/2);
+        int k;
 
-			if (--var2.stackSize <= 0)
-			{
-				par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, null);
-			}
+        for (k = 0; k < j; ++k)
+        {
+            this.dropItem(Item.leather.itemID, 1);
+        }
 
+        j = this.rand.nextInt(7) + 2 + this.rand.nextInt(1 + par2*2);
 
-			return true;
-		}
-		else
-		{
-			return super.interact(par1EntityPlayer);
-		}
-	}
-	/**
-	 * Returns the item ID for the item the mob drops on death.
-	 */
-	 protected int getDropItemId()
-	{
-		 int v = rand.nextInt (5);
-		 int s = rand.nextInt (3);
+        for (k = 0; k < j; ++k)
+        {
+            if (this.isBurning())
+            {
+                this.dropItem(Item.beefCooked.itemID, 1);
+            }
+            else
+            {
+                this.dropItem(Item.beefRaw.itemID, 1);
+            }
+        }
+    }
 
-		 if (s == 0)
-		 {
-			 this.dropItem(Item.bone.itemID,1);
-		 }
-		 else if (s == 1)
-		 {
-			 this.dropItem(Item.leather.itemID,1);
-		 }
-		 else if (s == 2)
-		 {
-			 this.dropItem(Item.bone.itemID,2);
-		 }
+    /**
+     * Called when a player interacts with a mob. e.g. gets milk from a cow, gets into the saddle on a pig.
+     */
+    public boolean interact(EntityPlayer par1EntityPlayer)
+    {
+        ItemStack itemstack = par1EntityPlayer.inventory.getCurrentItem();
 
-		 if(this.isBurning())
-		 {
-			 if (v == 0)
-			 {
-				 this.dropItem(Item.beefCooked.itemID, 1);
-			 }
-			 else if (v ==1)
-			 {
-				 this.dropItem(Item.beefCooked.itemID, 2);
+        if (itemstack != null && itemstack.itemID == Item.bucketEmpty.itemID && !par1EntityPlayer.capabilities.isCreativeMode)
+        {
+            if (itemstack.stackSize-- == 1)
+            {
+                par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, new ItemStack(Item.bucketMilk));
+            }
+            else if (!par1EntityPlayer.inventory.addItemStackToInventory(new ItemStack(Item.bucketMilk)))
+            {
+                par1EntityPlayer.dropPlayerItem(new ItemStack(Item.bucketMilk.itemID, 1, 0));
+            }
 
-			 }
-			 else if (v ==2)
-			 {
-				 this.dropItem(Item.beefCooked.itemID, 3);
+            return true;
+        }
+        else
+        {
+            return super.interact(par1EntityPlayer);
+        }
+    }
 
-			 }
-			 else if (v ==3)
-			 {
-				 this.dropItem(Item.beefCooked.itemID, 4);
-
-			 }
-			 else if (v ==4)
-			 {
-				 this.dropItem(Item.beefCooked.itemID, 5);
-
-			 }
-		 }
-		 else
-		 {
-			 if (v ==0)
-			 {
-				 this.dropItem(Item.beefRaw.itemID, 1);
-			 }
-			 else if (v ==1)
-			 {
-				 this.dropItem(Item.beefRaw.itemID, 2);
-
-			 }
-			 else if (v ==2)
-			 {
-				 this.dropItem(Item.beefRaw.itemID, 3);
-
-			 }
-			 else if (v ==3)
-			 {
-				 this.dropItem(Item.beefRaw.itemID, 4);
-
-			 }
-			 else if (v ==4)
-			 {
-				 this.dropItem(Item.beefRaw.itemID, 5);
-
-			 }
-		 }
-
-
-		 return 0;
-	}
-
-
-
-
-
-	 /**
-	  * This function is used when two same-species animals in 'love mode' breed to generate the new baby animal.
-	  */
-	 public EntityAnimal spawnBabyAnimal(EntityAgeable par1EntityAgeable)
-	 {
-		 int k = rand.nextInt(50);
+    /**
+     * This function is used when two same-species animals in 'love mode' breed to generate the new baby animal.
+     */
+    public EntityAgeable spawnBabyAnimal(EntityAgeable par1EntityAgeable)
+    {
+    	 int k = rand.nextInt(50);
 
 		 if(k <= 24)
 		 {
@@ -224,14 +185,11 @@ public class EntityCow2 extends EntityAnimal
 			 }
 
 		 }
-		 return (EntityAnimal)par1EntityAgeable;
-	 }
+		 return par1EntityAgeable;   
+		 }
 
-
-	 @Override
-	 public EntityAgeable createChild(EntityAgeable entityageable) {
-		 // TODO Auto-generated method stub
-		 return spawnBabyAnimal(entityageable);
-	 }
-
+    public EntityAgeable createChild(EntityAgeable par1EntityAgeable)
+    {
+        return this.spawnBabyAnimal(par1EntityAgeable);
+    }
 }

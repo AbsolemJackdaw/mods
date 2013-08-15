@@ -1,8 +1,6 @@
 package betterbreeds.entity;
 import java.util.Random;
 
-import betterbreeds.ModBreeds;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
@@ -23,6 +21,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import betterbreeds.ModBreeds;
 
 public class EntitySheep5 extends EntityAnimal
 {
@@ -230,7 +229,7 @@ public class EntitySheep5 extends EntityAnimal
 	 protected String getLivingSound()
 	 {
 		 int r = rand.nextInt(2);
-		 return r == 0 ? "xmasbb.bells": "mod.sheep.say";
+		 return r == 0 ? "subaraki:bells": "mob.sheep.say";
 	 }
 
 	 /**

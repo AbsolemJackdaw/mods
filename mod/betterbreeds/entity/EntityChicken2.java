@@ -1,5 +1,4 @@
 package betterbreeds.entity;
-import betterbreeds.ModBreeds;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.ai.EntityAIFollowParent;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -15,6 +14,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemSeeds;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import betterbreeds.ModBreeds;
 
 public class EntityChicken2 extends EntityAnimal
 {

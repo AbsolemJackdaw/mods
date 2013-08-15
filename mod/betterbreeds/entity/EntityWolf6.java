@@ -176,7 +176,7 @@ public class EntityWolf6 extends EntityTameable
 	    {
 	    	if(this.isSitting())
 	    	{
-	    		return "xmasbb.song";
+	    		return "subaraki:song";
 	    	}
 	    	return this.isAngry() ? "mob.wolf.growl" : (this.rand.nextInt(3) == 0 ? (this.isTamed() && this.dataWatcher.getWatchableObjectInt(18) < 10 ? "mob.wolf.whine" : "mob.wolf.panting") : "mob.wolf.bark");
 	    }

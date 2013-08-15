@@ -2,11 +2,9 @@ package betterbreeds.entity.render;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderLiving;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.passive.EntityWolf;
-import betterbreeds.entity.EntitySheep3;
+import net.minecraft.util.ResourceLocation;
 import betterbreeds.entity.EntityWolf2;
 
 public class RenderWolf2 extends RenderLiving

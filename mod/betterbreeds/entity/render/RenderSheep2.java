@@ -2,13 +2,13 @@ package betterbreeds.entity.render;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderLiving;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
-import betterbreeds.entity.EntityPig3;
 import betterbreeds.entity.EntitySheep2;
 
 public class RenderSheep2 extends RenderLiving
@@ -57,11 +57,12 @@ public class RenderSheep2 extends RenderLiving
     /**
      * Queries whether should render the specified pass or not.
      */
-    protected int shouldRenderPass(EntityLiving par1EntityLiving, int par2, float par3)
+    @Override
+    protected int shouldRenderPass(EntityLivingBase par1EntityLiving, int par2, float par3)
     {
         return this.setWoolColorAndRender((EntitySheep2)par1EntityLiving, par2, par3);
     }
-
+    @Override
     public void doRenderLiving(EntityLiving par1EntityLiving, double par2, double par4, double par6, float par8, float par9)
     {
         this.doRenderSheep((EntitySheep2)par1EntityLiving, par2, par4, par6, par8, par9);
@@ -73,6 +74,7 @@ public class RenderSheep2 extends RenderLiving
      * (Render<T extends Entity) and this method has signature public void doRender(T entity, double d, double d1,
      * double d2, float f, float f1). But JAD is pre 1.5 so doesn't do that.
      */
+    @Override
     public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9)
     {
         this.doRenderSheep((EntitySheep2)par1Entity, par2, par4, par6, par8, par9);

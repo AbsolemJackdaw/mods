@@ -4,7 +4,7 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.passive.EntityChicken;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import betterbreeds.entity.EntityChicken2;
@@ -13,7 +13,7 @@ public class RenderChicken2 extends RenderLiving
 {
 	private static final ResourceLocation texture = new ResourceLocation("textures/entity/chicken.png");
 
-	protected ResourceLocation func_110919_a(EntityChicken par1EntityChicken)
+	protected ResourceLocation func_110919_a(EntityChicken2 par1EntityChicken)
 	{
 		return texture;
 	}
@@ -21,7 +21,7 @@ public class RenderChicken2 extends RenderLiving
 	@Override
 	protected ResourceLocation func_110775_a(Entity par1Entity)
 	{
-		return this.func_110919_a((EntityChicken)par1Entity);
+		return this.func_110919_a((EntityChicken2)par1Entity);
 	}
 
 	public RenderChicken2(ModelBase par1ModelBase, float par2)
@@ -44,11 +44,12 @@ public class RenderChicken2 extends RenderLiving
 	/**
 	 * Defines what float the third param in setRotationAngles of ModelBase is
 	 */
-	protected float handleRotationFloat(EntityLiving par1EntityLiving, float par2)
+	@Override
+	protected float handleRotationFloat(EntityLivingBase par1EntityLiving, float par2)
 	{
 		return this.getWingRotation((EntityChicken2)par1EntityLiving, par2);
 	}
-
+	@Override
 	public void doRenderLiving(EntityLiving par1EntityLiving, double par2, double par4, double par6, float par8, float par9)
 	{
 		this.renderChicken((EntityChicken2)par1EntityLiving, par2, par4, par6, par8, par9);
@@ -59,7 +60,7 @@ public class RenderChicken2 extends RenderLiving
 	 * handing it off to a worker function which does the actual work. In all probabilty, the class Render is generic
 	 * (Render<T extends Entity) and this method has signature public void doRender(T entity, double d, double d1,
 	 * double d2, float f, float f1). But JAD is pre 1.5 so doesn't do that.
-	 */
+	 */@Override
 	public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9)
 	{
 		this.renderChicken((EntityChicken2)par1Entity, par2, par4, par6, par8, par9);

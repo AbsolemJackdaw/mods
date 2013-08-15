@@ -1,6 +1,5 @@
 package betterbreeds.entity;
 
-import betterbreeds.ModBreeds;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.ai.EntityAIFollowParent;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -16,6 +15,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemSeeds;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import betterbreeds.ModBreeds;
 public class EntityChicken5 extends EntityAnimal
 {
 	public boolean field_70885_d = false;
@@ -112,7 +112,7 @@ public class EntityChicken5 extends EntityAnimal
 	protected String getLivingSound()
 	{
 		int r = rand.nextInt(2);
-		return r == 0 ? "xmasbb.bells": "mod.chicken.say";
+		return r == 0 ? "subaraki:bells": "mob.chicken.say";
 	}
 
 	/**

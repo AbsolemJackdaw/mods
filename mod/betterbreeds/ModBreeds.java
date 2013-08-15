@@ -27,9 +27,12 @@ import betterbreeds.entity.EntityWolf3;
 import betterbreeds.entity.EntityWolf4;
 import betterbreeds.entity.EntityWolf5;
 import betterbreeds.entity.EntityWolf6;
+import betterbreeds.handelers.CommonProxy;
+import betterbreeds.handelers.OnHorseDeath;
 import betterbreeds.item.ItemCEgg;
 import betterbreeds.item.ItemChocolatPie;
 import betterbreeds.item.ItemDough;
+import betterbreeds.item.ItemJelly;
 import betterbreeds.item.ItemSheepsMilk;
 import betterbreeds.item.ItemSheppardPie;
 import betterbreeds.item.ItemSubsFood;
@@ -41,7 +44,6 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
-import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
@@ -49,11 +51,7 @@ import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 
 @Mod(modid = "Breeds", name = "ModBreeds", version = "1.5.1 v2.0")
-@NetworkMod(clientSideRequired = true, serverSideRequired = false,
-clientPacketHandlerSpec =
-@SidedPacketHandler(channels = {"firstChannel" }, packetHandler = ClientPacketHandler.class),
-serverPacketHandlerSpec =
-@SidedPacketHandler(channels = {"secondChannel" }, packetHandler = ServerPacketHandler.class))
+@NetworkMod(clientSideRequired = true, serverSideRequired = false)
 
 
 public class ModBreeds{
@@ -81,7 +79,7 @@ public class ModBreeds{
 	private static final World World = null;
 
 
-	@SidedProxy(clientSide = "betterbreeds.ClientProxy", serverSide = "betterbreeds.CommonProxy")
+	@SidedProxy(clientSide = "betterbreeds.handelers.ClientProxy", serverSide = "betterbreeds.handelers.CommonProxy")
 	public static CommonProxy proxy;
 
 	@PreInit
@@ -218,7 +216,7 @@ public class ModBreeds{
 		LanguageRegistry.instance().addStringLocalization("entity.XmasSheep.name", "fr_FR", "MouMoute");
 
 		LanguageRegistry.instance().addStringLocalization("entity.Superpig2.name", "en_US", "2nd Breed");
-		LanguageRegistry.instance().addStringLocalization("entity.Superpig3.name", "en_US", "3th Breed");
+		LanguageRegistry.instance().addStringLocalization("entity.Superpig3.name", "en_US", "3rd Breed");
 		LanguageRegistry.instance().addStringLocalization("entity.Superpig4.name", "en_US", "4th Breed");
 		LanguageRegistry.instance().addStringLocalization("entity.Superpig5.name", "en_US", "5th Breed");
 		LanguageRegistry.instance().addStringLocalization("entity.BeefCow.name", "en_US", "Meat Cow");

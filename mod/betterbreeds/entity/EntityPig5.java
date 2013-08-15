@@ -1,5 +1,4 @@
 package betterbreeds.entity;
-import betterbreeds.ModBreeds;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.ai.EntityAIFollowParent;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -19,6 +18,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.stats.AchievementList;
 import net.minecraft.world.World;
+import betterbreeds.ModBreeds;
 public class EntityPig5 extends EntityAnimal
 {
     public EntityPig5(World par1World)
