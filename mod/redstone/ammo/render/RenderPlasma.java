@@ -25,7 +25,7 @@ public class RenderPlasma extends Render
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 		GL11.glScalef(0.5F, 0.5F, 0.5F);
 		GL11.glColor3f(0f,1f,1f);
-		Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation("subaraki:rhg/plasma.png"));
+		this.renderManager.renderEngine.func_110577_a(new ResourceLocation("subaraki:rhg/plasma.png"));
 		base.render(par1Entity, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0625f);
 		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
 		GL11.glPopMatrix();

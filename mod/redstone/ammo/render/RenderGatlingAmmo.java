@@ -31,7 +31,7 @@ public class RenderGatlingAmmo extends Render
 			fx= "dirt";
 		}
 		if(theEntity.blockType == 2){
-			fx= "stonebrick";
+			fx= "cobblestone";
 		}
 		
 		GL11.glPushMatrix();
@@ -39,7 +39,7 @@ public class RenderGatlingAmmo extends Render
 		GL11.glRotatef((new Random()).nextInt(360), 1,0,1);
 		int size = 1;
 		GL11.glScalef(0.0F + (size * 0.3F), 0.0F + (size * 0.3F), 0.0F + (size * 0.3F));
-		Minecraft.getMinecraft().renderEngine.func_110581_b(new ResourceLocation("/textures/blocks/"+fx+".png"));
+		this.renderManager.renderEngine.func_110577_a(new ResourceLocation("textures/blocks/"+fx+".png"));
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);
