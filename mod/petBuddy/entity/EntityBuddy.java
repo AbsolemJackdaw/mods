@@ -60,23 +60,18 @@ public class EntityBuddy extends BuddyBase
 {
 	private float happynessFactorCooldown;
 
-	private int findsItemTimer;
-	private Object[][] foundItems;
-	private int[][] foundItemsStackSize;
-
-	private HashMap<String, String> itemInventory = new HashMap();
-
+	/*Used for randomized entity textures*/
 	private int rand2Text ;
 	private int rand3Text ;
 	private int rand4Text ;
 	private int rand5Text ;
-	
-	ArrayList<ItemStack> pickedupItems = new ArrayList<ItemStack>();
+
+	ItemStack []pickedupItems = new ItemStack[50];
 
 	public EntityBuddy(World par1World)
 	{
 		super(par1World);
-		this.findsItemTimer = this.rand.nextInt(12000) + 12000;
+
 		//i hope to prevent any buddies going lost in portals.
 		this.timeUntilPortal = 6000;
 
@@ -91,15 +86,215 @@ public class EntityBuddy extends BuddyBase
 	public EntityBuddy(World par1World, EntityPlayer player)
 	{
 		super(par1World, player);
-		this.findsItemTimer = this.rand.nextInt(12000) + 12000;
+
 		this.timeUntilPortal = 6000;
 
 		rand2Text = rand.nextInt(1);
 		rand3Text = rand.nextInt(2);
 		rand4Text = rand.nextInt(3);
 		rand5Text = rand.nextInt(5);
-		
+
 	}
+
+	public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
+	{
+		super.writeEntityToNBT(par1NBTTagCompound);
+
+		NBTTagList nbttaglist = new NBTTagList();
+
+		for (int i = 0; i < this.pickedupItems.length; ++i)
+		{
+			if (this.pickedupItems[i] != null)
+			{
+				NBTTagCompound nbttagcompound1 = new NBTTagCompound();
+				nbttagcompound1.setByte("Slot", (byte)i);
+				pickedupItems[i].writeToNBT(nbttagcompound1);
+				nbttaglist.appendTag(nbttagcompound1);
+			}
+		}
+		par1NBTTagCompound.setTag("Items", nbttaglist);
+	}
+
+	public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
+	{
+		super.readEntityFromNBT(par1NBTTagCompound);
+
+		NBTTagList nbttaglist = par1NBTTagCompound.getTagList("Items");
+		this.pickedupItems =  new ItemStack[50];
+
+		for (int i = 0; i < nbttaglist.tagCount(); ++i)
+		{
+			NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbttaglist.tagAt(i);
+			int j = nbttagcompound1.getByte("Slot") & 255;
+
+			this.pickedupItems[i]=ItemStack.loadItemStackFromNBT(nbttagcompound1);
+
+		}
+	}
+
+	int sayItems = 600;
+	int delay = 10;
+	@Override
+	public void onLivingUpdate() {
+
+		sayItems--;
+		if(sayItems == 0){
+			sayItems = 600;
+			if(pickedupItems.length > 0){
+				this.buddySpeak(getOwner(), "I've got some picked up items master");
+			}
+		}
+
+		List<EntityItem> xps = worldObj.getEntitiesWithinAABB(EntityItem.class, boundingBox.copy().expand(0.5D, 0.5D, 0.5D));
+		if (xps != null && xps.size() > 0) {
+			if(-- delay <= 0){
+				for (EntityItem xp : xps) {
+					delay = 10;
+					for(int i =0; i < 50; i++){
+						if(pickedupItems[i] == null){
+							pickedupItems[i] = xp.getEntityItem();
+							xp.setDead();
+							break;
+						}
+					}if(sayItems % 10 == 0){
+						buddySpeak(getOwner(), "I've picked up items master");
+					}
+				}
+			}
+		}
+
+		if(this.isBurning()){
+			extinguish();
+		}
+		if(!PetBuddyMain.playersWithPets.containsValue(this.entityId) && !worldObj.isRemote){
+			this.setDead();
+		}
+		super.onLivingUpdate();
+	}
+
+	/**
+	 * Called when a player interacts with a mob. e.g. gets milk from a cow, gets into the saddle on a pig.
+	 */
+	public boolean interact(EntityPlayer player)
+	{
+		player.addStat(PetBuddyMain.pa.findBuddy, 1);
+
+		if(player.getCurrentEquippedItem() != null){
+
+			//colors the pet with 3 types of dye.
+			if(player.getCurrentEquippedItem().getItem() instanceof ItemDye){
+				ItemStack item = player.getCurrentEquippedItem();
+
+				if(getGuiId() == 14){
+					float fl= getColor();
+					float flo= getColor2();
+					float fla= getColor3();
+					if(item.getItemDamage() == 0){
+						fl -= 0.05; flo -= 0.05; fla-= 0.05;
+					}else if(item.getItemDamage() == 1){
+						fl += 0.05; flo -= 0.05; fla-=0.05;
+					}else if(item.getItemDamage() == 2){
+						fl -= 0.05; flo += 0.05; fla-=0.05;
+					}else if(item.getItemDamage() == 4){
+						fl -= 0.05; flo -= 0.05; fla+=0.05;
+					}else if(item.getItemDamage() == 15){
+						fl += 0.05; flo += 0.05; fla+=0.05;
+					}else{
+						fl = rand.nextFloat();
+						flo = rand.nextFloat();
+						fla = rand.nextFloat();
+					}
+					if(fl < 0) fl =0;if (flo < 0) flo =0; if(fla < 0) fla =0;
+					if(fl > 1) fl =1;if (flo > 1) flo =1; if(fla > 1) fla =1;
+
+					setColor(fl,flo,fla);
+					item.stackSize--;
+				}
+				if(getGuiId() == 19 ){
+					float fl= getDragonColor();
+					float flo= getDragonColor2();
+					float fla= getDragonColor3();
+					if(item.getItemDamage() == 0){
+						fl -= 0.05; flo -= 0.05; fla-= 0.05;
+					}else if(item.getItemDamage() == 1){
+						fl += 0.05; flo -= 0.05; fla-=0.05;
+					}else if(item.getItemDamage() == 2){
+						fl -= 0.05; flo += 0.05; fla-=0.05;
+					}else if(item.getItemDamage() == 4){
+						fl -= 0.05; flo -= 0.05; fla+=0.05;
+					}else if(item.getItemDamage() == 15){
+						fl += 0.05; flo += 0.05; fla+=0.05;
+					}else{
+						fl = rand.nextFloat();
+						flo = rand.nextFloat();
+						fla = rand.nextFloat();
+					}
+					if(fl < 0) fl =0;if (flo < 0) flo =0; if(fla < 0) fla =0;
+					if(fl > 1) fl =1;if (flo > 1) flo =1; if(fla > 1) fla =1;
+
+					setDragonColor(fl,flo,fla);
+					item.stackSize--;
+				}
+			}
+		}
+
+		if(player.inventory.getCurrentItem() != null){
+
+			if(player.inventory.getCurrentItem().getItem().equals(Item.stick) && !player.isSneaking()||
+					player.inventory.getCurrentItem().getItem().equals(Item.leather) && !player.capabilities.isCreativeMode){
+				PetBuddyMain.proxy.openGui(0, player, player.username, this.entityId, player.capabilities.isCreativeMode,player.inventory.getCurrentItem().getItem());
+			}
+			if(player.inventory.getCurrentItem().getItem().equals(Item.silk)){
+				if (!this.worldObj.isRemote && hasItem == false){
+					if( this.ridingEntity == null ){
+						this.mountEntity(player);
+						this.ridingEntity = player;
+					}else{
+						this.mountEntity(player);
+						this.ridingEntity = null;
+					}
+				}
+			}
+		} 
+
+		if(player.inventory.getCurrentItem() == null ){
+
+			if(pickedupItems.length >0){
+				for(int c = 0; c < pickedupItems.length; c++){
+					if(pickedupItems[c] != null){
+						EntityItem item = new EntityItem(worldObj, getOwner().posX, getOwner().posY, getOwner().posZ,pickedupItems[c]);
+						if(!worldObj.isRemote)
+							worldObj.spawnEntityInWorld(item);
+						pickedupItems[c] = null;
+					}
+				}
+			}
+		}
+		return super.interact(player);
+	}
+
+	/**
+	 * This function is used when two same-species animals in 'love mode' breed to generate the new baby animal.
+	 */
+	public EntityBuddy spawnBabyAnimal(EntityAgeable par1EntityAgeable)
+	{
+		return null;
+	}
+
+	public EntityAgeable createChild(EntityAgeable par1EntityAgeable)
+	{
+		return this.spawnBabyAnimal(par1EntityAgeable);
+	}
+
+	public void buddySpeak(Entity entity , String text){
+		if(entity instanceof EntityPlayer){
+			if(!((EntityPlayer)getOwner()).worldObj.isRemote)
+				((EntityPlayer)getOwner()).addChatMessage("<"+getName()+">" + text);
+		}
+	}
+
+
+	/*========RENDERING METHODS=========*/
 
 	@Override
 	public float getMountedOffset(){
@@ -300,7 +495,6 @@ public class EntityBuddy extends BuddyBase
 		default ://Default steve.png
 			return new ResourceLocation( s+"/ghast/ghast.png");
 		}
-
 	}
 
 	protected String getLivingSound()
@@ -367,259 +561,5 @@ public class EntityBuddy extends BuddyBase
 		}
 	}
 
-	public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
-	{
-		super.writeEntityToNBT(par1NBTTagCompound);
-		
-		NBTTagList nbttaglist = new NBTTagList();
-
-		for (int i = 0; i < this.pickedupItems.size(); ++i)
-		{
-			if (this.pickedupItems.get(i) != null)
-			{
-				NBTTagCompound nbttagcompound1 = new NBTTagCompound();
-				nbttagcompound1.setByte("Slot", (byte)i);
-				pickedupItems.get(i).writeToNBT(nbttagcompound1);
-				nbttaglist.appendTag(nbttagcompound1);
-			}
-		}
-		par1NBTTagCompound.setTag("Items", nbttaglist);
-	}
-
-	public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
-	{
-		super.readEntityFromNBT(par1NBTTagCompound);
-		
-		NBTTagList nbttaglist = par1NBTTagCompound.getTagList("Items");
-		this.pickedupItems =  new ArrayList<ItemStack>();
-
-		for (int i = 0; i < nbttaglist.tagCount(); ++i)
-		{
-			NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbttaglist.tagAt(i);
-			int j = nbttagcompound1.getByte("Slot") & 255;
-
-			this.pickedupItems.set(i,ItemStack.loadItemStackFromNBT(nbttagcompound1));
-			
-		}
-	}
-
-	int sayItems = 600;
-	int delay = 10;
-	@Override
-	public void onLivingUpdate() {
-		
-		sayItems--;
-		if(sayItems == 0){
-			sayItems = 600;
-			if(pickedupItems.size() > 0){
-				this.buddySpeak(getOwner(), "I've got some picked up items master.");
-			}
-		}
-
-		List<EntityItem> xps = worldObj.getEntitiesWithinAABB(EntityItem.class, boundingBox.copy().expand(0.5D, 0.5D, 0.5D));
-		if (xps != null && xps.size() > 0) {
-			if(-- delay <= 0){
-				for (EntityItem xp : xps) {
-					delay = 10;
-					pickedupItems.add(xp.getEntityItem());
-					xp.setDead();
-
-					if(sayItems % 10 == 0){
-						buddySpeak(getOwner(), "I've picked up items master");
-					}
-				}
-			}
-		}
-
-		if(!(this.ridingEntity instanceof EntityPlayer) && !this.worldObj.isRemote && this.findsItemTimer >=0){		        
-			findsItemTimer --;
-		}else{
-			getEntityData().setInteger("itemTimer", findsItemTimer);
-		}
-
-		if(findsItemTimer == 0){
-			hasItem = true;
-			if(!worldObj.isRemote){
-				buddySpeak(getOwner(), "Hey, I think I found something !");
-			}
-		}
-		//		if(findsItemTimer + rand.nextInt(6000)  == 5000 && this.ridingEntity == null){
-		//			if(!worldObj.isRemote){
-		//				buddySpeak(getOwner(), "I'm tired... I want to sit on your head...");
-		//			}
-		//		}if(findsItemTimer + rand.nextInt(10000)  == 12000){
-		//			if(!worldObj.isRemote){
-		//				buddySpeak(getOwner(), "I feel a strong band between you and me " + getOwnerName() + ". Don't you ?");
-		//			}
-		//		}
-		if(this.isBurning()){
-			extinguish();
-		}
-		if(!PetBuddyMain.playersWithPets.containsValue(this.entityId)){
-			this.setDead();
-		}
-		FMLLog.getLogger().info(""+ getGuiId());
-		super.onLivingUpdate();
-	}
-
-	/**
-	 * Called when a player interacts with a mob. e.g. gets milk from a cow, gets into the saddle on a pig.
-	 */
-	public boolean interact(EntityPlayer player)
-	{
-		player.addStat(PetBuddyMain.pa.findBuddy, 1);
-
-		if(player.getCurrentEquippedItem() != null){
-			//adds happiness to pet.
-			if(player.getCurrentEquippedItem().getItem() instanceof ItemFood){
-				ItemFood food = (ItemFood) player.getCurrentEquippedItem().getItem();
-				float f = (float) 0.4f/food.getHealAmount(); // 0.4/8 = 0.05; beaf should add 0.05 happiness
-				//				this.HappynessFactor += f;
-			}
-
-			//colors the pet with 3 types of dye.
-			if(player.getCurrentEquippedItem().getItem() instanceof ItemDye){
-				ItemStack item = player.getCurrentEquippedItem();
-
-				if(getGuiId() == 14){
-					float fl= getColor();
-					float flo= getColor2();
-					float fla= getColor3();
-					if(item.getItemDamage() == 0){
-						fl -= 0.05; flo -= 0.05; fla-= 0.05;
-					}else if(item.getItemDamage() == 1){
-						fl += 0.05; flo -= 0.05; fla-=0.05;
-					}else if(item.getItemDamage() == 2){
-						fl -= 0.05; flo += 0.05; fla-=0.05;
-					}else if(item.getItemDamage() == 4){
-						fl -= 0.05; flo -= 0.05; fla+=0.05;
-					}else if(item.getItemDamage() == 15){
-						fl += 0.05; flo += 0.05; fla+=0.05;
-					}else{
-						fl = rand.nextFloat();
-						flo = rand.nextFloat();
-						fla = rand.nextFloat();
-					}
-					if(fl < 0) fl =0;if (flo < 0) flo =0; if(fla < 0) fla =0;
-					if(fl > 1) fl =1;if (flo > 1) flo =1; if(fla > 1) fla =1;
-
-					setColor(fl,flo,fla);
-					item.stackSize--;
-				}
-				if(getGuiId() == 19 ){
-					float fl= getDragonColor();
-					float flo= getDragonColor2();
-					float fla= getDragonColor3();
-					if(item.getItemDamage() == 0){
-						fl -= 0.05; flo -= 0.05; fla-= 0.05;
-					}else if(item.getItemDamage() == 1){
-						fl += 0.05; flo -= 0.05; fla-=0.05;
-					}else if(item.getItemDamage() == 2){
-						fl -= 0.05; flo += 0.05; fla-=0.05;
-					}else if(item.getItemDamage() == 4){
-						fl -= 0.05; flo -= 0.05; fla+=0.05;
-					}else if(item.getItemDamage() == 15){
-						fl += 0.05; flo += 0.05; fla+=0.05;
-					}else{
-						fl = rand.nextFloat();
-						flo = rand.nextFloat();
-						fla = rand.nextFloat();
-					}
-					if(fl < 0) fl =0;if (flo < 0) flo =0; if(fla < 0) fla =0;
-					if(fl > 1) fl =1;if (flo > 1) flo =1; if(fla > 1) fla =1;
-
-					setDragonColor(fl,flo,fla);
-					item.stackSize--;
-				}
-			}
-		}
-
-		if(player.inventory.getCurrentItem() != null){
-			if(player.inventory.getCurrentItem().getItem().equals(Item.stick)||
-					player.inventory.getCurrentItem().getItem().equals(Item.leather) && !player.capabilities.isCreativeMode){
-				PetBuddyMain.proxy.openGui(0, player, player.username, this.entityId, player.capabilities.isCreativeMode,player.inventory.getCurrentItem().getItem());
-
-				if(player.inventory.getCurrentItem().getItem() == Item.silk){
-					if (!this.worldObj.isRemote && hasItem == false){
-						if( this.ridingEntity == null ){
-							this.mountEntity(player);
-							this.ridingEntity = player;
-						}else{
-							this.mountEntity(player);
-							this.ridingEntity = null;
-						}
-					}
-				}
-			}
-		} 
-
-		if(player.inventory.getCurrentItem() == null ){
-			if(hasItem == true)
-				giveOwnerRandomItem(player);
-			if(pickedupItems.size()>0){
-				for(int c = 0; c < pickedupItems.size(); c++){
-					//				player.inventory.addItemStackToInventory(pickedupItems.get(c));
-					EntityItem item = new EntityItem(worldObj, getOwner().posX, getOwner().posY, getOwner().posZ, pickedupItems.get(c));
-					if(!worldObj.isRemote)
-						worldObj.spawnEntityInWorld(item);
-					pickedupItems.remove(c);
-				}
-			}
-		}
-		return super.interact(player);
-	}
-
-	/**
-	 * This function is used when two same-species animals in 'love mode' breed to generate the new baby animal.
-	 */
-	public EntityBuddy spawnBabyAnimal(EntityAgeable par1EntityAgeable)
-	{
-		return null;
-	}
-
-	public EntityAgeable createChild(EntityAgeable par1EntityAgeable)
-	{
-		return this.spawnBabyAnimal(par1EntityAgeable);
-	}
-
-
-	/**Gives the given player a random itemstack in his inventory. Does not have a weighted randomness.*/
-	public void giveOwnerRandomItem(EntityPlayer player){
-
-		foundItems = new Object[][] {{Item.feather, Item.appleRed, Item.flint, Item.cake, Item.diamond, Item.coal, Item.coal, Item.pickaxeIron, Item.wheat, Item.arrow, Item.goldNugget} ,
-				{Block.wood, Block.planks, Block.grass, Block.oreIron, Block.torchWood}};
-
-		foundItemsStackSize = new int[][] {{s(20), s(5), s(64), 1, s(3), s(5), s(10), 1, s(10), s(10), s(10)},
-				{s(20), s(20), s(5), s(4), s(64)}};
-
-		int count = rand.nextInt(foundItems.length);
-
-		if(count > foundItems[0].length){
-			player.inventory.addItemStackToInventory(new ItemStack((Block)foundItems[1][foundItems.length-count], foundItemsStackSize[1][foundItems.length-count]));
-			this.buddySpeak(getOwner(), "I found "+ foundItemsStackSize[1][foundItems.length-count] + " " +
-					((Block)foundItems[1][foundItems.length-count]).getLocalizedName());
-
-		}else{
-			player.inventory.addItemStackToInventory(new ItemStack((Item)foundItems[0][count], foundItemsStackSize[0][count]));
-			this.buddySpeak(getOwner(), "I found "+ foundItemsStackSize[0][count] +" "+
-					((Item)foundItems[0][count]).getItemDisplayName(new ItemStack((Item)foundItems[0][count])));
-
-		}
-
-		hasItem = false;
-		findsItemTimer =  this.rand.nextInt(12000) + 12000;
-	}
-
-	public void buddySpeak(Entity entity , String text){
-		if(entity instanceof EntityPlayer){
-			((EntityPlayer)getOwner()).addChatMessage("<"+getName()+">" + text);
-		}
-	}
-
-	/* this is mearely to save space. that's how I role. YOLO !! XD*/
-	/**Picks a random integer, and adds 1 to the result, so we never have 0.*/
-	public int s (int i){
-		return rand.nextInt(i)+1;
-	}
 
 }

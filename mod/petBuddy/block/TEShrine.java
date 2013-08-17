@@ -1,7 +1,10 @@
 package petBuddy.block;
 
+import cpw.mods.fml.common.FMLLog;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet132TileEntityData;
@@ -14,6 +17,9 @@ public class TEShrine extends TileEntity{
 	public int cooldown = 40*20; // 40 seconds * ticks
 	public boolean countdown = false;
 	public boolean cycleDone = false;
+
+	public boolean hasItemStack = false;
+	public ItemStack itemToImbue;
 
 
 	@Override
@@ -49,7 +55,16 @@ public class TEShrine extends TileEntity{
 		countdown = nbt.getBoolean("isCounting");
 		hasStatue = nbt.getBoolean("hasStatue");
 		cycleDone = nbt.getBoolean("isCycleDone");
+		hasItemStack = nbt.getBoolean("stack");
 
+		NBTTagList nbttaglist = nbt.getTagList("Items");
+		FMLLog.getLogger().info("" + nbttaglist);
+
+		for (int i = 0; i < nbttaglist.tagCount(); ++i)
+		{
+			NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbttaglist.tagAt(i);
+			this.itemToImbue = ItemStack.loadItemStackFromNBT(nbttagcompound1);
+		}
 	}
 
 	@Override
@@ -60,7 +75,19 @@ public class TEShrine extends TileEntity{
 		nbt.setBoolean("isCounting", countdown);
 		nbt.setBoolean("hasStatue", hasStatue);
 		nbt.setBoolean("isCycleDone", cycleDone);
-		
+		nbt.setBoolean("stack", hasItemStack);
+
+		NBTTagList nbttaglist = new NBTTagList();
+
+		if (this.itemToImbue != null){
+			NBTTagCompound nbttagcompound1 = new NBTTagCompound();
+			itemToImbue.writeToNBT(nbttagcompound1);
+			nbttaglist.appendTag(nbttagcompound1);
+		}
+
+		nbt.setTag("Items", nbttaglist);
+		FMLLog.getLogger().info("" + nbttaglist + " "+this.xCoord +" "+this.yCoord+ " "+this.zCoord);
+
 	}
 
 	@Override
@@ -69,20 +96,12 @@ public class TEShrine extends TileEntity{
 
 		if(cooldown == 0){
 			countdown = false;
-			//			cooldown = 40*20;
 			cycleDone = true;
 		}
 
 		if(countdown){
 			cooldown --;
 		}
-
-//		if(getWorldObj().isRemote){
-//			FMLLog.getLogger().info("S "+ " countdown : " + countdown +" cooldown "+cooldown);
-//		}
-//		if(!getWorldObj().isRemote){
-//			FMLLog.getLogger().info("C "+" countdown : " + countdown +" cooldown "+cooldown);
-//		}
 
 	}
 

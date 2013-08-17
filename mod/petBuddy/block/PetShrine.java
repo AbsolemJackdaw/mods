@@ -5,12 +5,14 @@ import java.util.Random;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import petBuddy.BuddyUtils;
 import petBuddy.PetBuddyMain;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
@@ -73,22 +75,54 @@ public class PetShrine extends BlockContainer {
 			int z, EntityPlayer par5EntityPlayer, int par6, float par7,
 			float par8, float par9) {
 
-		//		ItemStack stack = new ItemStack(PetBuddyMain.petStatue,1);
-		//		par5EntityPlayer.inventory.addItemStackToInventory(stack);
 
 		TEShrine te = (TEShrine)par1World.getBlockTileEntity(x, y, z);
-		//
+
 		if(te != null){
 			if(par5EntityPlayer.inventory.getCurrentItem() != null){
 				if(par5EntityPlayer.inventory.getCurrentItem().getItem().equals(PetBuddyMain.petStatue)){
 					te.hasStatue = true;
-					te.countdown = true;
+
 					if(!par5EntityPlayer.capabilities.isCreativeMode)
 						par5EntityPlayer.setCurrentItemOrArmor(0, null);
-					
+					if(te.hasItemStack && te.hasStatue)
+						te.countdown = true;
+
+				}else if(!te.hasItemStack && te.itemToImbue == null){
+
+					if(BuddyUtils.ItemToID(par5EntityPlayer.getCurrentEquippedItem()) != -5){
+						/*==Use copy, or else it will take ALL your current items ! */
+						te.itemToImbue = par5EntityPlayer.getCurrentEquippedItem().copy();
+						te.itemToImbue.stackSize = 1;
+						te.hasItemStack = true;
+						/*==consume one item==*/
+						par5EntityPlayer.inventory.consumeInventoryItem(par5EntityPlayer.getCurrentEquippedItem().itemID);
+
+						if(te.hasStatue)
+							te.countdown = true;
+					}else{
+						
+						if(!par1World.isRemote)
+							par5EntityPlayer.addChatMessage("The Shrine of Unity rejected your Item");
+					}
 				}
-			}else{
-				if(te.cycleDone){
+			}
+			/*==Retrieve Pending Object if no statue nad cycle hasnt started yet==*/
+			else if(!te.cycleDone && !te.hasStatue && te.hasItemStack){
+
+				EntityItem entityItem = new EntityItem(par1World, x, y, z, new ItemStack(te.itemToImbue.getItem(),1));
+
+				if(!par1World.isRemote)
+					par1World.spawnEntityInWorld(entityItem);
+				te.hasItemStack = false;
+				te.itemToImbue = null;
+
+			}else if (te.hasStatue && !te.countdown && !te.hasItemStack){
+				if(!par1World.isRemote)
+					par5EntityPlayer.addChatMessage("The statue got stuck !");
+			}
+			else{
+				if(te.cycleDone && te.hasItemStack && te.itemToImbue != null){
 
 					te.hasStatue = false;
 					te.cycleDone = false;
@@ -96,7 +130,9 @@ public class PetShrine extends BlockContainer {
 
 					ItemStack stack = new ItemStack(PetBuddyMain.petStatue,1);
 					NBTTagCompound nbt = new NBTTagCompound();
-					nbt.setInteger("guiID", getRandomBuddy());
+
+					nbt.setInteger("guiID", BuddyUtils.ItemToID(te.itemToImbue)); 
+
 					nbt.setString("name", par5EntityPlayer.username +"'s Buddy");
 					nbt.setString("skin", par5EntityPlayer.username);
 					nbt.setFloat("d_c_1", 0f);
@@ -105,24 +141,24 @@ public class PetShrine extends BlockContainer {
 					nbt.setFloat("s_c_1", 1f);
 					nbt.setFloat("s_c_2", 1f);
 					nbt.setFloat("s_c_3", 1f);
-					
+
 					stack.setTagCompound(nbt);
 
 					par5EntityPlayer.inventory.addItemStackToInventory(stack);
+
+					te.itemToImbue = null;
+					te.hasItemStack = false;
+				}else{
+					if(te.hasStatue && te.hasItemStack && !te.cycleDone){
+						if(!par1World.isRemote)
+							par5EntityPlayer.addChatMessage("Charging ... " + (int)(float)(100.0f - (((float)te.cooldown/(float)(40*20))*100.0f)) + "%");
+					}
+					else
+						if(!par1World.isRemote)
+							par5EntityPlayer.addChatMessage("A Unity Shrine");
 				}
 			}
 		}
-//		if(par1World.isRemote){
-//			for(int c = 0; c < par5EntityPlayer.inventory.getSizeInventory(); c ++){
-//				if(par5EntityPlayer.inventory.getStackInSlot(c) != null)
-//					FMLLog.getLogger().info("S "+par5EntityPlayer.inventory.getStackInSlot(c) + " boolean : " + te.countdown);
-//			}
-//		}if(!par1World.isRemote){
-//			for(int c = 0; c < par5EntityPlayer.inventory.getSizeInventory(); c ++){
-//				if(par5EntityPlayer.inventory.getStackInSlot(c) != null)
-//					FMLLog.getLogger().info("C "+par5EntityPlayer.inventory.getStackInSlot(c)+ " boolean : " + te.countdown);
-//			}
-//		}
 		return true;
 	}
 	@SideOnly(Side.CLIENT)
@@ -155,17 +191,17 @@ public class PetShrine extends BlockContainer {
 	}
 
 	private int getRandomBuddy(){
-		
+
 		int guiId;
 		Random rand = new Random();
-		
+
 		int c = rand.nextInt(5);
 		if(c >0){
 			guiId = 3;
 		}else{
 			guiId = rand.nextInt(2+34);
 		}
-		
+
 		return guiId;
 	}
 }

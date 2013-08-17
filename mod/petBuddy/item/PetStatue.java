@@ -2,13 +2,17 @@ package petBuddy.item;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutput;
 import java.text.DecimalFormat;
+import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.monster.EntityCaveSpider;
+import net.minecraft.entity.monster.EntitySpider;
+import net.minecraft.entity.passive.EntityCow;
+import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -16,14 +20,15 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import petBuddy.BuddyNames;
+import petBuddy.BuddyUtils;
 import petBuddy.PetBuddyMain;
+import petBuddy.RichTools.Targetting;
 import petBuddy.entity.EntityBuddy;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class PetStatue extends Item {
-
 
 	EntityBuddy pet;
 	public PetStatue(int par1) {
@@ -32,6 +37,7 @@ public class PetStatue extends Item {
 		this.setMaxStackSize(1);
 
 	}
+
 	@Override
 	public void registerIcons(IconRegister par1IconRegister) {
 		this.itemIcon = par1IconRegister.registerIcon("brick");
@@ -45,7 +51,7 @@ public class PetStatue extends Item {
 		NBTTagCompound tags = par1ItemStack.getTagCompound();
 		if (tags != null) {
 			if (tags.hasKey("guiID")) {
-				total = BuddyNames.IDToName(tags.getInteger("guiID")) + itemname;
+				total = BuddyUtils.IDToName(tags.getInteger("guiID")) + itemname;
 			}
 		}
 
@@ -58,61 +64,62 @@ public class PetStatue extends Item {
 			int par6, int par7, float par8, float par9, float par10) {
 
 
-		//		if(!par3World.isRemote){
-		if(PetBuddyMain.playersWithPets.containsKey(par2EntityPlayer.username))
-		{
-			EntityBuddy oldPet = (EntityBuddy) par3World.getEntityByID(PetBuddyMain.playersWithPets.get(par2EntityPlayer.username));
-			if(oldPet != null && par1ItemStack.stackTagCompound != null)
+
+		if(!par3World.isRemote){
+			if(PetBuddyMain.playersWithPets.containsKey(par2EntityPlayer.username))
 			{
-				par1ItemStack.stackTagCompound.setInteger("guiID", oldPet.getGuiId());
+				EntityBuddy oldPet = (EntityBuddy) par3World.getEntityByID(PetBuddyMain.playersWithPets.get(par2EntityPlayer.username));
+				if(oldPet != null && par1ItemStack.stackTagCompound != null)
+				{
+					par1ItemStack.stackTagCompound.setInteger("guiID", oldPet.getGuiId());
 
-				par1ItemStack.stackTagCompound.setString("name", oldPet.getName());
+					par1ItemStack.stackTagCompound.setString("name", oldPet.getName());
 
-				par1ItemStack.stackTagCompound.setString("skin", oldPet.getSkinName());
+					par1ItemStack.stackTagCompound.setString("skin", oldPet.getSkinName());
 
-				par1ItemStack.stackTagCompound.setFloat("d_c_1", oldPet.getDragonColor());
-				par1ItemStack.stackTagCompound.setFloat("d_c_2", oldPet.getDragonColor2());
-				par1ItemStack.stackTagCompound.setFloat("d_c_3", oldPet.getDragonColor3());
+					par1ItemStack.stackTagCompound.setFloat("d_c_1", oldPet.getDragonColor());
+					par1ItemStack.stackTagCompound.setFloat("d_c_2", oldPet.getDragonColor2());
+					par1ItemStack.stackTagCompound.setFloat("d_c_3", oldPet.getDragonColor3());
 
-				par1ItemStack.stackTagCompound.setFloat("s_c_1", oldPet.getColor());
-				par1ItemStack.stackTagCompound.setFloat("s_c_2", oldPet.getColor2());
-				par1ItemStack.stackTagCompound.setFloat("s_c_3", oldPet.getColor3());
+					par1ItemStack.stackTagCompound.setFloat("s_c_1", oldPet.getColor());
+					par1ItemStack.stackTagCompound.setFloat("s_c_2", oldPet.getColor2());
+					par1ItemStack.stackTagCompound.setFloat("s_c_3", oldPet.getColor3());
 
+				}
+				PetBuddyMain.playersWithPets.remove(par2EntityPlayer.username);
 			}
-			PetBuddyMain.playersWithPets.remove(par2EntityPlayer.username);
-		}
-		else
-		{
-			if(par1ItemStack.stackTagCompound != null)
+			else
 			{
-				if(par1ItemStack.stackTagCompound.hasKey("guiID")){
-					if(par1ItemStack.stackTagCompound.hasKey("name")){
-						if(par1ItemStack.stackTagCompound.hasKey("skin")){
+				if(par1ItemStack.stackTagCompound != null)
+				{
+					if(par1ItemStack.stackTagCompound.hasKey("guiID")){
+						if(par1ItemStack.stackTagCompound.hasKey("name")){
+							if(par1ItemStack.stackTagCompound.hasKey("skin")){
 
-							pet = new EntityBuddy(par3World, par2EntityPlayer);
-							pet.setPosition(par4+0.5, par5+1, par6+0.5);
+								pet = new EntityBuddy(par3World, par2EntityPlayer);
+								pet.setPosition(par4+0.5, par5+1, par6+0.5);
 
-							NBTTagCompound nbt = par1ItemStack.stackTagCompound;
+								NBTTagCompound nbt = par1ItemStack.stackTagCompound;
 
-							pet.setName(par1ItemStack.stackTagCompound.getString("name"));
-							pet.setSkinName(par1ItemStack.stackTagCompound.getString("skin"));
-							pet.setGuiId(par1ItemStack.stackTagCompound.getInteger("guiID"));
-							pet.setDragonColor(nbt.getFloat("d_c_1"),nbt.getFloat("d_c_2"),nbt.getFloat("d_c_3"));
-							pet.setColor(nbt.getFloat("s_c_1"),nbt.getFloat("s_c_2"),nbt.getFloat("s_c_3"));
+								pet.setName(par1ItemStack.stackTagCompound.getString("name"));
+								pet.setSkinName(par1ItemStack.stackTagCompound.getString("skin"));
+								pet.setGuiId(par1ItemStack.stackTagCompound.getInteger("guiID"));
+								pet.setDragonColor(nbt.getFloat("d_c_1"),nbt.getFloat("d_c_2"),nbt.getFloat("d_c_3"));
+								pet.setColor(nbt.getFloat("s_c_1"),nbt.getFloat("s_c_2"),nbt.getFloat("s_c_3"));
 
-							if(!par3World.isRemote)
-								par3World.spawnEntityInWorld(pet);
+								if(!par3World.isRemote)
+									par3World.spawnEntityInWorld(pet);
+							}
 						}
+					}else{
+						if(!par3World.isRemote)
+							par2EntityPlayer.addChatMessage("There's no buddy in this statue...");
 					}
-				}else{
+				}else
 					if(!par3World.isRemote)
 						par2EntityPlayer.addChatMessage("There's no buddy in this statue...");
-				}
-			}else
-				if(!par3World.isRemote)
-					par2EntityPlayer.addChatMessage("There's no buddy in this statue...");
+			}
 		}
-		//		}
 		FMLLog.getLogger().info(""+ PetBuddyMain.playersWithPets);
 
 		return true;
@@ -123,30 +130,53 @@ public class PetStatue extends Item {
 	public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World,
 			EntityPlayer par3EntityPlayer) {
 
-		//		if(!par2World.isRemote){
-		if(PetBuddyMain.playersWithPets.containsKey(par3EntityPlayer.username))
-		{
-			EntityBuddy oldPet = (EntityBuddy) par2World.getEntityByID(PetBuddyMain.playersWithPets.get(par3EntityPlayer.username));
-			if(oldPet != null && par1ItemStack.stackTagCompound != null)
-			{
-				par1ItemStack.stackTagCompound.setInteger("guiID", oldPet.getGuiId());
+		if (par2World!= null && par2World.isRemote && FMLCommonHandler.instance().getEffectiveSide().isClient()) {
+			EntityLiving el= Targetting.isTargetingLivingEntity(4.0D); 
 
-				par1ItemStack.stackTagCompound.setString("name", oldPet.getName());
+			if (el != null ) {
+				int id =  BuddyUtils.EntityToID(el.getClass());
+				if(id != -5 && par1ItemStack.stackTagCompound.getInteger("guiID") != id){
 
-				par1ItemStack.stackTagCompound.setString("skin", oldPet.getSkinName());
-
-				par1ItemStack.stackTagCompound.setFloat("d_c_1", oldPet.getDragonColor());
-				par1ItemStack.stackTagCompound.setFloat("d_c_2", oldPet.getDragonColor2());
-				par1ItemStack.stackTagCompound.setFloat("d_c_3", oldPet.getDragonColor3());
-
-				par1ItemStack.stackTagCompound.setFloat("s_c_1", oldPet.getColor());
-				par1ItemStack.stackTagCompound.setFloat("s_c_2", oldPet.getColor2());
-				par1ItemStack.stackTagCompound.setFloat("s_c_3", oldPet.getColor3());
-
+					ByteArrayOutputStream bos = new ByteArrayOutputStream();
+					DataOutputStream dos = new DataOutputStream(bos);
+					try {
+						dos.writeInt(256);
+						dos.writeInt(id);
+					} catch (Throwable ex) {
+					}
+					Packet250CustomPayload pcp = new Packet250CustomPayload("buddyPet", bos.toByteArray());
+					PacketDispatcher.sendPacketToServer(pcp);
+				}
 			}
-			PetBuddyMain.playersWithPets.remove(par3EntityPlayer.username);
 		}
-		//		}
+
+
+
+		if(!par2World.isRemote){	
+
+			if(PetBuddyMain.playersWithPets.containsKey(par3EntityPlayer.username))
+			{
+				EntityBuddy oldPet = (EntityBuddy) par2World.getEntityByID(PetBuddyMain.playersWithPets.get(par3EntityPlayer.username));
+				if(oldPet != null && par1ItemStack.stackTagCompound != null)
+				{
+					par1ItemStack.stackTagCompound.setInteger("guiID", oldPet.getGuiId());
+
+					par1ItemStack.stackTagCompound.setString("name", oldPet.getName());
+
+					par1ItemStack.stackTagCompound.setString("skin", oldPet.getSkinName());
+
+					par1ItemStack.stackTagCompound.setFloat("d_c_1", oldPet.getDragonColor());
+					par1ItemStack.stackTagCompound.setFloat("d_c_2", oldPet.getDragonColor2());
+					par1ItemStack.stackTagCompound.setFloat("d_c_3", oldPet.getDragonColor3());
+
+					par1ItemStack.stackTagCompound.setFloat("s_c_1", oldPet.getColor());
+					par1ItemStack.stackTagCompound.setFloat("s_c_2", oldPet.getColor2());
+					par1ItemStack.stackTagCompound.setFloat("s_c_3", oldPet.getColor3());
+
+				}
+				PetBuddyMain.playersWithPets.remove(par3EntityPlayer.username);
+			}
+		}
 		return super.onItemRightClick(par1ItemStack, par2World, par3EntityPlayer);
 	}
 
@@ -159,7 +189,7 @@ public class PetStatue extends Item {
 		{
 			if (tags.hasKey("guiID")) 
 			{
-				list.add(StatCollector.translateToLocal("Type : "+BuddyNames.IDToName(tags.getInteger("guiID"))));
+				list.add(StatCollector.translateToLocal("Type : "+BuddyUtils.IDToName(tags.getInteger("guiID"))));
 				if(tags.getInteger("guiID") == 3){
 					if (tags.hasKey("skin"))
 					{
