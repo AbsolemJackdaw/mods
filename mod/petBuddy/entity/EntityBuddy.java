@@ -262,9 +262,12 @@ public class EntityBuddy extends BuddyBase
 			if(pickedupItems.length >0){
 				for(int c = 0; c < pickedupItems.length; c++){
 					if(pickedupItems[c] != null){
+
 						EntityItem item = new EntityItem(worldObj, getOwner().posX, getOwner().posY, getOwner().posZ,pickedupItems[c]);
-						if(!worldObj.isRemote)
+						if(!worldObj.isRemote){
 							worldObj.spawnEntityInWorld(item);
+							FMLLog.getLogger().info(pickedupItems[c] + "");
+						}
 						pickedupItems[c] = null;
 					}
 				}

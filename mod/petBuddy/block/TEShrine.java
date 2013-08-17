@@ -58,7 +58,6 @@ public class TEShrine extends TileEntity{
 		hasItemStack = nbt.getBoolean("stack");
 
 		NBTTagList nbttaglist = nbt.getTagList("Items");
-		FMLLog.getLogger().info("" + nbttaglist);
 
 		for (int i = 0; i < nbttaglist.tagCount(); ++i)
 		{
@@ -86,7 +85,6 @@ public class TEShrine extends TileEntity{
 		}
 
 		nbt.setTag("Items", nbttaglist);
-		FMLLog.getLogger().info("" + nbttaglist + " "+this.xCoord +" "+this.yCoord+ " "+this.zCoord);
 
 	}
 

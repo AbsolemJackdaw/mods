@@ -354,7 +354,8 @@ public abstract class BuddyBase extends EntityTameable
 	public boolean interact(EntityPlayer player)
 	{
 		if(getOwner() instanceof EntityPlayer){
-			if(((EntityPlayer)getOwner()).isSneaking() && ((EntityPlayer)getOwner()).inventory.getCurrentItem().getItem().equals(Item.stick)){
+			if(((EntityPlayer)getOwner()).isSneaking() && ((EntityPlayer)getOwner()).inventory.getCurrentItem() != null &&
+					((EntityPlayer)getOwner()).inventory.getCurrentItem().getItem().equals(Item.stick)){
 				if(toggled)
 					toggled = false;
 				else 
