@@ -120,7 +120,7 @@ public class PetStatue extends Item {
 						par2EntityPlayer.addChatMessage("There's no buddy in this statue...");
 			}
 		}
-		FMLLog.getLogger().info(""+ PetBuddyMain.playersWithPets);
+//		FMLLog.getLogger().info(""+ PetBuddyMain.playersWithPets);
 
 		return true;
 	}

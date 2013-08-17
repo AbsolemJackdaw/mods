@@ -262,7 +262,7 @@ public class BuddyUtils {
 			return 34;
 		if(item.equals(Item.ingotGold))
 			return 35;
-		if(item.equals(Block.obsidian))
+		if(stack.itemID == Block.obsidian.blockID)
 			return 36;
 		
 		return -5;	

@@ -1,11 +1,5 @@
 package petBuddy.root;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutput;
-
-import net.minecraft.block.Block;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
@@ -19,16 +13,13 @@ import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBook;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import petBuddy.PetBuddyMain;
-import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -53,46 +44,18 @@ public abstract class BuddyBase extends EntityTameable
 	public final int NAME = 21;
 	public final int SKIN = 22;
 	public final int GUIID = 23;
+	public final int COLOR1 = 24;
+	public final int COLOR2 = 25;
+	public final int COLOR3 = 26;
+	public final int DCOLOR1 = 27;
+	public final int DCOLOR2 = 28;
+	public final int DCOLOR3 = 29;
 
 	/**used as defaults for datawatchers*/
 	String name = "MyPetBuddy";
 	String skin = "-none-";
 
-	private float randomColor;
-	private float randomColor2;
-	private float randomColor3;
 
-	public float getColor(){
-		return randomColor ;
-	}public float getColor2(){
-		return randomColor2 ;
-	}public float getColor3(){
-		return randomColor3;
-	}
-
-	public void setColor(float f, float g, float h){
-		randomColor  = f;
-		randomColor2 = g;
-		randomColor3 = h;
-	}
-
-	private float randomDragonColor;
-	private float randomDragonColor2;
-	private float randomDragonColor3;
-
-	public float getDragonColor(){
-		return randomDragonColor ;
-	}public float getDragonColor2(){
-		return randomDragonColor2 ;
-	}public float getDragonColor3(){
-		return randomDragonColor3;
-	}
-
-	public void setDragonColor(float f, float g, float h){
-		randomDragonColor  = f;
-		randomDragonColor2 = g;
-		randomDragonColor3 = h;
-	}
 
 	//	private int guiID;
 	public BuddyBase(World par1World)
@@ -140,20 +103,25 @@ public abstract class BuddyBase extends EntityTameable
 		this.dataWatcher.addObject(NAME, getOwnerName() + "'s Buddy");
 		this.dataWatcher.addObject(SKIN, "-none-");
 		this.dataWatcher.addObject(GUIID, (int) 3);
+		this.dataWatcher.addObject(COLOR1, (float) 0);
+		this.dataWatcher.addObject(COLOR2, (float) 0);
+		this.dataWatcher.addObject(COLOR3, (float) 0);
+		this.dataWatcher.addObject(DCOLOR1, (float) 1);
+		this.dataWatcher.addObject(DCOLOR2, (float) 1);
+		this.dataWatcher.addObject(DCOLOR3, (float) 1);
 	}
 
+		/*==== DATAWATCHERS===*/
 	public String getName(){
 		return dataWatcher.getWatchableObjectString(NAME);
 	}
 	public void setName(String n){
 		dataWatcher.updateObject(NAME, n);
 	}
-
-
+	
 	public String getSkinName(){
 		return dataWatcher.getWatchableObjectString(SKIN);
 	}
-	
 	public void setSkinName(String n){
 		dataWatcher.updateObject(SKIN, n);
 	}
@@ -164,6 +132,40 @@ public abstract class BuddyBase extends EntityTameable
 	public void setGuiId(int guiId){
 		dataWatcher.updateObject(GUIID, guiId);
 	}
+
+	public float getColor(){
+		return dataWatcher.func_111145_d(COLOR1) ;
+	}
+	public float getColor2(){
+		return dataWatcher.func_111145_d(COLOR2) ;
+	}
+	public float getColor3(){
+		return dataWatcher.func_111145_d(COLOR3) ;
+	}
+
+	public void setColor(float f, float g, float h){
+		dataWatcher.updateObject(COLOR1, f);
+		dataWatcher.updateObject(COLOR2, g);
+		dataWatcher.updateObject(COLOR3, h);
+	}
+
+	public float getDragonColor(){
+		return dataWatcher.func_111145_d(DCOLOR1) ;
+	}
+	public float getDragonColor2(){
+		return dataWatcher.func_111145_d(DCOLOR2) ;
+	}
+	public float getDragonColor3(){
+		return dataWatcher.func_111145_d(DCOLOR3) ;
+	}
+
+	public void setDragonColor(float f, float g, float h){
+		dataWatcher.updateObject(DCOLOR1, f);
+		dataWatcher.updateObject(DCOLOR2, g);
+		dataWatcher.updateObject(DCOLOR3, h);
+	}
+	
+	
 	@Override
 	public boolean isBreedingItem(ItemStack par1ItemStack) {
 		return false;
@@ -364,179 +366,179 @@ public abstract class BuddyBase extends EntityTameable
 		}
 
 		/**==Changing buddy appearance now gets handled with the shrine==**/
-//		if(player.inventory.getCurrentItem() != null && !player.capabilities.isCreativeMode && hasItem == false && toggled){
-//			ItemStack is = player.inventory.getCurrentItem();
-//			Item item = is.getItem();
-//
-//			//Sending a packet for changing buddy apearence does not use strings. they are here mainly used to find back 
-//			// the proper entity without any hassle.
-//			if(item.equals(Item.porkRaw)){
-//				sendPacket(2, 2, "pig");
-//				setGuiId(2);player.addStat(PetBuddyMain.pa.pigAchieve, 1);
-//			}
-//			if(item.equals(Item.bread)){
-//				sendPacket(3, 3, "tiny you");
-//				setGuiId(3);player.addStat(PetBuddyMain.pa.tinyYou, 1);
-//			}
-//			if(item.equals(Item.gunpowder)){
-//				sendPacket(4, 4, "creeper");
-//				setGuiId(4);player.addStat(PetBuddyMain.pa.creeper, 1);
-//			}
-//			if(item.equals(Item.beefRaw)){
-//				sendPacket(5, 5, "cow");
-//				setGuiId(5);player.addStat(PetBuddyMain.pa.cow, 1);
-//			}
-//			if(item.equals(Item.blazeRod) || item.equals(Item.blazePowder)){
-//				setGuiId(6);player.addStat(PetBuddyMain.pa.ghost, 1);
-//				sendPacket(6, 6, "blaze");
-//			}
-//			if(item.equals(Item.spiderEye)){ // fermented eye is for rpg spider // silk for buddy to ride
-//				sendPacket(7, 7, "spider");
-//				setGuiId(8);player.addStat(PetBuddyMain.pa.spider, 1);
-//			}
-//			if(item.equals(Item.netherStar)){
-//				setGuiId(8);player.addStat(PetBuddyMain.pa.wither, 1);
-//				sendPacket(8, 8, "wither boss");
-//			}
-//			if(item.equals(Item.fermentedSpiderEye)){
-//				setGuiId(9);player.addStat(PetBuddyMain.pa.rpgSpider, 1);
-//				sendPacket(9, 9, "rpg spider");
-//			}
-//			if(item.equals(Item.arrow)){
-//				sendPacket(10, 10, "skeleton");
-//				setGuiId(10);player.addStat(PetBuddyMain.pa.skelet, 1);
-//			}
-//			if(item.equals(Item.skull) && is.getItemDamage() == 1){
-//				setGuiId(11);player.addStat(PetBuddyMain.pa.witherSkelly, 1);
-//				sendPacket(11, 11, "skeleton w");
-//			}
-//			if(item.equals(Item.rottenFlesh)){
-//				if(getGuiId() == 3)
-//					setGuiId(12);player.addStat(PetBuddyMain.pa.zombie, 1);
-//				sendPacket(12, 12, "zombie");
-//			}
-//			if(item.equals(Item.ghastTear)){
-//				setGuiId(13);player.addStat(PetBuddyMain.pa.ghast, 1);
-//				sendPacket(13, 13, "ghast");
-//			}
-//			if(is.itemID == Block.cloth.blockID){
-//				sendPacket(14, 14, "sheep");
-//				setGuiId(14);player.addStat(PetBuddyMain.pa.sheep, 1);
-//			}
-//			if(item.equals(Item.enderPearl)){
-//				setGuiId(15);player.addStat(PetBuddyMain.pa.endPearl, 1);
-//				sendPacket(15, 15, "enderman");
-//			}
-//			if(item.equals(Item.fishCooked)){
-//				sendPacket(16, 16, "silverfish");
-//				setGuiId(16);player.addStat(PetBuddyMain.pa.silverfish, 1);
-//			}
-//			if(item.equals(Item.fishRaw)){
-//				sendPacket(23, 23, "cat");
-//				setGuiId(23);player.addStat(PetBuddyMain.pa.cat, 1);
-//			}
-//			if(item.equals(Item.snowball)){
-//				sendPacket(17, 17, "snowman");
-//				setGuiId(17);player.addStat(PetBuddyMain.pa.snow, 1);
-//			}
-//			if(is.itemID == Block.blockIron.blockID){
-//				sendPacket(18, 18, "iron golem");
-//				setGuiId(18);player.addStat(PetBuddyMain.pa.golem, 1);
-//			}
-//			if(is.itemID == Block.whiteStone.blockID){
-//				setGuiId(19);player.addStat(PetBuddyMain.pa.endDragon, 1);
-//				sendPacket(19, 19, "dragon");
-//			}
-//			if(item.equals(Item.netherStalkSeeds)){
-//				setGuiId(20);player.addStat(PetBuddyMain.pa.bat, 1);
-//				sendPacket(20, 20, "bat");
-//			}
-//			if(item.equals(Item.chickenRaw)){
-//				sendPacket(21, 21, "chicken");
-//				setGuiId(21);player.addStat(PetBuddyMain.pa.chicken, 1);
-//			}
-//			if(is.itemID == Block.mycelium.blockID){
-//				sendPacket(22, 22, "mooshroom");
-//				setGuiId(22);player.addStat(PetBuddyMain.pa.mooshroom, 1);
-//			}
-//			if(item.equals(Item.dyePowder) && is.getItemDamage() == 0){
-//				if(getGuiId() != 19 && getGuiId() != 14){
-//					sendPacket(24, 24, "squid");
-//					setGuiId(24);player.addStat(PetBuddyMain.pa.squid, 1);
-//				}
-//			}
-//			if(item instanceof ItemBook){
-//				sendPacket(25, 25, "villager");
-//				setGuiId(25);player.addStat(PetBuddyMain.pa.villager, 1);
-//			}
-//			if(item.equals(Item.bone)){
-//				sendPacket(26, 26, "wolf");
-//				setGuiId(26);player.addStat(PetBuddyMain.pa.wolf, 1);
-//			}
-//			if(item.equals(Item.netherQuartz)){
-//				setGuiId(27);player.addStat(PetBuddyMain.pa.pigZombie, 1);
-//				sendPacket(27, 27, "pig zombie");
-//			}
-//			if(item.equals(Item.beefCooked)){
-//				setGuiId(28);player.addStat(PetBuddyMain.pa.rpgBull, 1);
-//				sendPacket(28, 28, "rpg bull");
-//			}
-//			if(item.equals(Item.porkCooked)){
-//				setGuiId(29);player.addStat(PetBuddyMain.pa.rpgBoar, 1);
-//				sendPacket(29, 29, "rpg boar");
-//			}
-//			if(item.equals(Item.magmaCream)){
-//				setGuiId(30);player.addStat(PetBuddyMain.pa.magma, 1);
-//				sendPacket(30, 30, "MagmaCube");
-//			}
-//			if(item.equals(Item.slimeBall)){
-//				sendPacket(31, 31, "Slime");
-//				setGuiId(31);player.addStat(PetBuddyMain.pa.slime, 1);
-//			}
-//			if(item.equals(Item.feather)){ // turn a chicken into a harpy
-//				if(getGuiId() == 21){
-//					setGuiId(32);player.addStat(PetBuddyMain.pa.harpy, 1);
-//					sendPacket(32, 32, "harpy");
-//				}
-//			}
-//			if(item.equals(Item.wheat)){ // turn a chicken into a moa
-//				if(getGuiId() == 21){
-//					setGuiId(33);player.addStat(PetBuddyMain.pa.moa, 1);
-//					sendPacket(33, 33, "moa");
-//				}
-//			}
-//			if(item.equals(Item.pickaxeWood)){
-//				setGuiId(34);player.addStat(PetBuddyMain.pa.dwarf, 1);
-//				sendPacket(34, 34, "dwarf");
-//			}
-//			if(item.equals(Item.ingotGold)){
-//				setGuiId(35);player.addStat(PetBuddyMain.pa.elf, 1);
-//				sendPacket(35, 35, "elf");
-//			}
-//			if(item.equals(Block.obsidian)){
-//				setGuiId(36);player.addStat(PetBuddyMain.pa.orc, 1);
-//				sendPacket(36, 36, "orc");
-//			}
-//		}
+		//		if(player.inventory.getCurrentItem() != null && !player.capabilities.isCreativeMode && hasItem == false && toggled){
+		//			ItemStack is = player.inventory.getCurrentItem();
+		//			Item item = is.getItem();
+		//
+		//			//Sending a packet for changing buddy apearence does not use strings. they are here mainly used to find back 
+		//			// the proper entity without any hassle.
+		//			if(item.equals(Item.porkRaw)){
+		//				sendPacket(2, 2, "pig");
+		//				setGuiId(2);player.addStat(PetBuddyMain.pa.pigAchieve, 1);
+		//			}
+		//			if(item.equals(Item.bread)){
+		//				sendPacket(3, 3, "tiny you");
+		//				setGuiId(3);player.addStat(PetBuddyMain.pa.tinyYou, 1);
+		//			}
+		//			if(item.equals(Item.gunpowder)){
+		//				sendPacket(4, 4, "creeper");
+		//				setGuiId(4);player.addStat(PetBuddyMain.pa.creeper, 1);
+		//			}
+		//			if(item.equals(Item.beefRaw)){
+		//				sendPacket(5, 5, "cow");
+		//				setGuiId(5);player.addStat(PetBuddyMain.pa.cow, 1);
+		//			}
+		//			if(item.equals(Item.blazeRod) || item.equals(Item.blazePowder)){
+		//				setGuiId(6);player.addStat(PetBuddyMain.pa.ghost, 1);
+		//				sendPacket(6, 6, "blaze");
+		//			}
+		//			if(item.equals(Item.spiderEye)){ // fermented eye is for rpg spider // silk for buddy to ride
+		//				sendPacket(7, 7, "spider");
+		//				setGuiId(8);player.addStat(PetBuddyMain.pa.spider, 1);
+		//			}
+		//			if(item.equals(Item.netherStar)){
+		//				setGuiId(8);player.addStat(PetBuddyMain.pa.wither, 1);
+		//				sendPacket(8, 8, "wither boss");
+		//			}
+		//			if(item.equals(Item.fermentedSpiderEye)){
+		//				setGuiId(9);player.addStat(PetBuddyMain.pa.rpgSpider, 1);
+		//				sendPacket(9, 9, "rpg spider");
+		//			}
+		//			if(item.equals(Item.arrow)){
+		//				sendPacket(10, 10, "skeleton");
+		//				setGuiId(10);player.addStat(PetBuddyMain.pa.skelet, 1);
+		//			}
+		//			if(item.equals(Item.skull) && is.getItemDamage() == 1){
+		//				setGuiId(11);player.addStat(PetBuddyMain.pa.witherSkelly, 1);
+		//				sendPacket(11, 11, "skeleton w");
+		//			}
+		//			if(item.equals(Item.rottenFlesh)){
+		//				if(getGuiId() == 3)
+		//					setGuiId(12);player.addStat(PetBuddyMain.pa.zombie, 1);
+		//				sendPacket(12, 12, "zombie");
+		//			}
+		//			if(item.equals(Item.ghastTear)){
+		//				setGuiId(13);player.addStat(PetBuddyMain.pa.ghast, 1);
+		//				sendPacket(13, 13, "ghast");
+		//			}
+		//			if(is.itemID == Block.cloth.blockID){
+		//				sendPacket(14, 14, "sheep");
+		//				setGuiId(14);player.addStat(PetBuddyMain.pa.sheep, 1);
+		//			}
+		//			if(item.equals(Item.enderPearl)){
+		//				setGuiId(15);player.addStat(PetBuddyMain.pa.endPearl, 1);
+		//				sendPacket(15, 15, "enderman");
+		//			}
+		//			if(item.equals(Item.fishCooked)){
+		//				sendPacket(16, 16, "silverfish");
+		//				setGuiId(16);player.addStat(PetBuddyMain.pa.silverfish, 1);
+		//			}
+		//			if(item.equals(Item.fishRaw)){
+		//				sendPacket(23, 23, "cat");
+		//				setGuiId(23);player.addStat(PetBuddyMain.pa.cat, 1);
+		//			}
+		//			if(item.equals(Item.snowball)){
+		//				sendPacket(17, 17, "snowman");
+		//				setGuiId(17);player.addStat(PetBuddyMain.pa.snow, 1);
+		//			}
+		//			if(is.itemID == Block.blockIron.blockID){
+		//				sendPacket(18, 18, "iron golem");
+		//				setGuiId(18);player.addStat(PetBuddyMain.pa.golem, 1);
+		//			}
+		//			if(is.itemID == Block.whiteStone.blockID){
+		//				setGuiId(19);player.addStat(PetBuddyMain.pa.endDragon, 1);
+		//				sendPacket(19, 19, "dragon");
+		//			}
+		//			if(item.equals(Item.netherStalkSeeds)){
+		//				setGuiId(20);player.addStat(PetBuddyMain.pa.bat, 1);
+		//				sendPacket(20, 20, "bat");
+		//			}
+		//			if(item.equals(Item.chickenRaw)){
+		//				sendPacket(21, 21, "chicken");
+		//				setGuiId(21);player.addStat(PetBuddyMain.pa.chicken, 1);
+		//			}
+		//			if(is.itemID == Block.mycelium.blockID){
+		//				sendPacket(22, 22, "mooshroom");
+		//				setGuiId(22);player.addStat(PetBuddyMain.pa.mooshroom, 1);
+		//			}
+		//			if(item.equals(Item.dyePowder) && is.getItemDamage() == 0){
+		//				if(getGuiId() != 19 && getGuiId() != 14){
+		//					sendPacket(24, 24, "squid");
+		//					setGuiId(24);player.addStat(PetBuddyMain.pa.squid, 1);
+		//				}
+		//			}
+		//			if(item instanceof ItemBook){
+		//				sendPacket(25, 25, "villager");
+		//				setGuiId(25);player.addStat(PetBuddyMain.pa.villager, 1);
+		//			}
+		//			if(item.equals(Item.bone)){
+		//				sendPacket(26, 26, "wolf");
+		//				setGuiId(26);player.addStat(PetBuddyMain.pa.wolf, 1);
+		//			}
+		//			if(item.equals(Item.netherQuartz)){
+		//				setGuiId(27);player.addStat(PetBuddyMain.pa.pigZombie, 1);
+		//				sendPacket(27, 27, "pig zombie");
+		//			}
+		//			if(item.equals(Item.beefCooked)){
+		//				setGuiId(28);player.addStat(PetBuddyMain.pa.rpgBull, 1);
+		//				sendPacket(28, 28, "rpg bull");
+		//			}
+		//			if(item.equals(Item.porkCooked)){
+		//				setGuiId(29);player.addStat(PetBuddyMain.pa.rpgBoar, 1);
+		//				sendPacket(29, 29, "rpg boar");
+		//			}
+		//			if(item.equals(Item.magmaCream)){
+		//				setGuiId(30);player.addStat(PetBuddyMain.pa.magma, 1);
+		//				sendPacket(30, 30, "MagmaCube");
+		//			}
+		//			if(item.equals(Item.slimeBall)){
+		//				sendPacket(31, 31, "Slime");
+		//				setGuiId(31);player.addStat(PetBuddyMain.pa.slime, 1);
+		//			}
+		//			if(item.equals(Item.feather)){ // turn a chicken into a harpy
+		//				if(getGuiId() == 21){
+		//					setGuiId(32);player.addStat(PetBuddyMain.pa.harpy, 1);
+		//					sendPacket(32, 32, "harpy");
+		//				}
+		//			}
+		//			if(item.equals(Item.wheat)){ // turn a chicken into a moa
+		//				if(getGuiId() == 21){
+		//					setGuiId(33);player.addStat(PetBuddyMain.pa.moa, 1);
+		//					sendPacket(33, 33, "moa");
+		//				}
+		//			}
+		//			if(item.equals(Item.pickaxeWood)){
+		//				setGuiId(34);player.addStat(PetBuddyMain.pa.dwarf, 1);
+		//				sendPacket(34, 34, "dwarf");
+		//			}
+		//			if(item.equals(Item.ingotGold)){
+		//				setGuiId(35);player.addStat(PetBuddyMain.pa.elf, 1);
+		//				sendPacket(35, 35, "elf");
+		//			}
+		//			if(item.equals(Block.obsidian)){
+		//				setGuiId(36);player.addStat(PetBuddyMain.pa.orc, 1);
+		//				sendPacket(36, 36, "orc");
+		//			}
+		//		}
 		return super.interact(player);
 	}
 
 	@Deprecated /**crashes server. mehod is now empty*/
 	public void sendPacket(int id, int secondID, String petName){
-//		if(!worldObj.isRemote){
-//			ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-//			ObjectOutput out;
-//			DataOutputStream outputStream = new DataOutputStream(bytes);
-//			try {
-//				outputStream.writeInt(id);
-//				outputStream.writeInt(secondID);
-//				outputStream.writeUTF(petName);
-//				Packet250CustomPayload packet = new Packet250CustomPayload("buddyPet", bytes.toByteArray());
-//				PacketDispatcher.sendPacketToServer(packet);
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//		}
+		//		if(!worldObj.isRemote){
+		//			ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+		//			ObjectOutput out;
+		//			DataOutputStream outputStream = new DataOutputStream(bytes);
+		//			try {
+		//				outputStream.writeInt(id);
+		//				outputStream.writeInt(secondID);
+		//				outputStream.writeUTF(petName);
+		//				Packet250CustomPayload packet = new Packet250CustomPayload("buddyPet", bytes.toByteArray());
+		//				PacketDispatcher.sendPacketToServer(packet);
+		//			} catch (IOException e) {
+		//				e.printStackTrace();
+		//			}
+		//		}
 	}
 	/**
 	 * This function is used when two same-species animals in 'love mode' breed to generate the new baby animal.
@@ -600,7 +602,7 @@ public abstract class BuddyBase extends EntityTameable
 			}
 		}
 	}
-	
+
 	public float getHeight(){
 		switch(getGuiId()){
 		case 2:

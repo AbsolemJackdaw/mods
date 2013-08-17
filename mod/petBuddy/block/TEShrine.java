@@ -83,9 +83,7 @@ public class TEShrine extends TileEntity{
 			itemToImbue.writeToNBT(nbttagcompound1);
 			nbttaglist.appendTag(nbttagcompound1);
 		}
-
 		nbt.setTag("Items", nbttaglist);
-
 	}
 
 	@Override

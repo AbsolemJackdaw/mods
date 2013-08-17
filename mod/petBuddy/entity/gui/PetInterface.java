@@ -62,7 +62,7 @@ public class PetInterface extends GuiScreen {
 		this.buttonList.clear();
 
 		mc.getMinecraft().gameSettings.guiScale = 2;
-		FMLLog.getLogger().info(""+mc.getMinecraft().gameSettings.guiScale + " " + PetBuddyMain.proxy.getGuiScale());
+//		FMLLog.getLogger().info(""+mc.getMinecraft().gameSettings.guiScale + " " + PetBuddyMain.proxy.getGuiScale());
 		int posX = (this.width - xSize) / 2;
 		int posY = (this.height - ySize) / 2;
 		this.buttonList.add(new GuiButton(1, posX+160+50-20 , posY-110 , 20, 20, "X"));

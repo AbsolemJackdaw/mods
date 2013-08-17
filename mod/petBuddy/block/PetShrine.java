@@ -80,7 +80,7 @@ public class PetShrine extends BlockContainer {
 
 		if(te != null){
 			if(par5EntityPlayer.inventory.getCurrentItem() != null){
-				if(par5EntityPlayer.inventory.getCurrentItem().getItem().equals(PetBuddyMain.petStatue)){
+				if(par5EntityPlayer.inventory.getCurrentItem().getItem().equals(PetBuddyMain.petStatue) && !te.hasStatue){
 					te.hasStatue = true;
 
 					if(!par5EntityPlayer.capabilities.isCreativeMode)
@@ -110,7 +110,7 @@ public class PetShrine extends BlockContainer {
 			/*==Retrieve Pending Object if no statue nad cycle hasnt started yet==*/
 			else if(!te.cycleDone && !te.hasStatue && te.hasItemStack){
 
-				EntityItem entityItem = new EntityItem(par1World, x, y, z, new ItemStack(te.itemToImbue.getItem(),1));
+				EntityItem entityItem = new EntityItem(par1World, x, y, z, te.itemToImbue);
 
 				if(!par1World.isRemote)
 					par1World.spawnEntityInWorld(entityItem);

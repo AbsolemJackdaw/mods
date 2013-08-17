@@ -140,8 +140,13 @@ public class EntityBuddy extends BuddyBase
 		sayItems--;
 		if(sayItems == 0){
 			sayItems = 600;
-			if(pickedupItems.length > 0){
-				this.buddySpeak(getOwner(), "I've got some picked up items master");
+			if(pickedupItems.length > 0 ){
+				for(int c = 0; c < pickedupItems.length; c++){
+					if(pickedupItems[c] != null){
+						this.buddySpeak(getOwner(), "I've got some picked up items master");
+						break;
+					}
+				}
 			}
 		}
 
@@ -206,8 +211,8 @@ public class EntityBuddy extends BuddyBase
 					}
 					if(fl < 0) fl =0;if (flo < 0) flo =0; if(fla < 0) fla =0;
 					if(fl > 1) fl =1;if (flo > 1) flo =1; if(fla > 1) fla =1;
-
-					setColor(fl,flo,fla);
+					if(!worldObj.isRemote)
+						setColor(fl,flo,fla);
 					item.stackSize--;
 				}
 				if(getGuiId() == 19 ){
@@ -232,7 +237,8 @@ public class EntityBuddy extends BuddyBase
 					if(fl < 0) fl =0;if (flo < 0) flo =0; if(fla < 0) fla =0;
 					if(fl > 1) fl =1;if (flo > 1) flo =1; if(fla > 1) fla =1;
 
-					setDragonColor(fl,flo,fla);
+					if(!worldObj.isRemote)
+						setDragonColor(fl,flo,fla);
 					item.stackSize--;
 				}
 			}
@@ -266,7 +272,7 @@ public class EntityBuddy extends BuddyBase
 						EntityItem item = new EntityItem(worldObj, getOwner().posX, getOwner().posY, getOwner().posZ,pickedupItems[c]);
 						if(!worldObj.isRemote){
 							worldObj.spawnEntityInWorld(item);
-							FMLLog.getLogger().info(pickedupItems[c] + "");
+							//							FMLLog.getLogger().info(pickedupItems[c] + "");
 						}
 						pickedupItems[c] = null;
 					}

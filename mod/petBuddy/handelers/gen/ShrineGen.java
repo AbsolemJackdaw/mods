@@ -39,7 +39,7 @@ public class ShrineGen implements IWorldGenerator {
 			if(!world.isAirBlock(x, y, z) && world.isAirBlock(x, y+1, z) 
 					&& world.getBlockId(x, y, z) != Block.waterStill.blockID){
 				if( world.getBlockId(x, y, z) == Block.sand.blockID||world.getBlockId(x, y, z) == Block.dirt.blockID||
-						world.getBlockId(x, y, z) == Block.stone.blockID){
+						world.getBlockId(x, y, z) == Block.stone.blockID||world.getBlockId(x, y, z) == Block.grass.blockID){
 					
 				}
 				int stone = Block.stoneBrick.blockID;
