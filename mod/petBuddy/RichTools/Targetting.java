@@ -43,7 +43,8 @@ public class Targetting {
             Vec3 lookFarCoord = playerPosition.addVector(dirVec.xCoord * parDistance, dirVec.yCoord * parDistance, dirVec.zCoord * parDistance);
 
 
-            List<EntityLiving> targettedEntities = worldObj.getEntitiesWithinAABB(EntityLiving.class, viewEntity.boundingBox.addCoord(dirVec.xCoord * parDistance, dirVec.yCoord * parDistance, dirVec.zCoord * parDistance).expand(0.1, 0.1, 0.1));
+            List<EntityLiving> targettedEntities = worldObj.getEntitiesWithinAABB(EntityLiving.class, viewEntity.boundingBox.addCoord(
+            		dirVec.xCoord * parDistance, dirVec.yCoord * parDistance, dirVec.zCoord * parDistance).expand(0.1, 0.1, 0.1));
             targettedEntities.remove(viewEntity);
 
             for (EntityLiving targettedEntity : targettedEntities) {

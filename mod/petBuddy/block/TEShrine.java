@@ -90,6 +90,7 @@ public class TEShrine extends TileEntity{
 	public void updateEntity() {
 		super.updateEntity();
 
+		
 		if(cooldown == 0){
 			countdown = false;
 			cycleDone = true;

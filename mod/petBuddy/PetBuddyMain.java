@@ -26,6 +26,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
 
+/* TODO Add config for item ID's. */
 
 @Mod(modid = "buddyPet", name = "My tiny buddy", version = "1.0")
 
