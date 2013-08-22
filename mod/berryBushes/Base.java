@@ -59,7 +59,7 @@ public class Base {
 		bushIII = new Bush(747,2).setUnlocalizedName("BerryBushii").setCreativeTab(CreativeTabs.tabBlock);
 		bushIV = new Bush(748,3).setUnlocalizedName("BerryBushiii").setCreativeTab(CreativeTabs.tabBlock);
 		
-		berryCrop = new BerryCrops(749).setUnlocalizedName("berryCrops");
+		berryCrop = new BerryCrops(749).setUnlocalizedName("berryCrops").setHardness(0.5f).setResistance(0.2f);
 
 
 		LanguageRegistry.addName(berry, "Juicy Berry");

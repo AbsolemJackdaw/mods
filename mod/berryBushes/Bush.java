@@ -23,6 +23,8 @@ public class Bush extends BlockContainer{
 	public Bush(int par1, int meta ) {
 		super(par1, Material.leaves);
 		Meta = meta;
+		setResistance(0.2f);
+		setHardness(0.5f);
 	}
 	
 	@Override
