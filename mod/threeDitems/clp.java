@@ -1,19 +1,20 @@
-/*     */ package threeDitems;
-/*     */ 
-/*     */ import net.minecraft.block.Block;
+ package threeDitems;
+
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.MinecraftForgeClient;
 import threeDitems.models.bottle;
 import threeDitems.models.rod;
 import threeDitems.models.stick;
+import cpw.mods.fml.client.registry.KeyBindingRegistry;
 
 public class clp extends cmp
 {
-	public static clp instance = new clp();
 
 	public void render() {
-		instance = this;
-		Render3d.hastoRenderOnTick = true;
+		Render3d.hastoRenderOnTick = false;
+		
+		KeyBindingRegistry.registerKeyBinding(new KeyHandler());
 
 		MinecraftForgeClient.registerItemRenderer(Item.stick.itemID, new Render3d(new stick(),"/subaraki/3d/stick.png", 0.5f,0.2f,0.0f,40f,90f,10f,0f,0f,0f,0f,0f,0f,1,1));
 		MinecraftForgeClient.registerItemRenderer(Item.fishingRod.itemID, new Render3d(new rod(),"/subaraki/3d/rod.png", 0.5f,0.2f, -0.05f, -50f,-110f,0f,0.1f,-0.2f,0.4f,0f,0f,-30f,1,1));

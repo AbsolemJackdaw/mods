@@ -76,10 +76,10 @@ public class CaseEquipped
 
 				break;
 			case 4:
-				name = "/assets/minecraft/textures/entity/steve.png";
-				break;
-			case 5:
 				name = "/assets/minecraft/textures/entity/creeper/creeper.png";
+				break;
+			default:
+				name = "/assets/minecraft/textures/entity/steve.png";
 				break;
 			}
 		}
@@ -160,7 +160,7 @@ public class CaseEquipped
 		}
 
 		if(blockToRender != null){
-            Minecraft.getMinecraft().renderEngine.func_110577_a(TextureMap.field_110575_b);
+			Minecraft.getMinecraft().renderEngine.func_110577_a(TextureMap.field_110575_b);
 			render.renderBlockAsItem(blockToRender, 0, 2);
 		}
 

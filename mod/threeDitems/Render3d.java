@@ -121,24 +121,28 @@ public class Render3d implements IItemRenderer {
 
 	@Override
 	public boolean handleRenderType(ItemStack item, ItemRenderType type) {
-		switch(type)
-		{
-		case  EQUIPPED: 
-			if(item.getItem().equals(Item.dyePowder) && item.getItemDamage() != 4)
+		if(mod_3d.inst.isRendering3D){
+			switch(type)
+			{
+			case  EQUIPPED: 
+				if(item.getItem().equals(Item.dyePowder) && item.getItemDamage() != 4)
+					return false;
+				else
+					return true;
+			case  EQUIPPED_FIRST_PERSON: 
+				if(item.getItem().equals(Item.dyePowder) && item.getItemDamage() != 4)
+					return false;
+				else
+					return true;
+			case ENTITY:
+				if(item.getItem().equals(Item.dyePowder) && item.getItemDamage() != 4)
+					return false;
+				else
+					return true;
+			default: 
 				return false;
-			else
-				return true;
-		case  EQUIPPED_FIRST_PERSON: 
-			if(item.getItem().equals(Item.dyePowder) && item.getItemDamage() != 4)
-				return false;
-			else
-				return true;
-		case ENTITY:
-			if(item.getItem().equals(Item.dyePowder) && item.getItemDamage() != 4)
-				return false;
-			else
-				return true;
-		default: 
+			}
+		}else{
 			return false;
 		}
 	}
@@ -150,29 +154,32 @@ public class Render3d implements IItemRenderer {
 
 	@Override
 	public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
-		if(renderOnTick() == true){
-			mod_3d.proxy.render();
-		}
 
-		switch(type){
-		case  EQUIPPED:
-			CaseEquipped eq = new CaseEquipped();
-			eq.render(type, item, x, y, z, rotZ, rotY, rotX, X, Y, Z, fpsX, fpsY, fpsZ, scale, name, render,
-					frame, theItem, helper, blockToRender, armorFilenamePrefix, data);
-			break;
-		case  EQUIPPED_FIRST_PERSON:
-			CaseEquipped e = new CaseEquipped();
-			e.render(type, item, x, y, z, rotZ, rotY, rotX, X, Y, Z, fpsX, fpsY, fpsZ, scale, name, render,
-					frame, theItem, helper, blockToRender, armorFilenamePrefix, data);
-			break;
-		case ENTITY:
-			CaseEntity caseEntity = new CaseEntity();
-			caseEntity.render(type, item, x, y, z, rotZ, rotY, rotX, X, Y, Z, fpsX, fpsY, fpsZ, scaleWorld,
-					name, render, frame, theItem, helper, blockToRender, armorFilenamePrefix, data);
-			break;
-		default:
-			break;
-		}		
+		if(mod_3d.inst.isRendering3D){
+			if(renderOnTick() == true){
+				mod_3d.proxy.render();
+			}
+
+			switch(type){
+			case  EQUIPPED:
+				CaseEquipped eq = new CaseEquipped();
+				eq.render(type, item, x, y, z, rotZ, rotY, rotX, X, Y, Z, fpsX, fpsY, fpsZ, scale, name, render,
+						frame, theItem, helper, blockToRender, armorFilenamePrefix, data);
+				break;
+			case  EQUIPPED_FIRST_PERSON:
+				CaseEquipped e = new CaseEquipped();
+				e.render(type, item, x, y, z, rotZ, rotY, rotX, X, Y, Z, fpsX, fpsY, fpsZ, scale, name, render,
+						frame, theItem, helper, blockToRender, armorFilenamePrefix, data);
+				break;
+			case ENTITY:
+				CaseEntity caseEntity = new CaseEntity();
+				caseEntity.render(type, item, x, y, z, rotZ, rotY, rotX, X, Y, Z, fpsX, fpsY, fpsZ, scaleWorld,
+						name, render, frame, theItem, helper, blockToRender, armorFilenamePrefix, data);
+				break;
+			default:
+				break;
+			}		
+		}
 	}
 
 	public void potionContent(Entity p, ItemStack item)
