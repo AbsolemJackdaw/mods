@@ -16,8 +16,6 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
-import berryBushes.Base;
-
 public class BushTESR extends TileEntitySpecialRenderer{
 
 	private static final bush b = new bush();
@@ -31,8 +29,10 @@ public class BushTESR extends TileEntitySpecialRenderer{
 
 		
 		if(tileentity != null && tileentity instanceof BushTE){
+			
 			BushTE te = (BushTE)tileentity;
 			this.func_110628_a(new ResourceLocation("berries:bush.png"));
+			
 			GL11.glPushMatrix();
 
 			GL11.glTranslatef((float)d + 0.4F, (float)d1 + 1.5F, (float)d2 + 0.5F); 

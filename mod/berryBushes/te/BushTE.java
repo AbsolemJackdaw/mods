@@ -1,9 +1,5 @@
 package berryBushes.te;
 
-import cpw.mods.fml.common.FMLLog;
-import berryBushes.Base;
-import berryBushes.BerryCrops;
-import berryBushes.Bush;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
@@ -12,6 +8,9 @@ import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet132TileEntityData;
 import net.minecraft.tileentity.TileEntity;
+import berryBushes.Base;
+import berryBushes.BerryCrops;
+import berryBushes.Bush;
 
 public class BushTE extends TileEntity{
 
