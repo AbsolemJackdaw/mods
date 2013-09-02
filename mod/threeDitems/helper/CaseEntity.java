@@ -20,6 +20,7 @@ import net.minecraft.item.ItemEnderEye;
 import net.minecraft.item.ItemEnderPearl;
 import net.minecraft.item.ItemMinecart;
 import net.minecraft.item.ItemMonsterPlacer;
+import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemSkull;
 import net.minecraft.item.ItemStack;
@@ -66,7 +67,6 @@ public class CaseEntity
 							resourcelocation = AbstractClientPlayer.func_110305_h(item.getTagCompound().getString("SkullOwner"));
 							AbstractClientPlayer.func_110304_a(resourcelocation, item.getTagCompound().getString("SkullOwner"));
 						}
-
 						Minecraft.getMinecraft().renderEngine.func_110577_a(resourcelocation);
 					}
 				}else{
@@ -211,7 +211,9 @@ public class CaseEntity
 		}
 		if(item.getItem() instanceof ItemSword && !Config3D.instance.SwordModel){
 			GL11.glRotatef(90, 1.0f, 0.0f, 0.0f);
-
+		}
+		if(item.getItem() instanceof ItemPickaxe){
+			GL11.glRotatef(90, 1.0f, 0.0f, 0.0f);
 		}
 		theItem.render((Entity)data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
 

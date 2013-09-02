@@ -31,7 +31,12 @@ public class Render3d implements IItemRenderer {
 	private String name = "";
 	public static String[] armorFilenamePrefix = new String[] {"cloth", "chain", "iron", "diamond", "gold"};
 
-	Block blockToRender;
+	
+	private static final CaseEquipped eq = new CaseEquipped();
+	private static final CaseEquipped e = new CaseEquipped();
+	private static final CaseEntity caseEntity = new CaseEntity();
+
+	private Block blockToRender;
 	private float x;
 	private float y;
 	private float z;
@@ -124,20 +129,15 @@ public class Render3d implements IItemRenderer {
 		if(mod_3d.inst.isRendering3D){
 			switch(type)
 			{
+			//if itemdye is lapis and nothing else
 			case  EQUIPPED: 
-				if(item.getItem().equals(Item.dyePowder) && item.getItemDamage() != 4)
-					return false;
-				else
+				if(!(item.getItem().equals(Item.dyePowder) && item.getItemDamage() != 4))
 					return true;
 			case  EQUIPPED_FIRST_PERSON: 
-				if(item.getItem().equals(Item.dyePowder) && item.getItemDamage() != 4)
-					return false;
-				else
+				if(!(item.getItem().equals(Item.dyePowder) && item.getItemDamage() != 4))
 					return true;
 			case ENTITY:
-				if(item.getItem().equals(Item.dyePowder) && item.getItemDamage() != 4)
-					return false;
-				else
+				if(!(item.getItem().equals(Item.dyePowder) && item.getItemDamage() != 4))
 					return true;
 			default: 
 				return false;
@@ -156,23 +156,19 @@ public class Render3d implements IItemRenderer {
 	public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
 
 		if(mod_3d.inst.isRendering3D){
-			if(renderOnTick() == true){
-				mod_3d.proxy.render();
-			}
-
+//			if(renderOnTick() == true){
+//				mod_3d.proxy.render();
+//			}
 			switch(type){
 			case  EQUIPPED:
-				CaseEquipped eq = new CaseEquipped();
 				eq.render(type, item, x, y, z, rotZ, rotY, rotX, X, Y, Z, fpsX, fpsY, fpsZ, scale, name, render,
 						frame, theItem, helper, blockToRender, armorFilenamePrefix, data);
 				break;
 			case  EQUIPPED_FIRST_PERSON:
-				CaseEquipped e = new CaseEquipped();
 				e.render(type, item, x, y, z, rotZ, rotY, rotX, X, Y, Z, fpsX, fpsY, fpsZ, scale, name, render,
 						frame, theItem, helper, blockToRender, armorFilenamePrefix, data);
 				break;
 			case ENTITY:
-				CaseEntity caseEntity = new CaseEntity();
 				caseEntity.render(type, item, x, y, z, rotZ, rotY, rotX, X, Y, Z, fpsX, fpsY, fpsZ, scaleWorld,
 						name, render, frame, theItem, helper, blockToRender, armorFilenamePrefix, data);
 				break;
@@ -189,22 +185,17 @@ public class Render3d implements IItemRenderer {
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		if( p instanceof EntityPlayer)
-		{
+		if( p instanceof EntityPlayer){
 			EntityPlayer player = (EntityPlayer) p;
-			if(player.getCurrentEquippedItem() != null)
-			{
-				if(item.getItem().equals(Item.potion) || item.getItem().equals(Item.glassBottle))
-				{
+			if(player.getCurrentEquippedItem() != null){
+				if(item.getItem().equals(Item.potion) || item.getItem().equals(Item.glassBottle)){
 					int color = ((ItemPotion)item.getItem()).getColorFromDamage(item.getItemDamage());
 					float red = (float)(color >> 16 & 255) / 255.0F;
 					float green = (float)(color >> 8 & 255) / 255.0F;
 					float blue = (float)(color & 255) / 255.0F;					
 					GL11.glColor4f(red, green,blue, 1.0F);
 					((bottle)theItem).renderContent(p, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
-				}
-				else if(player.getCurrentEquippedItem().getItem().equals(Item.expBottle))
-				{
+				}else if(player.getCurrentEquippedItem().getItem().equals(Item.expBottle)){
 					GL11.glColor4f(0.7f, 1.0f, 0.0f, 1.0F);
 					((bottle)theItem).renderContent(p, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
 				}
@@ -212,9 +203,9 @@ public class Render3d implements IItemRenderer {
 		}
 	}
 
-	protected boolean renderOnTick(){
-		return this.hastoRenderOnTick;
-	}
+//	protected boolean renderOnTick(){
+//		return this.hastoRenderOnTick;
+//	}
 
 	public static int addNewArmourRendererPrefix(String armor)
 	{

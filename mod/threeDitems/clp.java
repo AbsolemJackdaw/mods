@@ -12,7 +12,7 @@ public class clp extends cmp
 {
 
 	public void render() {
-		Render3d.hastoRenderOnTick = false;
+//		Render3d.hastoRenderOnTick = false;
 		
 		KeyBindingRegistry.registerKeyBinding(new KeyHandler());
 
@@ -87,11 +87,11 @@ public class clp extends cmp
 		}
 		
 
-		RenderItem.inst.addPick(Item.pickaxeDiamond,"/subaraki/3d/pickDiamond.png",1,1);
-		RenderItem.inst.addPick(Item.pickaxeGold,"/subaraki/3d/pickGold.png",1,1);
-		RenderItem.inst.addPick(Item.pickaxeIron,"/subaraki/3d/pickSteel.png",1,1);
-		RenderItem.inst.addPick(Item.pickaxeStone,"/subaraki/3d/pickStone.png",1,1);
-		RenderItem.inst.addPick(Item.pickaxeWood,"/subaraki/3d/pickWood.png",1,1);
+		RenderItem.inst.addPick(Item.pickaxeDiamond,"/subaraki/3d/pickDiamond.png",0.6f,1);
+		RenderItem.inst.addPick(Item.pickaxeGold,"/subaraki/3d/pickGold.png",0.6f,1);
+		RenderItem.inst.addPick(Item.pickaxeIron,"/subaraki/3d/pickSteel.png",0.6f,1);
+		RenderItem.inst.addPick(Item.pickaxeStone,"/subaraki/3d/pickStone.png",0.6f,1);
+		RenderItem.inst.addPick(Item.pickaxeWood,"/subaraki/3d/pickWood.png",0.6f,1);
 
 		RenderItem.inst.addSpade(Item.shovelDiamond,"/subaraki/3d/spadeDiamond.png",1,1);
 		RenderItem.inst.addSpade(Item.shovelGold,"/subaraki/3d/spadeGold.png",1,1);

@@ -17,7 +17,6 @@ import com.google.common.collect.ObjectArrays;
 
 public class ArmorHelper {
 
-	DynamicTexture icon;
 	/**
 	 * Set the specified armor model as the player model. Args: player, armorSlot, partialTick
 	 */

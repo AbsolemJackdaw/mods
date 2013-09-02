@@ -16,7 +16,7 @@ public class mod_3d
 	public static cmp proxy;
 	
 	public static mod_3d inst;
-	public boolean isRendering3D = false;
+	public boolean isRendering3D = true;
 
 	@EventHandler
 	public void preLoad(FMLPreInitializationEvent e){
