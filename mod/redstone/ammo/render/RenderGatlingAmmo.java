@@ -2,7 +2,6 @@ package redstone.ammo.render;
 
 import java.util.Random;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;

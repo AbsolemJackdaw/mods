@@ -10,12 +10,9 @@ import gravestone.grave.TEGraveSpecial;
 import gravestone.gui.GuiGrave;
 import gravestone.gui.GuiGraveChoice;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.KeyBindingRegistry;
@@ -30,13 +27,6 @@ public class ClientProxy extends CommonProxy{
 		MinecraftForgeClient.registerItemRenderer(mod_Gravestone.bonesItem.itemID, new ItemBonesRenderer());
 
 		KeyBindingRegistry.registerKeyBinding(new KeyHandler());
-	}
-
-	public void spawnItem(ItemStack stack,int x,int y,int z, World world)
-	{
-		EntityItem entityitem = new EntityItem(world, x,y,z, stack);
-		entityitem.lifespan = 200;
-		world.spawnEntityInWorld(entityitem);
 	}
 
 	public void openGui(int id, EntityPlayer player, String name, TEGrave te)

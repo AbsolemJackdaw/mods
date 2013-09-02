@@ -1,10 +1,7 @@
 package petBuddy.entity;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-import net.minecraft.block.Block;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelBlaze;
@@ -24,7 +21,6 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemDye;
-import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -52,7 +48,6 @@ import petBuddy.entity.model.Squid;
 import petBuddy.entity.model.WitherModel;
 import petBuddy.entity.model.Wolf;
 import petBuddy.root.BuddyBase;
-import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

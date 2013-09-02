@@ -13,7 +13,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 
-@Mod(modid = "PaintingsMod", name = "Painitngs++", version = "1.5.2")
+@Mod(modid = "PaintingsMod", name = "Paintings++", version = "1.6.2")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
 
 
@@ -38,7 +38,7 @@ public class Paintings {
 		boolean gib = ConfigFile.instance.Gibea;
 		proxy.registerRenderInformation();
 
-		//adds PaintingGui compatibilty trough reflection
+		//adds PaintingGui compatibility trough reflection
 		if(tiny && !Insane && !sphax && !gib)
 		{
 			try {
@@ -48,7 +48,7 @@ public class Paintings {
 				paintingGuiHelper(altClass, "KZ_HEIGHT", 512);
 			}
 			catch(Exception e1){
-				FMLLog.getLogger().info("Davidees painting mod not installed. Skipping");
+				FMLLog.getLogger().info("Davidees painting mod not installed or to old/new. Skipping");
 			}
 		}
 		else if(!tiny && Insane && !sphax && !gib)
@@ -60,7 +60,7 @@ public class Paintings {
 				paintingGuiHelper(altClass, "KZ_HEIGHT", 512);
 			}
 			catch(Exception e1){
-				FMLLog.getLogger().info("Davidees painting mod not installed. Skipping");
+				FMLLog.getLogger().info("Davidees painting mod not installed or to old/new. Skipping");
 			}
 		}else if(!tiny && !Insane && sphax && !gib){
 			try {
@@ -70,7 +70,7 @@ public class Paintings {
 				paintingGuiHelper(altClass, "KZ_HEIGHT", 256);
 			}
 			catch(Exception e1){
-				FMLLog.getLogger().info("Davidees painting mod not installed. Skipping");
+				FMLLog.getLogger().info("Davidees painting mod not installed or to old/new. Skipping");
 			}
 		}else{
 			try {
@@ -80,7 +80,7 @@ public class Paintings {
 				paintingGuiHelper(altClass, "KZ_HEIGHT", 256);
 			}
 			catch(Exception e1){
-				FMLLog.getLogger().info("Davidees painting mod not installed. Skipping");
+				FMLLog.getLogger().info("Davidees painting mod not installed or to old/new. Skipping");
 			}
 		}
 

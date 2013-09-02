@@ -21,7 +21,6 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
-import petBuddy.PetBuddyMain;
 import petBuddy.entity.EntityBuddy;
 import petBuddy.entity.model.DragonsModel;
 import petBuddy.entity.model.SheepBody;

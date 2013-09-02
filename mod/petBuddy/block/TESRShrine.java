@@ -97,24 +97,7 @@ public class TESRShrine extends TileEntitySpecialRenderer{
 				GL11.glPushMatrix();
 				GL11.glTranslatef((float)d + 0.5F, (float)d1 + 0.8F, (float)d2 + 0.5F);
 
-				//				int i = te.getBlockMetadata() & 0x3;
-				//
-				//				switch (i)
-				//				{
-				//				case 0:
-				//					GL11.glRotatef(270.0F, 0.0F, 1.0F, 0.0F);
-				//					break;
-				//				case 1:
-				//					GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
-				//					break;
-				//				case 2:
-				//					GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F);
-				//					break;
-				//				case 3:
-				//					GL11.glRotatef(0.0F, 0.0F, 1.0F, 0.0F);
-				//				}
-
-				GL11.glEnable(32826);
+//				GL11.glEnable(32826);
 
 				for(int j = 0; j <4; j++){
 					switch (j)
@@ -155,10 +138,13 @@ public class TESRShrine extends TileEntitySpecialRenderer{
 							GL11.glScalef(f2, f2, f2);
 							GL11.glTranslatef(0.0F, 0.35F, 0.0F);
 							float f3 = 1.0F;
+							GL11.glDisable(GL11.GL_LIGHTING);
 							GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_SRC_COLOR);
 							GL11.glEnable(GL11.GL_BLEND);
+//							this.blockrender.renderStandardBlock(Block.dirt, (int)d, (int)d1, (int)d2);
 							
 							this.blockrender.renderBlockAsItem(Block.blocksList[te.itemToImbue.itemID], te.itemToImbue.getItemDamage(), f3);
+
 							GL11.glDisable(GL11.GL_BLEND);
 
 							GL11.glPopMatrix();
@@ -203,7 +189,6 @@ public class TESRShrine extends TileEntitySpecialRenderer{
 								else{
 									GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_SRC_COLOR);
 									GL11.glEnable(GL11.GL_BLEND);
-
 									drawItem(te.itemToImbue, 0);
 									GL11.glDisable(GL11.GL_BLEND);
 									
@@ -219,10 +204,9 @@ public class TESRShrine extends TileEntitySpecialRenderer{
 						}
 					}
 				}
-				GL11.glDisable(32826);
+//				GL11.glDisable(32826);
 				GL11.glPopMatrix();
 			}
-
 		}
 	}
 

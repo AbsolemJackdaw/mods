@@ -29,7 +29,6 @@ import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBook;
-import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 
 public class BuddyUtils {

@@ -18,7 +18,6 @@ import org.lwjgl.opengl.GL11;
 
 import petBuddy.PetBuddyMain;
 import petBuddy.entity.EntityBuddy;
-import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class PetInterface extends GuiScreen {

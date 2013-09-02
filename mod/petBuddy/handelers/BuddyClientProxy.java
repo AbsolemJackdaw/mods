@@ -3,8 +3,6 @@ package petBuddy.handelers;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.client.MinecraftForgeClient;
 import petBuddy.PetBuddyMain;
 import petBuddy.block.PetShrineRender;

@@ -1,6 +1,5 @@
 package petBuddy.block;
 
-import cpw.mods.fml.common.FMLLog;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -90,7 +89,7 @@ public class TEShrine extends TileEntity{
 	public void updateEntity() {
 		super.updateEntity();
 
-		
+	
 		if(cooldown == 0){
 			countdown = false;
 			cycleDone = true;
