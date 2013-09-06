@@ -1,8 +1,25 @@
 package threeDitems.proxy;
 
+import net.minecraft.client.model.ModelBiped;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.MinecraftForgeClient;
 import threeDitems.handlers.KeyHandler;
+import threeDitems.models.apple;
+import threeDitems.models.ball;
+import threeDitems.models.book;
+import threeDitems.models.bottle;
+import threeDitems.models.bowl;
+import threeDitems.models.bucket;
+import threeDitems.models.disc;
+import threeDitems.models.egg;
+import threeDitems.models.emerald;
+import threeDitems.models.enderball;
+import threeDitems.models.hoe;
+import threeDitems.models.ingot;
+import threeDitems.models.pick;
+import threeDitems.models.rod;
+import threeDitems.models.smallSword;
+import threeDitems.models.stick;
 import threeDitems.render.item.RenderBall;
 import threeDitems.render.item.RenderBook;
 import threeDitems.render.item.RenderBucket;
@@ -14,40 +31,29 @@ import threeDitems.render.item.RenderMonsterPlacer;
 import threeDitems.render.item.RenderPotion;
 import threeDitems.render.item.RenderRod;
 import threeDitems.render.item.RenderStick;
+import threeDitems.render.item.armor.RenderArmorBoots;
+import threeDitems.render.item.armor.RenderArmorHelm;
+import threeDitems.render.item.armor.RenderArmorLegs;
+import threeDitems.render.item.armor.RenderArmorPlate;
 import threeDitems.render.item.food.RenderApple;
 import threeDitems.render.item.food.RenderBowl;
 import threeDitems.render.item.tools.RenderHoe;
 import threeDitems.render.item.tools.RenderPickaxe;
 import threeDitems.render.item.tools.RenderSword;
-import threeDitems_old.models.apple;
-import threeDitems_old.models.ball;
-import threeDitems_old.models.book;
-import threeDitems_old.models.bottle;
-import threeDitems_old.models.bowl;
-import threeDitems_old.models.bucket;
-import threeDitems_old.models.disc;
-import threeDitems_old.models.egg;
-import threeDitems_old.models.emerald;
-import threeDitems_old.models.enderball;
-import threeDitems_old.models.hoe;
-import threeDitems_old.models.ingot;
-import threeDitems_old.models.pick;
-import threeDitems_old.models.rod;
-import threeDitems_old.models.smallSword;
-import threeDitems_old.models.stick;
 import cpw.mods.fml.client.registry.KeyBindingRegistry;
 
 public class clp extends cmp
 {
 
 	private int startId = 2002;
-
+	ModelBiped biped = new ModelBiped();
 	public void render() {		
 		KeyBindingRegistry.registerKeyBinding(new KeyHandler());
 
 		/*stick*/
 		MinecraftForgeClient.registerItemRenderer(Item.stick.itemID, 
 				new RenderStick(new stick(),"subaraki:3d/items/stick.png"));
+		
 		/*Monster Spawner*/
 		MinecraftForgeClient.registerItemRenderer(Item.monsterPlacer.itemID, 
 				new RenderMonsterPlacer(new egg(),"subaraki:3d/items/eggSpawn.png"));
@@ -190,6 +196,53 @@ public class clp extends cmp
 				new RenderPickaxe(new pick(),"subaraki:3d/items/pickSteel.png"));
 		MinecraftForgeClient.registerItemRenderer(Item.pickaxeDiamond.itemID, 
 				new RenderPickaxe(new pick(),"subaraki:3d/items/pickDiamond.png"));
+		
+		
+		/*Armor*/
+		MinecraftForgeClient.registerItemRenderer(Item.helmetDiamond.itemID, 
+				new RenderArmorHelm(biped,""));
+		MinecraftForgeClient.registerItemRenderer(Item.helmetGold.itemID, 
+				new RenderArmorHelm(biped,""));
+		MinecraftForgeClient.registerItemRenderer(Item.helmetLeather.itemID, 
+				new RenderArmorHelm(biped,""));
+		MinecraftForgeClient.registerItemRenderer(Item.helmetIron.itemID, 
+				new RenderArmorHelm(biped,""));
+		MinecraftForgeClient.registerItemRenderer(Item.helmetChain.itemID, 
+				new RenderArmorHelm(biped,""));
+		
+		MinecraftForgeClient.registerItemRenderer(Item.plateDiamond.itemID, 
+				new RenderArmorPlate(biped,""));
+		MinecraftForgeClient.registerItemRenderer(Item.plateGold.itemID, 
+				new RenderArmorPlate(biped,""));
+		MinecraftForgeClient.registerItemRenderer(Item.plateLeather.itemID, 
+				new RenderArmorPlate(biped,""));
+		MinecraftForgeClient.registerItemRenderer(Item.plateIron.itemID, 
+				new RenderArmorPlate(biped,""));
+		MinecraftForgeClient.registerItemRenderer(Item.plateChain.itemID, 
+				new RenderArmorPlate(biped,""));
+		
+		MinecraftForgeClient.registerItemRenderer(Item.legsDiamond.itemID, 
+				new RenderArmorLegs(biped,""));
+		MinecraftForgeClient.registerItemRenderer(Item.legsGold.itemID, 
+				new RenderArmorLegs(biped,""));
+		MinecraftForgeClient.registerItemRenderer(Item.legsLeather.itemID, 
+				new RenderArmorLegs(biped,""));
+		MinecraftForgeClient.registerItemRenderer(Item.legsIron.itemID, 
+				new RenderArmorLegs(biped,""));
+		MinecraftForgeClient.registerItemRenderer(Item.legsChain.itemID, 
+				new RenderArmorLegs(biped,""));
+		
+		MinecraftForgeClient.registerItemRenderer(Item.bootsDiamond.itemID, 
+				new RenderArmorBoots(biped,""));
+		MinecraftForgeClient.registerItemRenderer(Item.bootsGold.itemID, 
+				new RenderArmorBoots(biped,""));
+		MinecraftForgeClient.registerItemRenderer(Item.bootsIron.itemID, 
+				new RenderArmorBoots(biped,""));
+		MinecraftForgeClient.registerItemRenderer(Item.bootsLeather.itemID, 
+				new RenderArmorBoots(biped,""));
+		MinecraftForgeClient.registerItemRenderer(Item.bootsChain.itemID, 
+				new RenderArmorBoots(biped,""));
+		
 	}
 }
 

@@ -15,11 +15,11 @@ import net.minecraftforge.client.IItemRenderer;
 import org.lwjgl.opengl.GL11;
 
 import threeDitems.mod_3d;
-import threeDitems_old.helper.CaseEntity;
-import threeDitems_old.helper.CaseEquipped;
-import threeDitems_old.helper.FrameHelper;
-import threeDitems_old.helper.MinecartHelper;
-import threeDitems_old.models.bottle;
+import threeDitems.helper.CaseEntity;
+import threeDitems.helper.CaseEquipped;
+import threeDitems.helper.FrameHelper;
+import threeDitems.helper.MinecartHelper;
+import threeDitems.models.bottle;
 
 import com.google.common.collect.ObjectArrays;
 

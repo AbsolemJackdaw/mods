@@ -100,7 +100,8 @@ public abstract class Render3DInterface implements IItemRenderer,ISimpleBlockRen
 	}
 
 	public void renderItem(ItemRenderType type, ItemStack item, boolean glow){
-		Minecraft.getMinecraft().renderEngine.func_110577_a(modelTexture);
+		if(!shouldIgnoreTextureRendering())
+			Minecraft.getMinecraft().renderEngine.func_110577_a(modelTexture);
 
 		if(type == ItemRenderType.ENTITY){
 			renderEntity();
@@ -116,13 +117,12 @@ public abstract class Render3DInterface implements IItemRenderer,ISimpleBlockRen
 		if(glow)
 			Minecraft.getMinecraft().renderEngine.func_110577_a(glint);	
 
-		
+
 		preSpecials(item, model);
-		
-		model.render(null,0,0,0,0,0,0.0625f);
-		
+//		if(!shouldIgnoreModelRendering())
+			model.render(null,0,0,0,0,0,0.0625f);
 		postSpecials(item, model);
-		
+
 	}
 
 	@Override
@@ -195,9 +195,16 @@ public abstract class Render3DInterface implements IItemRenderer,ISimpleBlockRen
 	public abstract void renderEntity();
 	public abstract void renderEquipped();
 	public abstract void renderScale();
-	
+
 	public void preSpecials(ItemStack item, ModelBase model){
 	}
 	public void postSpecials(ItemStack item, ModelBase model){
+	}
+
+	/**Do not use this unless you know what you are doing !
+	 * Used for Armor and minecarts to ignore the actual loading of the primary, 
+	 * If you use this, make sure to manually load a texture*/
+	@Deprecated protected boolean shouldIgnoreTextureRendering(){
+		return false;
 	}
 }

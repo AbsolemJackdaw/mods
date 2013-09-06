@@ -9,8 +9,8 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
+import threeDitems.models.bottle;
 import threeDitems.render.Render3DInterface;
-import threeDitems_old.models.bottle;
 
 public class RenderPotion extends Render3DInterface{
 

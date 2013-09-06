@@ -7,8 +7,8 @@ import net.minecraft.item.ItemStack;
 
 import org.lwjgl.opengl.GL11;
 
+import threeDitems.models.enderball;
 import threeDitems.render.Render3DInterface;
-import threeDitems_old.models.enderball;
 
 public class RenderEnder extends Render3DInterface{
 

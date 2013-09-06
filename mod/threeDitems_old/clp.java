@@ -107,29 +107,29 @@ public class clp extends cmp
 //		RenderItem.inst.addHoe(Item.hoeStone,"/subaraki/3d/hoeStone.png",1,1);
 //		RenderItem.inst.addHoe(Item.hoeWood,"/subaraki/3d/hoeWood.png",1,1);
 
-		RenderItem.inst.addArmorHelm(Item.helmetDiamond,1,2);
-		RenderItem.inst.addArmorHelm(Item.helmetGold,1,2);
-		RenderItem.inst.addArmorHelm(Item.helmetLeather,1,2);
-		RenderItem.inst.addArmorHelm(Item.helmetChain,1,2);
-		RenderItem.inst.addArmorHelm(Item.helmetIron,1,2);
-
-		RenderItem.inst.addArmorPlateBody(Item.plateDiamond,1,3);
-		RenderItem.inst.addArmorPlateBody(Item.plateGold,1,3);
-		RenderItem.inst.addArmorPlateBody(Item.plateIron,1,3);
-		RenderItem.inst.addArmorPlateBody(Item.plateChain,1,3);
-		RenderItem.inst.addArmorPlateBody(Item.plateLeather,1,3);
-
-		RenderItem.inst.addArmorLegs(Item.legsDiamond,1,3);
-		RenderItem.inst.addArmorLegs(Item.legsGold,1,3);
-		RenderItem.inst.addArmorLegs(Item.legsIron,1,3);
-		RenderItem.inst.addArmorLegs(Item.legsChain,1,3);
-		RenderItem.inst.addArmorLegs(Item.legsLeather,1,3);
-
-		RenderItem.inst.addArmorBoots(Item.bootsDiamond,1,3);
-		RenderItem.inst.addArmorBoots(Item.bootsGold,1,3);
-		RenderItem.inst.addArmorBoots(Item.bootsChain,1,3);
-		RenderItem.inst.addArmorBoots(Item.bootsIron,1,3);
-		RenderItem.inst.addArmorBoots(Item.bootsLeather,1,3);
+//		RenderItem.inst.addArmorHelm(Item.helmetDiamond,1,2);
+//		RenderItem.inst.addArmorHelm(Item.helmetGold,1,2);
+//		RenderItem.inst.addArmorHelm(Item.helmetLeather,1,2);
+//		RenderItem.inst.addArmorHelm(Item.helmetChain,1,2);
+//		RenderItem.inst.addArmorHelm(Item.helmetIron,1,2);
+//
+//		RenderItem.inst.addArmorPlateBody(Item.plateDiamond,1,3);
+//		RenderItem.inst.addArmorPlateBody(Item.plateGold,1,3);
+//		RenderItem.inst.addArmorPlateBody(Item.plateIron,1,3);
+//		RenderItem.inst.addArmorPlateBody(Item.plateChain,1,3);
+//		RenderItem.inst.addArmorPlateBody(Item.plateLeather,1,3);
+//
+//		RenderItem.inst.addArmorLegs(Item.legsDiamond,1,3);
+//		RenderItem.inst.addArmorLegs(Item.legsGold,1,3);
+//		RenderItem.inst.addArmorLegs(Item.legsIron,1,3);
+//		RenderItem.inst.addArmorLegs(Item.legsChain,1,3);
+//		RenderItem.inst.addArmorLegs(Item.legsLeather,1,3);
+//
+//		RenderItem.inst.addArmorBoots(Item.bootsDiamond,1,3);
+//		RenderItem.inst.addArmorBoots(Item.bootsGold,1,3);
+//		RenderItem.inst.addArmorBoots(Item.bootsChain,1,3);
+//		RenderItem.inst.addArmorBoots(Item.bootsIron,1,3);
+//		RenderItem.inst.addArmorBoots(Item.bootsLeather,1,3);
 
 		RenderItem.inst.addCart(Item.minecartEmpty,0.5f,1.0f);
 		RenderItem.inst.addCart(Item.minecartCrate,0.5f,1.0f);
