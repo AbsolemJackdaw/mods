@@ -18,7 +18,7 @@ public class RenderPotion extends Render3DInterface{
 
 	public RenderPotion(ModelBase model, String texture) {
 		super(model, texture);
-		content = new ResourceLocation("subaraki:/3d/items/bottle.png");
+		content = new ResourceLocation("subaraki:3d/items/bottle.png");
 	}
 
 	@Override

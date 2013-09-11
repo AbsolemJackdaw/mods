@@ -17,7 +17,7 @@ public class RenderMonsterPlacer extends Render3DInterface{
 
 	public RenderMonsterPlacer(ModelBase model, String texture) {
 		super(model, texture);
-		spots = new ResourceLocation("subaraki:/3d/items/eggSpawnSpots.png");
+		spots = new ResourceLocation("subaraki:3d/items/eggSpawnSpots.png");
 	}
 
 	@Override

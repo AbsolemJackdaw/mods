@@ -14,7 +14,7 @@ public class bow extends ModelBase
 	ModelRenderer bowWoodup2;
 	ModelRenderer bowWooddown1;
 	ModelRenderer bowWooddown2;
-	ModelRenderer string;
+	public ModelRenderer string;
 	ModelRenderer bowWoodup1Bis;
 	ModelRenderer bowWoodup2Bis;
 	ModelRenderer bowWooddown1Bis;
@@ -22,14 +22,14 @@ public class bow extends ModelBase
 	ModelRenderer arrowShaft;
 	ModelRenderer arrowHead;
 	ModelRenderer arrowHeadDeco;
-	ModelRenderer stringpart1Bis;
-	ModelRenderer stringpart2Bis;
+	 ModelRenderer stringpart1Bis;
+	 ModelRenderer stringpart2Bis;
 	ModelRenderer bowWoodup1Bis2;
 	ModelRenderer bowWoodup2Bis2;
 	ModelRenderer bowWooddown1Bis2;
 	ModelRenderer bowWooddown2Bis2;
-	ModelRenderer stringpart1Bis2;
-	ModelRenderer stringpart2Bis2;
+	 ModelRenderer stringpart1Bis2;
+	 ModelRenderer stringpart2Bis2;
 	ModelRenderer arrowShaftBis;
 	ModelRenderer arrowHeadDecoBis;
 	ModelRenderer arrowHeadBis;

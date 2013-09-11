@@ -156,7 +156,7 @@ public class CaseEquipped
 		}
 
 		if(item.getItem() instanceof ItemMinecart){
-			helper.cartzz(item, theItem, render, data);
+			helper.cartzz(item, theItem, render);
 		}
 
 		if(blockToRender != null){

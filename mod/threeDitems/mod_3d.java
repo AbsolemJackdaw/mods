@@ -19,19 +19,17 @@ public class mod_3d
 	
 	public static mod_3d inst;
 	public boolean isRendering3D = true;
+	public boolean showHud = false;
 
 	@EventHandler
 	public void preLoad(FMLPreInitializationEvent e){
-		Config3D.instance.loadConfig(e.getSuggestedConfigurationFile());
-		
+//		Config3D.instance.loadConfig(e.getSuggestedConfigurationFile());	
 	}
 
 	@EventHandler
 	public void load(FMLInitializationEvent e)
 	{
-		inst = this;
-		
-		
+		inst = this;		
 
 //		proxy.renderBlocks();
 		

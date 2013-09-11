@@ -19,8 +19,8 @@ public class Config3D {
         config.save();
     }
     private void loadSettings(Configuration config){
-        config.addCustomCategoryComment("Sword Model", "True for Smooth Model, false for Plain Model.");
-
-        SwordModel = config.get("Sword Model", "Smooth Sword", true).getBoolean(true);
+//        config.addCustomCategoryComment("Sword Model", "True for Smooth Model, false for Plain Model.");
+//
+//        SwordModel = config.get("Sword Model", "Smooth Sword", true).getBoolean(true);
     }
 }

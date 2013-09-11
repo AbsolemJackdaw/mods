@@ -7,35 +7,36 @@ import org.lwjgl.opengl.GL11;
 import threeDitems.mod_3d;
 import threeDitems.render.Render3DInterface;
 
-public class RenderSword extends Render3DInterface {
+public class RenderSpade extends Render3DInterface {
 
-	public RenderSword(ModelBase model, String texture) {
+	public RenderSpade(ModelBase model, String texture) {
 		super(model, texture);
+		// TODO Auto-generated constructor stub
 	}
-
 	@Override
 	public void renderEquippedFP() {
-		GL11.glRotatef(50,0,1,0);
-		GL11.glRotatef(250,0,0,1);
-		GL11.glRotatef(90,1,0,0);
 		
-		GL11.glTranslatef(-0.3f, 1f, 0f);		
+		GL11.glRotatef(45+90,0,1,0);
+		GL11.glRotatef(0,0,0,1);
+		GL11.glRotatef(-50,1,0,0);
+		
+		GL11.glTranslatef(-1.3f, 0f, -0.5f);		
 	}
 
 	@Override
 	public void renderEntity() {
 		float f = 1.5f;
-		GL11.glRotatef(180, 1, 0, 0);
+		GL11.glRotatef(90, 0, 0, 1);
 		GL11.glScalef(f, f, f);		
 	}
 
 	@Override
 	public void renderEquipped() {
-		GL11.glRotatef(-45,0,1,0);
-		GL11.glRotatef(-20,0,0,1);
-		GL11.glRotatef(90,1,0,0);
+		GL11.glRotatef(45,0,1,0);
+		GL11.glRotatef(0,0,0,1);
+		GL11.glRotatef(200,1,0,0);
 			
-		GL11.glTranslatef(0.8f, -0.15f, -1f);		
+		GL11.glTranslatef(0f, -1f, -1f);		
 	}
 
 	@Override

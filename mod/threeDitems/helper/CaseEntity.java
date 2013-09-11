@@ -30,11 +30,11 @@ import net.minecraftforge.client.IItemRenderer.ItemRenderType;
 
 import org.lwjgl.opengl.GL11;
 
+import threeDitems.config.Config3D;
 import threeDitems.models.bottle;
 import threeDitems.models.bow;
 import threeDitems.models.enderball;
 import threeDitems.models.head;
-import threeDitems_old.Config3D;
 
 public class CaseEntity
 {
@@ -121,7 +121,7 @@ public class CaseEntity
 		}
 		if(item.getItem() instanceof ItemMinecart){
 			GL11.glTranslatef(0f,-0.2f,0F);
-			helper.cartzz(item, theItem, render, data);
+			helper.cartzz(item, theItem, render);
 		}
 		if(blockToRender != null){
             Minecraft.getMinecraft().renderEngine.func_110577_a(TextureMap.field_110575_b);

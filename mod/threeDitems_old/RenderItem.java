@@ -7,6 +7,7 @@ import net.minecraft.client.model.ModelBoat;
 import net.minecraft.client.model.ModelMinecart;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.MinecraftForgeClient;
+import threeDitems.config.Config3D;
 import threeDitems.models.Nihil;
 import threeDitems.models.apple;
 import threeDitems.models.arrow;
