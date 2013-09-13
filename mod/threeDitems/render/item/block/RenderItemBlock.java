@@ -52,11 +52,14 @@ public class RenderItemBlock extends Render3DInterface{
 
 	@Override
 	public void renderEquipped() {
-		GL11.glRotatef(45,0,1,0);
-		GL11.glRotatef(0,0,0,1);
-		GL11.glRotatef(-30,1,0,0);
+		GL11.glRotatef(0,0,1,0);
+		GL11.glRotatef(15,0,0,1);
+		GL11.glRotatef(10,1,0,0);
 
-		GL11.glTranslatef(0f, 0.5f, 1f);		
+		GL11.glTranslatef(0.4f, 0.5f, 0f);
+		
+		float f = 0.7f;
+		GL11.glScalef(f, f, f);		
 	}
 
 	@Override
@@ -66,7 +69,7 @@ public class RenderItemBlock extends Render3DInterface{
 	}
 
 	@Override
-	public void preSpecials(ItemStack item, ModelBase model) {
+	public void preSpecials(ItemStack item, ModelBase model, Object...data) {
 		super.preSpecials(item, model);
 		Minecraft.getMinecraft().renderEngine.func_110577_a(TextureMap.field_110575_b);
 		render.renderBlockAsItem(block, item.getItemDamage(), 1);

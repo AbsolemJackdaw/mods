@@ -41,11 +41,14 @@ public class RenderPotion extends Render3DInterface{
 
 	@Override
 	public void renderEquipped() {
-		GL11.glRotatef(45,0,1,0);
-		GL11.glRotatef(180,0,0,1);
-		GL11.glRotatef(30,1,0,0);
-
-		GL11.glTranslatef(0f, 0.6f, 0.8f);		
+		GL11.glRotatef(10,0,1,0);
+		GL11.glRotatef(15,0,0,1);
+		GL11.glRotatef(180,1,0,0);
+			
+		GL11.glTranslatef(0.4f, -0.2f, -0.3f);	
+		
+		float f = 0.5f;
+		GL11.glScalef(f, f, f);			
 	}
 
 	@Override
@@ -55,13 +58,13 @@ public class RenderPotion extends Render3DInterface{
 	}
 
 //	@Override
-//	public void preSpecials(ItemStack item, ModelBase model) {
+//	public void preSpecials(ItemStack item, ModelBase model, Object...data) {
 //		// TODO Auto-generated method stub
 //		super.preSpecials(item, model);
 //	}
 
 	@Override
-	public void postSpecials(ItemStack item, ModelBase model) {
+	public void postSpecials(ItemStack item,ModelBase model, Object... data) {
 		super.postSpecials(item, model);
 		
 		if(item.getItem() instanceof ItemPotion|| item.getItem().equals(Item.expBottle)){

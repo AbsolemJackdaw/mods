@@ -34,11 +34,14 @@ public class RenderBlazeRod extends Render3DInterface{
 
 	@Override
 	public void renderEquipped() {
-		GL11.glRotatef(45,0,1,0);
-		GL11.glRotatef(180,0,0,1);
-		GL11.glRotatef(-30,1,0,0);
+		GL11.glRotatef(10,0,1,0);
+		GL11.glRotatef(15,0,0,1);
+		GL11.glRotatef(90,1,0,0);
 			
-		GL11.glTranslatef(-0.1f, -1.2f, 0f);		
+		GL11.glTranslatef(0.4f, 0f, -0.7f);	
+		
+		float f = 0.5f;
+		GL11.glScalef(f, f, f);			
 	}
 
 	@Override
@@ -48,7 +51,7 @@ public class RenderBlazeRod extends Render3DInterface{
 	}
 
 	@Override
-	public void postSpecials(ItemStack item, ModelBase model) {
+	public void postSpecials(ItemStack item, ModelBase model, Object ... data) {
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);

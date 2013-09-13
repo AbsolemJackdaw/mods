@@ -34,13 +34,14 @@ public class RenderSaddle extends Render3DInterface{
 
 	@Override
 	public void renderEquipped() {
-		GL11.glRotatef(45,0,1,0);
-		GL11.glRotatef(180,0,0,1);
-		GL11.glRotatef(30,1,0,0);
+		GL11.glRotatef(10,0,1,0);
+		GL11.glRotatef(95,0,0,1);
+		GL11.glRotatef(180,1,0,0);
 			
-		GL11.glTranslatef(0f, 0.5f, 0.5f);		
-		float f = 0.7f;
-		GL11.glScalef(f, f, f);		
+		GL11.glTranslatef(0.2f, 0.3f, -0.2f);	
+		
+		float f = 1f;
+		GL11.glScalef(f, f, f);			
 	}
 
 	@Override

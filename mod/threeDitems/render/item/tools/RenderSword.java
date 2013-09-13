@@ -24,23 +24,25 @@ public class RenderSword extends Render3DInterface {
 
 	@Override
 	public void renderEntity() {
-		float f = 1.5f;
+		float f = 3f;
 		GL11.glRotatef(180, 1, 0, 0);
 		GL11.glScalef(f, f, f);		
 	}
 
 	@Override
 	public void renderEquipped() {
-		GL11.glRotatef(-45,0,1,0);
-		GL11.glRotatef(-20,0,0,1);
+		GL11.glRotatef(0,0,1,0);
+		GL11.glRotatef(-55,0,0,1);
 		GL11.glRotatef(90,1,0,0);
 			
-		GL11.glTranslatef(0.8f, -0.15f, -1f);		
+		GL11.glTranslatef(0.1f, -0.05f, -0.8f);	
+		float f = 0.8f;
+		GL11.glScalef(f, f, f);		
 	}
 
 	@Override
 	public void renderScale() {
-		float f = 4f;
+		float f = 2f;
 		GL11.glScalef(f, f, f);		
 	}
 

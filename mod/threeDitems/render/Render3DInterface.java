@@ -25,9 +25,12 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 public abstract class Render3DInterface implements IItemRenderer /*,ISimpleBlockRenderingHandler*/{
 	public ModelBase model;
 	private int renderId = -1;
-	
+
 	private final ResourceLocation modelTexture;
 	private final ResourceLocation glint;
+
+	RenderItem rend = new RenderItem();
+//	float zLevel = 0;
 
 	public Render3DInterface(ModelBase model, String texture){
 		this.model = model;
@@ -35,32 +38,58 @@ public abstract class Render3DInterface implements IItemRenderer /*,ISimpleBlock
 		modelTexture = new ResourceLocation(texture);
 		glint = new ResourceLocation("textures/misc/enchanted_item_glint.png");
 	}
-	
-	RenderItem rend = new RenderItem();
 
+	
 	@Override
 	public boolean handleRenderType(ItemStack item, ItemRenderType type) {
-		return mod_3d.inst.isRendering3D ? type != type.INVENTORY && !rend.renderInFrame :false;
+		return mod_3d.inst.isRendering3D ?type != type.INVENTORY && !rend.renderInFrame :false;
 	}
 
 	@Override
 	public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item,
 			ItemRendererHelper helper) {
-
-		return   mod_3d.inst.isRendering3D ? (type == ItemRenderType.ENTITY ? false: true) : false;
+		return mod_3d.inst.isRendering3D ? type == type.EQUIPPED_FIRST_PERSON ? true : false  : true;
 	} 
 
-	float zLevel = 0;
 	@Override
 	public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
-
-		RenderHelper.enableStandardItemLighting();
+		//		RenderHelper.enableStandardItemLighting();
 		//		if(hasSmoothingLighting())
 		//			GL11.glShadeModel(GL11.GL_SMOOTH);
+
+		if(!shouldIgnoreTextureRendering())
+			Minecraft.getMinecraft().renderEngine.func_110577_a(modelTexture);
 		GL11.glPushMatrix();
 
-		renderObject(type, item,false, data);
+		switch(type){
+		case ENTITY:
+			renderEntity();
+			break;
+		case EQUIPPED:
+			renderEquipped();
+			break;
+		case EQUIPPED_FIRST_PERSON:
+			renderEquippedFP();
+			break;
+		default : 
+			break;
+		}
+		renderScale();
 
+		preSpecials(item, model, data);
+		if(!shouldIgnoreModelRendering()){
+			model.render((Entity)data[1],0,0,0,0,0,0.0625f);
+		}
+		postSpecials(item, model, data);
+		renderglow(item);
+
+		GL11.glPopMatrix();
+
+		//		GL11.glColor4f(1, 1, 1, 1.0F);
+		//		RenderHelper.enableStandardItemLighting();
+	}
+
+	private void renderglow(ItemStack item){
 		if (item.hasEffect(item.getItemDamage()))
 		{
 			float tickModifier = (float) (Minecraft.getSystemTime() % 3000L) / 3000.0F * 48.0F;
@@ -85,7 +114,7 @@ public abstract class Render3DInterface implements IItemRenderer /*,ISimpleBlock
 				GL11.glTranslatef(0, var23, 0);
 				GL11.glMatrixMode(GL11.GL_MODELVIEW);
 				if(!shouldIgnoreModelRendering())
-					model.render((Entity)data[1],0,0,0,0,0,0.0625f);
+					model.render(null,0,0,0,0,0,0.0625f);
 			}
 
 			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -97,114 +126,17 @@ public abstract class Render3DInterface implements IItemRenderer /*,ISimpleBlock
 			GL11.glDisable(GL11.GL_BLEND);
 			GL11.glDepthFunc(GL11.GL_LEQUAL);
 		}
-		GL11.glPopMatrix();
-		GL11.glColor4f(1, 1, 1, 1.0F);
-		RenderHelper.enableStandardItemLighting();
 	}
 
-	public void renderObject(ItemRenderType type, ItemStack item, boolean glow, Object... data){
-		if(!shouldIgnoreTextureRendering())
-			Minecraft.getMinecraft().renderEngine.func_110577_a(modelTexture);
-
-
-		if(type == ItemRenderType.ENTITY){
-			renderEntity();
-		}
-		else if(type == ItemRenderType.EQUIPPED){
-			if((Entity)data[1] instanceof EntityPlayer)
-				renderEquipped();
-		}
-		else if(type == ItemRenderType.EQUIPPED_FIRST_PERSON){
-			renderEquippedFP();
-		}
-		
-		renderScale();
-
-
-		if(glow)
-			Minecraft.getMinecraft().renderEngine.func_110577_a(glint);	
-
-		preSpecials(item, model);
-		if(!shouldIgnoreModelRendering())
-			model.render((Entity)data[1],0,0,0,0,0,0.0625f);
-		postSpecials(item, model);
-
-	}
-
-//	@Override
-//	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z,
-//			Block block, int modelId, RenderBlocks renderer) {
-//		RenderHelper.enableStandardItemLighting();
-//		if(hasSmoothingLighting())
-//			GL11.glShadeModel(GL11.GL_SMOOTH);
-//
-//		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-//
-//		int var3 = world.getLightBrightnessForSkyBlocks(x, y, z, 0);
-//		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, var3 % 65536, var3 / 65536);
-//		GL11.glPushMatrix();
-//		GL11.glTranslated(x + Tessellator.instance.xOffset + 0.5, y + Tessellator.instance.yOffset, z + Tessellator.instance.zOffset + 0.5);
-//
-//		if(preRenderBlock(world, x, y, z, block)){
-//
-//			int color = block.colorMultiplier(world, x, y, z);
-//			GL11.glColor4f((float)(color >> 16 & 255) / 255.0F, (float)(color >> 8 & 255) / 255.0F, (float)(color & 255) / 255.0F, 1);
-//
-//			renderScale();
-//			GL11.glScalef(0.75F,0.75F,0.75F);
-//			//			model.render(null, 0, 0, 0, 0, 0, 0.0625f);
-//		}
-//
-//		GL11.glPopMatrix();
-//
-//		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
-//		RenderHelper.disableStandardItemLighting();
-//		//Minecraft.getMinecraft().renderEngine.bindTexture("/terrain.png");
-//		if (Minecraft.isAmbientOcclusionEnabled())
-//		{
-//			GL11.glShadeModel(GL11.GL_SMOOTH);
-//		}
-//		else
-//		{
-//			GL11.glShadeModel(GL11.GL_FLAT);
-//		}
-//
-//		return true;
-//	}
-
-	public boolean preRenderBlock(IBlockAccess world, int x, int y, int z, Block block){
-		return true;
-	}
-
-//	@Override
-//	public boolean shouldRender3DInInventory() {
-//		return false;
-//	}
-
-	public boolean hasSmoothingLighting(){
-		return false;
-	}
-
-//	@Override
-//	public int getRenderId() {
-//		if(renderId < 0)
-//			renderId = RenderingRegistry.getNextAvailableRenderId();
-//		return renderId;
-//	}
-//
-//	@Override
-//	public void renderInventoryBlock(Block block, int metadata, int modelID,
-//			RenderBlocks renderer) {
-//	}
 
 	public abstract void renderEquippedFP();
 	public abstract void renderEntity();
 	public abstract void renderEquipped();
 	public abstract void renderScale();
 
-	public void preSpecials(ItemStack item, ModelBase model){
+	public void preSpecials(ItemStack item, ModelBase model, Object... data){
 	}
-	public void postSpecials(ItemStack item, ModelBase model){
+	public void postSpecials(ItemStack item, ModelBase model, Object... data){
 	}
 
 	/**Do not use this unless you know what you are doing !
@@ -215,7 +147,104 @@ public abstract class Render3DInterface implements IItemRenderer /*,ISimpleBlock
 	}
 
 	/**used to bypass general model rendering. used for blocks and ItemFrame*/
-	 protected boolean shouldIgnoreModelRendering(){
+	protected boolean shouldIgnoreModelRendering(){
 		return false;
 	}
+
+
+	public boolean preRenderBlock(IBlockAccess world, int x, int y, int z, Block block){
+		return true;
+	}
+
+	/*=======================================================================*/
+
+
+	//	public void renderObject(ItemRenderType type, ItemStack item, boolean glow, Object... data){
+	//		if(!shouldIgnoreTextureRendering())
+	//			Minecraft.getMinecraft().renderEngine.func_110577_a(modelTexture);
+	//
+	//
+	//		switch(type){
+	//		case ENTITY:
+	//			renderEntity();
+	//			break;
+	//		case EQUIPPED:
+	//			renderEquipped();
+	//			break;
+	//		case EQUIPPED_FIRST_PERSON:
+	//			renderEquippedFP();
+	//			break;
+	//		default : break;
+	//		}
+	//		renderScale();
+	//		if(glow)
+	//			Minecraft.getMinecraft().renderEngine.func_110577_a(glint);	
+	//		preSpecials(item, model, data);
+	//		if(!shouldIgnoreModelRendering()){
+	//			model.render((Entity)data[1],0,0,0,0,0,0.0625f);
+	//		}
+	//		postSpecials(item, model, data);
+	//	}
+
+	//	@Override
+	//	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z,
+	//			Block block, int modelId, RenderBlocks renderer) {
+	//		RenderHelper.enableStandardItemLighting();
+	//		if(hasSmoothingLighting())
+	//			GL11.glShadeModel(GL11.GL_SMOOTH);
+	//
+	//		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+	//
+	//		int var3 = world.getLightBrightnessForSkyBlocks(x, y, z, 0);
+	//		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, var3 % 65536, var3 / 65536);
+	//		GL11.glPushMatrix();
+	//		GL11.glTranslated(x + Tessellator.instance.xOffset + 0.5, y + Tessellator.instance.yOffset, z + Tessellator.instance.zOffset + 0.5);
+	//
+	//		if(preRenderBlock(world, x, y, z, block)){
+	//
+	//			int color = block.colorMultiplier(world, x, y, z);
+	//			GL11.glColor4f((float)(color >> 16 & 255) / 255.0F, (float)(color >> 8 & 255) / 255.0F, (float)(color & 255) / 255.0F, 1);
+	//
+	//			renderScale();
+	//			GL11.glScalef(0.75F,0.75F,0.75F);
+	//			//			model.render(null, 0, 0, 0, 0, 0, 0.0625f);
+	//		}
+	//
+	//		GL11.glPopMatrix();
+	//
+	//		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
+	//		RenderHelper.disableStandardItemLighting();
+	//		//Minecraft.getMinecraft().renderEngine.bindTexture("/terrain.png");
+	//		if (Minecraft.isAmbientOcclusionEnabled())
+	//		{
+	//			GL11.glShadeModel(GL11.GL_SMOOTH);
+	//		}
+	//		else
+	//		{
+	//			GL11.glShadeModel(GL11.GL_FLAT);
+	//		}
+	//
+	//		return true;
+	//	}
+
+	//	@Override
+	//	public boolean shouldRender3DInInventory() {
+	//		return false;
+	//	}
+
+	//	public boolean hasSmoothingLighting(){
+	//		return false;
+	//	}
+
+	//	@Override
+	//	public int getRenderId() {
+	//		if(renderId < 0)
+	//			renderId = RenderingRegistry.getNextAvailableRenderId();
+	//		return renderId;
+	//	}
+	//
+	//	@Override
+	//	public void renderInventoryBlock(Block block, int metadata, int modelID,
+	//			RenderBlocks renderer) {
+	//	}
 }

@@ -32,11 +32,14 @@ public class RenderRod extends Render3DInterface {
 
 	@Override
 	public void renderEquipped() {
-		GL11.glRotatef(45,0,1,0);
+		GL11.glRotatef(90,0,1,0);
 		GL11.glRotatef(180,0,0,1);
-		GL11.glRotatef(-30,1,0,0);
+		GL11.glRotatef(-50,1,0,0);
 			
-		GL11.glTranslatef(0f, -1.2f, 1f);		
+		GL11.glTranslatef(0f, -0.6f, 0.7f);	
+		
+		float f = 0.7f;
+		GL11.glScalef(f, f, f);			
 	}
 
 	@Override

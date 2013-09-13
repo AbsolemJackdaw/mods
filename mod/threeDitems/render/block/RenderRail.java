@@ -29,11 +29,6 @@ public class RenderRail extends Render3DInterface{
 	}
 
 	@Override
-	public boolean hasSmoothingLighting(){
-		return true;
-	}
-
-	@Override
 	public void renderEquippedFP() {
 		
 	}

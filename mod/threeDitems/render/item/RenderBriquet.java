@@ -37,11 +37,14 @@ public class RenderBriquet extends Render3DInterface{
 
 	@Override
 	public void renderEquipped() {
-		GL11.glRotatef(130,0,1,0);
-		GL11.glRotatef(-60,0,0,1);
+		GL11.glRotatef(-75,0,1,0);
+		GL11.glRotatef(15,0,0,1);
 		GL11.glRotatef(90,1,0,0);
 			
-		GL11.glTranslatef(-0.8f, 0.25f, 1f);		
+		GL11.glTranslatef(0.2f, -0.3f, -0.1f);	
+		
+		float f = 0.7f;
+		GL11.glScalef(f, f, f);			
 	}
 
 	@Override

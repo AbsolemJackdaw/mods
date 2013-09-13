@@ -29,24 +29,26 @@ public class RenderBone extends Render3DInterface{
 		GL11.glRotatef(180,0,0,1);
 		GL11.glRotatef(0,1,0,0);
 			
-		GL11.glTranslatef(0f, 0f, 0f);		
+		GL11.glTranslatef(0f, 0f, 0f);	
+		float f = 2f;
+		GL11.glScalef(f, f, f);	
 	}
 
 	@Override
 	public void renderEquipped() {
-		GL11.glRotatef(130,0,1,0);
-		GL11.glRotatef(120,0,0,1);
+		GL11.glRotatef(0,0,1,0);
+		GL11.glRotatef(30,0,0,1);
 		GL11.glRotatef(90,1,0,0);
 			
-		GL11.glTranslatef(01f, 0f, -0.5f);		
-		float f = 0.7f;
+		GL11.glTranslatef(0.7f, -0.05f, 0.1f);		
+		float f = 0.5f;
 		GL11.glScalef(f, f, f);		
 	}
 
 	@Override
 	public void renderScale() {
-		float f = 7f;
-		GL11.glScalef(f, f, f+2);		
+		float f = 3f;
+		GL11.glScalef(f, f, f+1);		
 	}
 
 }

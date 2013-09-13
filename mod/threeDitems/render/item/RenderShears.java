@@ -34,11 +34,14 @@ public class RenderShears extends Render3DInterface{
 
 	@Override
 	public void renderEquipped() {
-		GL11.glRotatef(135,0,1,0);
-		GL11.glRotatef(-150,0,0,1);
-		GL11.glRotatef(90,1,0,0);
+		GL11.glRotatef(10,0,1,0);
+		GL11.glRotatef(15-90,0,0,1);
+		GL11.glRotatef(180,1,0,0);
 			
-		GL11.glTranslatef(0.5f, 0f, 01f);			
+		GL11.glTranslatef(-0.1f, -0.5f, -0.1f);	
+		
+		float f = 0.7f;
+		GL11.glScalef(f, f, f);			
 	}
 
 	@Override

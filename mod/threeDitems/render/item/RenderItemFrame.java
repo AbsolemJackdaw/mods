@@ -40,12 +40,13 @@ public class RenderItemFrame extends Render3DInterface{
 
 	@Override
 	public void renderEquipped() {
-		GL11.glRotatef(45,0,1,0);
-		GL11.glRotatef(180,0,0,1);
-		GL11.glRotatef(30,1,0,0);
+		GL11.glRotatef(10,0,1,0);
+		GL11.glRotatef(95,0,0,1);
+		GL11.glRotatef(90,1,0,0);
 			
-		GL11.glTranslatef(0f, 0.5f, 0.5f);		
-		float f = 0.7f;
+		GL11.glTranslatef(0.3f, 0.3f, -0.2f);	
+		
+		float f = 0.4f;
 		GL11.glScalef(f, f, f);		
 	}
 
@@ -56,7 +57,7 @@ public class RenderItemFrame extends Render3DInterface{
 	}
 
 	@Override
-	public void preSpecials(ItemStack item, ModelBase model) {
+	public void preSpecials(ItemStack item, ModelBase model, Object...data) {
 		super.preSpecials(item, model);
 		helper.renderFrameItemAsBlock(render, item.getItem());	
 	}

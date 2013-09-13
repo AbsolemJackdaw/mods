@@ -35,9 +35,4 @@ public class RenderStick extends Render3DInterface{
 	public void renderEquippedFP() {
 		GL11.glTranslatef(0.7f, 1f, 0.3f);
 	}
-	
-	@Override
-	public boolean hasSmoothingLighting(){
-		return true;
-	}
 }

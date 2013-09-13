@@ -17,7 +17,7 @@ public class bucket extends ModelBase
     ModelRenderer Shape8;
     ModelRenderer Shape9;
     ModelRenderer Shape10;
-    ModelRenderer Shape11;
+    public ModelRenderer Shape11;
   
   public bucket()
   {

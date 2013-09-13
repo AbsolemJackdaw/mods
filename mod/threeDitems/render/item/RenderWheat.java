@@ -34,13 +34,14 @@ public class RenderWheat extends Render3DInterface{
 
 	@Override
 	public void renderEquipped() {
-		GL11.glRotatef(45,0,1,0);
-		GL11.glRotatef(180,0,0,1);
-		GL11.glRotatef(60,1,0,0);
+		GL11.glRotatef(10,0,1,0);
+		GL11.glRotatef(15,0,0,1);
+		GL11.glRotatef(180,1,0,0);
 			
-		GL11.glTranslatef(0.8f, 0.5f, 2f);		
+		GL11.glTranslatef(1.2f, -0.3f, 1f);	
+		
 		float f = 0.7f;
-		GL11.glScalef(f, f, f);		
+		GL11.glScalef(f, f, f);
 	}
 
 	@Override

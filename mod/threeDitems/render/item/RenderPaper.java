@@ -34,13 +34,14 @@ public class RenderPaper extends Render3DInterface{
 
 	@Override
 	public void renderEquipped() {
-		GL11.glRotatef(130,0,1,0);
-		GL11.glRotatef(120,0,0,1);
-		GL11.glRotatef(90,1,0,0);
+		GL11.glRotatef(10,0,1,0);
+		GL11.glRotatef(95,0,0,1);
+		GL11.glRotatef(180,1,0,0);
 			
-		GL11.glTranslatef(0.7f, 0.2f, -0.7f);		
+		GL11.glTranslatef(0.2f, 0.5f, -0.2f);	
+		
 		float f = 0.7f;
-		GL11.glScalef(f, f, f);		
+		GL11.glScalef(f, f, f);				
 	}
 
 	@Override

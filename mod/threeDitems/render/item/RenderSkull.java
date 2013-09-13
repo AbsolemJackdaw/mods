@@ -13,13 +13,10 @@ import threeDitems.render.Render3DInterface;
 public class RenderSkull extends Render3DInterface{
 
 	String name ="textures/entity/steve.png";
-	ResourceLocation loc = new ResourceLocation(name);;
+	ResourceLocation loc = new ResourceLocation(name);
 
 	public RenderSkull(ModelBase model, String texture) {
 		super(model, texture);
-//
-//		name = "textures/entity/steve.png";
-//		loc = new ResourceLocation(name);
 	}
 
 	@Override
@@ -27,7 +24,7 @@ public class RenderSkull extends Render3DInterface{
 		GL11.glRotatef(90,0,1,0);
 		GL11.glRotatef(180,0,0,1);
 		GL11.glRotatef(0,1,0,0);
-			
+
 		GL11.glTranslatef(0.3f, -0.5f, 0.5f);		
 	}
 
@@ -36,17 +33,20 @@ public class RenderSkull extends Render3DInterface{
 		GL11.glRotatef(0,0,1,0);
 		GL11.glRotatef(180,0,0,1);
 		GL11.glRotatef(0,1,0,0);
-			
+
 		GL11.glTranslatef(0f, 0f, 0f);		
 	}
 
 	@Override
 	public void renderEquipped() {
-		GL11.glRotatef(45,0,1,0);
-		GL11.glRotatef(180,0,0,1);
-		GL11.glRotatef(30,1,0,0);
-			
-		GL11.glTranslatef(0f, 01f, 1f);		
+		GL11.glRotatef(10,0,1,0);
+		GL11.glRotatef(15,0,0,1);
+		GL11.glRotatef(180,1,0,0);
+
+		GL11.glTranslatef(0.5f, 0f, 0f);
+		
+		float f = 0.7f;
+		GL11.glScalef(f, f, f);		
 	}
 
 	@Override
@@ -55,7 +55,8 @@ public class RenderSkull extends Render3DInterface{
 		GL11.glScalef(f, f, f);		
 	}
 
-	public void postSpecials(ItemStack item, ModelBase model) {
+	@Override
+	public void postSpecials(ItemStack item, ModelBase model, Object... data) {
 
 		switch(item.getItemDamage()){
 		case 0:
@@ -92,7 +93,7 @@ public class RenderSkull extends Render3DInterface{
 		}
 
 		Minecraft.getMinecraft().renderEngine.func_110577_a(new ResourceLocation(name));
-		
+
 		switch(item.getItemDamage()){
 		case 2:
 			((head)model).renderZombie(0.0625f);
@@ -107,6 +108,12 @@ public class RenderSkull extends Render3DInterface{
 	@Deprecated
 	protected boolean shouldIgnoreTextureRendering() {
 		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	@Deprecated
+	protected boolean shouldIgnoreModelRendering(){
 		return true;
 	}
 }

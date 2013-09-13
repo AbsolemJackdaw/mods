@@ -268,7 +268,7 @@ public class clp extends cmp
 				new RenderIngot(new ingot(),"subaraki:3d/items/ingotGold.png"));
 		MinecraftForgeClient.registerItemRenderer(Item.brick.itemID, 
 				new RenderIngot(new ingot(),"subaraki:3d/items/brick.png"));
-		MinecraftForgeClient.registerItemRenderer(Item.brick.itemID, 
+		MinecraftForgeClient.registerItemRenderer(Item.netherrackBrick.itemID, 
 				new RenderIngot(new ingot(),"subaraki:3d/items/brickNether.png"));
 
 		/*===============================Tools===============================*/

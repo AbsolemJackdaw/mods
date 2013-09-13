@@ -23,22 +23,25 @@ public class RenderPickaxe extends Render3DInterface {
 
 	@Override
 	public void renderEntity() {
-		float f = 1.5f;
+		float f = 3f;
 		GL11.glRotatef(90, 1, 0, 0);
 		GL11.glScalef(f, f, f);
 	}
 
 	@Override
 	public void renderEquipped() {
-		GL11.glRotatef(-40,0,1,0);
-		GL11.glRotatef(250,0,0,1);
+		GL11.glRotatef(0,0,1,0);
+		GL11.glRotatef(-135,0,0,1);
 		GL11.glRotatef(0,1,0,0);
-		GL11.glTranslatef(-1f, -0.5f, 0f);
+		GL11.glTranslatef(-0.7f, -0.4f, -0.05f);
+		
+		float f = 0.7f;
+		GL11.glScalef(f, f, f);
 	}
 
 	@Override
 	public void renderScale() {
-		float f = 1.5f;
+		float f = 1f;
 		GL11.glScalef(f, f, f);
 	}
 

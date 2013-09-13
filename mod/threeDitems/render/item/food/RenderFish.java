@@ -34,11 +34,14 @@ public class RenderFish extends Render3DInterface{
 
 	@Override
 	public void renderEquipped() {
-		GL11.glRotatef(45,0,1,0);
-		GL11.glRotatef(180,0,0,1);
-		GL11.glRotatef(-30,1,0,0);
+		GL11.glRotatef(10,0,1,0);
+		GL11.glRotatef(15,0,0,1);
+		GL11.glRotatef(110,1,0,0);
 			
-		GL11.glTranslatef(-0.35f, -1.5f, -1f);		
+		GL11.glTranslatef(0.25f, -0.2f, -0.9f);	
+		
+		float f = 0.45f;
+		GL11.glScalef(f, f, f);		
 	}
 
 	@Override

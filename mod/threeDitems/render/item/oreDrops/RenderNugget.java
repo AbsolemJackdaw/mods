@@ -34,13 +34,15 @@ public class RenderNugget extends Render3DInterface{
 
 	@Override
 	public void renderEquipped() {
-		GL11.glRotatef(45,0,1,0);
-		GL11.glRotatef(180,0,0,1);
-		GL11.glRotatef(30,1,0,0);
+		GL11.glRotatef(10,0,1,0);
+		GL11.glRotatef(15,0,0,1);
+		GL11.glRotatef(180,1,0,0);
 			
-		GL11.glTranslatef(0f, 0f, 1f);		
+		GL11.glTranslatef(0.4f, -0f, -0.1f);	
+		
 		float f = 0.7f;
-		GL11.glScalef(f, f, f);		
+		GL11.glScalef(f, f, f);			
+
 	}
 
 	@Override

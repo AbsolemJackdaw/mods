@@ -44,11 +44,14 @@ public class RenderArmorHelm extends Render3DInterface{
 
 	@Override
 	public void renderEquipped() {
-		GL11.glRotatef(45,0,1,0);
+		GL11.glRotatef(20,0,1,0);
 		GL11.glRotatef(180,0,0,1);
-		GL11.glRotatef(30,1,0,0);
-			
-		GL11.glTranslatef(0f, -1f, 0.9f);		
+		GL11.glRotatef(-10,1,0,0);
+
+		GL11.glTranslatef(-0.3f, -1f, 0.3f);	
+		
+		float f = 0.7f;
+		GL11.glScalef(f, f, f);	
 	}
 
 	@Override
@@ -58,7 +61,7 @@ public class RenderArmorHelm extends Render3DInterface{
 	}
 
 	@Override
-	public void preSpecials(ItemStack item, ModelBase model) {
+	public void preSpecials(ItemStack item, ModelBase model, Object...data) {
 		super.preSpecials(item, model);
 		ah.setArmorModel((ModelBiped)model, item, 
 				((ItemArmor)item.getItem()).armorType, armorFilenamePrefix[((ItemArmor)item.getItem()).renderIndex]);
