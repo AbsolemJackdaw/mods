@@ -24,18 +24,11 @@ public class CharmHUD implements ITickHandler {
 
 	public Minecraft mc;
 
-	public static DynamicTexture icons;
-	public static DynamicTexture charmBar;
-	
+	public static ResourceLocation icons = new ResourceLocation("textures/gui/icons.png");
+	public static ResourceLocation charmBar = new ResourceLocation("charms:hud.png");
+
 	public CharmHUD() {
 		this.mc = Minecraft.getMinecraft();
-
-		try {
-			icons = new DynamicTexture(ImageIO.read(getClass().getResourceAsStream("/assets/minecraft/textures/gui/icons.png")));
-			charmBar = new DynamicTexture(ImageIO.read(getClass().getResourceAsStream("/charms/hud.png")));
-		} catch (IOException c) {
-			c.printStackTrace();
-		}
 	}
 
 	@Override
@@ -80,27 +73,13 @@ public class CharmHUD implements ITickHandler {
 					boolean showHearts  = ConfigClass.instance.showHearts;
 					boolean halfHearts = ConfigClass.instance.halfHearts;
 
-					//					boolean noHero = mc.thePlayer.getMaxHealth() > 20;
-					//					boolean noHero2 = mc.thePlayer.getMaxHealth() > 40;
-
 					if(leftyFlip == true){
 						xOffset -= 101;
-						//						if(noHero == true){
-						//							yOffset -= 10;
-						//							if(noHero2 == true){
-						//								yOffset -= 10;
-						//							}
+
 					}
 					for(int i =0; i<4; i++){
 						if(mc.thePlayer.inventory.armorItemInSlot(i) != null){
 							yOffset = height-55;
-							//								if(noHero == true){
-							//									yOffset = height-55- 10;
-							//									if(noHero2 == true){
-							//										yOffset = height-55- 20;
-							//									}
-							//						}
-							//					}
 						}
 					}
 
@@ -112,8 +91,7 @@ public class CharmHUD implements ITickHandler {
 					mc.fontRenderer.drawString(""+(healAmount/c), xOffset+34, yOffset-2, mc.currentScreen == null || mc.currentScreen instanceof GuiChat ? 0xffffff : 0x555555);
 
 					//binds the texture
-					if(charmBar != null)
-						charmBar.func_110564_a();
+					mc.renderEngine.func_110577_a(charmBar);
 
 					GL11.glColor3f(0,1,1);
 					if(mc.currentScreen != null && !(mc.currentScreen instanceof GuiChat)){
@@ -134,7 +112,7 @@ public class CharmHUD implements ITickHandler {
 					gui.drawTexturedModalRect(xOffset, yOffset, 0, 0,scaleCharmBar(stack) ,5);
 
 					//texture should not be found !
-					this.mc.renderEngine.func_110577_a(new ResourceLocation("white.png"));
+					//this.mc.renderEngine.func_110577_a(new ResourceLocation("white.png"));
 					GL11.glColor3f(0.7f,0f,0.7f);
 					if(mc.currentScreen != null && !(mc.currentScreen instanceof GuiChat)){
 						GL11.glColor3f(0.3f,0f,0.3f);
@@ -149,8 +127,7 @@ public class CharmHUD implements ITickHandler {
 						if(mc.currentScreen != null && !(mc.currentScreen instanceof GuiChat)){
 							GL11.glColor3f(0.2f,0.2f,0.2f);
 						}
-						if(icons != null)
-							icons.func_110564_a();
+						mc.renderEngine.func_110577_a(icons);
 						gui.drawTexturedModalRect(xOffset+24, yOffset-2, 16, 0, h ,9);
 						gui.drawTexturedModalRect(xOffset+24, yOffset-2, 52, 0, h ,9);
 
