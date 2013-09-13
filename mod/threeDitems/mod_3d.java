@@ -1,6 +1,5 @@
 package threeDitems;
 
-import threeDitems.config.Config3D;
 import threeDitems.proxy.cmp;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;

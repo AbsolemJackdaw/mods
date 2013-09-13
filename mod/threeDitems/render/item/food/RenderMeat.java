@@ -1,8 +1,9 @@
 package threeDitems.render.item.food;
 
+import net.minecraft.client.model.ModelBase;
+
 import org.lwjgl.opengl.GL11;
 
-import net.minecraft.client.model.ModelBase;
 import threeDitems.render.Render3DInterface;
 
 public class RenderMeat extends Render3DInterface{

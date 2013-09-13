@@ -6,6 +6,7 @@ import gravestone.bones.TEBones;
 import gravestone.grave.BlockGrave;
 import gravestone.grave.ItemGrave;
 import gravestone.grave.TEGrave;
+import gravestone.handelers.CommandPanel;
 import gravestone.handelers.CommonProxy;
 import gravestone.handelers.DeathEvent;
 import gravestone.handelers.PacketHandler;
@@ -26,9 +27,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.Init;
-import cpw.mods.fml.common.Mod.PreInit;
-import cpw.mods.fml.common.Mod.ServerStarting;
+import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -63,12 +62,12 @@ public class mod_Gravestone{
 		instance = this;
 	}
 
-	@PreInit
+	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 
 		ConfigClass.instance.loadConfig(event.getSuggestedConfigurationFile());
 	}
-	@Init
+	@EventHandler
 	public void load(FMLInitializationEvent event)
 	{
 		MinecraftForge.EVENT_BUS.register(new DeathEvent());
@@ -94,10 +93,10 @@ public class mod_Gravestone{
 		proxy.registerRender();
 	}
 
-	@ServerStarting
+	@EventHandler
 	public void serverStarting(FMLServerStartingEvent event) {
 		CommandHandler commandManager = (CommandHandler) event.getServer().getCommandManager();
-		commandManager.registerCommand(new gravestone.handelers.CommandPanel());
+		commandManager.registerCommand(new CommandPanel());
 	}
 
 	public void buildGravestone(EntityPlayer player, InventoryPlayer inv ) {

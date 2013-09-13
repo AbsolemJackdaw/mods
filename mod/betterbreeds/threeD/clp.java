@@ -1,11 +1,16 @@
 package betterbreeds.threeD;
 
-import cpw.mods.fml.common.FMLLog;
-import threeDitems.models.*;
-import threeDitems.*;
-import threeDitems.render.item.food.*;
-import threeDitems.render.item.*;
+import threeDitems.Render3DItem;
+import threeDitems.models.bread;
+import threeDitems.models.bucket;
+import threeDitems.models.egg;
+import threeDitems.models.meat;
+import threeDitems.render.item.RenderBucket;
+import threeDitems.render.item.food.RenderBread;
+import threeDitems.render.item.food.RenderEGg;
+import threeDitems.render.item.food.RenderMeat;
 import betterbreeds.ModBreeds;
+import cpw.mods.fml.common.FMLLog;
 
 public class clp extends cmp{
 

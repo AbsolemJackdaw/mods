@@ -7,7 +7,6 @@ import net.minecraft.item.ItemStack;
 
 import org.lwjgl.opengl.GL11;
 
-import threeDitems.mod_3d;
 import threeDitems.helper.ArmorHelper;
 import threeDitems.render.Render3DInterface;
 

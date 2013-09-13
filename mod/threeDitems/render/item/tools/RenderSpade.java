@@ -4,7 +4,6 @@ import net.minecraft.client.model.ModelBase;
 
 import org.lwjgl.opengl.GL11;
 
-import threeDitems.mod_3d;
 import threeDitems.render.Render3DInterface;
 
 public class RenderSpade extends Render3DInterface {

@@ -1,22 +1,14 @@
 package threeDitems.render.item.block;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockBrewingStand;
-import net.minecraft.block.BlockFurnace;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntityBrewingStand;
-import net.minecraft.tileentity.TileEntityFurnace;
 
 import org.lwjgl.opengl.GL11;
 
-import cpw.mods.fml.common.FMLLog;
-
-import threeDitems.mod_3d;
 import threeDitems.render.Render3DInterface;
 
 public class RenderItemBlock extends Render3DInterface{

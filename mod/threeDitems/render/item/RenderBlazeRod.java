@@ -1,10 +1,10 @@
 package threeDitems.render.item;
 
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.item.ItemStack;
+
 import org.lwjgl.opengl.GL11;
 
-import net.minecraft.client.model.ModelBase;
-import net.minecraft.entity.Entity;
-import net.minecraft.item.ItemStack;
 import threeDitems.render.Render3DInterface;
 
 public class RenderBlazeRod extends Render3DInterface{
