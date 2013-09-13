@@ -30,11 +30,13 @@ public class RenderHatchet extends Render3DInterface {
 
 	@Override
 	public void renderEquipped() {
-		GL11.glRotatef(45,0,1,0);
-		GL11.glRotatef(0,0,0,1);
-		GL11.glRotatef(200,1,0,0);
+		GL11.glRotatef(-95,0,1,0);
+		GL11.glRotatef(-5,0,0,1);
+		GL11.glRotatef(-50,1,0,0);
 			
-		GL11.glTranslatef(0f, -1f, -1f);		
+		GL11.glTranslatef(-0.1f, 0.6f, -0.2f);	
+		float f = 0.5f;
+		GL11.glScalef(f, f, f);		
 	}
 
 	@Override
