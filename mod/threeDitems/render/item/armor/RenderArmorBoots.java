@@ -13,7 +13,6 @@ import threeDitems.render.Render3DInterface;
 
 public class RenderArmorBoots extends Render3DInterface{
 
-	public static String[] armorFilenamePrefix = new String[] {"cloth", "chain", "iron", "diamond", "gold"};
 
 	private static final ArmorHelper ah= new ArmorHelper();
 

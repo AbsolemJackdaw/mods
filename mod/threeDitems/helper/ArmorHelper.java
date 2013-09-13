@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
 
 import org.lwjgl.opengl.GL11;
 
-import threeDitems_old.Render3d;
+import threeDitems.render.Render3DInterface;
 
 import com.google.common.collect.ObjectArrays;
 
@@ -70,7 +70,7 @@ public class ArmorHelper {
 	 */
 	public static int addArmorPrefix(String armor)
 	{
-		Render3d.armorFilenamePrefix = ObjectArrays.concat(Render3d.armorFilenamePrefix, armor);
-		return Render3d.armorFilenamePrefix.length - 1;
+		Render3DInterface.armorFilenamePrefix = ObjectArrays.concat(Render3DInterface.armorFilenamePrefix, armor);
+		return Render3DInterface.armorFilenamePrefix.length - 1;
 	}
 }
