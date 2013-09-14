@@ -1,5 +1,6 @@
 package gravestone.grave;
 
+import gravestone.grave.te.TEGrave;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.IItemRenderer;

@@ -1,6 +1,7 @@
 package gravestone.grave;
 
 import gravestone.mod_Gravestone;
+import gravestone.grave.te.TEGrave;
 
 import java.util.Random;
 
@@ -16,6 +17,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import cpw.mods.fml.common.FMLLog;
+import cpw.mods.fml.common.network.FMLNetworkHandler;
 
 public class BlockGrave extends BlockContainer{
 
@@ -38,24 +41,23 @@ public class BlockGrave extends BlockContainer{
 		return new TEGrave();
 	}
 
-    @Override
-    public float getExplosionResistance(Entity par1Entity, World world, int x, int y, int z, double explosionX, double explosionY, double explosionZ) {
-        return getExplosionResistance(par1Entity);
-    }
+	@Override
+	public float getExplosionResistance(Entity par1Entity, World world, int x, int y, int z, double explosionX, double explosionY, double explosionZ) {
+		return getExplosionResistance(par1Entity);
+	}
 
-    @Override
-    public float getExplosionResistance(Entity par1Entity) {
-        return 18000000F;
-    }
-    
-    public void onBlockExploded(World world, int x, int y, int z, Explosion explosion) {
-        //DO NOTHING, prevents creeper griefing of gravestones.
-    }
-    
+	@Override
+	public float getExplosionResistance(Entity par1Entity) {
+		return 18000000F;
+	}
+
+	public void onBlockExploded(World world, int x, int y, int z, Explosion explosion) {
+		//DO NOTHING, prevents creeper griefing of gravestones.
+	}
+
 	@Override
 	public int quantityDropped(Random par1Random)
 	{
-
 		return 0;
 	}
 
@@ -80,53 +82,73 @@ public class BlockGrave extends BlockContainer{
 	public boolean renderAsNormalBlock() {
 		return false;
 	}
+
 	public void setName(String name)
 	{
 		this.name = name;
 	}
 
 	@Override
+	public void onBlockClicked(World par1World, int x, int y, int z,
+			EntityPlayer par5EntityPlayer) {
+		super.onBlockClicked(par1World, x, y, z, par5EntityPlayer);
+
+
+		TEGrave te = (TEGrave)par1World.getBlockTileEntity(x, y, z);
+		//		FMLLog.getLogger().info(""+par1World.playerEntities);
+
+		if(te != null)
+			if(par1World.playerEntities.contains(te.thePlayer)){
+				FMLLog.getLogger().info("GraveOwner is in game.");
+
+				if(!(te.playername.equals(par5EntityPlayer.username))){
+					this.blockHardness = -1;
+					FMLLog.getLogger().info("You are not the grave owner ! ");
+
+				}else{
+					FMLLog.getLogger().info("You are the grave owner.");
+
+					this.blockHardness = 10;
+				}
+			}else{
+				FMLLog.getLogger().info("GraveOwner is offline.");
+
+				this.blockHardness = 10;
+			}
+	}
+
+	@Override
 	public boolean onBlockActivated(World par1World, int x, int y, int z, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
 	{
+		FMLLog.getLogger().info("Block activated");
+
 		TEGrave te = (TEGrave)par1World.getBlockTileEntity(x, y, z);	
 
-		if(par5EntityPlayer.getCurrentEquippedItem() != null)
+		if(te != null)
 		{
-
-		}else{
-			if(te != null)
+			if(!par5EntityPlayer.isSneaking())
 			{
-				if(!par5EntityPlayer.isSneaking())
+				if(te.theMeta > 0)
 				{
-					if(te.theMeta > 0)
-					{
-						switch(te.playername.length())
-						{
-						case 0:
-							mod_Gravestone.proxy.openGui(1, par5EntityPlayer, "!Empty!",te);
-							break;
-						default:
-							mod_Gravestone.proxy.openGui(1, par5EntityPlayer, te.playername,te);
-							break;
-						}
-					}
-					else
-					{
-						te.theMeta = 1;
-						if(!par1World.isRemote)
-							par5EntityPlayer.addChatMessage("You didn't set a grave Model! Repairing...");
-					}
+					FMLNetworkHandler.openGui(par5EntityPlayer, mod_Gravestone.instance, 2, par1World, x, y, z);
+
 				}
 				else
 				{
-					if(te.ModelRotation < 348.75)
-					{
-						te.ModelRotation +=11.25f;
-					}
-					else
-					{
-						te.ModelRotation =0;
-					}
+					te.theMeta = 1;
+					if(!par1World.isRemote)
+						par5EntityPlayer.addChatMessage("You didn't set a grave Model! Repairing...");
+				}
+			}
+			else
+			{
+				if(te.ModelRotation < 348.75)
+				{
+					te.ModelRotation +=11.25f;
+				}
+				else
+				{
+					te.ModelRotation =0;
 				}
 			}
 		}
@@ -172,14 +194,14 @@ public class BlockGrave extends BlockContainer{
 
 	@Override
 	public void breakBlock(World world, int x, int y, int z, int par5, int par6) {
-		
-		TEGrave tileentityfurnace = (TEGrave)world.getBlockTileEntity(x,y,z);
 
-		if (tileentityfurnace != null)
+		TEGrave te = (TEGrave)world.getBlockTileEntity(x,y,z);
+
+		if (te != null)
 		{
-			for (int j1 = 0; j1 < tileentityfurnace.getSizeInventory(); ++j1)
+			for (int j1 = 0; j1 < te.getSizeInventory(); ++j1)
 			{
-				ItemStack itemstack = tileentityfurnace.getStackInSlot(j1);
+				ItemStack itemstack = te.getStackInSlot(j1);
 
 				if (itemstack != null)
 				{

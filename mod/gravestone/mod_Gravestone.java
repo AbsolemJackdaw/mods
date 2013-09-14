@@ -5,10 +5,11 @@ import gravestone.bones.ItemSkulls;
 import gravestone.bones.TEBones;
 import gravestone.grave.BlockGrave;
 import gravestone.grave.ItemGrave;
-import gravestone.grave.TEGrave;
+import gravestone.grave.te.TEGrave;
 import gravestone.handelers.CommandPanel;
 import gravestone.handelers.CommonProxy;
 import gravestone.handelers.DeathEvent;
+import gravestone.handelers.GuiHandler;
 import gravestone.handelers.PacketHandler;
 import gravestone.handelers.PlayerTracker;
 
@@ -34,6 +35,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
+import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
@@ -73,7 +75,7 @@ public class mod_Gravestone{
 		MinecraftForge.EVENT_BUS.register(new DeathEvent());
 
 		gravestone = new BlockGrave(ConfigClass.instance.graveBlock).setBlockUnbreakable().setResistance(6000000.0F).setUnlocalizedName("GraveStone");
-		bones = new BlockBones(ConfigClass.instance.bonesBlock, Material.ground).setHardness(10f);
+		bones = new BlockBones(ConfigClass.instance.bonesBlock, Material.ground).setHardness(2f);
 		graveItem = new ItemGrave(ConfigClass.instance.grave).setUnlocalizedName("graveItem").setCreativeTab(CreativeTabs.tabDecorations);
 		bonesItem = new ItemSkulls(ConfigClass.instance.bones).setUnlocalizedName("bonesItem").setCreativeTab(CreativeTabs.tabDecorations);
 
@@ -90,6 +92,9 @@ public class mod_Gravestone{
 		GameRegistry.registerTileEntity(TEGrave.class, "grave");
 		GameRegistry.registerTileEntity(TEBones.class, "playerbody");
 		GameRegistry.registerPlayerTracker(new PlayerTracker());
+		
+		NetworkRegistry.instance().registerGuiHandler(this, new GuiHandler());
+
 		proxy.registerRender();
 	}
 
@@ -147,6 +152,10 @@ public class mod_Gravestone{
 			player.worldObj.setBlockTileEntity(x, y-2, z,new TEBones());
 		}
 
+		placeGrave(te, player, inv);
+	}
+	
+	private void placeGrave(TileEntity te , EntityPlayer player, InventoryPlayer inv){
 		if(te != null) {
 			try {
 				TEGrave tegrave = (TEGrave)te;

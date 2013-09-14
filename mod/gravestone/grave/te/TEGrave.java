@@ -1,10 +1,11 @@
-package gravestone.grave;
+package gravestone.grave.te;
 
 import java.util.Random;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -14,76 +15,71 @@ import net.minecraft.network.packet.Packet132TileEntityData;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-public class TEGrave extends TileEntity // implements IInventory
+public class TEGrave extends TileEntity  implements IInventory
 {
+
+	public ItemStack[] inv;
+	
 	public String playername = "";
-	public boolean hasItems = true;
-	public ItemStack[] graveContents = new ItemStack[40];
 	public int theMeta =0;
 	public int base = 0;
 	public float ModelRotation = 0;
 	public EntityPlayer thePlayer;
-	Random rand = new Random();
 	public String message1 = "";
 	public String message2= "";
 	public boolean customName = false;
-
-	public String setName(String name)
-	{
-		playername = name;
-		return playername;
+	
+	public String locked = "";
+	
+	//used in slotgrave
+	public boolean otherPlayerHasTakenItemStack = false;
+	
+	public TEGrave(){
+		inv = new ItemStack[40];
 	}
-
-	public Entity setPlayer(EntityPlayer player)
-	{
-		thePlayer = player;
-		return player;
-	}
-	public void setDeathMessage(String message)
-	{
-		message1 = message;
-	}
-	public void setDeathMessage2(String message)
-	{
-		message2 = message;
-	}
-	public void setMeta(int i)
-	{
-		theMeta = i;
-	}
-
-	private String field_94045_s;
+	
+	Random rand = new Random();
 
 	public int getSizeInventory()
 	{
-		return graveContents.length;
+		return inv.length;
 	}
 
 	public ItemStack getStackInSlot(int par1)
 	{
-		return this.graveContents[par1];
+		return this.inv[par1];
 	}
 
-	public ItemStack decrStackSize(int par1, int par2)
+	public void setInventorySlotContents(int par1, ItemStack par2ItemStack)
 	{
-		if (this.graveContents[par1] != null)
+		this.inv[par1] = par2ItemStack;
+
+		if (par2ItemStack != null && par2ItemStack.stackSize > this.getInventoryStackLimit()) {
+			par2ItemStack.stackSize = this.getInventoryStackLimit();
+		}
+		this.onInventoryChanged();
+	}
+	
+	public ItemStack decrStackSize(int slot, int ammount)
+	{
+		if (this.inv[slot] != null)
 		{
 			ItemStack itemstack;
 
-			if (this.graveContents[par1].stackSize <= par2)
+			if (this.inv[slot].stackSize <= ammount)
 			{
-				itemstack = this.graveContents[par1];
-				this.graveContents[par1] = null;
+				itemstack = this.inv[slot];
+				this.inv[slot] = null;
 				this.onInventoryChanged();
 				return itemstack;
 			}
 			else
 			{
-				itemstack = this.graveContents[par1].splitStack(par2);
+				itemstack = this.inv[slot].splitStack(ammount);
 
-				if (this.graveContents[par1].stackSize == 0)
+				if (this.inv[slot].stackSize == 0)
 				{
-					this.graveContents[par1] = null;
+					this.inv[slot] = null;
 				}
 
 				this.onInventoryChanged();
@@ -98,10 +94,10 @@ public class TEGrave extends TileEntity // implements IInventory
 
 	public ItemStack getStackInSlotOnClosing(int par1)
 	{
-		if (this.graveContents[par1] != null)
+		if (this.inv[par1] != null)
 		{
-			ItemStack itemstack = this.graveContents[par1];
-			this.graveContents[par1] = null;
+			ItemStack itemstack = this.inv[par1];
+			this.inv[par1] = null;
 			return itemstack;
 		}
 		else
@@ -110,30 +106,38 @@ public class TEGrave extends TileEntity // implements IInventory
 		}
 	}
 
-	public void setInventorySlotContents(int par1, ItemStack par2ItemStack)
+	public int getInventoryStackLimit()
 	{
-		this.graveContents[par1] = par2ItemStack;
-
-		if (par2ItemStack != null && par2ItemStack.stackSize > this.getInventoryStackLimit()) {
-			par2ItemStack.stackSize = this.getInventoryStackLimit();
-		}
-		this.onInventoryChanged();
-
+		return 64;
 	}
 
+	public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer)
+	{
+		return this.worldObj.getBlockTileEntity(this.xCoord, this.yCoord, this.zCoord) != this ? false : 
+			par1EntityPlayer.getDistanceSq((double)this.xCoord + 0.5D, (double)this.yCoord + 0.5D, (double)this.zCoord + 0.5D) <= 64.0D;
+	}
+	
 	public String getInvName()
 	{
-		return this.isInvNameLocalized() ? this.field_94045_s : "container.chest";
+		return "Grave";
 	}
 
+	@Override
+	public void openChest() {
+	}
+
+	@Override
+	public void closeChest() {
+	}
+
+	@Override
+	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
+		return true;
+	}
+	
 	public boolean isInvNameLocalized()
 	{
-		return this.field_94045_s != null && this.field_94045_s.length() > 0;
-	}
-
-	public void func_94043_a(String par1Str)
-	{
-		this.field_94045_s = par1Str;
+		return true;
 	}
 
 	@Override
@@ -147,17 +151,19 @@ public class TEGrave extends TileEntity // implements IInventory
 		theMeta = par1NBTTagCompound.getInteger("Meta");
 		base = par1NBTTagCompound.getInteger("base");
 		ModelRotation = par1NBTTagCompound.getFloat("rotation");
+		
+		otherPlayerHasTakenItemStack = par1NBTTagCompound.getBoolean("isLooted");
 		NBTTagList nbttaglist = par1NBTTagCompound.getTagList("Items");
-		this.graveContents = new ItemStack[this.getSizeInventory()];
+		this.inv = new ItemStack[this.getSizeInventory()];
 
 		for (int i = 0; i < nbttaglist.tagCount(); ++i)
 		{
 			NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbttaglist.tagAt(i);
 			int j = nbttagcompound1.getByte("Slot") & 255;
 
-			if (j >= 0 && j < this.graveContents.length)
+			if (j >= 0 && j < this.inv.length)
 			{
-				this.graveContents[j] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
+				this.inv[j] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
 			}
 		}
 	}
@@ -173,30 +179,21 @@ public class TEGrave extends TileEntity // implements IInventory
 		par1NBTTagCompound.setInteger("Meta", theMeta);
 		par1NBTTagCompound.setInteger("base", base);
 		par1NBTTagCompound.setFloat("rotation", ModelRotation);
-
+		par1NBTTagCompound.setBoolean("isLooted", otherPlayerHasTakenItemStack);
+		
 		NBTTagList nbttaglist = new NBTTagList();
 
-		for (int i = 0; i < this.graveContents.length; ++i)
+		for (int i = 0; i < this.inv.length; ++i)
 		{
-			if (this.graveContents[i] != null)
+			if (this.inv[i] != null)
 			{
 				NBTTagCompound nbttagcompound1 = new NBTTagCompound();
 				nbttagcompound1.setByte("Slot", (byte)i);
-				graveContents[i].writeToNBT(nbttagcompound1);
+				inv[i].writeToNBT(nbttagcompound1);
 				nbttaglist.appendTag(nbttagcompound1);
 			}
 		}
 		par1NBTTagCompound.setTag("Items", nbttaglist);
-	}
-
-	public int getInventoryStackLimit()
-	{
-		return 64;
-	}
-
-	public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer)
-	{
-		return this.worldObj.getBlockTileEntity(this.xCoord, this.yCoord, this.zCoord) != this ? false : par1EntityPlayer.getDistanceSq((double)this.xCoord + 0.5D, (double)this.yCoord + 0.5D, (double)this.zCoord + 0.5D) <= 64.0D;
 	}
 
 	@Override
@@ -261,4 +258,30 @@ public class TEGrave extends TileEntity // implements IInventory
 			}
 		}
 	}
+
+
+	public String setName(String name)
+	{
+		playername = name;
+		return playername;
+	}
+
+	public Entity setPlayer(EntityPlayer player)
+	{
+		thePlayer = player;
+		return player;
+	}
+	public void setDeathMessage(String message)
+	{
+		message1 = message;
+	}
+	public void setDeathMessage2(String message)
+	{
+		message2 = message;
+	}
+	public void setMeta(int i)
+	{
+		theMeta = i;
+	}
+
 }

@@ -1,6 +1,7 @@
 package gravestone.grave;
 
 import gravestone.mod_Gravestone;
+import gravestone.grave.te.TEGrave;
 
 import java.util.List;
 
@@ -69,7 +70,7 @@ public class ItemGrave extends Item{
 						if(!par3World.isRemote)
 							par2EntityPlayer.addChatMessage("Message 1 missing.");
 					if(nbt.hasKey("Message2"))
-						grave.setDeathMessage(nbt.getString("Message2"));
+						grave.setDeathMessage2(nbt.getString("Message2"));
 					else
 						if(!par3World.isRemote)
 							par2EntityPlayer.addChatMessage("Message 2 missing.");

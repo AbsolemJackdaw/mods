@@ -1,6 +1,6 @@
 package gravestone.handelers;
 
-import gravestone.grave.TEGrave;
+import gravestone.grave.te.TEGrave;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;

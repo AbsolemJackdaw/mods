@@ -5,8 +5,8 @@ import gravestone.bones.ItemBonesRenderer;
 import gravestone.bones.TEBones;
 import gravestone.bones.TESRBones;
 import gravestone.grave.GraveItemRenderer;
-import gravestone.grave.TEGrave;
-import gravestone.grave.TEGraveSpecial;
+import gravestone.grave.te.TEGrave;
+import gravestone.grave.te.TEGraveSpecial;
 import gravestone.gui.GuiGrave;
 import gravestone.gui.GuiGraveChoice;
 import net.minecraft.client.Minecraft;
@@ -29,13 +29,20 @@ public class ClientProxy extends CommonProxy{
 		KeyBindingRegistry.registerKeyBinding(new KeyHandler());
 	}
 
+	@Deprecated
 	public void openGui(int id, EntityPlayer player, String name, TEGrave te)
 	{
 		if(id == 1)
 		{
-			Minecraft.getMinecraft().displayGuiScreen(new GuiGrave(player, name, te));
+			Minecraft.getMinecraft().displayGuiScreen(new GuiGrave(player, te));
 		}
 	}
+	
+	public void openGui(int id, EntityPlayer player, TEGrave te)
+	{
+		openGui(id, player, "", te);
+	}
+	
 	public void openGui2(int id, EntityPlayer player)
 	{
 		Minecraft.getMinecraft().displayGuiScreen(new GuiGraveChoice(player));

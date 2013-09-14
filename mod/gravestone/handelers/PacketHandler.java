@@ -1,13 +1,13 @@
 package gravestone.handelers;
 
 import gravestone.mod_Gravestone;
-import gravestone.grave.TEGrave;
+import gravestone.grave.te.TEGrave;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.INetworkManager;
@@ -62,23 +62,29 @@ public class PacketHandler implements IPacketHandler {
 						TEGrave te = (TEGrave)tile;
 						if(te != null)
 						{
-							for(int par1 =0; par1 < te.graveContents.length;par1++)
+							for(int par1 =0; par1 < te.inv.length;par1++)
 							{
 								ItemStack stacks = te.getStackInSlot(par1);
-								if(stacks != null){
-									if(par1 < 36){
-										p.inventory.addItemStackToInventory(stacks);
-										te.setInventorySlotContents(par1, null);
-									}else if(par1 >= 36){
-										int i = EntityLiving.getArmorPosition(stacks) - 1;
-										ItemStack itemstack1 = p.getCurrentArmor(i);
-										if (itemstack1 == null){
-											p.setCurrentItemOrArmor(i + 1, stacks);
-										}else{
-											p.dropPlayerItem(stacks);
-										}
-										te.setInventorySlotContents(par1, null);
-									}
+
+								if(stacks != null)
+								{
+									EntityItem item = new EntityItem(p.worldObj);
+									item.setEntityItemStack(stacks);
+
+									p.worldObj.spawnEntityInWorld(item);
+									//if(par1 < 36){
+									//p.inventory.addItemStackToInventory(stacks);
+									//	te.setInventorySlotContents(par1, null);
+									//}else if(par1 >= 36){
+									//	int i = EntityLiving.getArmorPosition(stacks) - 1;
+									//	ItemStack itemstack1 = p.getCurrentArmor(i);
+									//	if (itemstack1 == null){
+									//		p.setCurrentItemOrArmor(i + 1, stacks);
+									//	}else{
+									//		p.dropPlayerItem(stacks);
+									//	}
+									//	te.setInventorySlotContents(par1, null);
+									//}
 								}
 							}
 						}

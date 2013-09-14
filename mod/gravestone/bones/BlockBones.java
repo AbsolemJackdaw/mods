@@ -1,7 +1,7 @@
 package gravestone.bones;
 
 import gravestone.mod_Gravestone;
-import gravestone.grave.TEGrave;
+import gravestone.grave.te.TEGrave;
 
 import java.util.Random;
 

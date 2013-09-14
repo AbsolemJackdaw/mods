@@ -1,4 +1,6 @@
-package gravestone.grave;
+package gravestone.grave.te;
+import gravestone.grave.ModelGrave;
+import gravestone.grave.ModelHead;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
