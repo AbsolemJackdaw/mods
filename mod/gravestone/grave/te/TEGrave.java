@@ -283,5 +283,11 @@ public class TEGrave extends TileEntity  implements IInventory
 	{
 		theMeta = i;
 	}
+	
+	@Override
+	public void updateEntity() {
+		super.updateEntity();
+		
+	}
 
 }

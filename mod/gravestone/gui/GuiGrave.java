@@ -53,7 +53,7 @@ public class GuiGrave extends GuiContainer{
 	public GuiGrave(EntityPlayer player, TEGrave grave ) {
 		super(new GraveContainer(player.inventory, grave));
 
-		deathPlayer = grave.thePlayer;
+		deathPlayer = player.worldObj.getPlayerEntityByName(grave.playername);
 		playerOpenGui = player;
 
 		nameOfDeathPlayer = grave.playername;

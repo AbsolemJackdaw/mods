@@ -7,6 +7,7 @@ import java.util.Random;
 
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
@@ -89,39 +90,9 @@ public class BlockGrave extends BlockContainer{
 	}
 
 	@Override
-	public void onBlockClicked(World par1World, int x, int y, int z,
-			EntityPlayer par5EntityPlayer) {
-		super.onBlockClicked(par1World, x, y, z, par5EntityPlayer);
-
-
-		TEGrave te = (TEGrave)par1World.getBlockTileEntity(x, y, z);
-		//		FMLLog.getLogger().info(""+par1World.playerEntities);
-
-		if(te != null)
-			if(par1World.playerEntities.contains(te.thePlayer)){
-				FMLLog.getLogger().info("GraveOwner is in game.");
-
-				if(!(te.playername.equals(par5EntityPlayer.username))){
-					this.blockHardness = -1;
-					FMLLog.getLogger().info("You are not the grave owner ! ");
-
-				}else{
-					FMLLog.getLogger().info("You are the grave owner.");
-
-					this.blockHardness = 10;
-				}
-			}else{
-				FMLLog.getLogger().info("GraveOwner is offline.");
-
-				this.blockHardness = 10;
-			}
-	}
-
-	@Override
 	public boolean onBlockActivated(World par1World, int x, int y, int z, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
 	{
-		FMLLog.getLogger().info("Block activated");
-
+		this.blockHardness = 10;
 		TEGrave te = (TEGrave)par1World.getBlockTileEntity(x, y, z);	
 
 		if(te != null)
@@ -193,6 +164,23 @@ public class BlockGrave extends BlockContainer{
 	}
 
 	@Override
+	public void onBlockClicked(World par1World, int par2, int par3, int par4,
+			EntityPlayer par5EntityPlayer) {
+		super.onBlockClicked(par1World, par2, par3, par4, par5EntityPlayer);
+		TEGrave te = (TEGrave)par1World.getBlockTileEntity(par2,par3,par4);
+
+		if(te != null){
+			if(te.playername.equals(par5EntityPlayer.username)){
+//				FMLNetworkHandler.openGui(par5EntityPlayer, mod_Gravestone.instance, 2, par1World, par2,par3,par4);
+//				FMLLog.getLogger().info("yeah");
+			}else{
+				FMLNetworkHandler.openGui(par5EntityPlayer, mod_Gravestone.instance, 2, par1World, par2,par3,par4);
+//				FMLLog.getLogger().info("nope");
+			}
+		}
+	}
+	
+	@Override
 	public void breakBlock(World world, int x, int y, int z, int par5, int par6) {
 
 		TEGrave te = (TEGrave)world.getBlockTileEntity(x,y,z);
@@ -230,7 +218,8 @@ public class BlockGrave extends BlockContainer{
 						entityitem.motionX = (double)((float)this.rand.nextGaussian() * f3);
 						entityitem.motionY = (double)((float)this.rand.nextGaussian() * f3 + 0.2F);
 						entityitem.motionZ = (double)((float)this.rand.nextGaussian() * f3);
-						world.spawnEntityInWorld(entityitem);
+						if(!world.isRemote)
+							world.spawnEntityInWorld(entityitem);
 					}
 				}
 			}

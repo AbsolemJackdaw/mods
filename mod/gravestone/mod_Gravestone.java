@@ -74,7 +74,7 @@ public class mod_Gravestone{
 	{
 		MinecraftForge.EVENT_BUS.register(new DeathEvent());
 
-		gravestone = new BlockGrave(ConfigClass.instance.graveBlock).setBlockUnbreakable().setResistance(6000000.0F).setUnlocalizedName("GraveStone");
+		gravestone = new BlockGrave(ConfigClass.instance.graveBlock).setHardness(10).setResistance(6000000.0F).setUnlocalizedName("GraveStone");
 		bones = new BlockBones(ConfigClass.instance.bonesBlock, Material.ground).setHardness(2f);
 		graveItem = new ItemGrave(ConfigClass.instance.grave).setUnlocalizedName("graveItem").setCreativeTab(CreativeTabs.tabDecorations);
 		bonesItem = new ItemSkulls(ConfigClass.instance.bones).setUnlocalizedName("bonesItem").setCreativeTab(CreativeTabs.tabDecorations);
