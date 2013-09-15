@@ -169,17 +169,16 @@ public class BlockGrave extends BlockContainer{
 		super.onBlockClicked(par1World, par2, par3, par4, par5EntityPlayer);
 		TEGrave te = (TEGrave)par1World.getBlockTileEntity(par2,par3,par4);
 
-		if(te != null){
-			if(te.playername.equals(par5EntityPlayer.username)){
-//				FMLNetworkHandler.openGui(par5EntityPlayer, mod_Gravestone.instance, 2, par1World, par2,par3,par4);
-//				FMLLog.getLogger().info("yeah");
-			}else{
-				FMLNetworkHandler.openGui(par5EntityPlayer, mod_Gravestone.instance, 2, par1World, par2,par3,par4);
-//				FMLLog.getLogger().info("nope");
+		if(te != null && te.playername.length() > 0){
+			if(par1World.playerEntities!= null && par1World.playerEntities.contains(par1World.getPlayerEntityByName(te.playername))){
+				if(te.playername.equals(par5EntityPlayer.username)){
+				}else{
+					FMLNetworkHandler.openGui(par5EntityPlayer, mod_Gravestone.instance, 2, par1World, par2,par3,par4);
+				}
 			}
 		}
 	}
-	
+
 	@Override
 	public void breakBlock(World world, int x, int y, int z, int par5, int par6) {
 
