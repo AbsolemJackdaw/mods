@@ -72,7 +72,7 @@ public abstract class Render3DInterface implements IItemRenderer /*,ISimpleBlock
 
 		preSpecials(item, model, data);
 		if(!shouldIgnoreModelRendering()){
-			model.render((Entity)data[1],0,0,0,0,0,0.0625f);
+			model.render(null,0,0,0,0,0,0.0625f);
 		}
 		postSpecials(item, model, data);
 		renderglow(item);
