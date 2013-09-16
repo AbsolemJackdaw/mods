@@ -2,6 +2,9 @@ package gravestone.grave.te;
 
 import java.util.Random;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,6 +16,7 @@ import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet132TileEntityData;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 
 public class TEGrave extends TileEntity  implements IInventory
@@ -36,6 +40,7 @@ public class TEGrave extends TileEntity  implements IInventory
 	
 	public TEGrave(){
 		inv = new ItemStack[40];
+		
 	}
 	
 	Random rand = new Random();
@@ -287,7 +292,18 @@ public class TEGrave extends TileEntity  implements IInventory
 	@Override
 	public void updateEntity() {
 		super.updateEntity();
-		
+	}
+	
+	
+	@Override
+	public double getMaxRenderDistanceSquared() {
+		return 16384;
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public AxisAlignedBB getRenderBoundingBox() {
+		return this.INFINITE_EXTENT_AABB;
 	}
 
 }
