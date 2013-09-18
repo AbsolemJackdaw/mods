@@ -10,6 +10,7 @@ import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.RenderBlocks;
+import net.minecraft.client.renderer.entity.RenderBiped;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.Entity;
@@ -43,7 +44,7 @@ public class CaseEntity
 	public void render(ItemRenderType type, ItemStack item, float x, float y, float z, float rotZ, float rotY, float rotX, 
 			float X, float Y, float Z, float fpsX, float fpsY, float fpsZ, float scale, 
 			String name, RenderBlocks render, FrameHelper frame, ModelBase theItem, MinecartHelper helper, 
-			Block blockToRender, String[] armorFilenamePrefix, Object[] data)
+			Block blockToRender, Object[] data)
 	{
 		GL11.glPushMatrix();
 		if(item.getItem() instanceof ItemSkull){
@@ -105,7 +106,7 @@ public class CaseEntity
 		if(item.getItem() instanceof ItemArmor){
 			ArmorHelper ah= new ArmorHelper();
 			int c =((ItemArmor)item.getItem()).armorType;
-			ah.setArmorModel((ModelBiped)theItem, item, c, armorFilenamePrefix[((ItemArmor)item.getItem()).renderIndex]);
+			ah.setArmorModel((ModelBiped)theItem, item, c, RenderBiped.bipedArmorFilenamePrefix[((ItemArmor)item.getItem()).renderIndex]);
 			if(c == 0){
 				GL11.glTranslatef(0f, -0.5f ,0F);
 			}if(c == 1){

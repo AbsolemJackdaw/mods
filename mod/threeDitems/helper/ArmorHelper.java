@@ -63,14 +63,4 @@ public class ArmorHelper {
 		}
 	}
 
-	/**
-	 * Add a new armour prefix
-	 * Basicly copied this code from the RenderRegistry.
-	 * @param armor
-	 */
-	public static int addArmorPrefix(String armor)
-	{
-		Render3DInterface.armorFilenamePrefix = ObjectArrays.concat(Render3DInterface.armorFilenamePrefix, armor);
-		return Render3DInterface.armorFilenamePrefix.length - 1;
-	}
 }

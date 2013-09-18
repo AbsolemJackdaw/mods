@@ -2,6 +2,7 @@ package threeDitems.render.item.armor;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.renderer.entity.RenderBiped;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 
@@ -61,7 +62,7 @@ public class RenderArmorBoots extends Render3DInterface{
 	public void preSpecials(ItemStack item, ModelBase model, Object...data) {
 		super.preSpecials(item, model);
 		ah.setArmorModel((ModelBiped)model, item, 
-				((ItemArmor)item.getItem()).armorType, armorFilenamePrefix[((ItemArmor)item.getItem()).renderIndex]);
+				((ItemArmor)item.getItem()).armorType, RenderBiped.bipedArmorFilenamePrefix[((ItemArmor)item.getItem()).renderIndex]);
 	}
 
 	/**Do not use this unless you know what you are doing !
