@@ -25,18 +25,8 @@ public class SlotArmorGrave extends Slot{
 	@Override
 	public boolean canTakeStack(EntityPlayer par1EntityPlayer)
 	{
-//		if(!te.playername.equals(par1EntityPlayer.username)){
-//			if(!te.otherPlayerHasTakenItemStack)
-//			{
-//				te.otherPlayerHasTakenItemStack = true;
-//				te.locked = "You loot "+ te.getStackInSlot(this.getSlotIndex()).getDisplayName() + " from "+te.playername+"'s grave.";
-//				return true;
-//			}else{
-//				te.locked = "You admire the items from "+ te.playername+"'s grave...";
-//			}
-//		}
-		
-		return true; // te.playername.equals(par1EntityPlayer.username) ? true : false;
+
+		return true;
 	}
 
 	/**
