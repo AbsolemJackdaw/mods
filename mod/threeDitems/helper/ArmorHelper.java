@@ -10,10 +10,6 @@ import net.minecraft.item.ItemStack;
 
 import org.lwjgl.opengl.GL11;
 
-import threeDitems.render.Render3DInterface;
-
-import com.google.common.collect.ObjectArrays;
-
 public class ArmorHelper {
 
 	/**

@@ -3,7 +3,6 @@ import gravestone.grave.ModelGrave;
 import gravestone.grave.ModelHead;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
-import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderBiped;
@@ -15,8 +14,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
-
-import cpw.mods.fml.common.FMLLog;
 
 public class TEGraveSpecial extends TileEntitySpecialRenderer // because your block is, and you are too.
 {
