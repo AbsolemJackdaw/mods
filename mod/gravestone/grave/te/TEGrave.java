@@ -2,9 +2,6 @@ package gravestone.grave.te;
 
 import java.util.Random;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,6 +15,8 @@ import net.minecraft.network.packet.Packet132TileEntityData;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class TEGrave extends TileEntity  implements IInventory
 {
@@ -32,6 +31,8 @@ public class TEGrave extends TileEntity  implements IInventory
 	public String message1 = "";
 	public String message2= "";
 	public boolean customName = false;
+	
+	public boolean hasItems = false;
 	
 	public String locked = "";
 	
@@ -292,12 +293,22 @@ public class TEGrave extends TileEntity  implements IInventory
 	@Override
 	public void updateEntity() {
 		super.updateEntity();
+		
+			for(int i =0; i < getSizeInventory(); i++){
+				if(getStackInSlot(i) != null){
+					//if al stacks are null, hasItems = false;
+					hasItems = true;
+					return;
+				}else{
+					hasItems = false;
+				}
+			}
 	}
 	
-	
+	/*256 blocks squared*/
 	@Override
 	public double getMaxRenderDistanceSquared() {
-		return 16384;
+		return 65536.0D;
 	}
 
 	@Override

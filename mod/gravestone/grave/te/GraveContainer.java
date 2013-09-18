@@ -15,31 +15,52 @@ public class GraveContainer extends Container{
 	public GraveContainer(InventoryPlayer inv, TEGrave te)
 	{
 
+
 		this.te = te;
 
-		for (int i = 0; i < 4; i++)
-		{
-			for (int k = 0; k < 9; k++)
+		if(inv.player.capabilities.isCreativeMode){
+			for (int i = 0; i < 4; i++)
+			{
+				for (int k = 0; k < 9; k++)
+				{
+					addSlotToContainer(new Slot(te,slotCount++, 
+							8 + k * 18,
+							18 + i * 18));
+				}
+			}
+			for (int i = 0; i < 4; i++)
+			{
+				addSlotToContainer(new SlotArmorGrave(te,slotCount++, 
+						174 ,
+						18*4 - i * 18));
+
+			}
+		}else{
+			for (int i = 0; i < 4; i++)
+			{
+				for (int k = 0; k < 9; k++)
+				{
+					addSlotToContainer(new SlotGrave(te,slotCount++, 
+							8 + k * 18,
+							18 + i * 18));
+				}
+			}
+			for (int i = 0; i < 4; i++)
 			{
 				addSlotToContainer(new SlotGrave(te,slotCount++, 
-						8 + k * 18,
-						18 + i * 18));
+						174 ,
+						18*4 - i * 18));
 			}
 		}
-		for (int i = 0; i < 4; i++)
-		{
-			addSlotToContainer(new SlotGrave(te,slotCount++, 
-					174 ,
-					18*4 - i * 18));
 
-		}
+
 
 		fillInv(inv);
 		//		detectAndSendChanges();
 	}
 
 
-	
+
 	private void fillInv(InventoryPlayer inv){
 
 		for (int i = 0; i < 3; i++)
@@ -78,18 +99,18 @@ public class GraveContainer extends Container{
 			EntityPlayer par4EntityPlayer) {
 		return super.slotClick(par1, par2, par3, par4EntityPlayer);
 	}
-	
+
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer player, int slotID)
 	{
 		ItemStack stack = null;
-		
+
 		Slot slot= (Slot)inventorySlots.get(slotID);
-		
+
 		if(slot != null && slot.getHasStack()){
 			ItemStack slotStack = slot.getStack();
 			stack = slotStack.copy();
-			
+
 			if(slot.inventory instanceof TEGrave){
 				if(!this.mergeItemStack(stack, 40, 76, true)){
 					return null;
@@ -102,11 +123,11 @@ public class GraveContainer extends Container{
 				}if(slotStack.stackSize == stack.stackSize){
 					return null;
 				}
-				
+
 				slot.onPickupFromSlot(player, slotStack);
 			}
 			else {
-					return null;
+				return null;
 			}					
 		}		
 		return stack;

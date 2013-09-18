@@ -3,25 +3,31 @@ import gravestone.grave.ModelGrave;
 import gravestone.grave.ModelHead;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
+import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.entity.RenderBiped;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import cpw.mods.fml.common.FMLLog;
 
 public class TEGraveSpecial extends TileEntitySpecialRenderer // because your block is, and you are too.
 {
 	private ModelGrave model = new ModelGrave(); 
 	private ModelHead modelhead = new ModelHead();
-	public static TEGraveSpecial teRender;
 
-	private static final ResourceLocation beaconTexture = new ResourceLocation("textures/entity/beacon_beam.png");
+	private ModelHead modelarmorhead = new ModelHead();
+	private ModelHead modelarmorchest = new ModelHead();
+
+	//	private ModelBiped modelBip = new ModelBiped(1.5f);
+	public static TEGraveSpecial teRender;
 
 
 	public void setTileEntityRenderer(TileEntityRenderer par1TileEntityRenderer)
@@ -146,11 +152,34 @@ public class TEGraveSpecial extends TileEntitySpecialRenderer // because your bl
 		default:
 			break;
 		}
+		ArmorHelper helper = new ArmorHelper();
+		
+		GL11.glPushMatrix();
+		if(tile.getStackInSlot(tile.getSizeInventory()-1) != null && tile.theMeta == 5){
+			//			FMLLog.getLogger().info("in");
+			float f2 = 1.2f;
+			GL11.glScalef(f2,f2,f2);
+			GL11.glTranslatef(0f, 0.05f, 0f);
+			ItemStack item = tile.getStackInSlot(tile.getSizeInventory()-1);
+			helper.setArmorModel(modelarmorhead, item, 
+					((ItemArmor)item.getItem()).armorType, RenderBiped.bipedArmorFilenamePrefix[((ItemArmor)item.getItem()).renderIndex]);
+			modelarmorhead.renderHead(0.0625f); //render(null, 0, 0, 0, 0, 0, 0.0625f);
+		}
+		GL11.glPopMatrix();
+		
+		GL11.glPushMatrix();
+		if(tile.getStackInSlot(tile.getSizeInventory()-2) != null && tile.theMeta == 5){
+			float f2 = 1.1f;
+			GL11.glScalef(f2,f2,f2);
+			GL11.glTranslatef(0f, -0.02f, 0f);
+			ItemStack item = tile.getStackInSlot(tile.getSizeInventory()-2);
+			helper.setArmorModel(modelarmorchest, item, 
+					((ItemArmor)item.getItem()).armorType, RenderBiped.bipedArmorFilenamePrefix[((ItemArmor)item.getItem()).renderIndex]);
+			modelarmorchest.renderHead(0.0625f); // render(null, 0, 0, 0, 0, 0, 0.0625f);
+		}
 		GL11.glPopMatrix();
 
-
-
-
+		GL11.glPopMatrix();
 
 	}
 
@@ -195,28 +224,43 @@ public class TEGraveSpecial extends TileEntitySpecialRenderer // because your bl
 
 
 	private void renderBeam(TEGrave tileentity, double d, double d1, double d2/*x,y,z*/){
-		if(tileentity!= null){
+
+		if(tileentity!= null && tileentity.hasItems){
+			//			float f1 = 1;
 			Tessellator tesselator = Tessellator.instance;
 			GL11.glDisable(3553 /*GL_TEXTURE_2D */);
 			GL11.glDisable(2896/*GL_LIGHTING */);
 			GL11.glDisable(2912/*GL_FOG */);
 			GL11.glDepthMask(false);
+			GL11.glDisable(GL11.GL_CULL_FACE);
+
 			GL11.glEnable(3042/*GL_BLEND */);
 			//			    GL11.glBlendFunc(770/* GL_SRC_ALPHA */, 1/*GL_LINES */);
 			GL11.glBlendFunc(770/* GL_SRC_ALPHA */, GL11.GL_LINES/*GL_LINES */);
 
-			int height = 1000;
-			float brightness = 0.06F;
+			char var5 = 0x000F0;
+			int var6 = var5 % 65536;
+			int var7 = var5 / 65536;
+			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, var6 / 1.0F, var7 / 1.0F);
+
+			int height = 256;
+			//			float brightness = 0.06F;
 			double topWidthFactor = 0.5D;
 			double bottomWidthFactor = 0.5D;
 			float r = 255;
 			float b = 255;
 			float g = 255;
 
-			for (int width = 0; width < 5; width++)
+			// true when player is someone else.
+			boolean other = tileentity.playername.equals(Minecraft.getMinecraft().thePlayer.username) ? false: true;
+			float otherFloat = 0f; //other ? 0.6f : 0f;
+			float color =  other && !Minecraft.getMinecraft().thePlayer.capabilities.isCreativeMode ? 0f : 0.7f;
+
+			float colorOther = 0;
+			for (int width = 0; width < (other ? 2: 5); width++)
 			{
 				tesselator.startDrawing(5);
-				tesselator.setColorRGBA_F(r * brightness, g * brightness, b * brightness, 0.15f);
+				tesselator.setColorRGBA_F(color-otherFloat,color-otherFloat,color, 0.11f);
 				double var32 = 0.1D + width * 0.2D;
 				var32 *= topWidthFactor;
 

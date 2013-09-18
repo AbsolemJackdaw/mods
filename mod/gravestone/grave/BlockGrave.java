@@ -7,7 +7,6 @@ import java.util.Random;
 
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
@@ -18,18 +17,22 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.network.FMLNetworkHandler;
 
 public class BlockGrave extends BlockContainer{
 
 	Random rand = new Random();
 	String name = "";
+	
+	int slotID = 0;
+
+	
 	public BlockGrave(int par1) {
 		super(par1, Material.rock);
 		this.setBlockBounds(0.4f, 0.0F, 0.4F, 0.6f, 1.0f, 0.6f);
 		this.setTickRandomly(true);
 		this.setBlockUnbreakable();
+
 	}
 
 	@Override
@@ -94,7 +97,7 @@ public class BlockGrave extends BlockContainer{
 	{
 		this.blockHardness = 10;
 		TEGrave te = (TEGrave)par1World.getBlockTileEntity(x, y, z);	
-
+		
 		if(te != null)
 		{
 			if(!par5EntityPlayer.isSneaking())
@@ -123,7 +126,7 @@ public class BlockGrave extends BlockContainer{
 				}
 			}
 		}
-		return false;
+		return true;
 	}
 
 	public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int x, int y, int z) {
@@ -168,7 +171,6 @@ public class BlockGrave extends BlockContainer{
 			EntityPlayer par5EntityPlayer) {
 		super.onBlockClicked(par1World, par2, par3, par4, par5EntityPlayer);
 		TEGrave te = (TEGrave)par1World.getBlockTileEntity(par2,par3,par4);
-
 		if(te != null && te.playername.length() > 0){
 			if(par1World.playerEntities!= null && par1World.playerEntities.contains(par1World.getPlayerEntityByName(te.playername))){
 				if(te.playername.equals(par5EntityPlayer.username)){
