@@ -22,7 +22,7 @@ public class TEGrave extends TileEntity  implements IInventory
 {
 
 	public ItemStack[] inv;
-	
+
 	public String playername = "";
 	public int theMeta =0;
 	public int base = 0;
@@ -31,19 +31,19 @@ public class TEGrave extends TileEntity  implements IInventory
 	public String message1 = "";
 	public String message2= "";
 	public boolean customName = false;
-	
+
 	public boolean hasItems = false;
-	
+
 	public String locked = "";
-	
+
 	//used in slotgrave
 	public boolean otherPlayerHasTakenItemStack = false;
-	
+
 	public TEGrave(){
 		inv = new ItemStack[40];
-		
+
 	}
-	
+
 	Random rand = new Random();
 
 	public int getSizeInventory()
@@ -65,7 +65,7 @@ public class TEGrave extends TileEntity  implements IInventory
 		}
 		this.onInventoryChanged();
 	}
-	
+
 	public ItemStack decrStackSize(int slot, int ammount)
 	{
 		if (this.inv[slot] != null)
@@ -122,7 +122,7 @@ public class TEGrave extends TileEntity  implements IInventory
 		return this.worldObj.getBlockTileEntity(this.xCoord, this.yCoord, this.zCoord) != this ? false : 
 			par1EntityPlayer.getDistanceSq((double)this.xCoord + 0.5D, (double)this.yCoord + 0.5D, (double)this.zCoord + 0.5D) <= 64.0D;
 	}
-	
+
 	public String getInvName()
 	{
 		return "Grave";
@@ -140,7 +140,7 @@ public class TEGrave extends TileEntity  implements IInventory
 	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
 		return true;
 	}
-	
+
 	public boolean isInvNameLocalized()
 	{
 		return true;
@@ -157,7 +157,7 @@ public class TEGrave extends TileEntity  implements IInventory
 		theMeta = par1NBTTagCompound.getInteger("Meta");
 		base = par1NBTTagCompound.getInteger("base");
 		ModelRotation = par1NBTTagCompound.getFloat("rotation");
-		
+
 		otherPlayerHasTakenItemStack = par1NBTTagCompound.getBoolean("isLooted");
 		NBTTagList nbttaglist = par1NBTTagCompound.getTagList("Items");
 		this.inv = new ItemStack[this.getSizeInventory()];
@@ -186,7 +186,7 @@ public class TEGrave extends TileEntity  implements IInventory
 		par1NBTTagCompound.setInteger("base", base);
 		par1NBTTagCompound.setFloat("rotation", ModelRotation);
 		par1NBTTagCompound.setBoolean("isLooted", otherPlayerHasTakenItemStack);
-		
+
 		NBTTagList nbttaglist = new NBTTagList();
 
 		for (int i = 0; i < this.inv.length; ++i)
@@ -218,7 +218,7 @@ public class TEGrave extends TileEntity  implements IInventory
 
 	@Override
 	public void onDataPacket(INetworkManager net, Packet132TileEntityData pkt) {
-		this.readFromNBT(pkt.customParam1);
+		this.readFromNBT(pkt.data);
 	}
 
 	public void dropContents(World world, int x, int y, int z) {
@@ -289,22 +289,22 @@ public class TEGrave extends TileEntity  implements IInventory
 	{
 		theMeta = i;
 	}
-	
+
 	@Override
 	public void updateEntity() {
 		super.updateEntity();
-		
-			for(int i =0; i < getSizeInventory(); i++){
-				if(getStackInSlot(i) != null){
-					//if al stacks are null, hasItems = false;
-					hasItems = true;
-					return;
-				}else{
-					hasItems = false;
-				}
+
+		for(int i =0; i < getSizeInventory(); i++){
+			if(getStackInSlot(i) != null){
+				//if al stacks are null, hasItems = false;
+				hasItems = true;
+				return;
+			}else{
+				hasItems = false;
 			}
+		}
 	}
-	
+
 	/*256 blocks squared*/
 	@Override
 	public double getMaxRenderDistanceSquared() {

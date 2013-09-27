@@ -107,16 +107,16 @@ public class TEGraveSpecial extends TileEntitySpecialRenderer // because your bl
 		GL11.glScalef(0.7F, -0.7F, -0.7F);
 		if(tile != null)
 		{			
-			ResourceLocation resourcelocation = AbstractClientPlayer.field_110314_b;
+			ResourceLocation resourcelocation = AbstractClientPlayer.locationStevePng;
 			if (tile.playername != null && tile.playername.length() > 0)
 			{
-				resourcelocation = AbstractClientPlayer.func_110305_h(tile.playername);
-				AbstractClientPlayer.func_110304_a(resourcelocation, tile.playername);
+				resourcelocation = AbstractClientPlayer.getLocationSkin(tile.playername);
+				AbstractClientPlayer.getDownloadImageSkin(resourcelocation, tile.playername);
 
 			}else{
 				resourcelocation = new ResourceLocation( "textures/entity/steve.png");
 			}
-			Minecraft.getMinecraft().renderEngine.func_110577_a(resourcelocation);
+			Minecraft.getMinecraft().renderEngine.bindTexture(resourcelocation);
 
 			switch(tile.theMeta)
 			{
@@ -215,7 +215,7 @@ public class TEGraveSpecial extends TileEntitySpecialRenderer // because your bl
 			resourcelocation =new ResourceLocation("subaraki:grave/gravestone.png");
 			break;
 		}
-		this.func_110628_a(resourcelocation);
+		this.bindTexture(resourcelocation);
 	}
 
 

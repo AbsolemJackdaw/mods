@@ -1,7 +1,6 @@
 package gravestone.bones;
 
 import gravestone.mod_Gravestone;
-import gravestone.grave.te.TEGrave;
 
 import java.util.Random;
 
@@ -12,7 +11,6 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
@@ -94,29 +92,12 @@ public class BlockBones extends BlockContainer {
 	}
 
 	public void breakBlock(World world, int x, int y, int z, int par5, int par6) {
-		TEGrave te = (TEGrave) world.getBlockTileEntity(x, y+2, z);
 
 		int c = 1+rand.nextInt(4);
 		EntityItem item;
 		item = new EntityItem(world, x,y,z, new ItemStack(Item.bone, c));
 		world.spawnEntityInWorld(item);
 
-		if (te != null)
-		{	
-			int chance =rand.nextInt(50);
-			if(chance == 64 && te.customName == false){
-				String name = te.playername;
-				ItemStack skull = new ItemStack(Item.skull.itemID,1,3);
-				if( skull.stackTagCompound == null ) {
-					skull.setTagCompound( new NBTTagCompound() );
-				}
-				if( !skull.stackTagCompound.hasKey( "SkullOwner" ) ) {
-					skull.stackTagCompound.setString( "SkullOwner", name );
-				}
-				EntityItem entityitem = new EntityItem(world, x,y,z, skull);
-				world.spawnEntityInWorld(entityitem);
-			}
-		}
 		world.removeBlockTileEntity(x,y,z);
 	}
 }

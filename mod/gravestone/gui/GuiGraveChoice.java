@@ -83,7 +83,7 @@ public class GuiGraveChoice extends GuiScreen {
 		this.ySize_lo = (float) par2;
 		super.drawScreen(par1, par2, par3);
 
-//		this.mc.renderEngine.func_110577_a(new ResourceLocation(("/gui/demo_bg.png")));
+//		this.mc.renderEngine.bindTexture(new ResourceLocation(("/gui/demo_bg.png")));
 		GL11.glColor4f(0.0F, 0.0F, 0.0F, 5.0F);
 		int posX = (this.width - xSize) / 2;
 		int posY = (this.height - ySize) / 2;
@@ -176,56 +176,56 @@ public class GuiGraveChoice extends GuiScreen {
 		{
 		case 1:
 			grave.showBasic(true);
-			mc.renderEngine.func_110577_a(new ResourceLocation("subaraki:grave/gravestone.png"));
+			mc.renderEngine.bindTexture(new ResourceLocation("subaraki:grave/gravestone.png"));
 			break;
 		case 2:
 			grave.showZerk(true);
 			try{
-				mc.renderEngine.func_110577_a(new ResourceLocation("subaraki:grave/gravezerk.png"));	
+				mc.renderEngine.bindTexture(new ResourceLocation("subaraki:grave/gravezerk.png"));	
 			}catch(Throwable e){}
 
 			break;
 		case 3 :
 			grave.showTomb(true);
 			try{
-				mc.renderEngine.func_110577_a(new ResourceLocation("subaraki:grave/gravestone.png"));
+				mc.renderEngine.bindTexture(new ResourceLocation("subaraki:grave/gravestone.png"));
 			}catch(Throwable e){}
 			break;
 		case 4:
 			grave.showPillar(true);
 			grave.renderSkeleton(true);
 			try{
-				mc.renderEngine.func_110577_a(new ResourceLocation("subaraki:grave/gravepillar.png"));
+				mc.renderEngine.bindTexture(new ResourceLocation("subaraki:grave/gravepillar.png"));
 			}catch(Throwable e){}
 			break;
 		case 5:
 			grave.showPillar(true);
 			try{
-				mc.renderEngine.func_110577_a(new ResourceLocation("subaraki:grave/gravepillar.png"));
+				mc.renderEngine.bindTexture(new ResourceLocation("subaraki:grave/gravepillar.png"));
 			}catch(Throwable e){}
 
 			break;
 		case 6:
 			grave.renderCross(true);try{
-				mc.renderEngine.func_110577_a(new ResourceLocation("subaraki:grave/gravewood.png"));
+				mc.renderEngine.bindTexture(new ResourceLocation("subaraki:grave/gravewood.png"));
 			}catch(Throwable e){}
 			break;
 		case 7:
 			grave.showPillar(true);
 			try{
-				mc.renderEngine.func_110577_a(new ResourceLocation("subaraki:grave/gravepillar.png"));
+				mc.renderEngine.bindTexture(new ResourceLocation("subaraki:grave/gravepillar.png"));
 			}catch(Throwable e){}
 			break;
 		case 8:
 			grave.renderAngel(true);
 			try{
-				mc.renderEngine.func_110577_a(new ResourceLocation("subaraki:grave/Angel.png"));
+				mc.renderEngine.bindTexture(new ResourceLocation("subaraki:grave/Angel.png"));
 			}catch(Throwable e){}
 			break;
 		case 9:
 			grave.renderKnight(true);
 			try{
-				mc.renderEngine.func_110577_a(new ResourceLocation("subaraki:grave/knight.png"));
+				mc.renderEngine.bindTexture(new ResourceLocation("subaraki:grave/knight.png"));
 			}catch(Throwable e){}
 			break;
 		default :
@@ -237,7 +237,7 @@ public class GuiGraveChoice extends GuiScreen {
 			grave.renderAngel(false);
 			grave.renderKnight(false);
 			try{
-				mc.renderEngine.func_110577_a(new ResourceLocation("subaraki/gravestone.png"));
+				mc.renderEngine.bindTexture(new ResourceLocation("subaraki/gravestone.png"));
 			}catch(Throwable e){}
 			break;
 		}
@@ -295,16 +295,16 @@ public class GuiGraveChoice extends GuiScreen {
 			grave.renderSkeleton(false);
 			grave.renderCross(false);
 			try{
-				ResourceLocation resourcelocation = AbstractClientPlayer.field_110314_b;
+				ResourceLocation resourcelocation = AbstractClientPlayer.locationStevePng;
 				if (thePlayer.username != null && thePlayer.username.length() > 0)
 				{
-					resourcelocation = AbstractClientPlayer.func_110305_h(thePlayer.username);
-					AbstractClientPlayer.func_110304_a(resourcelocation, thePlayer.username);
+					resourcelocation = AbstractClientPlayer.getLocationSkin(thePlayer.username);
+					AbstractClientPlayer.getDownloadImageSkin(resourcelocation, thePlayer.username);
 
 				}else{
 					resourcelocation = new ResourceLocation( "textures/entity/steve.png");
 				}
-				Minecraft.getMinecraft().renderEngine.func_110577_a(resourcelocation);
+				Minecraft.getMinecraft().renderEngine.bindTexture(resourcelocation);
 			}catch(Throwable e){}
 
 			GL11.glTranslatef(width / 2-150, height / 2-40, 40);
