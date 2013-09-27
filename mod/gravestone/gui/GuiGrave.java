@@ -46,7 +46,7 @@ public class GuiGrave extends GuiContainer{
 	ResourceLocation wood = new ResourceLocation("subaraki:grave/gravewood.png");
 	ResourceLocation angel = new ResourceLocation("subaraki:grave/Angel.png");
 	ResourceLocation knight = new ResourceLocation("subaraki:grave/knight.png");
-	ResourceLocation resourcelocation = AbstractClientPlayer.field_110314_b;
+	ResourceLocation resourcelocation = AbstractClientPlayer.locationStevePng;
 	ResourceLocation steve = new ResourceLocation("textures/entity/steve.png");;
 
 
@@ -165,7 +165,7 @@ public class GuiGrave extends GuiContainer{
 		int posX = (this.width - xSize) / 2;
 		int posY = (this.height - ySize) / 2;
 
-		mc.renderEngine.func_110577_a(new ResourceLocation("subaraki:grave/grave_chest.png"));
+		mc.renderEngine.bindTexture(new ResourceLocation("subaraki:grave/grave_chest.png"));
 		drawTexturedModalRect(posX, posY, 0, 0, xSize, ySize);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
@@ -192,56 +192,56 @@ public class GuiGrave extends GuiContainer{
 		{
 		case 1:
 			grave.showBasic(true);
-			this.mc.renderEngine.func_110577_a(gravestone);
+			this.mc.renderEngine.bindTexture(gravestone);
 			break;
 		case 2:
 			grave.showZerk(true);
 			try{
-				this.mc.renderEngine.func_110577_a(zerk);	
+				this.mc.renderEngine.bindTexture(zerk);	
 			}catch(Throwable e){}
 
 			break;
 		case 3 :
 			grave.showTomb(true);
 			try{
-				this.mc.renderEngine.func_110577_a(gravestone);
+				this.mc.renderEngine.bindTexture(gravestone);
 			}catch(Throwable e){}
 			break;
 		case 4:
 			grave.showPillar(true);
 			grave.renderSkeleton(true);
 			try{
-				this.mc.renderEngine.func_110577_a(pillar);
+				this.mc.renderEngine.bindTexture(pillar);
 			}catch(Throwable e){}
 			break;
 		case 5:
 			grave.showPillar(true);
 			try{
-				this.mc.renderEngine.func_110577_a(pillar);
+				this.mc.renderEngine.bindTexture(pillar);
 			}catch(Throwable e){}
 
 			break;
 		case 6:
 			grave.renderCross(true);try{
-				this.mc.renderEngine.func_110577_a(wood);
+				this.mc.renderEngine.bindTexture(wood);
 			}catch(Throwable e){}
 			break;
 		case 7:
 			grave.showPillar(true);
 			try{
-				this.mc.renderEngine.func_110577_a(pillar);
+				this.mc.renderEngine.bindTexture(pillar);
 			}catch(Throwable e){}
 			break;
 		case 8:
 			grave.renderAngel(true);
 			try{
-				this.mc.renderEngine.func_110577_a(angel);
+				this.mc.renderEngine.bindTexture(angel);
 			}catch(Throwable e){}
 			break;
 		case 9:
 			grave.renderKnight(true);
 			try{
-				this.mc.renderEngine.func_110577_a(knight);
+				this.mc.renderEngine.bindTexture(knight);
 			}catch(Throwable e){}
 			break;
 		default :
@@ -253,7 +253,7 @@ public class GuiGrave extends GuiContainer{
 			grave.renderAngel(false);
 			grave.renderKnight(false);
 			try{
-				this.mc.renderEngine.func_110577_a(gravestone);
+				this.mc.renderEngine.bindTexture(gravestone);
 			}catch(Throwable e){}
 			break;
 		}
@@ -315,13 +315,13 @@ public class GuiGrave extends GuiContainer{
 			try{
 				if (nameOfDeathPlayer != null && nameOfDeathPlayer.length() > 0)
 				{
-					resourcelocation = AbstractClientPlayer.func_110305_h(nameOfDeathPlayer);
-					AbstractClientPlayer.func_110304_a(resourcelocation, nameOfDeathPlayer);
+					resourcelocation = AbstractClientPlayer.getLocationSkin(nameOfDeathPlayer);
+					AbstractClientPlayer.getDownloadImageSkin(resourcelocation, nameOfDeathPlayer);
 
 				}else{
 					resourcelocation = steve; 
 				}
-				Minecraft.getMinecraft().renderEngine.func_110577_a(resourcelocation);
+				Minecraft.getMinecraft().renderEngine.bindTexture(resourcelocation);
 			}catch(Throwable e){}
 
 			GL11.glTranslatef(this.width / 2-150, this.height / 2-40, 40);

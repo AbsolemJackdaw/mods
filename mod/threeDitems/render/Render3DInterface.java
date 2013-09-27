@@ -20,10 +20,8 @@ public abstract class Render3DInterface implements IItemRenderer /*,ISimpleBlock
 	private final ResourceLocation modelTexture;
 	private final ResourceLocation glint;
 
-//	public static String[] armorFilenamePrefix = new String[] {"cloth", "chain", "iron", "diamond", "gold"};
 
 	RenderItem rend = new RenderItem();
-//	float zLevel = 0;
 
 	public Render3DInterface(ModelBase model, String texture){
 		this.model = model;
