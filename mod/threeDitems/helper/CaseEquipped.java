@@ -37,8 +37,18 @@ import threeDitems.models.enderball;
 import threeDitems.models.head;
 
 public class CaseEquipped
-{
-	DynamicTexture icon;
+{	
+	private static final ResourceLocation bottleLoc = new ResourceLocation("subaraki:3d/bottle.png");
+	private static final ResourceLocation spotsLoc = new ResourceLocation("subaraki:3d/eggSpawnSpots.png");
+	
+	private static final ResourceLocation skullSkelly = new ResourceLocation("textures/entity/skeleton/skeleton.png");
+	private static final ResourceLocation skullWither = new ResourceLocation("textures/entity/skeleton/wither_skeleton.png");
+	private static final ResourceLocation skullZombie = new ResourceLocation("textures/entity/zombie/zombie.png");
+	private static final ResourceLocation skullCreeper = new ResourceLocation("textures/entity/creeper/creeper.png");
+	private static final ResourceLocation skullSteve = new ResourceLocation("textures/entity/steve.png");
+
+	
+	
 	public void render(IItemRenderer.ItemRenderType type, ItemStack item, float x, float y, float z, 
 			float rotZ, float rotY, float rotX, float X, float Y, float Z, float fpsX, float fpsY, 
 			float fpsZ, float scale, String name, RenderBlocks render, FrameHelper frame, 
@@ -49,47 +59,37 @@ public class CaseEquipped
 		if(item.getItem() instanceof ItemSkull){
 			switch(item.getItemDamage()){
 			case 0:
-				name = "/assets/minecraft/textures/entity/skeleton/skeleton.png";
+				Minecraft.getMinecraft().renderEngine.bindTexture(skullSkelly);
 				break;
 			case 1:
-				name = "/assets/minecraft/textures/entity/skeleton/wither_skeleton.png";
+				Minecraft.getMinecraft().renderEngine.bindTexture(skullWither);
 				break;
 			case 2:
-				name = "/assets/minecraft/textures/entity/zombie/zombie.png";
+				Minecraft.getMinecraft().renderEngine.bindTexture(skullZombie);
 				break;
 			case 3: 
 				if(item.getTagCompound() != null){
 					if (item.getTagCompound().hasKey("SkullOwner")){
-						ResourceLocation resourcelocation = AbstractClientPlayer.field_110314_b;
+						ResourceLocation resourcelocation = AbstractClientPlayer.locationStevePng;
 
 						if (item.getTagCompound().getString("SkullOwner") != null && item.getTagCompound().getString("SkullOwner").length() > 0)
 						{
-							resourcelocation = AbstractClientPlayer.func_110305_h(item.getTagCompound().getString("SkullOwner"));
-							AbstractClientPlayer.func_110304_a(resourcelocation, item.getTagCompound().getString("SkullOwner"));
+							resourcelocation = AbstractClientPlayer.getLocationSkin(item.getTagCompound().getString("SkullOwner"));
+							AbstractClientPlayer.getDownloadImageSkin(resourcelocation, item.getTagCompound().getString("SkullOwner"));
 						}
 
-						Minecraft.getMinecraft().renderEngine.func_110577_a(resourcelocation);
+						Minecraft.getMinecraft().renderEngine.bindTexture(resourcelocation);
 					}
-				}else{
-					name = "/assets/minecraft/textures/entity/steve.png";
 				}
-
 				break;
 			case 4:
-				name = "/assets/minecraft/textures/entity/creeper/creeper.png";
+				Minecraft.getMinecraft().renderEngine.bindTexture(skullCreeper);
 				break;
 			default:
-				name = "/assets/minecraft/textures/entity/steve.png";
+				Minecraft.getMinecraft().renderEngine.bindTexture(skullSteve);
 				break;
 			}
 		}
-
-		try {
-			icon = new DynamicTexture(ImageIO.read(getClass().getResourceAsStream(name)));
-		} catch (IOException c) {
-			c.printStackTrace();
-		}
-		icon.func_110564_a();
 
 
 		if(data[1] != null && data[1] instanceof EntityPlayer)
@@ -160,7 +160,7 @@ public class CaseEquipped
 		}
 
 		if(blockToRender != null){
-			Minecraft.getMinecraft().renderEngine.func_110577_a(TextureMap.field_110575_b);
+			Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationBlocksTexture);
 			render.renderBlockAsItem(blockToRender, 0, 2);
 		}
 
@@ -280,12 +280,7 @@ public class CaseEquipped
 
 	public void potionContent(Entity p, ItemStack item, ModelBase theItem)
 	{
-		try {
-			icon = new DynamicTexture(ImageIO.read(getClass().getResourceAsStream("/subaraki/3d/bottle.png")));
-		} catch (IOException c) {
-			c.printStackTrace();
-		}
-		icon.func_110564_a();
+		Minecraft.getMinecraft().renderEngine.bindTexture(bottleLoc);
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -314,12 +309,7 @@ public class CaseEquipped
 
 	public void renderDots(Entity p, ItemStack item, ModelBase theItem, int colorParser)
 	{		
-		try {
-			icon = new DynamicTexture(ImageIO.read(getClass().getResourceAsStream("/subaraki/3d/eggSpawnSpots.png")));
-		} catch (IOException c) {
-			c.printStackTrace();
-		}
-		icon.func_110564_a();
+		Minecraft.getMinecraft().renderEngine.bindTexture(spotsLoc);
 		if( p instanceof EntityPlayer)
 		{
 			EntityPlayer player = (EntityPlayer) p;

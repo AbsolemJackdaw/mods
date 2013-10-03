@@ -47,7 +47,7 @@ public class PetStatueRender implements IItemRenderer {
 
 //		if(type.equals(IItemRenderer.ItemRenderType.ENTITY))
 //			FMLLog.getLogger().info(""+(Entity)data[1]);
-		Minecraft.getMinecraft().renderEngine.func_110577_a(LOC);
+		Minecraft.getMinecraft().renderEngine.bindTexture(LOC);
 		pet.bipedHeadwear.isHidden = false;
 		pet.bipedHead.isHidden = false;
 		switch(type){

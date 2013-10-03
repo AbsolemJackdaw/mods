@@ -54,7 +54,7 @@ public class RenderHalo implements IItemRenderer {
 
 		case ENTITY:
 			GL11.glPushMatrix();
-			Minecraft.getMinecraft().renderEngine.func_110577_a(LOC);
+			Minecraft.getMinecraft().renderEngine.bindTexture(LOC);
 			GL11.glScalef(1f, 1f, 1f);
 			GL11.glRotatef(90, 0.0f, 0.0f, 1.0f);
 			GL11.glRotatef(0, 0.0f, 1.0f, 0.0f);
@@ -72,7 +72,7 @@ public class RenderHalo implements IItemRenderer {
 
 	public void caseEq(ItemRenderType type, ItemStack item, Object... data){
 		GL11.glPushMatrix();
-		Minecraft.getMinecraft().renderEngine.func_110577_a(LOC);
+		Minecraft.getMinecraft().renderEngine.bindTexture(LOC);
 
 		if(item.getTagCompound() != null && item.getTagCompound().hasKey("EnergyCharge")){
 			float red = item.getTagCompound().getFloat("EnergyCharge")/30;

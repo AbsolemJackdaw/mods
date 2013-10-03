@@ -19,7 +19,7 @@ public class RenderChicken2 extends RenderLiving
 	}
 
 	@Override
-	protected ResourceLocation func_110775_a(Entity par1Entity)
+	protected ResourceLocation getEntityTexture(Entity par1Entity)
 	{
 		return this.func_110919_a((EntityChicken2)par1Entity);
 	}

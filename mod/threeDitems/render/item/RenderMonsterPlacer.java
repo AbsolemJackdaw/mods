@@ -72,7 +72,7 @@ public class RenderMonsterPlacer extends Render3DInterface{
 	public void postSpecials(ItemStack item, ModelBase model, Object... data)
 	{
 		super.postSpecials(item, model);
-		Minecraft.getMinecraft().renderEngine.func_110577_a(spots);
+		Minecraft.getMinecraft().renderEngine.bindTexture(spots);
 		int color = ((ItemMonsterPlacer)item.getItem()).getColorFromItemStack(item,0);
 		float red = (float)(color >> 16 & 255) / 255.0F;
 		float green = (float)(color >> 8 & 255) / 255.0F;

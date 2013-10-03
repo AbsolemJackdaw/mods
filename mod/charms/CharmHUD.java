@@ -87,7 +87,7 @@ public class CharmHUD implements ITickHandler {
 					mc.fontRenderer.drawString(""+(healAmount/c), xOffset+34, yOffset-2, mc.currentScreen == null || mc.currentScreen instanceof GuiChat ? 0xffffff : 0x555555);
 
 					//binds the texture
-					mc.renderEngine.func_110577_a(charmBar);
+					mc.renderEngine.bindTexture(charmBar);
 
 					GL11.glColor3f(0,1,1);
 					if(mc.currentScreen != null && !(mc.currentScreen instanceof GuiChat)){
@@ -123,7 +123,7 @@ public class CharmHUD implements ITickHandler {
 						if(mc.currentScreen != null && !(mc.currentScreen instanceof GuiChat)){
 							GL11.glColor3f(0.2f,0.2f,0.2f);
 						}
-						mc.renderEngine.func_110577_a(icons);
+						mc.renderEngine.bindTexture(icons);
 						gui.drawTexturedModalRect(xOffset+24, yOffset-2, 16, 0, h ,9);
 						gui.drawTexturedModalRect(xOffset+24, yOffset-2, 52, 0, h ,9);
 

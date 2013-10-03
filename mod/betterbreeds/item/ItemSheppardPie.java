@@ -33,7 +33,7 @@ public class ItemSheppardPie extends Item
 
 	public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer var3)
 	{
-		if(var3.getFoodStats().getFoodLevel() < 20 || var3.func_110143_aJ() < 20)
+		if(var3.getFoodStats().getFoodLevel() < 20 || var3.getHealth() < 20)
 		{
 			var3.setItemInUse(par1ItemStack, this.getMaxItemUseDuration(par1ItemStack));
 		}
@@ -45,7 +45,7 @@ public class ItemSheppardPie extends Item
 	@Override
 	public ItemStack onEaten(ItemStack var1, World var2, EntityPlayer var3)
 	{
-		if(var3.getFoodStats().getFoodLevel() < 20 || var3.func_110143_aJ() < 20)
+		if(var3.getFoodStats().getFoodLevel() < 20 || var3.getHealth() < 20)
 		{
 			var1.damageItem(1, var3);
 			var3.heal(5);

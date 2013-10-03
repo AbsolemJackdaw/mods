@@ -1,6 +1,7 @@
 package betterbreeds.entity;
 
 import net.minecraft.entity.EntityAgeable;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIFollowParent;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMate;
@@ -42,10 +43,12 @@ public class EntityCow4 extends EntityAnimal
         return true;
     }
 
-    public int getMaxHealth()
-    {
-        return 20;
-    }
+    @Override
+	protected void applyEntityAttributes() {
+		super.applyEntityAttributes();
+        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(20);
+        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.20000000298023224D);
+	}
 
     /**
      * Returns the sound this mob makes while it's alive.

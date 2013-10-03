@@ -1,18 +1,16 @@
 package petBuddy.root;
 
-import java.io.IOException;
 import java.util.Random;
-
-import javax.imageio.ImageIO;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelCow;
 import net.minecraft.client.model.ModelEnderman;
 import net.minecraft.client.model.ModelSlime;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.RenderLiving;
-import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -24,6 +22,7 @@ import org.lwjgl.opengl.GL11;
 import petBuddy.entity.EntityBuddy;
 import petBuddy.entity.model.DragonsModel;
 import petBuddy.entity.model.SheepBody;
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -32,7 +31,9 @@ public class RenderBuddy extends RenderLiving
 {
 	private float scaleBuddy;
 	public Random rand = new Random();
-	private DynamicTexture renderPassTexture;
+	private static final ResourceLocation sheepLoc = new ResourceLocation("textures/entity/sheep/sheep_fur.png");
+	private static final ResourceLocation dragonLoc = new ResourceLocation("subaraki:mobs/ender.png");
+	private static final ResourceLocation enderLoc = new ResourceLocation("textures/entity/enderman/enderman_eyes.png");
 	public RenderBuddy(float par2, float scale)
 	{
 		super(new ModelCow(), par2);
@@ -42,7 +43,7 @@ public class RenderBuddy extends RenderLiving
 	@Override
 	protected void preRenderCallback(EntityLivingBase pet, float par2) {
 		BuddyBase bud = (BuddyBase)pet;
-		
+
 		GL11.glScalef(scaleBuddy, scaleBuddy, scaleBuddy);
 		if(bud.getGuiId() == 13){
 			GL11.glTranslatef(0f, -1.5f, 0f);
@@ -75,6 +76,27 @@ public class RenderBuddy extends RenderLiving
 			float f3 = (float)i;
 			GL11.glScalef(f2 * f3, 1.0F / f2 * f3, f2 * f3);
 		}
+//		if(bud.getGuiId() == 3){
+//			BuddyBase buddy = (BuddyBase)pet;
+//			ModelBase base = ((BuddyBase)pet).getModel();
+//
+//			if(base instanceof ModelBiped){
+//				ModelBiped biped = (ModelBiped)base;
+//				ResourceLocation resourcelocation = AbstractClientPlayer.locationStevePng;
+//				if (buddy.getSkinName() != null && buddy.getSkinName().length() > 0){
+//					resourcelocation = AbstractClientPlayer.getLocationCape(buddy.getSkinName());
+//					AbstractClientPlayer.getDownloadImageCape(resourcelocation, buddy.getSkinName());
+//					
+//						bindTexture(resourcelocation);
+//						GL11.glPushMatrix();
+//						GL11.glRotatef(180, 0, 1, 0);
+//						GL11.glTranslatef(0, -1.5f, -0.15f);
+//						biped.renderCloak(0.0625f);
+//						GL11.glPopMatrix();
+//					
+//				}
+//			}
+//		}
 		if(pet.isRiding()){
 			GL11.glTranslatef(0f, ((BuddyBase)pet).getMountedOffset(), 0f);
 		}
@@ -88,12 +110,7 @@ public class RenderBuddy extends RenderLiving
 	{
 		if (par2 == 0 && buddy.getGuiId() == 14){
 			this.setRenderPassModel(modelBody);
-			try {
-				renderPassTexture = new DynamicTexture(ImageIO.read(getClass().getResourceAsStream("/assets/minecraft/textures/entity/sheep/sheep_fur.png")));
-			} catch (IOException c) {
-				c.printStackTrace();
-			}
-			renderPassTexture.func_110564_a();
+			bindTexture(sheepLoc);
 			float f1 = 1.0F;
 			GL11.glColor3f(((EntityBuddy)buddy).getColor(),((EntityBuddy)buddy).getColor2(),((EntityBuddy)buddy).getColor3());
 			return 1;
@@ -101,12 +118,7 @@ public class RenderBuddy extends RenderLiving
 
 		if (par2 == 0 && buddy.getGuiId() == 19){
 			this.setRenderPassModel(modelDragon);
-			try {
-				renderPassTexture = new DynamicTexture(ImageIO.read(getClass().getResourceAsStream("/subaraki/mobs/ender.png")));
-			} catch (IOException c) {
-				c.printStackTrace();
-			}
-			renderPassTexture.func_110564_a();
+			bindTexture(dragonLoc);
 			float f1 = 1.0F;
 			GL11.glColor3f(((EntityBuddy)buddy).getDragonColor(),((EntityBuddy)buddy).getDragonColor2(),((EntityBuddy)buddy).getDragonColor3());
 			return 1;
@@ -114,12 +126,7 @@ public class RenderBuddy extends RenderLiving
 
 		if(par2 == 0 && buddy.getGuiId() == 15){
 			this.setRenderPassModel(model);
-			try {
-				renderPassTexture = new DynamicTexture(ImageIO.read(getClass().getResourceAsStream("/assets/minecraft/textures/entity/enderman/enderman_eyes.png")));
-			} catch (IOException c) {
-				c.printStackTrace();
-			}
-			renderPassTexture.func_110564_a();			
+			bindTexture(enderLoc);
 			float f1 = 1.0F;
 			GL11.glEnable(GL11.GL_BLEND);
 			GL11.glDisable(GL11.GL_ALPHA_TEST);
@@ -194,24 +201,24 @@ public class RenderBuddy extends RenderLiving
 	}
 
 	@Override
-	protected ResourceLocation func_110775_a(Entity entity) {
+	protected ResourceLocation getEntityTexture(Entity entity) {
 		BuddyBase pet = (BuddyBase)entity;
 
 		if(pet.getGuiId() ==3){
-			ResourceLocation resourcelocation = AbstractClientPlayer.field_110314_b;
-			if (pet.getSkinName() != null && pet.getSkinName().length() > 0)
-			{
-				resourcelocation = AbstractClientPlayer.func_110305_h(pet.getSkinName());
-				AbstractClientPlayer.func_110304_a(resourcelocation, pet.getSkinName());
+			ResourceLocation resourcelocation = AbstractClientPlayer.locationStevePng;
+			if (pet.getSkinName() != null && pet.getSkinName().length() > 0){
 
-			}else{
-				resourcelocation = new ResourceLocation( "textures/entity/steve.png");
+				resourcelocation = AbstractClientPlayer.getLocationSkin(pet.getSkinName());
+				AbstractClientPlayer.getDownloadImageSkin(resourcelocation, pet.getSkinName());
+
 			}
-			Minecraft.getMinecraft().renderEngine.func_110577_a(resourcelocation);
+			Minecraft.getMinecraft().renderEngine.bindTexture(resourcelocation);
 			return resourcelocation;
 		}
 		else{
 			return pet.getTexture();
 		}
 	}
+
+
 }

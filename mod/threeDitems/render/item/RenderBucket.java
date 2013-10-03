@@ -73,7 +73,7 @@ public class RenderBucket extends Render3DInterface {
 		
 		if(item.getItem().equals(Item.bucketWater)){
 			((bucket)model).Shape11.isHidden = false;
-			Minecraft.getMinecraft().renderEngine.func_110577_a(new ResourceLocation("subaraki:3d/items/bucketWater.png"));
+			Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation("subaraki:3d/items/bucketWater.png"));
 			
 			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_SRC_COLOR);
 			GL11.glEnable(GL11.GL_BLEND);
@@ -83,7 +83,7 @@ public class RenderBucket extends Render3DInterface {
 		
 		if(item.getItem().equals(Item.bucketLava)){
 			((bucket)model).Shape11.isHidden = false;
-			Minecraft.getMinecraft().renderEngine.func_110577_a(new ResourceLocation("subaraki:3d/items/bucketLava.png"));
+			Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation("subaraki:3d/items/bucketLava.png"));
 			
 			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_SRC_COLOR);
 			GL11.glEnable(GL11.GL_BLEND);

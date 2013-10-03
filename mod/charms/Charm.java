@@ -24,6 +24,7 @@ public class Charm extends Item{
 
 	private final int SLOT_ID;
 	private final int TIER;
+	
 	public Charm(int par1, int heal, int color, int tier) {
 		super(par1);
 		this.setMaxStackSize(1);
@@ -35,7 +36,6 @@ public class Charm extends Item{
 		SLOT_ID = ConfigClass.instance.slotID;
 		TIER = tier;
 		cooldownMAX= cooldown;
-		this.func_111206_d("map_filled");
 	}
 
 	@Override @SideOnly(Side.CLIENT)
@@ -60,8 +60,8 @@ public class Charm extends Item{
 			EntityLivingBase el = (EntityLivingBase)ent;
 			if(p.inventory.mainInventory[SLOT_ID]!= null && p.inventory.mainInventory[SLOT_ID].equals(is)){
 
-				int hearts = (int)p.func_110143_aJ(); // p.getHealth(); PLayers current health
-				int maxHearts =(int) p.func_110138_aP();// p.getMaxHealth(); Players MAX health
+				int hearts = (int)p.getHealth(); // p.getHealth(); PLayers current health
+				int maxHearts =(int) p.getMaxHealth();// p.getMaxHealth(); Players MAX health
 				int healthDif = maxHearts-hearts;
 
 				if(hearts <= maxHearts/2){

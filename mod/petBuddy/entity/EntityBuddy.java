@@ -267,7 +267,6 @@ public class EntityBuddy extends BuddyBase
 						EntityItem item = new EntityItem(worldObj, getOwner().posX, getOwner().posY, getOwner().posZ,pickedupItems[c]);
 						if(!worldObj.isRemote){
 							worldObj.spawnEntityInWorld(item);
-							//							FMLLog.getLogger().info(pickedupItems[c] + "");
 						}
 						pickedupItems[c] = null;
 					}

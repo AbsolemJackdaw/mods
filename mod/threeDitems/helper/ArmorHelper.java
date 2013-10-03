@@ -25,7 +25,7 @@ public class ArmorHelper {
 			if (item instanceof ItemArmor)
 			{
 				ItemArmor itemarmor = (ItemArmor)item;
-				Minecraft.getMinecraft().renderEngine.func_110577_a(RenderBiped.getArmorResource(null, itemstack, par2, null));
+				Minecraft.getMinecraft().renderEngine.bindTexture(RenderBiped.getArmorResource(null, itemstack, par2, null));
 
 				boolean for0 = par2 == 0;
 				boolean for1 = par2 == 1;

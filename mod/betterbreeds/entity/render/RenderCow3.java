@@ -18,7 +18,7 @@ public class RenderCow3 extends RenderLiving
 	}
 
 	@Override
-	protected ResourceLocation func_110775_a(Entity par1Entity)
+	protected ResourceLocation getEntityTexture(Entity par1Entity)
 	{
 		return this.func_110919_a((EntityCow3)par1Entity);
 	}

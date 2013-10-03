@@ -78,8 +78,21 @@ public class BuddyPacketHandler implements IPacketHandler {
 				}
 
 				break;
-			}
+				
+			default :
+				secondID = dis.readInt();
+				buddyName = dis.readUTF();
 
+				buddy = (EntityBuddy)world.getEntityByID(secondID);
+
+				buddy.setGuiId(guiId);
+				
+				if(p.capabilities.isCreativeMode && !world.isRemote){
+					p.addChatMessage("Set buddy to " + BuddyUtils.IDToName(guiId));
+				}
+				p.addStat(PetBuddyMain.pa.nameBuddy, 1);
+				break;
+			}
 
 		} catch (IOException e) {
 			e.printStackTrace();

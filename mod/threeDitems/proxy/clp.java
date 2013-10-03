@@ -5,7 +5,6 @@ import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelBoat;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.MinecraftForgeClient;
-import threeDitems.bow.BowHud;
 import threeDitems.handlers.KeyHandler;
 import threeDitems.models.apple;
 import threeDitems.models.arrow;
@@ -100,8 +99,6 @@ import threeDitems.render.item.tools.RenderPickaxe;
 import threeDitems.render.item.tools.RenderSpade;
 import threeDitems.render.item.tools.RenderSword;
 import cpw.mods.fml.client.registry.KeyBindingRegistry;
-import cpw.mods.fml.common.registry.TickRegistry;
-import cpw.mods.fml.relauncher.Side;
 
 public class clp extends cmp
 {
@@ -110,7 +107,7 @@ public class clp extends cmp
 	ModelBiped biped = new ModelBiped();
 	public void render() {	
 		
-		TickRegistry.registerTickHandler(new BowHud(), Side.CLIENT);
+//		TickRegistry.registerTickHandler(new BowHud(), Side.CLIENT);
 
 		KeyBindingRegistry.registerKeyBinding(new KeyHandler());
 

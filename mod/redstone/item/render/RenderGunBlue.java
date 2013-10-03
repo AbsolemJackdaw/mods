@@ -53,7 +53,7 @@ public class RenderGunBlue implements IItemRenderer {
 				break;
 		case ENTITY:
 			GL11.glPushMatrix();
-			Minecraft.getMinecraft().renderEngine.func_110577_a(LOC);
+			Minecraft.getMinecraft().renderEngine.bindTexture(LOC);
 			GL11.glScalef(3f, 3f, 3f);
 			GL11.glRotatef(0, 0.0f, 0.0f, 1.0f);
 			GL11.glRotatef(0, 0.0f, 1.0f, 0.0f);
@@ -71,7 +71,7 @@ public class RenderGunBlue implements IItemRenderer {
 	
 	public void caseEq(ItemRenderType type, ItemStack item, Object... data){
 		GL11.glPushMatrix();
-		Minecraft.getMinecraft().renderEngine.func_110577_a(LOC);
+		Minecraft.getMinecraft().renderEngine.bindTexture(LOC);
 		GL11.glRotatef(15, 0.0f, 0.0f, 1.0f);
 		GL11.glRotatef(12, 0.0f, 1.0f, 0.0f);
 		GL11.glRotatef(195, 1.0f, 0.0f, 0.0f);

@@ -21,7 +21,7 @@ public class BushTESR extends TileEntitySpecialRenderer{
 	private static final bush b = new bush();
 
 	private static final ResourceLocation glint = new ResourceLocation("textures/misc/enchanted_item_glint.png");
-
+	private static final ResourceLocation loc = new ResourceLocation("berries:bush.png");
 
 	@Override
 	public void renderTileEntityAt(TileEntity tileentity, double d, double d1,
@@ -31,7 +31,7 @@ public class BushTESR extends TileEntitySpecialRenderer{
 		if(tileentity != null && tileentity instanceof BushTE){
 			
 			BushTE te = (BushTE)tileentity;
-			this.func_110628_a(new ResourceLocation("berries:bush.png"));
+			this.bindTexture(loc);
 			
 			GL11.glPushMatrix();
 
@@ -161,7 +161,7 @@ public class BushTESR extends TileEntitySpecialRenderer{
 	}
 
 	private void bindTextureMap(ItemStack item) {
-		func_110628_a(RenderManager.instance.renderEngine.func_130087_a(item.getItemSpriteNumber()));
+		bindTexture(RenderManager.instance.renderEngine.getResourceLocation(item.getItemSpriteNumber()));
 	}
 
 
@@ -225,13 +225,13 @@ public class BushTESR extends TileEntitySpecialRenderer{
 			float f6 = (k1 >> 8 & 0xFF) / 255.0F;
 			float f8 = (k1 & 0xFF) / 255.0F;
 			GL11.glColor4f(f4, f6, f8, 1.0F);
-			ItemRenderer.renderItemIn2D(var8, c2, c3, c1, c4, icon.func_130010_a(), icon.func_110967_i(), 0.0625F);
+			ItemRenderer.renderItemIn2D(var8, c2, c3, c1, c4, icon.getIconHeight(), icon.getIconWidth(), 0.0625F);
 
 			if ((var18 != null) && (var18.hasEffect()) && (par2 == 0))
 			{
 				GL11.glDepthFunc(514);
 				GL11.glDisable(2896);
-				func_110628_a(glint);
+				bindTexture(glint);
 				GL11.glEnable(3042);
 				GL11.glBlendFunc(768, 1);
 				float colorMult = 0.76F;

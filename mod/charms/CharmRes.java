@@ -13,7 +13,7 @@ public class CharmRes {
 	@ForgeSubscribe
 	public void onPlayerHurt(LivingHurtEvent event) {
 
-		if (event.entityLiving instanceof EntityPlayer && event.entityLiving.func_110143_aJ() - event.ammount <= 0)
+		if (event.entityLiving instanceof EntityPlayer && event.entityLiving.getHealth() - event.ammount <= 0)
 		{
 			EntityPlayer p = (EntityPlayer)event.entityLiving;
 			ItemStack stack = p.inventory.mainInventory[ConfigClass.instance.slotID];
@@ -21,8 +21,8 @@ public class CharmRes {
 			if(stack != null && stack.getItem() instanceof Charm)
 			{
 				Charm charm = (Charm)stack.getItem();
-				int hearts = (int)p.func_110143_aJ(); // p.getHealth(); PLayers current health
-				int maxHearts =(int) p.func_110138_aP();// p.getMaxHealth(); Players MAX health
+				int hearts = (int)p.getHealth(); // p.getHealth(); PLayers current health
+				int maxHearts =(int) p.getMaxHealth();//p.getMaxHealth(); Players MAX health
 
 				if(charm.cooldown == 30*20){
 					//if the charm has less hearts to heal then the player has actual health 

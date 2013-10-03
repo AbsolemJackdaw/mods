@@ -9,8 +9,8 @@ public class sndmngr {
 	{
 		try 
 		{
-			event.manager.soundPoolSounds.addSound("subaraki:bells.ogg");
-			event.manager.soundPoolSounds.addSound("subaraki:song.ogg");
+			event.manager.addSound("subaraki:bells.ogg");
+			event.manager.addSound("subaraki:song.ogg");
 			
 		}
 		catch (Exception e)

@@ -56,11 +56,11 @@ public class RenderThawer implements IItemRenderer {
 		case ENTITY:
 			GL11.glPushMatrix();
 			if(ItemGun.thaw == 1)
-				Minecraft.getMinecraft().renderEngine.func_110577_a(LOC_LAVA);
+				Minecraft.getMinecraft().renderEngine.bindTexture(LOC_LAVA);
 			else if(ItemGun.thaw == 0)
-				Minecraft.getMinecraft().renderEngine.func_110577_a(LOC_ICE);
+				Minecraft.getMinecraft().renderEngine.bindTexture(LOC_ICE);
 			else
-				Minecraft.getMinecraft().renderEngine.func_110577_a(LOC_LAVA);
+				Minecraft.getMinecraft().renderEngine.bindTexture(LOC_LAVA);
 			GL11.glScalef(2f, 2f, 2f);
 			GL11.glRotatef(0, 0.0f, 0.0f, 1.0f);
 			GL11.glRotatef(0, 0.0f, 1.0f, 0.0f);
@@ -80,11 +80,11 @@ public class RenderThawer implements IItemRenderer {
 		GL11.glPushMatrix();
 
 		if(ItemGun.thaw == 1)
-			Minecraft.getMinecraft().renderEngine.func_110577_a(LOC_LAVA);
+			Minecraft.getMinecraft().renderEngine.bindTexture(LOC_LAVA);
 		else if(ItemGun.thaw == 0)
-			Minecraft.getMinecraft().renderEngine.func_110577_a(LOC_ICE);
+			Minecraft.getMinecraft().renderEngine.bindTexture(LOC_ICE);
 		else
-			Minecraft.getMinecraft().renderEngine.func_110577_a(LOC_LAVA);
+			Minecraft.getMinecraft().renderEngine.bindTexture(LOC_LAVA);
 
 		if(ItemGun.thaw == 1 &&item.getTagCompound() != null && item.getTagCompound().hasKey("EnergyCharge")){
 			float red = item.getTagCompound().getFloat("EnergyCharge")/300;

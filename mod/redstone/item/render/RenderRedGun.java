@@ -54,7 +54,7 @@ public class RenderRedGun implements IItemRenderer {
 
 		case ENTITY:
 			GL11.glPushMatrix();
-			Minecraft.getMinecraft().renderEngine.func_110577_a(LOC);
+			Minecraft.getMinecraft().renderEngine.bindTexture(LOC);
 			GL11.glScalef(1.75f, 1.75f, 1.75f);
 			GL11.glRotatef(0, 0.0f, 0.0f, 1.0f);
 			GL11.glRotatef(0, 0.0f, 1.0f, 0.0f);
@@ -71,7 +71,7 @@ public class RenderRedGun implements IItemRenderer {
 
 	public void caseEq(ItemRenderType type, ItemStack item, Object... data){
 		GL11.glPushMatrix();
-		Minecraft.getMinecraft().renderEngine.func_110577_a(LOC);
+		Minecraft.getMinecraft().renderEngine.bindTexture(LOC);
 		GL11.glScalef(1.75f, 1.75f, 1.75f);
 		GL11.glRotatef(16, 0.0f, 0.0f, 1.0f);
 		GL11.glRotatef(11, 0.0f, 1.0f, 0.0f);

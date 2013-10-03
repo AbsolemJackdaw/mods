@@ -49,7 +49,7 @@ public abstract class Render3DInterface implements IItemRenderer /*,ISimpleBlock
 		//			GL11.glShadeModel(GL11.GL_SMOOTH);
 
 		if(!shouldIgnoreTextureRendering())
-			Minecraft.getMinecraft().renderEngine.func_110577_a(modelTexture);
+			Minecraft.getMinecraft().renderEngine.bindTexture(modelTexture);
 		GL11.glPushMatrix();
 
 		switch(type){
@@ -84,7 +84,7 @@ public abstract class Render3DInterface implements IItemRenderer /*,ISimpleBlock
 		if (item.hasEffect(item.getItemDamage()))
 		{
 			float tickModifier = (float) (Minecraft.getSystemTime() % 3000L) / 3000.0F * 48.0F;
-			Minecraft.getMinecraft().renderEngine.func_110577_a(glint);
+			Minecraft.getMinecraft().renderEngine.bindTexture(glint);
 			GL11.glEnable(GL11.GL_BLEND);
 			float var20 = 0.5F;
 			GL11.glColor4f(var20, var20, var20, 1);

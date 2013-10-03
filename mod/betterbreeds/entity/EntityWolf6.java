@@ -73,20 +73,20 @@ public class EntityWolf6 extends EntityTameable
 		return spawnBabyAnimal(entityageable);
 	}
 
-	protected void func_110147_ax()
-	{
-		super.func_110147_ax();
-		this.func_110148_a(SharedMonsterAttributes.field_111263_d).func_111128_a(0.30000001192092896D);
+	  protected void applyEntityAttributes()
+	    {
+	        super.applyEntityAttributes();
+	        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.30000001192092896D);
 
-		if (this.isTamed())
-		{
-			this.func_110148_a(SharedMonsterAttributes.field_111267_a).func_111128_a(32.0D);
-		}
-		else
-		{
-			this.func_110148_a(SharedMonsterAttributes.field_111267_a).func_111128_a(8.0D);
-		}
-	}
+	        if (this.isTamed())
+	        {
+	            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(20.0D);
+	        }
+	        else
+	        {
+	            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(8.0D);
+	        }
+	    }
 
 	/**
 	 * Returns true if the newer Entity AI code should be run
@@ -112,19 +112,12 @@ public class EntityWolf6 extends EntityTameable
 			 this.setAngry(true);
 		 }
 	 }
-	 /**
-	  * main AI tick function, replaces updateEntityActionState
-	  */@Override
-	  protected void updateAITick()
-	  {
-		  this.dataWatcher.updateObject(18, Float.valueOf(this.func_110143_aJ()));
-	  }
+
 
 	  @Override
 	  protected void entityInit()
 	  {
 		  super.entityInit();
-		  this.dataWatcher.addObject(18, new Float(this.func_110143_aJ()));
 		  this.dataWatcher.addObject(19, new Byte((byte)0));
 		  this.dataWatcher.addObject(20, new Byte((byte)BlockColored.getBlockFromDye(1)));
 	  }
@@ -389,7 +382,7 @@ public class EntityWolf6 extends EntityTameable
 	    			{
 	    				ItemFood itemfood = (ItemFood)Item.itemsList[itemstack.itemID];
 
-	    				if (itemfood.isWolfsFavoriteMeat() && this.dataWatcher.func_111145_d(18) < 20.0F)
+	    				if (itemfood.isWolfsFavoriteMeat() && this.getHealth() < 20.0F)
 	    				{
 	    					if (!par1EntityPlayer.capabilities.isCreativeMode)
 	    					{
@@ -453,7 +446,6 @@ public class EntityWolf6 extends EntityTameable
 	    				this.setPathToEntity((PathEntity)null);
 	    				this.setAttackTarget((EntityLivingBase)null);
 	    				this.aiSit.setSitting(true);
-	    				this.setEntityHealth(20.0F);
 	    				this.setOwner(par1EntityPlayer.getCommandSenderName());
 	    				this.playTameEffect(true);
 	    				this.worldObj.setEntityState(this, (byte)7);
@@ -503,7 +495,7 @@ public class EntityWolf6 extends EntityTameable
 	    @SideOnly(Side.CLIENT)
 	    public float getTailRotation()
 	    {
-	    	return this.isAngry() ? 1.5393804F : (this.isTamed() ? (0.65F - (20.0F - this.dataWatcher.func_111145_d(18)) * 0.02F) * (float)Math.PI : ((float)Math.PI / 5F));
+	    	return this.isAngry() ? 1.5393804F : (this.isTamed() ? (0.65F - (20.0F - this.getHealth()) * 0.02F) * (float)Math.PI : ((float)Math.PI / 5F));
 	    }
 
 	    /**

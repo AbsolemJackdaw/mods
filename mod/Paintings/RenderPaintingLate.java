@@ -48,7 +48,7 @@ public class RenderPaintingLate extends Render
 		GL11.glTranslatef((float)par2, (float)par4, (float)par6);
 		GL11.glRotatef(par8, 0.0F, 1.0F, 0.0F);
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-		Minecraft.getMinecraft().renderEngine.func_110577_a(art);
+		Minecraft.getMinecraft().renderEngine.bindTexture(art);
 		EnumArt enumart = par1EntityPainting.art;
 		float f2 = 0.0625F;
 		GL11.glScalef(f2, f2, f2);
@@ -170,7 +170,7 @@ public class RenderPaintingLate extends Render
 	}
 
 	@Override
-	protected ResourceLocation func_110775_a(Entity entity) {
+	protected ResourceLocation getEntityTexture(Entity entity) {
 		return this.func_110806_a((EntityPainting)entity);
 	}
 }

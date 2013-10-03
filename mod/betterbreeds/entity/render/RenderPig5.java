@@ -18,7 +18,7 @@ public class RenderPig5 extends RenderLiving
 	}
 
 	@Override
-	protected ResourceLocation func_110775_a(Entity par1Entity)
+	protected ResourceLocation getEntityTexture(Entity par1Entity)
 	{
 		return this.func_110919_a((EntityPig5)par1Entity);
 	}
@@ -31,7 +31,7 @@ public class RenderPig5 extends RenderLiving
 
     protected int renderSaddledPig(EntityPig5 par1EntityPig, int par2, float par3)
     {
-		this.func_110776_a(new ResourceLocation("textures/entity/pig/pig_saddle.png"));
+		this.bindTexture(new ResourceLocation("textures/entity/pig/pig_saddle.png"));
         return par2 == 0 && par1EntityPig.getSaddled() ? 1 : -1;
     }
 

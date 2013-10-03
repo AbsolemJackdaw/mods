@@ -156,11 +156,9 @@ public class PetInterface extends GuiScreen {
 		this.xSize_lo = (float) par1;
 		this.ySize_lo = (float) par2;
 
-		fontRenderer.drawString("Toggled = "+buddy.toggled, 0, 0, 0xffffff);
-
 		try
 		{
-			this.mc.renderEngine.func_110581_b(new ResourceLocation("/gui/demo_bg.png"));
+//			this.mc.renderEngine.bindTexture(new ResourceLocation("/gui/demo_bg.png"));
 			GL11.glColor4f(0.0F, 0.0F, 0.0F, 5.0F);
 			int posX = (this.width ) / 2;
 			int posY = (this.height) / 2;
@@ -173,7 +171,6 @@ public class PetInterface extends GuiScreen {
 				fontRenderer.drawSplitString(hi, (posX-posX/2) + 70/2, this.height / 2-80, 180 ,0x000000);
 				fontRenderer.drawSplitString(hi, (posX-posX/2) + 70/2-1, this.height / 2-81, 180 ,0xffffff);
 			}
-
 		}
 		finally
 		{
@@ -228,7 +225,7 @@ public class PetInterface extends GuiScreen {
 			}
 		}
 		else{
-			sendPacket(button.id, button.id, "Failed to read string");
+			sendPacket(button.id, buddyID, "Failed to read string");
 			mc.thePlayer.closeScreen();
 			mc.gameSettings.guiScale = PetBuddyMain.proxy.getGuiScale();
 		}

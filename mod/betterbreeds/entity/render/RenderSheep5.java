@@ -21,7 +21,7 @@ public class RenderSheep5 extends RenderLiving
 	}
 
 	@Override
-	protected ResourceLocation func_110775_a(Entity par1Entity)
+	protected ResourceLocation getEntityTexture(Entity par1Entity)
 	{
 		return this.func_110919_a((EntitySheep5)par1Entity);
 	}
@@ -36,7 +36,7 @@ public class RenderSheep5 extends RenderLiving
 	{
 		if (par2 == 0 && !par1EntitySheep.getSheared())
 		{
-			this.func_110776_a(new ResourceLocation("/subaraki:BB/xmasheep.png"));
+			this.bindTexture(new ResourceLocation("/subaraki:BB/xmasheep.png"));
 			float var4 = 1.0F;
 			int var5 = par1EntitySheep.getFleeceColor();
 			GL11.glColor3f(var4 * EntitySheep5.fleeceColorTable[var5][0], var4 * EntitySheep5.fleeceColorTable[var5][1], var4 * EntitySheep5.fleeceColorTable[var5][2]);

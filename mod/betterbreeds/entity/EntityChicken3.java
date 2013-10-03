@@ -1,5 +1,6 @@
 package betterbreeds.entity;
 import net.minecraft.entity.EntityAgeable;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIFollowParent;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMate;
@@ -52,9 +53,11 @@ public class EntityChicken3 extends EntityAnimal
 		return true;
 	}
 
-	public int getMaxHealth()
-	{
-		return 10;
+	@Override
+	protected void applyEntityAttributes() {
+		super.applyEntityAttributes();
+        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(10);
+
 	}
 	public boolean interact(EntityPlayer par1EntityPlayer)
 	{

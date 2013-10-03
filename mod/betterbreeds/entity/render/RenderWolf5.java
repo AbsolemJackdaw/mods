@@ -19,7 +19,7 @@ public class RenderWolf5 extends RenderLiving
 	}
 
 	@Override
-	protected ResourceLocation func_110775_a(Entity par1Entity)
+	protected ResourceLocation getEntityTexture(Entity par1Entity)
 	{
 		return this.func_110914_a((EntityWolf5)par1Entity);
 	}

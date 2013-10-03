@@ -74,14 +74,14 @@ public class RenderBall extends Render3DInterface {
 			GL11.glScalef(f2,f2,f2);
 			GL11.glTranslatef(0.03f,-0.03f, 0.03f);
 
-			Minecraft.getMinecraft().renderEngine.func_110577_a(magma);
+			Minecraft.getMinecraft().renderEngine.bindTexture(magma);
 			model.render(null, 0, 0, 0, 0, 0, 0.0625f);
 			GL11.glPopMatrix();
 
 			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_SRC_COLOR);
 			GL11.glEnable(GL11.GL_BLEND);
 
-			Minecraft.getMinecraft().renderEngine.func_110577_a(slime);
+			Minecraft.getMinecraft().renderEngine.bindTexture(slime);
 
 		}
 	}

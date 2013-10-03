@@ -39,7 +39,6 @@ public abstract class BuddyBase extends EntityTameable
 
 	protected boolean hasItem = false;
 
-	public boolean toggled = false;
 
 	public final int NAME = 21;
 	public final int SKIN = 22;
@@ -74,7 +73,7 @@ public abstract class BuddyBase extends EntityTameable
 		this.targetTasks.addTask(2, new EntityAIOwnerHurtTarget(this));
 		this.targetTasks.addTask(3, new EntityAIHurtByTarget(this, true));
 		this.slimeJumpDelay = this.rand.nextInt(20) + 10;
-		setEntityHealth(666);
+		setHealth(666);
 
 	}
 	public BuddyBase(World par1World, EntityPlayer player)
@@ -134,13 +133,13 @@ public abstract class BuddyBase extends EntityTameable
 	}
 
 	public float getColor(){
-		return dataWatcher.func_111145_d(COLOR1) ;
+		return dataWatcher.getWatchableObjectFloat(COLOR1) ;
 	}
 	public float getColor2(){
-		return dataWatcher.func_111145_d(COLOR2) ;
+		return dataWatcher.getWatchableObjectFloat(COLOR2) ;
 	}
 	public float getColor3(){
-		return dataWatcher.func_111145_d(COLOR3) ;
+		return dataWatcher.getWatchableObjectFloat(COLOR3) ;
 	}
 
 	public void setColor(float f, float g, float h){
@@ -150,13 +149,13 @@ public abstract class BuddyBase extends EntityTameable
 	}
 
 	public float getDragonColor(){
-		return dataWatcher.func_111145_d(DCOLOR1) ;
+		return dataWatcher.getWatchableObjectFloat(DCOLOR1) ;
 	}
 	public float getDragonColor2(){
-		return dataWatcher.func_111145_d(DCOLOR2) ;
+		return dataWatcher.getWatchableObjectFloat(DCOLOR2) ;
 	}
 	public float getDragonColor3(){
-		return dataWatcher.func_111145_d(DCOLOR3) ;
+		return dataWatcher.getWatchableObjectFloat(DCOLOR3) ;
 	}
 
 	public void setDragonColor(float f, float g, float h){
@@ -355,15 +354,6 @@ public abstract class BuddyBase extends EntityTameable
 	@Override
 	public boolean interact(EntityPlayer player)
 	{
-		if(getOwner() instanceof EntityPlayer){
-			if(((EntityPlayer)getOwner()).isSneaking() && ((EntityPlayer)getOwner()).inventory.getCurrentItem() != null &&
-					((EntityPlayer)getOwner()).inventory.getCurrentItem().getItem().equals(Item.stick)){
-				if(toggled)
-					toggled = false;
-				else 
-					toggled = true;
-			}
-		}
 
 		/**==Changing buddy appearance now gets handled with the shrine==**/
 		//		if(player.inventory.getCurrentItem() != null && !player.capabilities.isCreativeMode && hasItem == false && toggled){
@@ -555,7 +545,7 @@ public abstract class BuddyBase extends EntityTameable
 
 	public double[] getMovementOffsets(int par1, float par2)
 	{
-		if (this.func_110143_aJ() <= 0)
+		if (this.getHealth() <= 0)
 		{
 			par2 = 0.0F;
 		}

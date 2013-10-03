@@ -25,14 +25,14 @@ public class FrameHelper extends Render
 		GL11.glPushMatrix();
 
 
-		Minecraft.getMinecraft().renderEngine.func_110577_a(oak);
+		Minecraft.getMinecraft().renderEngine.bindTexture(oak);
 		Block block = Block.planks;
 		float f = 0.0625F;
 		float f1 = 0.75F;
 		float f2 = f1 / 2.0F;
 
 		GL11.glPushMatrix();
-		Minecraft.getMinecraft().renderEngine.func_110577_a(frame);
+		Minecraft.getMinecraft().renderEngine.bindTexture(frame);
 		GL11.glRotatef(0, 0.0f, 0.0f, 1.0f);
 		GL11.glRotatef(90, 0.0f, 1.0f, 0.0f);
 		GL11.glRotatef(0, 1.0f, 0.0f, 0.0f);
@@ -45,7 +45,7 @@ public class FrameHelper extends Render
 	}
 
 	public void renderFrame(Block block, float f2, float f){
-		Minecraft.getMinecraft().renderEngine.func_110577_a(birch);
+		Minecraft.getMinecraft().renderEngine.bindTexture(birch);
 	
 		GL11.glPushMatrix();
 		renderBlocksInstance.overrideBlockBounds(0.0D, (double)(0.5F - f2), (double)(0.5F - f2), (double)(f + 1.0E-4F), (double)(f + 0.5F - f2), (double)(0.5F + f2));
@@ -84,7 +84,7 @@ public class FrameHelper extends Render
 	}
 
 	@Override
-	protected ResourceLocation func_110775_a(Entity entity) {
+	protected ResourceLocation getEntityTexture(Entity entity) {
 		return null;
 	}
 }

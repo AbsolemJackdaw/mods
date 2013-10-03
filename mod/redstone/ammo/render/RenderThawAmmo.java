@@ -50,7 +50,7 @@ public class RenderThawAmmo extends Render
 		GL11.glRotatef((new Random()).nextInt(360), 1, 1, 1);
 		int size = 1;
 		GL11.glScalef(0.0F + (size * 0.3F), 0.0F + (size * 0.3F), 0.0F + (size * 0.3F));
-		this.renderManager.renderEngine.func_110577_a(new ResourceLocation("subaraki:rhg/empty.png"));
+		this.renderManager.renderEngine.bindTexture(new ResourceLocation("subaraki:rhg/empty.png"));
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -95,7 +95,7 @@ public class RenderThawAmmo extends Render
 	}
 
 	@Override
-	protected ResourceLocation func_110775_a(Entity entity) {
+	protected ResourceLocation getEntityTexture(Entity entity) {
 		// TODO Auto-generated method stub
 		return null;
 	}

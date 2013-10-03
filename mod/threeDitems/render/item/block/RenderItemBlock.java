@@ -63,7 +63,7 @@ public class RenderItemBlock extends Render3DInterface{
 	@Override
 	public void preSpecials(ItemStack item, ModelBase model, Object...data) {
 		super.preSpecials(item, model);
-		Minecraft.getMinecraft().renderEngine.func_110577_a(TextureMap.field_110575_b);
+		Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationBlocksTexture);
 		render.renderBlockAsItem(block, item.getItemDamage(), 1);
 
 	}

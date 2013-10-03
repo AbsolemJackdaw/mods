@@ -13,8 +13,11 @@ import threeDitems.render.Render3DInterface;
 
 public class RenderSkull extends Render3DInterface{
 
-	String name ="textures/entity/steve.png";
-	ResourceLocation loc = new ResourceLocation(name);
+	private static final ResourceLocation skullSkelly = new ResourceLocation("textures/entity/skeleton/skeleton.png");
+	private static final ResourceLocation skullWither = new ResourceLocation("textures/entity/skeleton/wither_skeleton.png");
+	private static final ResourceLocation skullZombie = new ResourceLocation("textures/entity/zombie/zombie.png");
+	private static final ResourceLocation skullCreeper = new ResourceLocation("textures/entity/creeper/creeper.png");
+	private static final ResourceLocation skullSteve = new ResourceLocation("textures/entity/steve.png");
 
 	public RenderSkull(ModelBase model, String texture) {
 		super(model, texture);
@@ -45,7 +48,7 @@ public class RenderSkull extends Render3DInterface{
 		GL11.glRotatef(180,1,0,0);
 
 		GL11.glTranslatef(0.5f, 0f, 0f);
-		
+
 		float f = 0.7f;
 		GL11.glScalef(f, f, f);		
 	}
@@ -61,39 +64,36 @@ public class RenderSkull extends Render3DInterface{
 
 		switch(item.getItemDamage()){
 		case 0:
-			name = "textures/entity/skeleton/skeleton.png";
+			Minecraft.getMinecraft().renderEngine.bindTexture(skullSkelly);
 			break;
 		case 1:
-			name = "textures/entity/skeleton/wither_skeleton.png";
+			Minecraft.getMinecraft().renderEngine.bindTexture(skullWither);
 			break;
 		case 2:
-			name = "textures/entity/zombie/zombie.png";
+			Minecraft.getMinecraft().renderEngine.bindTexture(skullZombie);
 			break;
 		case 3: 
 			if(item.getTagCompound() != null){
 				if (item.getTagCompound().hasKey("SkullOwner")){
-					ResourceLocation resourcelocation = AbstractClientPlayer.field_110314_b;
+					ResourceLocation resourcelocation = AbstractClientPlayer.locationStevePng;
 
 					if (item.getTagCompound().getString("SkullOwner") != null && item.getTagCompound().getString("SkullOwner").length() > 0)
 					{
-						resourcelocation = AbstractClientPlayer.func_110305_h(item.getTagCompound().getString("SkullOwner"));
-						AbstractClientPlayer.func_110304_a(resourcelocation, item.getTagCompound().getString("SkullOwner"));
+						resourcelocation = AbstractClientPlayer.getLocationSkin(item.getTagCompound().getString("SkullOwner"));
+						AbstractClientPlayer.getDownloadImageSkin(resourcelocation, item.getTagCompound().getString("SkullOwner"));
 					}
-					Minecraft.getMinecraft().renderEngine.func_110577_a(resourcelocation);
+
+					Minecraft.getMinecraft().renderEngine.bindTexture(resourcelocation);
 				}
-			}else{
-				name = "textures/entity/steve.png";
 			}
 			break;
 		case 4:
-			name = "textures/entity/creeper/creeper.png";
+			Minecraft.getMinecraft().renderEngine.bindTexture(skullCreeper);
 			break;
 		default:
-			name = "textures/entity/steve.png";
+			Minecraft.getMinecraft().renderEngine.bindTexture(skullSteve);
 			break;
 		}
-
-		Minecraft.getMinecraft().renderEngine.func_110577_a(new ResourceLocation(name));
 
 		switch(item.getItemDamage()){
 		case 2:

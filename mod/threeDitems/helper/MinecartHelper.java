@@ -21,7 +21,7 @@ public class MinecartHelper {
 	private static final ResourceLocation MINECART_TEXTURE = new ResourceLocation("textures/entity/minecart.png");
 
 	public void cartzz(ItemStack item, ModelBase theItem, RenderBlocks renderer){
-//		Minecraft.getMinecraft().renderEngine.func_110577_a(MINECART_TEXTURE);
+//		Minecraft.getMinecraft().renderEngine.bindTexture(MINECART_TEXTURE);
 //		mod_3d.proxy.render();
 		if(item.getItem().equals(Item.minecartEmpty)){
 			theItem.render(new EntityMinecartEmpty(Minecraft.getMinecraft().theWorld),0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);				
@@ -45,7 +45,7 @@ public class MinecartHelper {
 		if (block != null)
 		{
 			GL11.glPushMatrix();
-			Minecraft.getMinecraft().renderEngine.func_110577_a(TextureMap.field_110575_b);
+			Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationBlocksTexture);
 			float f8 = 0.75F;
 			GL11.glScalef(f8, f8, f8);
 			GL11.glTranslatef(0.0F, (float)-5 / 16.0F, 0.0F);

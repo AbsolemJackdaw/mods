@@ -19,7 +19,7 @@ public class OnHorseDeath {
 
 		if (event.entityLiving instanceof EntityHorse)
 		{
-			if(event.entityLiving.func_110143_aJ() - event.ammount <= 0){
+			if(event.entityLiving.getHealth() - event.ammount <= 0){
 				EntityItem entityitem = new EntityItem(event.entityLiving.worldObj, 
 						event.entityLiving.posX,event.entityLiving.posY,event.entityLiving.posZ, 
 						new ItemStack(ModBreeds.horsemeat));

@@ -128,7 +128,7 @@ public class PetStatue extends Item {
 
 			if (el != null ) {
 				int id =  BuddyUtils.EntityToID(el.getClass());
-				if(id != -5 && par1ItemStack.stackTagCompound.getInteger("guiID") != id){
+				if(id != -5 && par1ItemStack.stackTagCompound != null && par1ItemStack.stackTagCompound.getInteger("guiID") != id){
 
 					ByteArrayOutputStream bos = new ByteArrayOutputStream();
 					DataOutputStream dos = new DataOutputStream(bos);
@@ -139,6 +139,9 @@ public class PetStatue extends Item {
 					}
 					Packet250CustomPayload pcp = new Packet250CustomPayload("buddyPet", bos.toByteArray());
 					PacketDispatcher.sendPacketToServer(pcp);
+				}else{
+//					if(!par2World.isRemote){
+						par3EntityPlayer.addChatMessage("Your statue has to be imbued before being able to Point-change it !");
 				}
 			}
 		}

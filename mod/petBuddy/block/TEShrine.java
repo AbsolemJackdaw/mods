@@ -38,7 +38,7 @@ public class TEShrine extends TileEntity{
 
 	@Override
 	public void onDataPacket(INetworkManager net, Packet132TileEntityData pkt) {
-		this.readFromNBT(pkt.customParam1);
+		this.readFromNBT(pkt.data);
 	}
 
 	public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer)
