@@ -4,8 +4,6 @@ import java.util.Random;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
-import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelCow;
 import net.minecraft.client.model.ModelEnderman;
 import net.minecraft.client.model.ModelSlime;
@@ -22,7 +20,6 @@ import org.lwjgl.opengl.GL11;
 import petBuddy.entity.EntityBuddy;
 import petBuddy.entity.model.DragonsModel;
 import petBuddy.entity.model.SheepBody;
-import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

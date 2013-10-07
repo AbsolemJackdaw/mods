@@ -1,4 +1,4 @@
-//package tutorial;
+//package vanilla3DArmor;
 //
 //import net.minecraft.client.model.ModelBiped;
 //import net.minecraft.client.renderer.texture.IconRegister;
@@ -11,12 +11,13 @@
 //import cpw.mods.fml.relauncher.Side;
 //import cpw.mods.fml.relauncher.SideOnly;
 //
+//
+//
 //public class CustomArmor extends ItemArmor{
 //
 //	public CustomArmor(int par1, EnumArmorMaterial par2EnumArmorMaterial,
 //			int par3, int par4) {
 //		super(par1, par2EnumArmorMaterial, par3, par4);
-//		// TODO Auto-generated constructor stub
 //	}
 //
 //	@Override
@@ -29,31 +30,29 @@
 //	@Override
 //	public String getArmorTexture(ItemStack stack, Entity entity, int slot,
 //			String type) {
-//		if (stack.itemID == mod_ArmorTutorial.chest.itemID || stack.itemID == mod_ArmorTutorial.boots.itemID || stack.itemID == mod_ArmorTutorial.helmet.itemID) {
-//			return "armor:armorModel.png";
+//		if (stack.itemID == mod_VanillaArmor3D.chestD.itemID || stack.itemID == mod_VanillaArmor3D.bootsD.itemID || stack.itemID == mod_VanillaArmor3D.helmetD.itemID) {
+//			return "armor:armorD.png";
 //		}
-//		if (stack.itemID == mod_ArmorTutorial.legs.itemID) {
-//			return "armor:armorModelLegs.png";
+//		if (stack.itemID == mod_VanillaArmor3D.legsD.itemID) {
+//			return "armor:armorD2.png";
 //		}
 //		return null;
 //	}
 //
-//
+//	ModelBiped armorModel = null;
 //
 //	@Override
 //	@SideOnly(Side.CLIENT)
 //	public ModelBiped getArmorModel(EntityLivingBase entityLiving,
 //			ItemStack itemStack, int armorSlot) {
 //
-//		ModelBiped armorModel = null;
-//
 //		if(itemStack != null){
 //			int type = ((ItemArmor)itemStack.getItem()).armorType;
 //
 //			if(type == 1 || type == 3){
-//				armorModel = mod_ArmorTutorial.proxy.getArmorModel(0);
+//				armorModel = mod_VanillaArmor3D.proxy.getArmorModel(0);
 //			}else{
-//				armorModel = mod_ArmorTutorial.proxy.getArmorModel(1);
+//				armorModel = mod_VanillaArmor3D.proxy.getArmorModel(1);
 //			}
 //
 //			if(armorModel != null){

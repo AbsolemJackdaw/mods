@@ -39,8 +39,7 @@ public class BuddyPacketHandler implements IPacketHandler {
 			String buddyName;
 			EntityBuddy buddy;
 
-			switch(guiId){
-
+			switch(guiId){				
 			case 100:
 				secondID = dis.readInt();
 				buddyName = dis.readUTF();

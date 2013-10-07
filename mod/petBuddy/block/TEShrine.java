@@ -8,6 +8,7 @@ import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet132TileEntityData;
 import net.minecraft.tileentity.TileEntity;
+import cpw.mods.fml.common.FMLLog;
 
 public class TEShrine extends TileEntity{
 
@@ -31,8 +32,9 @@ public class TEShrine extends TileEntity{
 		Packet132TileEntityData datapacket = null;
 		NBTTagCompound blockinfo = new NBTTagCompound();
 		writeToNBT(blockinfo);
-		//4th paramater is action type, 1-4 will perform vanilla functions via this packet, dont use.
-		datapacket = new Packet132TileEntityData(this.xCoord, this.yCoord, this.zCoord,5, blockinfo);
+		//4th paramater is action type, 1-4 will perform vanilla functions via this packet, don't use.
+		datapacket = new Packet132TileEntityData(this.xCoord, this.yCoord, this.zCoord, 5, blockinfo);
+		FMLLog.getLogger().info("BLOCKINFO "+ blockinfo);
 		return datapacket;
 	}
 
@@ -88,7 +90,6 @@ public class TEShrine extends TileEntity{
 	@Override
 	public void updateEntity() {
 		super.updateEntity();
-
 	
 		if(cooldown == 0){
 			countdown = false;

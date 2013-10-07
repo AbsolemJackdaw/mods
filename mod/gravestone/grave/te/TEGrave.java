@@ -41,7 +41,6 @@ public class TEGrave extends TileEntity  implements IInventory
 
 	public TEGrave(){
 		inv = new ItemStack[40];
-
 	}
 
 	Random rand = new Random();

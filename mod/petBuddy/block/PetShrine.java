@@ -107,7 +107,7 @@ public class PetShrine extends BlockContainer {
 					}
 				}
 			}
-			/*==Retrieve Pending Object if no statue nad cycle hasnt started yet==*/
+			/*==Retrieve Pending Object if no statue and cycle hasn't started yet==*/
 			else if(!te.cycleDone && !te.hasStatue && te.hasItemStack){
 
 				EntityItem entityItem = new EntityItem(par1World, x, y, z, te.itemToImbue);
@@ -188,20 +188,5 @@ public class PetShrine extends BlockContainer {
 				par1World.spawnParticle("smoke", x+0.85f,y+0.3f,z+0.15f, 0.0D, 0.02D, 0.0D);
 			}
 		}
-	}
-
-	private int getRandomBuddy(){
-
-		int guiId;
-		Random rand = new Random();
-
-		int c = rand.nextInt(5);
-		if(c >0){
-			guiId = 3;
-		}else{
-			guiId = rand.nextInt(2+34);
-		}
-
-		return guiId;
 	}
 }

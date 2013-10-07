@@ -91,6 +91,7 @@ public class EntityBuddy extends BuddyBase
 
 	}
 
+	@Override
 	public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
 	{
 		super.writeEntityToNBT(par1NBTTagCompound);
@@ -114,8 +115,9 @@ public class EntityBuddy extends BuddyBase
 	{
 		super.readEntityFromNBT(par1NBTTagCompound);
 
+		this.pickedupItems = new ItemStack[50];
+
 		NBTTagList nbttaglist = par1NBTTagCompound.getTagList("Items");
-		this.pickedupItems =  new ItemStack[50];
 
 		for (int i = 0; i < nbttaglist.tagCount(); ++i)
 		{
@@ -243,7 +245,8 @@ public class EntityBuddy extends BuddyBase
 
 			if(player.inventory.getCurrentItem().getItem().equals(Item.stick) && !player.isSneaking()||
 					player.inventory.getCurrentItem().getItem().equals(Item.leather) && !player.capabilities.isCreativeMode){
-				PetBuddyMain.proxy.openGui(0, player, player.username, this.entityId, player.capabilities.isCreativeMode,player.inventory.getCurrentItem().getItem());
+				
+				PetBuddyMain.proxy.openGui(0, player, player.username, this.entityId);
 			}
 			if(player.inventory.getCurrentItem().getItem().equals(Item.silk)){
 				if (!this.worldObj.isRemote && hasItem == false){

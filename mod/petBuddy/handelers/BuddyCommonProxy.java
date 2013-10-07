@@ -1,7 +1,6 @@
 package petBuddy.handelers;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 
 public class BuddyCommonProxy {
 
@@ -13,6 +12,6 @@ public class BuddyCommonProxy {
 	
 	public void render() {}
 	
-	public void openGui(int id, EntityPlayer player, String name, int entityID, boolean creative, Item item){}
+	public void openGui(int id, EntityPlayer player, String name, int entityID){}
 	
 }

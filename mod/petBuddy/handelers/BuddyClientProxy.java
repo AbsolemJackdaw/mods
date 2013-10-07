@@ -2,7 +2,6 @@ package petBuddy.handelers;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraftforge.client.MinecraftForgeClient;
 import petBuddy.PetBuddyMain;
 import petBuddy.block.PetShrineRender;
@@ -33,8 +32,8 @@ public class BuddyClientProxy extends BuddyCommonProxy{
 	}
 
 	@Override
-	public void openGui(int id, EntityPlayer player, String name, int entityID, boolean creative, Item item)
+	public void openGui(int id, EntityPlayer player, String name, int entityID)
 	{
-		Minecraft.getMinecraft().displayGuiScreen(new PetInterface(player, name, entityID, creative, item, Minecraft.getMinecraft().gameSettings.guiScale));
+		Minecraft.getMinecraft().displayGuiScreen(new PetInterface(player, name, entityID, Minecraft.getMinecraft().gameSettings.guiScale));
 	}
 }

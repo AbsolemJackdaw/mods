@@ -11,7 +11,6 @@ import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.network.packet.Packet250CustomPayload;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 import org.lwjgl.opengl.GL11;
@@ -38,22 +37,19 @@ public class PetInterface extends GuiScreen {
 	private boolean isPlayerCreativeMode;
 
 
-	public PetInterface(EntityPlayer player, String name, int entityID, boolean creative, Item item, int scale) {
-		super();
-
+	public PetInterface(EntityPlayer player, String name, int entityID, int scale) {
 		thePlayer = player;
 		playerName = name;
 		inst = this;
 		World world = player.worldObj;
 		buddyID = entityID;
 		buddy= (EntityBuddy)world.getEntityByID(entityID);
-		isPlayerCreativeMode = creative;
-		String skinOrName = item.equals(Item.leather) ? "skin": "name";
+		isPlayerCreativeMode = player.capabilities.isCreativeMode;
+		String skinOrName = player.getCurrentEquippedItem().equals(Item.leather) ? "skin": "name";
 		if(isPlayerCreativeMode)
 			hi = "Choose a new Buddy to adventure with you.";
 		else
 			hi = "Choose a new "+ skinOrName +" for " + buddy.getName();
-
 	}
 
 	@Override
@@ -61,7 +57,6 @@ public class PetInterface extends GuiScreen {
 		this.buttonList.clear();
 
 		mc.getMinecraft().gameSettings.guiScale = 2;
-//		FMLLog.getLogger().info(""+mc.getMinecraft().gameSettings.guiScale + " " + PetBuddyMain.proxy.getGuiScale());
 		int posX = (this.width - xSize) / 2;
 		int posY = (this.height - ySize) / 2;
 		this.buttonList.add(new GuiButton(1, posX+160+50-20 , posY-110 , 20, 20, "X"));
@@ -113,6 +108,7 @@ public class PetInterface extends GuiScreen {
 		}
 
 		///////////////////////////___PET__NAME_____/////////////////////////////////////////////////
+		
 		////BUTTON////
 		if(isPlayerCreativeMode)
 			this.buttonList.add(new GuiButton(100, posX-200 , posY-110, 70, 20, "Submit name"));
@@ -132,6 +128,7 @@ public class PetInterface extends GuiScreen {
 		}
 
 		///////////////////////////___SKIN__NAME_____////////////////////////////////////////////////
+		
 		////BUTTON////
 		if(isPlayerCreativeMode)
 			this.buttonList.add(new GuiButton(101, posX+80 , posY-110, 70, 20, "Submit Skin"));
@@ -158,7 +155,6 @@ public class PetInterface extends GuiScreen {
 
 		try
 		{
-//			this.mc.renderEngine.bindTexture(new ResourceLocation("/gui/demo_bg.png"));
 			GL11.glColor4f(0.0F, 0.0F, 0.0F, 5.0F);
 			int posX = (this.width ) / 2;
 			int posY = (this.height) / 2;

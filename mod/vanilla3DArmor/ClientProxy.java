@@ -1,11 +1,11 @@
-package tutorial;
+package vanilla3DArmor;
 
 import net.minecraft.client.model.ModelBiped;
 
 public class ClientProxy extends CommonProxy {
 
-	private static final tutarm tutChest = new tutarm(1.0f);
-	private static final tutarm tutLegs = new tutarm(0.5f); 
+	private static final VanillaArmorModel tutChest = new VanillaArmorModel(1f);
+	private static final VanillaArmorModel tutLegs = new VanillaArmorModel(0.5f); 
 
 	@Override
 	    public ModelBiped getArmorModel(int id){
