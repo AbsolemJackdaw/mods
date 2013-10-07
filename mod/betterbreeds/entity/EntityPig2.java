@@ -47,10 +47,10 @@ public class EntityPig2 extends EntityAnimal
 	@Override
 	protected void applyEntityAttributes() {
 		super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(14);
-        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.20000000298023224D);
+		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(14);
+		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.20000000298023224D);
 	}
-	
+
 	protected void entityInit()
 	{
 		super.entityInit();
@@ -212,39 +212,23 @@ public class EntityPig2 extends EntityAnimal
 	 */
 	public EntityAnimal spawnBabyAnimal(EntityAgeable par1EntityAgeable)
 	{
-		int k = rand.nextInt(10);
 
-		if(k <= 4)
-		{
+		double chance = Math.random();
+
+		if(chance < 0.5)
 			return new EntityPig2(this.worldObj);
-		}
-		else if (k > 4 && k <=7)
-		{
+		else if (chance <0.8)
 			return new EntityPig (this.worldObj);
-		}
-		else if (k == 9)
-		{
+		else
 			return new EntityPig3 (this.worldObj);
-		}
-		else if ( k == 8)
-		{
-			return new EntityPig3 (this.worldObj);
-		}
-		if(k!=0)
-		{
-			int v = rand.nextInt(50);
-			if(v < 50)
-			{
-				return new EntityPig6 (this.worldObj);
-			}}
-		return (EntityAnimal)par1EntityAgeable;
+
 	}
-	
+
 	public boolean isBreedingItem(ItemStack par1ItemStack)
 	{
 		return par1ItemStack != null && par1ItemStack.itemID == Item.carrot.itemID;
 	}
-	
+
 	public void onStruckByLightning(EntityLightningBolt par1EntityLightningBolt)
 	{
 		if (!this.worldObj.isRemote)

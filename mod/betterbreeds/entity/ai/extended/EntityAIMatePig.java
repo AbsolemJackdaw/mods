@@ -115,16 +115,15 @@ public class EntityAIMatePig extends EntityAIBase
 	{
 		EntityAgeable entityageable = null;
 
-		int k = rand.nextInt(2);
+		double chance = Math.random();
 
-		if(k == 0)
-		{
+
+		if(chance < 0.5){
 			entityageable= new EntityPig2(theWorld);
-		}
-		else if (k == 1)
-		{
+		}else{
 			entityageable= new EntityPig (theWorld);
 		}
+		
 		if (entityageable != null)
 		{
 			this.theAnimal.setGrowingAge(6000);

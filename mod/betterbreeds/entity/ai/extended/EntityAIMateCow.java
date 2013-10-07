@@ -20,7 +20,7 @@ public class EntityAIMateCow extends EntityAIBase
 	World theWorld;
 	private EntityAnimal targetMate;
 	Random rand = new Random();
-	
+
 	/**
 	 * Delay preventing a baby from spawning immediately when two mate-able animals find each other.
 	 */
@@ -118,20 +118,21 @@ public class EntityAIMateCow extends EntityAIBase
 	{
 		EntityAgeable entityageable = null;
 
-		int k = rand.nextInt(50);
-		if(k <= 24)
+		double chance = Math.random();
+		
+		if(chance < 0.40) // 40 % chance
 		{
 			entityageable= new EntityCow(theWorld);
 		}
-		else if (k > 24 && k <=36)
+		else if (chance < 0.70)// its not < 4, so 5,6 or 7. 30% chance
 		{
 			entityageable= new EntityCow2 (theWorld);
 		}
-		else if (k > 36 && k <= 48 )
+		else if (chance < 0.99 )// all is smaller then 7. so 8 or 9. 20 % or rather 29,9 %
 		{
 			entityageable= new EntityCow3 (theWorld);
 		}
-		else if (k > 48 && k <=49)
+		else // 0.1%
 		{
 			entityageable= new EntityMooshroom (theWorld);
 		}
@@ -142,7 +143,7 @@ public class EntityAIMateCow extends EntityAIBase
 			this.targetMate.setGrowingAge(6000);
 			this.theAnimal.resetInLove();
 			this.targetMate.resetInLove();
-			entityageable.setGrowingAge(-24000);
+			entityageable.setGrowingAge(-18000);
 			entityageable.setLocationAndAngles(this.theAnimal.posX, this.theAnimal.posY, this.theAnimal.posZ, 0.0F, 0.0F);
 			this.theWorld.spawnEntityInWorld(entityageable);
 			Random random = this.theAnimal.getRNG();

@@ -38,8 +38,7 @@ import betterbreeds.item.ItemSheppardPie;
 import betterbreeds.item.ItemSubsFood;
 import betterbreeds.item.ItemXmasSpecial;
 import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.Init;
-import cpw.mods.fml.common.Mod.PreInit;
+import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -50,7 +49,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 
-@Mod(modid = "Breeds", name = "ModBreeds", version = "1.5.1 v2.0")
+@Mod(modid = "Breeds", name = "ModBreeds", version = "1.6.4 v1")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
 
 
@@ -82,13 +81,13 @@ public class ModBreeds{
 	@SidedProxy(clientSide = "betterbreeds.handelers.ClientProxy", serverSide = "betterbreeds.handelers.CommonProxy")
 	public static CommonProxy proxy;
 
-	@PreInit
+	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 
 		BreedsConfig.instance.loadConfig(event.getSuggestedConfigurationFile());
 	}
 
-	@Init
+	@EventHandler
 	public void load(FMLInitializationEvent event)
 	{
 		BBT = new BBTab(CreativeTabs.getNextID(), "BreedTab");

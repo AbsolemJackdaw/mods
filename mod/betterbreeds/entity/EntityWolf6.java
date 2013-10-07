@@ -18,7 +18,6 @@ import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityTameable;
-import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.item.Item;
@@ -73,45 +72,45 @@ public class EntityWolf6 extends EntityTameable
 		return spawnBabyAnimal(entityageable);
 	}
 
-	  protected void applyEntityAttributes()
-	    {
-	        super.applyEntityAttributes();
-	        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.30000001192092896D);
+	protected void applyEntityAttributes()
+	{
+		super.applyEntityAttributes();
+		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.30000001192092896D);
 
-	        if (this.isTamed())
-	        {
-	            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(20.0D);
-	        }
-	        else
-	        {
-	            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(8.0D);
-	        }
-	    }
+		if (this.isTamed())
+		{
+			this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(20.0D);
+		}
+		else
+		{
+			this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(8.0D);
+		}
+	}
 
 	/**
 	 * Returns true if the newer Entity AI code should be run
 	 */
-	public boolean isAIEnabled()
-	{
-		return true;
-	}
-
-	/**
-	 * Sets the active target the Task system uses for tracking
-	 */ @Override
-	 public void setAttackTarget(EntityLivingBase par1EntityLivingBase)
+	 public boolean isAIEnabled()
 	 {
-		 super.setAttackTarget(par1EntityLivingBase);
-
-		 if (par1EntityLivingBase == null)
-		 {
-			 this.setAngry(false);
-		 }
-		 else if (!this.isTamed())
-		 {
-			 this.setAngry(true);
-		 }
+		 return true;
 	 }
+
+	 /**
+	  * Sets the active target the Task system uses for tracking
+	  */ @Override
+	  public void setAttackTarget(EntityLivingBase par1EntityLivingBase)
+	  {
+		  super.setAttackTarget(par1EntityLivingBase);
+
+		  if (par1EntityLivingBase == null)
+		  {
+			  this.setAngry(false);
+		  }
+		  else if (!this.isTamed())
+		  {
+			  this.setAngry(true);
+		  }
+	  }
 
 
 	  @Override
@@ -561,31 +560,8 @@ public class EntityWolf6 extends EntityTameable
 	     */
 	    public EntityAnimal spawnBabyAnimal(EntityAgeable par1EntityAgeable)
 	    {
-	    	int k = rand.nextInt(4);
 
-	    	if (k == 0)
-	    	{
-	    		EntityWolf6 var3 = new EntityWolf6(this.worldObj);
-	    		var3.setOwner(this.getOwnerName());
-	    		var3.setTamed(true);
-	    		return var3;
-	    	}
-	    	if (k == 1 )
-	    	{
-	    		EntityWolf3 var4 = new EntityWolf3(this.worldObj);
-	    		var4.setOwner(this.getOwnerName());
-	    		var4.setTamed(true);
-	    		return var4;
-	    	}
-	    	if (k > 1 && k <= 3)
-	    	{
-	    		EntityWolf var2 = new EntityWolf(this.worldObj);
-	    		var2.setOwner(this.getOwnerName());
-	    		var2.setTamed(true);
-	    		return var2;
-	    	}
-
-	    	return (EntityAnimal)par1EntityAgeable;
+	    	return null;
 	    }
 
 	    /**
@@ -593,23 +569,7 @@ public class EntityWolf6 extends EntityTameable
 	     */
 	    public boolean canMateWith(EntityAnimal par1EntityAnimal)
 	    {
-	    	if (par1EntityAnimal == this)
-	    	{
-	    		return false;
-	    	}
-	    	else if (!this.isTamed())
-	    	{
-	    		return false;
-	    	}
-	    	else if (!(par1EntityAnimal instanceof EntityWolf6))
-	    	{
-	    		return false;
-	    	}
-	    	else
-	    	{
-	    		EntityWolf6 var2 = (EntityWolf6)par1EntityAnimal;
-	    		return !var2.isTamed() ? false : (var2.isSitting() ? false : this.isInLove() && var2.isInLove());
-	    	}
+	    	return false;
 	    }
 
 	    public boolean func_70922_bv()

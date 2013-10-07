@@ -319,12 +319,11 @@ public class EntitySheep2 extends EntityAnimal
          return (EntityAnimal)par1EntityAgeable;
     }
 
- 	
-
     /**
      * This function applies the benefits of growing back wool and faster growing up to the acting entity. (This
      * function is used in the AIEatGrass)
      */
+    @Override
     public void eatGrassBonus()
     {
         this.setSheared(false);

@@ -188,6 +188,8 @@ public class EntityPig6 extends EntityAnimal
 	{
 		return par1ItemStack != null && par1ItemStack.itemID == Item.carrot.itemID;
 	}
+	
+	
 	public void onStruckByLightning(EntityLightningBolt par1EntityLightningBolt)
 	{
 		if (!this.worldObj.isRemote)

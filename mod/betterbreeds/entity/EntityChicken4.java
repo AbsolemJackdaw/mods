@@ -19,193 +19,192 @@ import betterbreeds.ModBreeds;
 
 public class EntityChicken4 extends EntityAnimal
 {
-    public boolean field_70885_d = false;
-    public float field_70886_e = 0.0F;
-    public float destPos = 0.0F;
-    public float field_70884_g;
-    public float field_70888_h;
-    public float field_70889_i = 1.0F;
+	public boolean field_70885_d = false;
+	public float field_70886_e = 0.0F;
+	public float destPos = 0.0F;
+	public float field_70884_g;
+	public float field_70888_h;
+	public float field_70889_i = 1.0F;
 
-    /** The time until the next egg is spawned. */
-    public int timeUntilNextEgg;
+	/** The time until the next egg is spawned. */
+	public int timeUntilNextEgg;
 
-    public EntityChicken4(World par1World)
-    {
-        super(par1World);
-        this.setSize(0.3F, 0.7F);
-        this.timeUntilNextEgg = this.rand.nextInt(3000) + 6000;
-        float var2 = 0.25F;
-        this.tasks.addTask(0, new EntityAISwimming(this));
-        this.tasks.addTask(1, new EntityAIPanic(this, 0.38F));
-        this.tasks.addTask(2, new EntityAIMate(this, var2));
-        this.tasks.addTask(3, new EntityAITempt(this, 0.25F, Item.seeds.itemID, false));
-        this.tasks.addTask(4, new EntityAIFollowParent(this, 0.28F));
-        this.tasks.addTask(5, new EntityAIWander(this, var2));
-        this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
-        this.tasks.addTask(7, new EntityAILookIdle(this));
-    }
-
-    /**
-     * Returns true if the newer Entity AI code should be run
-     */
-    public boolean isAIEnabled()
-    {
-        return true;
-    }
-
-	@Override
-	protected void applyEntityAttributes() {
-		super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(100);
-
+	public EntityChicken4(World par1World)
+	{
+		super(par1World);
+		this.setSize(0.3F, 0.7F);
+		this.timeUntilNextEgg = this.rand.nextInt(3000) + 6000;
+		float var2 = 0.25F;
+		this.tasks.addTask(0, new EntityAISwimming(this));
+		this.tasks.addTask(1, new EntityAIPanic(this, 0.38F));
+		this.tasks.addTask(2, new EntityAIMate(this, var2));
+		this.tasks.addTask(3, new EntityAITempt(this, 0.25F, Item.seeds.itemID, false));
+		this.tasks.addTask(4, new EntityAIFollowParent(this, 0.28F));
+		this.tasks.addTask(5, new EntityAIWander(this, var2));
+		this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
+		this.tasks.addTask(7, new EntityAILookIdle(this));
 	}
-    public boolean interact(EntityPlayer par1EntityPlayer)
-    {
-        
-        ItemStack var2 = par1EntityPlayer.inventory.getCurrentItem();
 
-        if (var2 != null && var2.itemID == ModBreeds.XmasSpecial.itemID && var2.getItemDamage() == 5&& !worldObj.isRemote)
-        {
-        	EntityChicken5 var21 = new EntityChicken5(this.worldObj);           
-        	var21.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, this.rotationPitch);
+	/**
+	 * Returns true if the newer Entity AI code should be run
+	 */
+	 public boolean isAIEnabled()
+	 {
+		 return true;
+	 }
 
-             this.worldObj.spawnEntityInWorld(var21);
-             this.setDead();
-             
-          	if (--var2.stackSize <= 0)
-            {
-                par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, null);
-            }
-           
+	 @Override
+	 protected void applyEntityAttributes() {
+		 super.applyEntityAttributes();
+		 this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(100);
 
-            return true;
-        }
-        else
-        {
-            return super.interact(par1EntityPlayer);
-        }
-    }
+	 }
+	 public boolean interact(EntityPlayer par1EntityPlayer)
+	 {
 
-    /**
-     * Called frequently so the entity can update its state every tick as required. For example, zombies and skeletons
-     * use this to react to sunlight and start to burn.
-     */
-    public void onLivingUpdate()
-    {
-        super.onLivingUpdate();
-        this.field_70888_h = this.field_70886_e;
-        this.field_70884_g = this.destPos;
-        this.destPos = (float)((double)this.destPos + (double)(this.onGround ? -1 : 4) * 0.3D);
+		 ItemStack var2 = par1EntityPlayer.inventory.getCurrentItem();
 
-        if (this.destPos < 0.0F)
-        {
-            this.destPos = 0.0F;
-        }
+		 if (var2 != null && var2.itemID == ModBreeds.XmasSpecial.itemID && var2.getItemDamage() == 5&& !worldObj.isRemote)
+		 {
+			 EntityChicken5 var21 = new EntityChicken5(this.worldObj);           
+			 var21.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, this.rotationPitch);
 
-        if (this.destPos > 1.0F)
-        {
-            this.destPos = 1.0F;
-        }
+			 this.worldObj.spawnEntityInWorld(var21);
+			 this.setDead();
 
-        if (!this.onGround && this.field_70889_i < 1.0F)
-        {
-            this.field_70889_i = 1.0F;
-        }
+			 if (--var2.stackSize <= 0)
+			 {
+				 par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, null);
+			 }
 
-        this.field_70889_i = (float)((double)this.field_70889_i * 0.9D);
 
-        if (!this.onGround && this.motionY < 0.0D)
-        {
-            this.motionY *= 0.6D;
-        }
+			 return true;
+		 }
+		 else
+		 {
+			 return super.interact(par1EntityPlayer);
+		 }
+	 }
 
-        this.field_70886_e += this.field_70889_i * 2.0F;
+	 /**
+	  * Called frequently so the entity can update its state every tick as required. For example, zombies and skeletons
+	  * use this to react to sunlight and start to burn.
+	  */
+	 public void onLivingUpdate()
+	 {
+		 super.onLivingUpdate();
+		 this.field_70888_h = this.field_70886_e;
+		 this.field_70884_g = this.destPos;
+		 this.destPos = (float)((double)this.destPos + (double)(this.onGround ? -1 : 4) * 0.3D);
 
-        if (!this.isChild() && !this.worldObj.isRemote && --this.timeUntilNextEgg <= 0)
-        {
-            this.worldObj.playSoundAtEntity(this, "mob.chickenplop", 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
-            this.dropItem(ModBreeds.EasterEgg.itemID, 1);
-            this.timeUntilNextEgg = this.rand.nextInt(3000) + 6000;
-        }
-    }
+		 if (this.destPos < 0.0F)
+		 {
+			 this.destPos = 0.0F;
+		 }
 
-    /**
-     * Called when the mob is falling. Calculates and applies fall damage.
-     */
-    protected void fall(float par1) {}
+		 if (this.destPos > 1.0F)
+		 {
+			 this.destPos = 1.0F;
+		 }
 
-    /**
-     * Returns the sound this mob makes while it's alive.
-     */
-    protected String getLivingSound()
-    {
-        return "mob.chicken.say";
-    }
+		 if (!this.onGround && this.field_70889_i < 1.0F)
+		 {
+			 this.field_70889_i = 1.0F;
+		 }
 
-    /**
-     * Returns the sound this mob makes when it is hurt.
-     */
-    protected String getHurtSound()
-    {
-        return "mob.chicken.hurt";
-    }
+		 this.field_70889_i = (float)((double)this.field_70889_i * 0.9D);
 
-    /**
-     * Returns the sound this mob makes on death.
-     */
-    protected String getDeathSound()
-    {
-        return "mob.chicken.hurt";
-    }
+		 if (!this.onGround && this.motionY < 0.0D)
+		 {
+			 this.motionY *= 0.6D;
+		 }
 
-    /**
-     * Returns the item ID for the item the mob drops on death.
-     */
-    protected int getDropItemId()
-    {
-        return ModBreeds.EasterEgg.itemID;
-    }
+		 this.field_70886_e += this.field_70889_i * 2.0F;
 
-    /**
-     * Drop 0-2 items of this living's type
-     */
-    protected void dropFewItems(boolean par1, int par2)
-    {
-        int var3 = this.rand.nextInt(3) + this.rand.nextInt(1 + par2);
+		 if (!this.isChild() && !this.worldObj.isRemote && --this.timeUntilNextEgg <= 0)
+		 {
+			 this.worldObj.playSoundAtEntity(this, "mob.chickenplop", 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
+			 this.dropItem(ModBreeds.EasterEgg.itemID, 1);
+			 this.timeUntilNextEgg = this.rand.nextInt(3000) + 6000;
+		 }
+	 }
 
-        for (int var4 = 0; var4 < var3; ++var4)
-        {
-        	this.entityDropItem(new ItemStack(Item.dyePowder.itemID, 3, 1), 0.0F);
-        }
+	 /**
+	  * Called when the mob is falling. Calculates and applies fall damage.
+	  */
+	 protected void fall(float par1) {}
 
-        if (this.isBurning())
-        {
-            this.dropItem(ModBreeds.EasterEgg.itemID, 1);
-        }
-        else
-        {
-            this.entityDropItem(new ItemStack(Item.dyePowder.itemID, 3, 1),0F);
-        }
-    }
+	 /**
+	  * Returns the sound this mob makes while it's alive.
+	  */
+	 protected String getLivingSound()
+	 {
+		 return "mob.chicken.say";
+	 }
 
-    /**
-     * This function is used when two same-species animals in 'love mode' breed to generate the new baby animal.
-     */
-    public EntityAnimal spawnBabyAnimal(EntityAgeable par1EntityAgeable)
-    {
-    	
-        return new EntityChicken4(this.worldObj);
-    }
-    
-    @Override
-    public boolean isBreedingItem(ItemStack par1ItemStack)
-    {
-        return par1ItemStack != null && par1ItemStack.getItem() instanceof ItemSeeds;
-    }
+	 /**
+	  * Returns the sound this mob makes when it is hurt.
+	  */
+	 protected String getHurtSound()
+	 {
+		 return "mob.chicken.hurt";
+	 }
 
-	@Override
-	public EntityAgeable createChild(EntityAgeable entityageable) {
-		// TODO Auto-generated method stub
-		return spawnBabyAnimal(entityageable);
-	}
+	 /**
+	  * Returns the sound this mob makes on death.
+	  */
+	 protected String getDeathSound()
+	 {
+		 return "mob.chicken.hurt";
+	 }
+
+	 /**
+	  * Returns the item ID for the item the mob drops on death.
+	  */
+	 protected int getDropItemId()
+	 {
+		 return ModBreeds.EasterEgg.itemID;
+	 }
+
+	 /**
+	  * Drop 0-2 items of this living's type
+	  */
+	 protected void dropFewItems(boolean par1, int par2)
+	 {
+		 int var3 = this.rand.nextInt(3) + this.rand.nextInt(1 + par2);
+
+		 for (int var4 = 0; var4 < var3; ++var4)
+		 {
+			 this.entityDropItem(new ItemStack(Item.dyePowder.itemID, 3, 1), 0.0F);
+		 }
+
+		 if (this.isBurning())
+		 {
+			 this.dropItem(ModBreeds.EasterEgg.itemID, 1);
+		 }
+		 else
+		 {
+			 this.entityDropItem(new ItemStack(Item.dyePowder.itemID, 3, 1),0F);
+		 }
+	 }
+
+	 /**
+	  * This function is used when two same-species animals in 'love mode' breed to generate the new baby animal.
+	  */
+	 public EntityAnimal spawnBabyAnimal(EntityAgeable par1EntityAgeable)
+	 {
+		 return new EntityChicken4(this.worldObj);
+	 }
+
+	 @Override
+	 public boolean isBreedingItem(ItemStack par1ItemStack)
+	 {
+		 return par1ItemStack != null && par1ItemStack.getItem() instanceof ItemSeeds;
+	 }
+
+	 @Override
+	 public EntityAgeable createChild(EntityAgeable entityageable) {
+		 // TODO Auto-generated method stub
+		 return spawnBabyAnimal(entityageable);
+	 }
 }

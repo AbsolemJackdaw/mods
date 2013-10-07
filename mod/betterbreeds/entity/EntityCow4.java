@@ -126,13 +126,10 @@ this.entityDropItem(new ItemStack(ModBreeds.XmasSpecial,1,3), 0f);
     	 worldObj.spawnParticle("smoke", posX-0.2f, posY+(double)(height), posZ-0.2f, 0.0D, 0.0D, 0.0D);
     	 worldObj.spawnParticle("smoke", posX+0.2f, posY+(double)(height), posZ-0.2f, 0.0D, 0.0D, 0.0D);
 
-
-
     }
 
 	@Override
 	public EntityAgeable createChild(EntityAgeable entityageable) {
-		// TODO Auto-generated method stub
 		return null;
 	}
     

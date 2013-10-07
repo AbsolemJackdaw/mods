@@ -56,7 +56,7 @@ public class EntityChicken3 extends EntityAnimal
 	@Override
 	protected void applyEntityAttributes() {
 		super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(10);
+		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(10);
 
 	}
 	public boolean interact(EntityPlayer par1EntityPlayer)
@@ -191,28 +191,17 @@ public class EntityChicken3 extends EntityAnimal
 	 */
 	public EntityAnimal spawnBabyAnimal(EntityAgeable par1EntityAgeable)
 	{
-		int k = rand.nextInt(100);
-
-		if(k <44)
+		double chance = Math.random();
+		if(chance < 0.45)
 		{
 			return new EntityChicken3(this.worldObj);
 		}
-		else if (k >=44 && k <= 89)
+		else if (chance < 0.9)
 		{
 			return new EntityChicken2 (this.worldObj);
 		}
-		if (k > 89 && k<=99)
-		{
+		else
 			return new EntityChicken4 (this.worldObj);
-		}
-		if(k!=0)
-		{
-			int v = rand.nextInt(50);
-			if(v < 50)
-			{
-				return new EntityChicken5 (this.worldObj);
-			}}
-		return (EntityAnimal) par1EntityAgeable;
 	}
 
 	@Override
@@ -220,10 +209,10 @@ public class EntityChicken3 extends EntityAnimal
 		// TODO Auto-generated method stub
 		return spawnBabyAnimal(entityageable);
 	}
-	
+
 	@Override
-    public boolean isBreedingItem(ItemStack par1ItemStack)
-    {
-        return par1ItemStack != null && par1ItemStack.getItem() instanceof ItemSeeds;
-    }
+	public boolean isBreedingItem(ItemStack par1ItemStack)
+	{
+		return par1ItemStack != null && par1ItemStack.getItem() instanceof ItemSeeds;
+	}
 }

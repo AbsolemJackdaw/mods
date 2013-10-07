@@ -79,7 +79,7 @@ public class EntityWolf2 extends EntityTameable
 	  protected void applyEntityAttributes()
 	    {
 	        super.applyEntityAttributes();
-	        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.30000001192092896D);
+	        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.50000001192092896D);
 
 	        if (this.isTamed())
 	        {
@@ -560,31 +560,24 @@ public class EntityWolf2 extends EntityTameable
 	     */
 	    public EntityAnimal spawnBabyAnimal(EntityAgeable par1EntityAgeable)
 	    {
-	    	int k = rand.nextInt(4);
+	    	double chance = Math.random();
 
-	    	if (k == 0)
-	    	{
+	    	if (chance < 0.5){
 	    		EntityWolf2 var3 = new EntityWolf2(this.worldObj);
 	    		var3.setOwner(this.getOwnerName());
 	    		var3.setTamed(true);
 	    		return var3;
-	    	}
-	    	if (k == 1 )
-	    	{
+	    	}else if (chance < 0.7){
 	    		EntityWolf3 var4 = new EntityWolf3(this.worldObj);
 	    		var4.setOwner(this.getOwnerName());
 	    		var4.setTamed(true);
 	    		return var4;
-	    	}
-	    	if (k > 1 && k <= 3)
-	    	{
+	    	}else{
 	    		EntityWolf var2 = new EntityWolf(this.worldObj);
 	    		var2.setOwner(this.getOwnerName());
 	    		var2.setTamed(true);
 	    		return var2;
 	    	}
-
-	    	return (EntityAnimal)par1EntityAgeable;
 	    }
 
 	    /**

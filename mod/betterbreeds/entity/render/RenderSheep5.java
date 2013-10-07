@@ -13,7 +13,7 @@ import betterbreeds.entity.EntitySheep5;
 
 public class RenderSheep5 extends RenderLiving
 {
-	private static final ResourceLocation texture = new ResourceLocation("subaraki:BB/meatSheep.png");
+	private static final ResourceLocation texture = new ResourceLocation("textures/entity/sheep/sheep.png");
 
 	protected ResourceLocation func_110919_a(EntitySheep5 par1EntityChicken)
 	{
@@ -36,7 +36,7 @@ public class RenderSheep5 extends RenderLiving
 	{
 		if (par2 == 0 && !par1EntitySheep.getSheared())
 		{
-			this.bindTexture(new ResourceLocation("/subaraki:BB/xmasheep.png"));
+			this.bindTexture(new ResourceLocation("subaraki:BB/xmasheep.png"));
 			float var4 = 1.0F;
 			int var5 = par1EntitySheep.getFleeceColor();
 			GL11.glColor3f(var4 * EntitySheep5.fleeceColorTable[var5][0], var4 * EntitySheep5.fleeceColorTable[var5][1], var4 * EntitySheep5.fleeceColorTable[var5][2]);

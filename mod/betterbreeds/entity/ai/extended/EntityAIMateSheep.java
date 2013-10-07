@@ -116,23 +116,16 @@ public class EntityAIMateSheep extends EntityAIBase
 	{
 		EntityAgeable entityageable = null;
 
-		int k = rand.nextInt(90);
-		if (k <= 30)
-		{
+		double chance = Math.random();
+		
+		if (chance < 0.33){
 			entityageable = new EntitySheep3(this.theWorld);
-
-		}
-		else if (k > 30 && k <=60)
-		{
+		}else if (chance < 0.66){
 			entityageable = new EntitySheep2(this.theWorld);
-
-		}
-
-		else if (k > 60 && k <=89)
-		{
+		}else{
 			entityageable = new EntitySheep(this.theWorld);
-
 		}
+		
 		if (entityageable != null)
 		{
 			this.theAnimal.setGrowingAge(6000);

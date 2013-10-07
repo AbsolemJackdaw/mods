@@ -244,34 +244,18 @@ public class EntityPig4 extends EntityAnimal
 	 */
 	public EntityAnimal spawnBabyAnimal(EntityAgeable par1EntityAgeable)
 	{
-		int k = rand.nextInt(20);
 
-		if(k <= 9)
-		{
+		double chance = Math.random();
+		
+		if(chance < 0.5)
 			return new EntityPig4(this.worldObj);
-		}
-		else if (k > 9 && k <=14)
-		{
+		else if (chance < 0.7)
 			return new EntityPig3 (this.worldObj);
-		}
-		else if (k > 14 && k <=17)
-		{
+		else if (chance < 0.9)
 			return new EntityPig2 (this.worldObj);
-		}
-
-		else if (k > 17 && k <= 19)
-		{
+		else
 			return new EntityPig5 (this.worldObj);
-		}
 
-		if(k!=0)
-		{
-			int v = rand.nextInt(50);
-			if(v < 50)
-			{
-				return new EntityPig6 (this.worldObj);
-			}}
-		return (EntityAnimal)par1EntityAgeable;
 	}
 
 

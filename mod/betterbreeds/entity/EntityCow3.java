@@ -46,8 +46,8 @@ public class EntityCow3 extends EntityAnimal
 	@Override
 	protected void applyEntityAttributes() {
 		super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(10);
-        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.20000000298023224D);
+		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(10);
+		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.20000000298023224D);
 	}
 
 	/**
@@ -162,33 +162,16 @@ public class EntityCow3 extends EntityAnimal
 	 */
 	public EntityAgeable spawnBabyAnimal(EntityAgeable par1EntityAgeable)
 	{
-		int k = rand.nextInt(50);
+		double chance = Math.random();
 
-		if(k <= 24)
-		{
+		if(chance < 0.5)
 			return new EntityCow3(this.worldObj);
-		}
-		else if (k > 24 && k <=36)
-		{
+		else if (chance < 0.7)
 			return new EntityCow (this.worldObj);
-		}
-		else if (k > 36 && k <= 48)
-		{
+		else if (chance < 0.99)
 			return new EntityCow2 (this.worldObj);
-		}
-		else if (k > 48 && k <=49)
-		{
+		else
 			return new EntityMooshroom (this.worldObj);
-		}
-		if(k!=0)
-		{
-			int v = rand.nextInt(50);
-			if(v < 50)
-			{
-				return new EntityCow3 (this.worldObj);
-			}
-		}
-		return par1EntityAgeable; 
 	}
 
 	public EntityAgeable createChild(EntityAgeable par1EntityAgeable)

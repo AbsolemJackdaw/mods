@@ -50,8 +50,8 @@ public class EntityPig3 extends EntityAnimal
 	@Override
 	protected void applyEntityAttributes() {
 		super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(16);
-        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.20000000298023224D);
+		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(16);
+		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.30000000298023224D);
 	}
 
 	protected void entityInit()
@@ -215,32 +215,18 @@ public class EntityPig3 extends EntityAnimal
 	 */
 	public EntityAnimal spawnBabyAnimal(EntityAgeable par1EntityAgeable)
 	{
-		int k = rand.nextInt(20);
 
-		if(k <= 9)
-		{
+		double chance = Math.random();
+
+		if(chance < 0.5)
 			return new EntityPig3(this.worldObj);
-		}
-		else if (k > 9 && k <=14)
-		{
+		else if (chance < 0.75)
 			return new EntityPig2 (this.worldObj);
-		}
-		else if (k > 14 && k <=17)
-		{
+		else if (chance < 0.9)
 			return new EntityPig (this.worldObj);
-		}
-		else if (k > 17 && k <=19)
-		{
+		else 
 			return new EntityPig4 (this.worldObj);
-		}
-		if(k!=0)
-		{
-			int v = rand.nextInt(50);
-			if(v < 50)
-			{
-				return new EntityPig6 (this.worldObj);
-			}}
-		return (EntityAnimal)par1EntityAgeable;
+
 	}
 
 	public boolean isBreedingItem(ItemStack par1ItemStack)

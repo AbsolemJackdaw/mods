@@ -38,6 +38,7 @@ public class EntityAIMateWolf extends EntityAIBase
 	/**
 	 * Returns whether the EntityAIBase should begin execution.
 	 */
+	@Override
 	public boolean shouldExecute()
 	{
 		if (!this.theAnimal.isInLove())
@@ -54,6 +55,7 @@ public class EntityAIMateWolf extends EntityAIBase
 	/**
 	 * Returns whether an in-progress EntityAIBase should continue executing
 	 */
+	@Override
 	public boolean continueExecuting()
 	{
 		return this.targetMate.isEntityAlive() && this.targetMate.isInLove() && this.spawnBabyDelay < 60;
@@ -62,6 +64,7 @@ public class EntityAIMateWolf extends EntityAIBase
 	/**
 	 * Resets the task
 	 */
+	@Override
 	public void resetTask()
 	{
 		this.targetMate = null;
@@ -71,6 +74,7 @@ public class EntityAIMateWolf extends EntityAIBase
 	/**
 	 * Updates the task
 	 */
+	@Override
 	public void updateTask()
 	{
 		this.theAnimal.getLookHelper().setLookPositionWithEntity(this.targetMate, 10.0F, (float)this.theAnimal.getVerticalFaceSpeed());
@@ -116,17 +120,12 @@ public class EntityAIMateWolf extends EntityAIBase
 	{
 		EntityAgeable entityageable = null ;
 
-		int k = rand.nextInt(4);
+		double chance = Math.random();
 
-		if (k == 0)
-		{
+		if (chance  < 0.4){
 			entityageable = new EntityWolf2(theWorld);
-		}
-
-		if (k > 0 && k <= 3)
-		{
+		}else{
 			entityageable = new EntityWolf(theWorld);
-
 		}
 
 		if (entityageable != null)

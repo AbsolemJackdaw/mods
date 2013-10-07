@@ -248,25 +248,22 @@ public class EntityPig5 extends EntityAnimal
      */
     public EntityAnimal spawnBabyAnimal(EntityAgeable par1EntityAgeable)
     {
-    	int k = rand.nextInt(10);
+    	double chance = Math.random();
     	
-    	if(k <= 8)
-    	{
+    	if(chance < 0.8)
         return new EntityPig(this.worldObj);
-    	}
-    	
-    	else if (k == 9)
-    	{
+    	else
     		return new EntityPig5 (this.worldObj);
-    	}
     	
-    	return (EntityAnimal)par1EntityAgeable;
     }
 
+    @Override
     public boolean isBreedingItem(ItemStack par1ItemStack)
     {
         return par1ItemStack != null && par1ItemStack.itemID == Item.carrot.itemID;
     }
+    
+    @Override
     public void onStruckByLightning(EntityLightningBolt par1EntityLightningBolt)
     {
         if (!this.worldObj.isRemote)
@@ -280,7 +277,6 @@ public class EntityPig5 extends EntityAnimal
 
 	@Override
 	public EntityAgeable createChild(EntityAgeable entityageable) {
-		// TODO Auto-generated method stub
 		return spawnBabyAnimal(entityageable);
 	}
 }
