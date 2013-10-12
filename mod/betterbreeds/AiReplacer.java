@@ -33,44 +33,6 @@ public class AiReplacer implements IScheduledTickHandler {
 
 	@Override
 	public void tickStart(EnumSet<TickType> type, Object... tickData) {
-
-		if (FMLCommonHandler.instance().getMinecraftServerInstance().isServerRunning() && FMLCommonHandler.instance().getMinecraftServerInstance().worldServers != null) {
-			if(FMLCommonHandler.instance().getEffectiveSide().isServer()){
-				for (WorldServer ws : FMLCommonHandler.instance().getMinecraftServerInstance().worldServers) {
-					if (ws != null) {
-
-						try
-						{
-							for(int i=0;i<ws.getLoadedEntityList().size();i++)
-							{
-								if(((Entity)ws.getLoadedEntityList().get(i)) instanceof EntityLiving)
-								{
-									Entity e =(Entity) ws.getLoadedEntityList().get(i);
-
-									if (e != null && e instanceof EntityAnimal) 
-									{
-										EntityAnimal animal = (EntityAnimal) e;
-
-										/*===== Breeding naturally ! =====*/
-										double chanceOfFallingInLove = Math.random();
-										//										FMLLog.getLogger().info("" + chanceOfFallingInLove);
-										if(chanceOfFallingInLove < 0.0005){
-											if(animal.getGrowingAge() == 0 && animal.inLove <= 0){
-												animal.func_110196_bT();
-											}
-										}
-									}
-								}
-							}
-						}
-						catch(Throwable en)
-						{
-
-						}
-					}
-				}
-			}
-		}
 	}
 
 	@Override
@@ -122,6 +84,48 @@ public class AiReplacer implements IScheduledTickHandler {
 					}
 				}
 			}
+		}
+
+
+
+
+		if(BreedsConfig.instance.naturalBreeding){
+			if (FMLCommonHandler.instance().getMinecraftServerInstance().isServerRunning() && FMLCommonHandler.instance().getMinecraftServerInstance().worldServers != null) {
+				if(FMLCommonHandler.instance().getEffectiveSide().isServer()){
+					for (WorldServer ws : FMLCommonHandler.instance().getMinecraftServerInstance().worldServers) {
+						if (ws != null) {
+
+							try
+							{
+								for(int i=0;i<ws.getLoadedEntityList().size();i++)
+								{
+									if(((Entity)ws.getLoadedEntityList().get(i)) instanceof EntityLiving)
+									{
+										Entity e =(Entity) ws.getLoadedEntityList().get(i);
+
+										if (e != null && e instanceof EntityAnimal) 
+										{
+											EntityAnimal animal = (EntityAnimal) e;
+
+											/*===== Breeding naturally ! =====*/
+											double chanceOfFallingInLove = Math.random();
+											if(chanceOfFallingInLove < 0.0005){
+												if(animal.getGrowingAge() == 0 && animal.inLove <= 0){
+													animal.func_110196_bT();
+												}
+											}
+										}
+									}
+								}
+							}
+							catch(Throwable en)
+							{
+
+							}
+						}
+					}
+				}
+			}	
 		}
 	}
 

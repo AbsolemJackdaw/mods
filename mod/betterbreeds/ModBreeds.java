@@ -1,5 +1,6 @@
 package betterbreeds;
 
+import modUpdateChecked.OnPlayerLogin;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -27,9 +28,11 @@ import betterbreeds.entity.EntityWolf3;
 import betterbreeds.entity.EntityWolf4;
 import betterbreeds.entity.EntityWolf5;
 import betterbreeds.entity.EntityWolf6;
+import betterbreeds.handelers.BreedsPacketHandler;
 import betterbreeds.handelers.CommonProxy;
 import betterbreeds.handelers.OnHorseDeath;
 import betterbreeds.item.ItemCEgg;
+import betterbreeds.item.ItemCage;
 import betterbreeds.item.ItemChocolatPie;
 import betterbreeds.item.ItemDough;
 import betterbreeds.item.ItemJelly;
@@ -43,17 +46,24 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
+import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 
-@Mod(modid = "Breeds", name = "ModBreeds", version = "1.6.4 v1")
+
+@Mod(modid = "Breeds", name = "ModBreeds", version = "1.6.4 v3")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
 
-
 public class ModBreeds{
+
+	public static final String tag = "EntityName";
+
+	
+	public static final String version = "1.6.4 v3";
+	public static final String name = "BetterBreeding";
 
 	public static  Item Sheepmilk ;
 	public static  Item Sheepraw  ;
@@ -73,6 +83,9 @@ public class ModBreeds{
 	public static Item horsemeat;
 	public static Item horsemeatCooked;
 
+	public static Item animalcage;
+
+
 	public static Item XmasSpecial;
 	public static CreativeTabs BBT ;
 	private static final World World = null;
@@ -90,8 +103,12 @@ public class ModBreeds{
 	@EventHandler
 	public void load(FMLInitializationEvent event)
 	{
+
+		GameRegistry.registerPlayerTracker(new OnPlayerLogin(version, name));
+
 		BBT = new BBTab(CreativeTabs.getNextID(), "BreedTab");
 
+		animalcage = new ItemCage(BreedsConfig.instance.cage).setUnlocalizedName("petCage").setCreativeTab(BBT);
 		Sheepmilk = new ItemSheepsMilk(BreedsConfig.instance.milk, 6, 0.3F, false).setUnlocalizedName("a.bucket_milk").setContainerItem(Item.bucketEmpty).setCreativeTab(BBT);
 		Sheepraw =  new ItemSubsFood(BreedsConfig.instance.sheepraw, 2, 0.2F, false).setUnlocalizedName("sheepRaw").setCreativeTab(BBT);
 		Sheepcooked = new ItemSubsFood(BreedsConfig.instance.sheep,6,  1F, true).setUnlocalizedName("sheepCooked").setCreativeTab(BBT);
@@ -128,10 +145,13 @@ public class ModBreeds{
 
 		GameRegistry.addRecipe(new ItemStack (SheppardsPie,1), new Object [] { "MMM","PPP", 'P',PastryDough, 'M',Sheepcooked});
 		GameRegistry.addRecipe(new ItemStack (ChocolatePie,1), new Object [] { "MMM","PPP", 'P',PastryDough, 'M',EasterEgg});
-//		GameRegistry.addRecipe(new ItemStack (XmasSpecial,1,4), new Object [] { "PS","PS", 'P',Block.planks, 'S',Item.stick});
-//		GameRegistry.addRecipe(new ItemStack (XmasSpecial,1,5), new Object [] { "FRF","RSR","FRF", 'F',new ItemStack(Block.tallGrass,1,2), 'S',Item.sugar,'R', new ItemStack(Item.dyePowder,1,1)});
+		//		GameRegistry.addRecipe(new ItemStack (XmasSpecial,1,4), new Object [] { "PS","PS", 'P',Block.planks, 'S',Item.stick});
+		//		GameRegistry.addRecipe(new ItemStack (XmasSpecial,1,5), new Object [] { "FRF","RSR","FRF", 'F',new ItemStack(Block.tallGrass,1,2), 'S',Item.sugar,'R', new ItemStack(Item.dyePowder,1,1)});
 		GameRegistry.addRecipe(new ItemStack (jelly,1), new Object [] { "DSD","SSS","DSD", 'S',Item.sugar, 'D',new ItemStack(Item.dyePowder,1,9)});
 
+		GameRegistry.addRecipe(new ItemStack (animalcage,1), new Object [] { "waw","waw","waw", 'w',Item.stick, 'a',Item.appleRed});
+
+		
 		LanguageRegistry.addName(Sheepmilk   ,"Sheeps Milk");
 		LanguageRegistry.addName(Sheepraw    ,"Sheeps Gigot");
 		LanguageRegistry.addName(Sheepcooked ,"Roasted Gigot");
@@ -147,14 +167,15 @@ public class ModBreeds{
 		LanguageRegistry.addName(horsemeat  ,"Raw Horse Meat");
 		LanguageRegistry.addName(lasagna  ,"Lasagna");
 		LanguageRegistry.addName(horsemeatCooked  ,"Horse Meat");
+		LanguageRegistry.addName(animalcage,"AnimalTrap");
 
 
-//		LanguageRegistry.addName(XmasSpecial,"PepperMinth Egg");
-//		LanguageRegistry.addName(new ItemStack(XmasSpecial,1,1) ,"Honey Glazed Ham");
-//		LanguageRegistry.addName(new ItemStack(XmasSpecial,1,2)  ,"Hot Chocolat");
-//		LanguageRegistry.addName(new ItemStack(XmasSpecial,1,3)  ,"Magic Meat");
-//		LanguageRegistry.addName(new ItemStack(XmasSpecial,1,4)  ,"Empty Mug");
-//		LanguageRegistry.addName(new ItemStack(XmasSpecial,1,5)  ,"The Spirit of Christmas");
+		//		LanguageRegistry.addName(XmasSpecial,"PepperMinth Egg");
+		//		LanguageRegistry.addName(new ItemStack(XmasSpecial,1,1) ,"Honey Glazed Ham");
+		//		LanguageRegistry.addName(new ItemStack(XmasSpecial,1,2)  ,"Hot Chocolat");
+		//		LanguageRegistry.addName(new ItemStack(XmasSpecial,1,3)  ,"Magic Meat");
+		//		LanguageRegistry.addName(new ItemStack(XmasSpecial,1,4)  ,"Empty Mug");
+		//		LanguageRegistry.addName(new ItemStack(XmasSpecial,1,5)  ,"The Spirit of Christmas");
 
 		LanguageRegistry.instance().addNameForObject(Sheepmilk, "fr_FR", "Lait Mouton");
 		LanguageRegistry.instance().addNameForObject(Sheepraw    , "fr_FR","Jambe de Mouton");
@@ -167,12 +188,12 @@ public class ModBreeds{
 		LanguageRegistry.instance().addNameForObject(BlackBread, "fr_FR", "Sandwich Viande de Black_Eye ");
 		LanguageRegistry.instance().addNameForObject(Sandwich, "fr_FR", "Sandwich a l'Oeuf ");
 		LanguageRegistry.instance().addNameForObject(ChocoBrood, "fr_FR", "Sandwich au Chocolat ");
-//		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,5),"fr_FR"  ,"L'esprit de Noel");
-//		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,4),"fr_FR"  ,"Tasse Vide");
-//		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,3),"fr_FR"  ,"Viande Serene");
-//		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,2),"fr_FR"  ,"Chocolat Chaud");
-//		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,1),"fr_FR"  ,"Jambon au Bain de Miel");
-//		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,0),"fr_FR"  ,"Oeuf A La Menthe");
+		//		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,5),"fr_FR"  ,"L'esprit de Noel");
+		//		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,4),"fr_FR"  ,"Tasse Vide");
+		//		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,3),"fr_FR"  ,"Viande Serene");
+		//		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,2),"fr_FR"  ,"Chocolat Chaud");
+		//		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,1),"fr_FR"  ,"Jambon au Bain de Miel");
+		//		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,0),"fr_FR"  ,"Oeuf A La Menthe");
 
 		LanguageRegistry.instance().addNameForObject(Sheepmilk, "de_DE", "Schafsmilch");
 		LanguageRegistry.instance().addNameForObject(Sheepraw    , "de_DE","Lammkeule");
@@ -185,12 +206,12 @@ public class ModBreeds{
 		LanguageRegistry.instance().addNameForObject(BlackBread, "de_DE", "Black_Eye's Fleish Brotchen");
 		LanguageRegistry.instance().addNameForObject(Sandwich, "de_DE", "Brotchen mit Ei");
 		LanguageRegistry.instance().addNameForObject(ChocoBrood, "de_DE", "Schokoladenbrotchen");      
-//		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,5),"de_DE"  ,"Der Geist der Weihnacht");
-//		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,4),"de_DE"  ,"Leere Tasse");
-//		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,3),"de_DE"  ,"Viande Serene");
-//		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,2),"de_DE"  ,"Heisse Schokolade");
-//		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,1),"de_DE"  ,"Schinken mit Honigglasur");
-//		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,0),"de_DE"  ,"Minz-Ei");
+		//		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,5),"de_DE"  ,"Der Geist der Weihnacht");
+		//		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,4),"de_DE"  ,"Leere Tasse");
+		//		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,3),"de_DE"  ,"Viande Serene");
+		//		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,2),"de_DE"  ,"Heisse Schokolade");
+		//		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,1),"de_DE"  ,"Schinken mit Honigglasur");
+		//		LanguageRegistry.instance().addNameForObject(new ItemStack(XmasSpecial,1,0),"de_DE"  ,"Minz-Ei");
 
 		LanguageRegistry.instance().addStringLocalization("entity.Superpig2.name", "fr_FR", "2eme Race");
 		LanguageRegistry.instance().addStringLocalization("entity.Superpig3.name", "fr_FR", "3eme Race");
@@ -290,7 +311,7 @@ public class ModBreeds{
 
 		TickRegistry.registerScheduledTickHandler(new AiReplacer(), Side.SERVER);
 		proxy.registerRenderInformation();
-		
+
 		MinecraftForge.EVENT_BUS.register(new OnHorseDeath());
 
 	}

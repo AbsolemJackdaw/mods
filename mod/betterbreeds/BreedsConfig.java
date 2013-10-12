@@ -28,6 +28,9 @@ public class BreedsConfig {
 	public int horseraw;
 	public int horse;
 	public int lasagna;
+	public int cage;
+
+	public boolean naturalBreeding;
 
 
 	private BreedsConfig() {}
@@ -37,6 +40,12 @@ public class BreedsConfig {
 		config.load();
 		loadItems(config);
 		config.save();
+	}
+
+	private void loadBools(Configuration config){
+		config.addCustomCategoryComment("Natural Breeding", "boolean: true/false");
+
+		naturalBreeding = config.get("", "Natural Breeding", false).getBoolean(false);
 	}
 
 	private void loadItems(Configuration config){
@@ -75,6 +84,8 @@ public class BreedsConfig {
 		horse = config.getItem("Horse Meat", itemnum).getInt(itemnum);
 		itemnum++;		
 		tag = config.getItem("DogTag", itemnum).getInt(itemnum);
+		itemnum++;
+		cage = config.getItem("petcage", itemnum).getInt(itemnum);
 		itemnum++;
 	}
 
