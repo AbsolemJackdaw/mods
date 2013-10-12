@@ -1,10 +1,11 @@
-package toolbelts;
+package toolbelts.handlers;
 
 import java.util.EnumSet;
 import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
+import toolbelts.handlers.packets.BeltPacket;
 import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.TickType;
 
@@ -12,7 +13,6 @@ public class CommonTickHandler implements ITickHandler{
 
 	@Override
 	public void tickStart(EnumSet<TickType> type, Object... tickData) {
-		// TODO Auto-generated method stub
 
 	}
 	int countdown = 0;
