@@ -62,7 +62,7 @@ public class ModBreeds{
 	public static final String tag = "EntityName";
 
 	
-	public static final String version = "1.6.4 v3";
+	public static final String version = "1.6.4 v4";
 	public static final String name = "BetterBreeding";
 
 	public static  Item Sheepmilk ;
