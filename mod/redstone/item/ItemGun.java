@@ -2,6 +2,9 @@ package redstone.item;
 
 import java.util.List;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
@@ -69,6 +72,11 @@ public class ItemGun extends Item {
 
 	}
 
+	@Override
+	@SideOnly(Side.CLIENT)
+	public boolean isFull3D() {
+		return false;
+	}
 	@Override
 	public void registerIcons(IconRegister par1IconRegister) {
 

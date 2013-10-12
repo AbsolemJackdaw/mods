@@ -64,7 +64,6 @@ public class ItemBonesRenderer implements IItemRenderer {
 			TileEntityRenderer.instance.renderTileEntityAt(te, 0.0D, 0.0D, 0.0D, 0.0F);
 			break;
 		case INVENTORY:
-
 			GL11.glPushMatrix();
 			GL11.glTranslatef(0.0F, 0.1F, 0.0F);
 			GL11.glScalef(1f, 1f, 1f);

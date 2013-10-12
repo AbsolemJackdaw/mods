@@ -23,11 +23,6 @@ public class PacketHandler implements IPacketHandler {
 	public int y1;
 	public int z1;
 
-	public static PacketHandler instance;
-	public PacketHandler()
-	{
-		instance = this;
-	}
 	@Override
 	public void onPacketData(INetworkManager manager,
 			Packet250CustomPayload packet, Player player) {

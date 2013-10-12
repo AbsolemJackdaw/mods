@@ -15,6 +15,7 @@ import gravestone.handelers.PlayerTracker;
 
 import java.util.Random;
 
+import modUpdateChecked.OnPlayerLogin;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.command.CommandHandler;
@@ -40,7 +41,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
 
-@Mod(modid = "GraveStoneMod", name = "GraveStone", version = "1.6.2 v5.2")
+@Mod(modid = "GraveStoneMod", name = "GraveStone", version = "1.6.4 v2")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false,
 clientPacketHandlerSpec =
 @SidedPacketHandler(channels = {"graveData"}, packetHandler = PacketHandler.class),
@@ -48,6 +49,9 @@ serverPacketHandlerSpec =
 @SidedPacketHandler(channels = {"graveData"}, packetHandler = PacketHandler.class))
 
 public class mod_Gravestone{
+	
+	private static final String version = "1.6.4 v2";
+	private static final String name = "GraveStones";
 
 	public static mod_Gravestone instance;
 	public ItemStack[] stack;
@@ -73,7 +77,8 @@ public class mod_Gravestone{
 	public void load(FMLInitializationEvent event)
 	{
 		MinecraftForge.EVENT_BUS.register(new DeathEvent());
-
+		GameRegistry.registerPlayerTracker(new OnPlayerLogin(version, name));
+		
 		gravestone = new BlockGrave(ConfigClass.instance.graveBlock).setHardness(10).setResistance(6000000.0F).setUnlocalizedName("GraveStone");
 		bones = new BlockBones(ConfigClass.instance.bonesBlock, Material.ground).setHardness(2f);
 		graveItem = new ItemGrave(ConfigClass.instance.grave).setUnlocalizedName("graveItem").setCreativeTab(CreativeTabs.tabDecorations);

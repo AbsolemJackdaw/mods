@@ -1,5 +1,6 @@
 package redstone;
 
+import modUpdateChecked.OnPlayerLogin;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -14,6 +15,7 @@ import redstone.ammo.RedAmmo;
 import redstone.ammo.ThawAmmo;
 import redstone.item.ItemGun;
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.SidedProxy;
@@ -24,7 +26,7 @@ import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-@Mod(modid = "RedStoneHandGuns", name = "RedStoneGuns", version = "Beta")
+@Mod(modid = "RedStoneHandGuns", name = "RedStoneGuns", version = "1.6.4 v1")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
 
 
@@ -46,19 +48,25 @@ public class mod_RedStoneGuns {
 	@SidedProxy(serverSide = "redstone.CommonProxy", clientSide = "redstone.ClientProxy")
 	public static CommonProxy proxy;
 
+	private static final String name = "RedStoneHandGuns";
+	private static final String version = "1.6.4 v1";
+	
 	public int getUniqueID() {
 		return uniqueID++;
 	}
 
-	@PreInit
+	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 
 		GunConfig.instance.loadConfig(event.getSuggestedConfigurationFile());
 	}
 
-	@Init
+	@EventHandler
 	public void load (FMLInitializationEvent e){
+		
+		GameRegistry.registerPlayerTracker(new OnPlayerLogin(version, name));
 
+		
 		RedTab = new RedTab(CreativeTabs.getNextID(), "redTab");
 
 		redGun = new ItemGun(GunConfig.instance.redGun,0,0).setUnlocalizedName("rGun").setCreativeTab(RedTab);

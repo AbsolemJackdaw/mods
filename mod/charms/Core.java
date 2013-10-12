@@ -1,5 +1,6 @@
 package charms;
 
+import modUpdateChecked.OnPlayerLogin;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -14,7 +15,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 
 
 
-@Mod(modid = "Charms", name = "Health Charms", version = "5.0")
+@Mod(modid = "Charms", name = "Health Charms", version = "1.6.4 v1")
 
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
 
@@ -23,6 +24,9 @@ public class Core {
 	@SidedProxy(serverSide = "charms.CharmHUDCommonRenderer", clientSide = "charms.CharmHUDClientRenderer")
 	public static CharmHUDCommonRenderer proxy;
 
+	private static final String name = "HealthCharms";
+	private static final String version = "1.6.4 v1";
+	
 	public static Item charmTierI;
 	public static Item charmTierII;
 	public static Item charmTierIII;
@@ -43,6 +47,8 @@ public class Core {
 
 	@EventHandler
 	public void load (FMLInitializationEvent e){
+	
+		GameRegistry.registerPlayerTracker(new OnPlayerLogin(version, name));
 		
 		charmTierI = new Charm(845, 10*2,0xc1c1c1,1).setUnlocalizedName("charmTierI");
 		charmTierII = new Charm(846, 15*2, 0xffe083,2).setUnlocalizedName("charmTierII");

@@ -2,6 +2,7 @@ package petBuddy;
 
 import java.util.HashMap;
 
+import modUpdateChecked.OnPlayerLogin;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -28,7 +29,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 
 /* TODO Add config for item ID's. */
 
-@Mod(modid = "buddyPet", name = "My tiny buddy", version = "1.0")
+@Mod(modid = "buddyPet", name = "My tiny buddy", version = "1.6.4 1.0")
 
 @NetworkMod(clientSideRequired = true, serverSideRequired = false,
 clientPacketHandlerSpec =
@@ -42,6 +43,10 @@ public class PetBuddyMain {
 	@SidedProxy(serverSide = "petBuddy.handelers.BuddyCommonProxy", clientSide = "petBuddy.handelers.BuddyClientProxy")
 	public static BuddyCommonProxy proxy;
 
+	
+	private static final String name = "PetBuddy";
+	private static final String version = "1.6.4 v1.0";
+	
 	public static HashMap<String, Integer> playersWithPets = new HashMap();	
 	
 	public static final PetAchievements pa = new PetAchievements();
@@ -63,6 +68,7 @@ public class PetBuddyMain {
 	public void load (FMLInitializationEvent e){
 
 		GameRegistry.registerWorldGenerator(new ShrineGen());
+		GameRegistry.registerPlayerTracker(new OnPlayerLogin(version, name));
 		
 		petStatue = new PetStatue(2564).setUnlocalizedName("petstatue");
 		shrine =  new PetShrine(1000).setUnlocalizedName("petshrine").setHardness(7).setResistance(10).setCreativeTab(CreativeTabs.tabDecorations);
