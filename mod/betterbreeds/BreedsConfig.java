@@ -39,13 +39,14 @@ public class BreedsConfig {
 		Configuration config = new Configuration(file);
 		config.load();
 		loadItems(config);
+		loadBools(config);
 		config.save();
 	}
 
 	private void loadBools(Configuration config){
 		config.addCustomCategoryComment("Natural Breeding", "boolean: true/false");
 
-		naturalBreeding = config.get("", "Natural Breeding", false).getBoolean(false);
+		naturalBreeding = config.get("Natural Breeding", "Natural Breeding", false).getBoolean(false);
 	}
 
 	private void loadItems(Configuration config){

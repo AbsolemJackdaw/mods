@@ -28,6 +28,7 @@ import betterbreeds.entity.EntityWolf3;
 import betterbreeds.entity.EntityWolf4;
 import betterbreeds.entity.EntityWolf5;
 import betterbreeds.entity.EntityWolf6;
+import betterbreeds.entity.ai.AiReplacer;
 import betterbreeds.handelers.BreedsPacketHandler;
 import betterbreeds.handelers.CommonProxy;
 import betterbreeds.handelers.OnHorseDeath;

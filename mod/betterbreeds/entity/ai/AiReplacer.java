@@ -1,4 +1,4 @@
-package betterbreeds;
+package betterbreeds.entity.ai;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -15,12 +15,14 @@ import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.world.WorldServer;
+import betterbreeds.BreedsConfig;
 import betterbreeds.entity.ai.extended.EntityAIMateChicken;
 import betterbreeds.entity.ai.extended.EntityAIMateCow;
 import betterbreeds.entity.ai.extended.EntityAIMatePig;
 import betterbreeds.entity.ai.extended.EntityAIMateSheep;
 import betterbreeds.entity.ai.extended.EntityAIMateWolf;
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.IScheduledTickHandler;
 import cpw.mods.fml.common.TickType;
 
@@ -37,7 +39,13 @@ public class AiReplacer implements IScheduledTickHandler {
 
 	@Override
 	public void tickEnd(EnumSet<TickType> type, Object... tickData) {
-		//
+
+		replaceAI();
+		breedNaturally();
+		
+	}
+
+	private void replaceAI(){
 		if (FMLCommonHandler.instance().getMinecraftServerInstance().isServerRunning() && FMLCommonHandler.instance().getMinecraftServerInstance().worldServers != null) {
 			if(FMLCommonHandler.instance().getEffectiveSide().isServer()){
 				for (WorldServer ws : FMLCommonHandler.instance().getMinecraftServerInstance().worldServers) {
@@ -53,29 +61,37 @@ public class AiReplacer implements IScheduledTickHandler {
 										EntityAgeable entityageable = (EntityAgeable) e;
 										EntityAITaskEntry oldAI = null;
 
-										for (EntityAITaskEntry entityAI : (List<EntityAITaskEntry>) entityageable.tasks.taskEntries) {
-											if (entityAI.action instanceof EntityAIMate ) {
+										for (EntityAITaskEntry entityAI : (List<EntityAITaskEntry>) entityageable.tasks.taskEntries){
+
+											if (entityAI.action instanceof EntityAIMate) {
 												oldAI = (EntityAITaskEntry) entityAI;
+
+												if (oldAI != null) {
+													//only gets called if vanilla animal to prevent over-processing of setting the old ai to a new aiMate
+													if(e instanceof EntityWolf || e instanceof EntityPig || e instanceof EntityChicken ||
+															e instanceof EntityCow || e instanceof EntitySheep){
+
+														if(e instanceof EntityWolf){
+															entityageable.tasks.addTask(oldAI.priority, new EntityAIMateWolf(entityageable, 0.3f));
+														}
+														else if(e instanceof EntityPig){
+															entityageable.tasks.addTask(oldAI.priority, new EntityAIMatePig(entityageable, 0.3f));	
+														}
+														else if(e instanceof EntityChicken){											
+															entityageable.tasks.addTask(oldAI.priority, new EntityAIMateChicken(entityageable, 0.3f));
+														}
+														else if(e instanceof EntityCow){										
+															entityageable.tasks.addTask(oldAI.priority, new EntityAIMateCow(entityageable, 0.3f));
+														}
+														else if(e instanceof EntitySheep){											
+															entityageable.tasks.addTask(oldAI.priority, new EntityAIMateSheep(entityageable, 0.3f));
+														}
+														entityageable.tasks.taskEntries.remove(oldAI);
+														//FMLLog.getLogger().info("AI got replaced for " + e.getEntityName() + " " + e.entityId);
+													}
+												}							 
 											}
 										}
-
-										if (oldAI != null) {
-
-											if(e instanceof EntityWolf)
-												entityageable.tasks.addTask(oldAI.priority, new EntityAIMateWolf(entityageable, 0.3f));											
-											if(e instanceof EntityPig)
-												entityageable.tasks.addTask(oldAI.priority, new EntityAIMatePig(entityageable, 0.3f));											
-											if(e instanceof EntityChicken)											
-												entityageable.tasks.addTask(oldAI.priority, new EntityAIMateChicken(entityageable, 0.3f));											
-											if(e instanceof EntityCow)											
-												entityageable.tasks.addTask(oldAI.priority, new EntityAIMateCow(entityageable, 0.3f));											
-											if(e instanceof EntitySheep)											
-												entityageable.tasks.addTask(oldAI.priority, new EntityAIMateSheep(entityageable, 0.3f));											
-											else
-												entityageable.tasks.addTask(oldAI.priority, new EntityAIMate((EntityAnimal)entityageable, 0.3f));
-
-											entityageable.tasks.taskEntries.remove(oldAI);
-										}							 
 									}
 								}
 							}
@@ -85,9 +101,10 @@ public class AiReplacer implements IScheduledTickHandler {
 				}
 			}
 		}
+	}
 
 
-
+	private void breedNaturally(){
 
 		if(BreedsConfig.instance.naturalBreeding){
 			if (FMLCommonHandler.instance().getMinecraftServerInstance().isServerRunning() && FMLCommonHandler.instance().getMinecraftServerInstance().worldServers != null) {
@@ -107,20 +124,20 @@ public class AiReplacer implements IScheduledTickHandler {
 										{
 											EntityAnimal animal = (EntityAnimal) e;
 
-											/*===== Breeding naturally ! =====*/
-											double chanceOfFallingInLove = Math.random();
-											if(chanceOfFallingInLove < 0.0005){
-												if(animal.getGrowingAge() == 0 && animal.inLove <= 0){
-													animal.func_110196_bT();
+											if( !animal.isInLove()){
+												/*===== Breeding naturally ! =====*/
+												double chanceOfFallingInLove = Math.random();
+												if(chanceOfFallingInLove < 0.0004){
+													if(animal.getGrowingAge() == 0 && animal.inLove <= 0){
+														animal.func_110196_bT();
+													}
 												}
 											}
 										}
 									}
 								}
 							}
-							catch(Throwable en)
-							{
-
+							catch(Throwable en){
 							}
 						}
 					}
