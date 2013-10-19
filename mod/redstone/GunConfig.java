@@ -23,6 +23,8 @@ public class GunConfig {
 
 	public boolean setAmmoTab;
 
+	public int defGun;
+
 
 	private GunConfig() {}
 
@@ -57,6 +59,8 @@ public class GunConfig {
 		gatling = config.getItem("gatling", itemnum).getInt(itemnum);
 		itemnum++;
 		plasma = config.getItem("halo plasma gun", itemnum).getInt(itemnum);
+		itemnum++;
+		defGun = config.getItem("halo small gun", itemnum).getInt(itemnum);
 		itemnum++;
 	}
 

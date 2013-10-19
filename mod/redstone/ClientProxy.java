@@ -16,6 +16,7 @@ import redstone.ammo.render.RenderGatlingAmmo;
 import redstone.ammo.render.RenderPlasma;
 import redstone.ammo.render.RenderThawAmmo;
 import redstone.item.render.RenderCannon;
+import redstone.item.render.RenderDefGun;
 import redstone.item.render.RenderGatling;
 import redstone.item.render.RenderGunBlue;
 import redstone.item.render.RenderGunEnd;
@@ -46,6 +47,8 @@ public class ClientProxy extends CommonProxy {
 		MinecraftForgeClient.registerItemRenderer(mod_RedStoneGuns.thawer.itemID, new RenderThawer());
 		MinecraftForgeClient.registerItemRenderer(mod_RedStoneGuns.gatling.itemID, new RenderGatling());
 		MinecraftForgeClient.registerItemRenderer(mod_RedStoneGuns.plasmaRifle.itemID, new RenderHalo());
+
+		MinecraftForgeClient.registerItemRenderer(mod_RedStoneGuns.defGun.itemID, new RenderDefGun());
 
 	}
 }

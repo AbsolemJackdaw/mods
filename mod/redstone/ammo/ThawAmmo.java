@@ -38,6 +38,7 @@ public class ThawAmmo extends EntityThrowable
 		String particle = "";
 		if(status == 0){
 			particle = "smoke";
+
 		}
 		else if (status == 1){
 			particle = "flame";
@@ -67,25 +68,8 @@ public class ThawAmmo extends EntityThrowable
 		int x = var1.blockX;
 		int y = var1.blockY;
 		int z = var1.blockZ;
-		if(status == 0){
-			//			if (world.getBlockMaterial(x, y, z)== Material.water && world.getBlockMetadata(x,y,z) == 0){
-			//				world.setBlockToAir(x,y,z);
-			//				world.setBlock(x, y, z, Block.ice.blockID);
-			//			}
-			//			if (world.getBlockMaterial(x, y, z )== Material.lava && world.getBlockMetadata(x,y,z) == 0){
-			//				world.setBlockToAir(x,y,z);
-			//				world.setBlock(x, y, z, Block.stone.blockID);
-			//			}
-			if (world.getBlockMaterial(x, y+1, z ) == Material.air && 
-					world.getBlockMaterial(x, y, z ) != Material.snow &&
-					world.getBlockMaterial(x, y, z ) != Material.ice ){
-				world.setBlock(x, y+1, z, Block.snow.blockID);
-			}
-		}else if(status == 1){
-			//			if (world.getBlockMaterial(x, y, z )== Material.rock && world.getBlockMetadata(x,y,z) == 0){
-			//				world.setBlockToAir(x,y,z);
-			//				world.setBlock(x, y, z, Block.lavaStill.blockID);
-			//			}
+		if(status == 1){
+
 			if (world.getBlockMaterial(x, y, z )== Material.ice && world.getBlockMetadata(x,y,z) == 0){
 				world.setBlockToAir(x,y,z);
 				world.setBlock(x, y, z, Block.waterStill.blockID);
