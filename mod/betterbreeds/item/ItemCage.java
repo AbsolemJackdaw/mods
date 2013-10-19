@@ -1,7 +1,5 @@
 package betterbreeds.item;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.List;
 
 import net.minecraft.client.renderer.texture.IconRegister;

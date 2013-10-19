@@ -29,7 +29,6 @@ import betterbreeds.entity.EntityWolf4;
 import betterbreeds.entity.EntityWolf5;
 import betterbreeds.entity.EntityWolf6;
 import betterbreeds.entity.ai.AiReplacer;
-import betterbreeds.handelers.BreedsPacketHandler;
 import betterbreeds.handelers.CommonProxy;
 import betterbreeds.handelers.OnHorseDeath;
 import betterbreeds.item.ItemCEgg;
@@ -47,7 +46,6 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
-import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
@@ -55,7 +53,7 @@ import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 
 
-@Mod(modid = "Breeds", name = "ModBreeds", version = "1.6.4 v3")
+@Mod(modid = "Breeds", name = "ModBreeds", version = ModBreeds.version)
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
 
 public class ModBreeds{
@@ -63,7 +61,7 @@ public class ModBreeds{
 	public static final String tag = "EntityName";
 
 	
-	public static final String version = "1.6.4 v4";
+	protected static final String version = "1.6.4 v5";
 	public static final String name = "BetterBreeding";
 
 	public static  Item Sheepmilk ;

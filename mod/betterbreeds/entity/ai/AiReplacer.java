@@ -22,7 +22,6 @@ import betterbreeds.entity.ai.extended.EntityAIMatePig;
 import betterbreeds.entity.ai.extended.EntityAIMateSheep;
 import betterbreeds.entity.ai.extended.EntityAIMateWolf;
 import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.IScheduledTickHandler;
 import cpw.mods.fml.common.TickType;
 
