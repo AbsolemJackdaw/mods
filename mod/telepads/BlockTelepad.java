@@ -53,12 +53,14 @@ public class BlockTelepad extends BlockContainer{
 							stack.setTagCompound(new NBTTagCompound());
 							stack.getTagCompound().setInteger(ItemPadLocations.SIZE, 1);
 							stack.getTagCompound().setIntArray(ItemPadLocations.LOCATION_+0, a_ray);
+							stack.getTagCompound().setInteger(ItemPadLocations.DIM_+0, par1World.provider.dimensionId);
 						}else{
 							int size = stack.getTagCompound().getInteger(ItemPadLocations.SIZE);
 							for(int t =0; t < size; t++){
 								te.allCoords.add(stack.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+t));
 							}
 							stack.getTagCompound().setIntArray(ItemPadLocations.LOCATION_+(size), a_ray);
+							stack.getTagCompound().setInteger(ItemPadLocations.DIM_+size, par1World.provider.dimensionId);
 							stack.getTagCompound().setInteger(ItemPadLocations.SIZE, size +1);
 						}
 					}
@@ -68,6 +70,7 @@ public class BlockTelepad extends BlockContainer{
 				stack.setTagCompound(new NBTTagCompound());
 				stack.getTagCompound().setInteger(ItemPadLocations.SIZE, 1);
 				stack.getTagCompound().setIntArray(ItemPadLocations.LOCATION_+0, a_ray);
+				stack.getTagCompound().setInteger(ItemPadLocations.DIM_+0, par1World.provider.dimensionId);
 				p.inventory.addItemStackToInventory(stack);
 			}
 
@@ -137,19 +140,38 @@ public class BlockTelepad extends BlockContainer{
 		//
 		TETelepad te = (TETelepad)par1World.getBlockTileEntity(x, y, z);
 
-		//		if(par5EntityPlayer.getCurrentEquippedItem()!= null && par5EntityPlayer.getCurrentEquippedItem().getItem() instanceof ItemPadLocations && par5EntityPlayer.getCurrentEquippedItem().hasTagCompound()){
-		//			te.allCoords.clear();
-		//			te.allCoords.trimToSize();
-		//			for(int i = 0; i < par5EntityPlayer.getCurrentEquippedItem().getTagCompound().getInteger(ItemPadLocations.SIZE); i++){
-		//				te.allCoords.add(par5EntityPlayer.getCurrentEquippedItem().getTagCompound().getIntArray(ItemPadLocations.LOCATION_+i));
-		//			}
-		//		}
 
 		if(par5EntityPlayer.getCurrentEquippedItem() == null || par5EntityPlayer.getCurrentEquippedItem() != null && !par5EntityPlayer.getCurrentEquippedItem().getItem().equals(mod_telepads.padLocator)){
 			if(te.ownerName.equals(par5EntityPlayer.username) && par5EntityPlayer.isSneaking()){
+				
+				
+				if(par5EntityPlayer.inventory.hasItem(mod_telepads.padLocator.itemID)){
+					for(int i = 0; i < par5EntityPlayer.inventory.getSizeInventory(); i++){
+						if(par5EntityPlayer.inventory.getStackInSlot(i) != null && par5EntityPlayer.inventory.getStackInSlot(i).getItem() instanceof ItemPadLocations){
+
+							ItemStack stack = par5EntityPlayer.inventory.getStackInSlot(i);
+							//in rare events of someone actually spawning in an empty register ... 
+							if(!stack.hasTagCompound()){
+								int[] a_ray = new int[3];
+								a_ray[0] = x;
+								a_ray[1] = y;
+								a_ray[2] = z;
+								stack.setTagCompound(new NBTTagCompound());
+								stack.getTagCompound().setInteger(ItemPadLocations.SIZE, 1);
+								stack.getTagCompound().setIntArray(ItemPadLocations.LOCATION_+0, a_ray);
+								stack.getTagCompound().setInteger(ItemPadLocations.DIM_+0, par1World.provider.dimensionId);
+							}
+							
+							registerUpdate(par5EntityPlayer, stack, te, par1World, x, y, z);
+						}
+					}
+				}
+				
 				if(!par1World.isRemote)
 					par5EntityPlayer.addChatMessage("TelePad " + te.telepadname + " got set to universal acces.");
 				te.ownerName = "UNIVERSAL";
+
+				
 			}
 		}else{
 			if(par5EntityPlayer.inventory.hasItem(mod_telepads.padLocator.itemID)){
@@ -158,98 +180,31 @@ public class BlockTelepad extends BlockContainer{
 
 						ItemStack stack = par5EntityPlayer.inventory.getStackInSlot(i);
 
+						//in rare events of someone actually spawning in an empty register ... 
+						if(!stack.hasTagCompound()){
+							int[] a_ray = new int[3];
+							a_ray[0] = x;
+							a_ray[1] = y;
+							a_ray[2] = z;
+							stack.setTagCompound(new NBTTagCompound());
+							stack.getTagCompound().setInteger(ItemPadLocations.SIZE, 1);
+							stack.getTagCompound().setIntArray(ItemPadLocations.LOCATION_+0, a_ray);
+							stack.getTagCompound().setInteger(ItemPadLocations.DIM_+0, par1World.provider.dimensionId);
+						}
+						
 						// if the TE is a Universal Pad
 						if(te.ownerName.equals("UNIVERSAL")){
-							if(par5EntityPlayer.getCurrentEquippedItem().itemID == stack.itemID){
-								boolean sendRegisterMessage = true;
-								int size = stack.getTagCompound().getInteger(ItemPadLocations.SIZE);
-
-								int[] universalPadArray = new int[3];
-
-								for(int c =0; c < size; c++){
-
-									int[] ray = new int[3];
-									ray[0] = stack.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[0];
-									ray[1] = stack.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[1];
-									ray[2] = stack.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[2];
-
-									if(ray[0] == x && ray[1] == y && ray[2] == z){
-										if(!par1World.isRemote)
-											par5EntityPlayer.addChatMessage("I already registered this Universal Telepad.");
-										sendRegisterMessage = false;
-										universalPadArray = null;
-										break;
-									}else{
-										universalPadArray[0] = x;
-										universalPadArray[1] = y;
-										universalPadArray[2] = z;
-									}
-								}
-
-								if(sendRegisterMessage ){
-									if(!par1World.isRemote)
-										par5EntityPlayer.addChatMessage("Universal TelePad was added to the Register.");
-									if(universalPadArray != null){
-										//dont do size+1. size is already the maximum value and in loops always gets checked for -1 (0 included)
-										//aka : size == list.addLast(Object)
-										stack.getTagCompound().setIntArray(ItemPadLocations.LOCATION_+(size), universalPadArray);
-										stack.getTagCompound().setString("TelePadName_"+(size), "Universal Pad");
-										stack.getTagCompound().setInteger(ItemPadLocations.SIZE , size+1);
-									}
-								}
-							}
+							registerAddPad(par5EntityPlayer, stack, te, par1World, x, y, z);
 						}
+
 						if(te.ownerName.equals(par5EntityPlayer.username)){
-							if(par5EntityPlayer.getCurrentEquippedItem().itemID == stack.itemID){
-
-								int size = stack.getTagCompound().getInteger(ItemPadLocations.SIZE);
-								//
-
-								int newID =0;
-								NBTTagCompound newNBT = new NBTTagCompound();
-								//
-								for(int c = 0; c < size; c++){
-									//
-									int[] ray = new int[3];
-									ray[0] = stack.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[0];
-									ray[1] = stack.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[1];
-									ray[2] = stack.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[2];
-
-									FMLLog.getLogger().info("ray" + ray[0] + " " + ray[1] + " " + ray[2]);
-									FMLLog.getLogger().info("pos" + x + " " + y + " " + z);
-									//
-									String name = stack.getTagCompound().getString("TelePadName_"+c);
-									//
-									if(ray[0] == te.xCoord && ray[1] == te.yCoord && ray[2] == te.zCoord){
-										//
-										//										//if the coordinates are in, don't do anything, it will remove them from the list.
-										//										//the player IS the owner, so theoreticly, it should be in the list. if it isn't, that's even better.
-										FMLLog.getLogger().info(" 'removed' index " + c);
-										//										stack.getTagCompound().removeTag(ItemPadLocations.LOCATION_+c);
-
-									}else{
-										//copy over values to a new nbt. 
-										newNBT.setIntArray(ItemPadLocations.LOCATION_+(newID),
-												stack.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c));
-										newNBT.setString("TelePadName_"+(newID), 
-												stack.getTagCompound().getString("TelePadName_"+c));
-										newNBT.setInteger(ItemPadLocations.SIZE , newID+1);
-										newID++;
-									}
-								}
-								stack.setTagCompound(newNBT);
-								//and spawn a new block
-								par1World.setBlockToAir(x, y, z);
-								ItemStack telePad = new ItemStack(mod_telepads.telepad);
-								EntityItem item = new EntityItem(par1World, x, y, z, telePad);
-								if(!par1World.isRemote)
-									par1World.spawnEntityInWorld(item);
-							}
+							registerRemovePad(par5EntityPlayer, stack, te, par1World, x, y, z);
 						}
 					}
 				}
 			}
 		}
+
 		return true;
 	}
 
@@ -282,7 +237,7 @@ public class BlockTelepad extends BlockContainer{
 				par1World.spawnParticle("portal", x+0.5, d1, z+0.5, d2, d3, d4);
 			}
 		}else{
-			if (par5Random.nextInt(300) == 0)
+			if (par5Random.nextInt(50) == 0)
 			{
 				par1World.playSound((double)x , (double)y, (double)z, "subaraki:telepadShort", 1.0F, par5Random.nextFloat() * 0.4F + 0.8F, false);
 			}
@@ -305,6 +260,135 @@ public class BlockTelepad extends BlockContainer{
 				d2 = (double)(par5Random.nextFloat() * 1.0F * (float)i1);
 				par1World.spawnParticle("portal", x+0.5, d1, z+0.5, d2, d3, d4);
 			}
+		}
+	}
+
+
+
+	/**Adds a universal pad to the register*/
+	private void registerAddPad(EntityPlayer par5EntityPlayer, ItemStack stack, TETelepad te, World par1World, int x, int y, int z){
+		if(par5EntityPlayer.getCurrentEquippedItem().itemID == stack.itemID){
+			boolean sendRegisterMessage = true;
+			int size = stack.getTagCompound().getInteger(ItemPadLocations.SIZE);
+
+			int[] universalPadArray = new int[3];
+
+			for(int c =0; c < size; c++){
+
+				int[] ray = new int[3];
+				ray[0] = stack.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[0];
+				ray[1] = stack.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[1];
+				ray[2] = stack.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[2];
+
+				if(ray[0] == x && ray[1] == y && ray[2] == z){
+					if(!par1World.isRemote)
+						par5EntityPlayer.addChatMessage("I already registered this Universal Telepad.");
+					sendRegisterMessage = false;
+					universalPadArray = null;
+					break;
+				}
+				else{
+					universalPadArray[0] = x;
+					universalPadArray[1] = y;
+					universalPadArray[2] = z;
+				}
+			}
+
+			if(sendRegisterMessage ){
+				if(!par1World.isRemote)
+					par5EntityPlayer.addChatMessage("Universal TelePad was added to the Register.");
+				if(universalPadArray != null){
+					//dont do size+1. size is already the maximum value and in loops always gets checked for -1 (0 included)
+					//aka : size == list.addLast(Object)
+					stack.getTagCompound().setIntArray(ItemPadLocations.LOCATION_+(size), universalPadArray);
+					stack.getTagCompound().setString("TelePadName_"+(size), "Universal Pad");
+					stack.getTagCompound().setInteger(ItemPadLocations.DIM_+size, par1World.provider.dimensionId);
+					stack.getTagCompound().setInteger(ItemPadLocations.SIZE , size+1);
+				}
+			}
+		}
+	}
+
+	/**re-runs all nbt and updates any names if needed.*/
+	private void registerUpdate(EntityPlayer par5EntityPlayer, ItemStack stack, TETelepad te, World par1World, int x, int y, int z){
+
+		int size = stack.getTagCompound().getInteger(ItemPadLocations.SIZE);
+
+		//NBTTagCompound newNBT = new NBTTagCompound();
+
+		for(int c =0; c < size; c++){
+
+			int[] ray = new int[3];
+			ray[0] = stack.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[0];
+			ray[1] = stack.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[1];
+			ray[2] = stack.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[2];
+
+
+			if(ray[0] == x && ray[1] == y && ray[2] == z){
+				stack.getTagCompound().setString("TelePadName_"+(c), "Universal Pad");
+			}else{
+				stack.getTagCompound().setString("TelePadName_"+(c), 
+						stack.getTagCompound().getString("TelePadName_"+c));
+			}
+
+			stack.getTagCompound().setIntArray(ItemPadLocations.LOCATION_+(c),ray);
+			stack.getTagCompound().setInteger(ItemPadLocations.DIM_+c, par1World.provider.dimensionId);
+
+		}
+
+		if(!par1World.isRemote)
+			par5EntityPlayer.addChatMessage("Universal TelePad was added to the Register.");
+		//stack.setTagCompound(newNBT);
+	}
+
+
+	/**Used to remove a pad from the register*/
+	private void registerRemovePad(EntityPlayer par5EntityPlayer, ItemStack stack, TETelepad te, World par1World, int x, int y, int z){
+		if(par5EntityPlayer.getCurrentEquippedItem().itemID == stack.itemID){
+			
+			int size = stack.getTagCompound().getInteger(ItemPadLocations.SIZE);
+
+			int newID =0;
+			NBTTagCompound newNBT = new NBTTagCompound();
+			//
+			for(int c = 0; c < size; c++){
+				//
+				int[] ray = new int[3];
+				ray[0] = stack.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[0];
+				ray[1] = stack.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[1];
+				ray[2] = stack.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[2];
+
+				//FMLLog.getLogger().info("ray" + ray[0] + " " + ray[1] + " " + ray[2]);
+				//FMLLog.getLogger().info("pos" + x + " " + y + " " + z);
+				//
+				String name = stack.getTagCompound().getString("TelePadName_"+c);
+				//
+				if(ray[0] == te.xCoord && ray[1] == te.yCoord && ray[2] == te.zCoord){
+
+					//if the coordinates are in, do nothing, it will 'remove' them from the list.
+					//the player IS the owner, so theoreticly, it should be in the list. if it isn't, that's even better.
+					FMLLog.getLogger().info(" 'removed' index " + c);
+
+				}else{
+					//copy over values to a new nbt. 
+					newNBT.setIntArray(ItemPadLocations.LOCATION_+(newID),
+							stack.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c));
+					newNBT.setString("TelePadName_"+(newID), 
+							stack.getTagCompound().getString("TelePadName_"+c));
+					newNBT.setInteger(ItemPadLocations.DIM_+newID, stack.getTagCompound().getInteger(ItemPadLocations.DIM_+c));
+					newNBT.setInteger(ItemPadLocations.SIZE , newID+1);
+
+					newID++;
+				}
+			}
+			
+			stack.setTagCompound(newNBT);
+			//and spawn a new block
+			par1World.setBlockToAir(x, y, z);
+			ItemStack telePad = new ItemStack(mod_telepads.telepad);
+			EntityItem item = new EntityItem(par1World, x, y, z, telePad);
+			if(!par1World.isRemote)
+				par1World.spawnEntityInWorld(item);
 		}
 	}
 }

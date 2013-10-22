@@ -65,6 +65,11 @@ public class GuiNewRegister extends GuiScreen {
 			for (int t = 0; t < te.allNames.size(); t++){
 				stack.getTagCompound().setString("TelePadName_"+t, te.allNames.get(t));
 			}
+			
+			for (int t = 0; t < te.allDims.size(); t++){
+				stack.getTagCompound().setInteger(ItemPadLocations.DIM_+t, te.allDims.get(t));
+			}
+			
 			stack.getTagCompound().setInteger(ItemPadLocations.SIZE, te.allCoords.size());
 
 			sendPacket(button.id, stack);

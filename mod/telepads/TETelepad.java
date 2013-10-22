@@ -29,6 +29,8 @@ public class TETelepad extends TileEntity{
 
 	public ArrayList<String> allNames = new ArrayList<String>();
 
+	public ArrayList<Integer> allDims = new ArrayList<Integer>();
+
 	public String telepadname = "TelePad";
 
 	public String ownerName;
@@ -51,6 +53,7 @@ public class TETelepad extends TileEntity{
 
 		allCoords.trimToSize();
 		allNames.trimToSize();
+		allDims.trimToSize();
 		for (int i = 0; i < this.allCoords.size(); ++i)
 		{
 			par1nbtTagCompound.setIntArray("Coords_"+i, allCoords.get(i));
@@ -59,6 +62,10 @@ public class TETelepad extends TileEntity{
 		for (int i = 0; i < this.allNames.size(); ++i)
 		{
 			par1nbtTagCompound.setString("PadName_"+i, allNames.get(i));
+		}
+
+		for(int i = 0; i < allDims.size(); i++){
+			par1nbtTagCompound.setInteger("Dimension_"+i, allDims.get(i));
 		}
 
 		super.writeToNBT(par1nbtTagCompound);
@@ -76,11 +83,13 @@ public class TETelepad extends TileEntity{
 		for (int i = 0; i < c ; ++i){
 			this.allCoords.add(par1nbtTagCompound.getIntArray("Coords_"+i));
 			this.allNames.add(par1nbtTagCompound.getString("PadName_"+i));
+			this.allDims.add(par1nbtTagCompound.getInteger("Dimension_"+i));
 		}
 
 		allCoords.trimToSize();
 		allNames.trimToSize();
-
+		allDims.trimToSize();
+		
 		super.readFromNBT(par1nbtTagCompound);
 	}
 
@@ -142,7 +151,8 @@ public class TETelepad extends TileEntity{
 
 										allCoords = new ArrayList<int[]>();
 										allNames = new ArrayList<String>();
-
+										allDims = new ArrayList<Integer>();
+										
 										int size = stack.getTagCompound().getInteger(ItemPadLocations.SIZE);
 
 										for(int c =0; c < size; c++){
@@ -153,12 +163,14 @@ public class TETelepad extends TileEntity{
 											ray[2] = stack.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[2];
 
 											String padName = stack.getTagCompound().getString("TelePadName_"+c);
+											int dim = stack.getTagCompound().getInteger(ItemPadLocations.DIM_+c);
 											//FMLLog.getLogger().info(""+ray);
 											allCoords.add(ray);
 											allNames.add(padName);
+											allDims.add(dim);
 											//FMLLog.getLogger().info("Added " + padName + " to allNames : "+ allNames);
 										}
-										
+
 										// ... and open gui
 										FMLNetworkHandler.openGui(p, mod_telepads.instance, 0, worldObj, xCoord, yCoord, zCoord);
 									}else{

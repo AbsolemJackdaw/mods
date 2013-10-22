@@ -53,7 +53,6 @@ public class TelePadsTeleportHandler implements IPacketHandler {
 
 							int size = stack.getTagCompound().getInteger(ItemPadLocations.SIZE);
 							stack.getTagCompound().setString("TelePadName_"+(size-1), name);
-
 						}
 					}
 				}
@@ -103,7 +102,13 @@ public class TelePadsTeleportHandler implements IPacketHandler {
 				int y = dis.readInt();
 				int z = dis.readInt();
 
-				p.setPositionAndUpdate(x+2, y+0.5d, z);
+				int dimID = dis.readInt();
+				if( dimID!= p.worldObj.provider.dimensionId){
+					p.travelToDimension(dimID);
+					p.setPositionAndUpdate(x+2, y+0.5d, z);
+				}else{
+					p.setPositionAndUpdate(x+2, y+0.5d, z);
+				}
 				
 				break;
 

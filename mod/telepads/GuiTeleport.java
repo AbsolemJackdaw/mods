@@ -169,7 +169,11 @@ public class GuiTeleport extends GuiScreen{
 				outputStream.writeInt(te.allCoords.get(id)[0]);//x
 				outputStream.writeInt(te.allCoords.get(id)[1]);//y
 				outputStream.writeInt(te.allCoords.get(id)[2]);//z
+				
+				outputStream.writeInt(te.allDims.get(id));
 			}
+			
+			
 
 			Packet250CustomPayload packet = new Packet250CustomPayload("telePads", bytes.toByteArray());
 			PacketDispatcher.sendPacketToServer(packet);
