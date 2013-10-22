@@ -73,16 +73,19 @@ public class ItemPadLocations extends Item {
 		if(!par2World.isRemote){
 			par3EntityPlayer.addChatMessage(EnumChatFormatting.DARK_AQUA + "/*======= How To Use =======*/");
 			par3EntityPlayer.addChatMessage(EnumChatFormatting.DARK_AQUA + "");
-			par3EntityPlayer.addChatMessage(EnumChatFormatting.DARK_AQUA + "/*=Register=*/");
+			par3EntityPlayer.addChatMessage(EnumChatFormatting.DARK_AQUA + "/*=REGISTER=*/");
 			par3EntityPlayer.addChatMessage(EnumChatFormatting.DARK_AQUA + "Right Click for Information Guide.");
 			par3EntityPlayer.addChatMessage(EnumChatFormatting.DARK_AQUA + "");
-			par3EntityPlayer.addChatMessage(EnumChatFormatting.DARK_AQUA + "/*=TelePads=*/");
-			par3EntityPlayer.addChatMessage(EnumChatFormatting.DARK_AQUA + "1.Click Empty handed to set TelePad to Universal");
-			par3EntityPlayer.addChatMessage(EnumChatFormatting.DARK_AQUA + "2.Use Register on TelePad to add Universal TelePad, if not already registered.");
-			par3EntityPlayer.addChatMessage(EnumChatFormatting.DARK_AQUA + "3.Standing on a TelePad will cause it to make a backup of your current Register ,");
-			par3EntityPlayer.addChatMessage(EnumChatFormatting.DARK_AQUA + "if lost, stand back on a pad to get a new one.");
-			par3EntityPlayer.addChatMessage(EnumChatFormatting.DARK_AQUA + "4.TelePads are player only and can be shared with anyone if set to universal.");
-			par3EntityPlayer.addChatMessage(EnumChatFormatting.DARK_AQUA + "");
+			par3EntityPlayer.addChatMessage(EnumChatFormatting.DARK_AQUA + "/*=TELEPADS=*/");
+			par3EntityPlayer.addChatMessage(EnumChatFormatting.DARK_AQUA + "1.Teleporting : stand on pad and wait 3-5 Seconds.");
+			par3EntityPlayer.addChatMessage(EnumChatFormatting.DARK_AQUA + "2.Removing TelePad : Right Click Register on TelePad");
+			par3EntityPlayer.addChatMessage(EnumChatFormatting.DARK_AQUA + "3.Allowing friends to use a pad :");
+			par3EntityPlayer.addChatMessage(EnumChatFormatting.DARK_AQUA + ".a: Right Click TelePad empty handed");
+			par3EntityPlayer.addChatMessage(EnumChatFormatting.DARK_AQUA + ".b: Let Friend RightClick his Register on the TelePad");
+			par3EntityPlayer.addChatMessage(EnumChatFormatting.DARK_AQUA + "4.Lost your register ? Stand on one of your pads to recover");
+			par3EntityPlayer.addChatMessage(EnumChatFormatting.DARK_AQUA + "one. TelePads Remember what locations you travelled to last !");
+			par3EntityPlayer.addChatMessage(EnumChatFormatting.DARK_AQUA + "5.FYI :TelePads are player only and can be shared with anyone if set to Universal Acces(Step 3)");
+			par3EntityPlayer.addChatMessage(EnumChatFormatting.DARK_AQUA + "Universal Pads can't be removed.");
 
 		}
 

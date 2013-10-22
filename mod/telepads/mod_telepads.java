@@ -1,5 +1,6 @@
 package telepads;
 
+import modUpdateChecked.OnPlayerLogin;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
@@ -25,7 +26,7 @@ serverPacketHandlerSpec =
 
 public class mod_telepads {
 
-	protected static final String version = "Beta";
+	protected static final String version = "1.6.4 v1";
 	protected static final String modID = "telepads";
 	protected static final String modName = "Teleportation Pads";
 	
@@ -57,11 +58,14 @@ public class mod_telepads {
 		LanguageRegistry.addName(telepad, "TelePad");
 		LanguageRegistry.addName(padLocator, "Register With TelePadLocations");
 		
+		proxy.registerSound();
 		
-		MinecraftForge.EVENT_BUS.register(new sndmngr());
+//		MinecraftForge.EVENT_BUS.register(new sndmngr());
 		
 		GameRegistry.addRecipe(new ItemStack(telepad,2),new Object[] {"GGG", "RER", "RIR", 
 			'G', Block.glass, 'R', Item.redstone, 'E', Item.enderPearl, 'I', Block.blockIron });
+
+		GameRegistry.registerPlayerTracker(new OnPlayerLogin(version, modName));
 
 	}
 

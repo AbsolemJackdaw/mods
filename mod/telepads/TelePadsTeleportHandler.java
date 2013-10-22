@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.Packet250CustomPayload;
@@ -104,12 +105,17 @@ public class TelePadsTeleportHandler implements IPacketHandler {
 
 				int dimID = dis.readInt();
 				if( dimID!= p.worldObj.provider.dimensionId){
-					p.travelToDimension(dimID);
-					p.setPositionAndUpdate(x+2, y+0.5d, z);
+					if(p.worldObj.provider.dimensionId == 1){
+						p.travelToDimension(1);
+					}else{
+						p.travelToDimension(dimID);
+						p.setPositionAndUpdate(x+2, y+0.5d, z);
+					}
+
 				}else{
 					p.setPositionAndUpdate(x+2, y+0.5d, z);
 				}
-				
+
 				break;
 
 			case IDENTIFIER_REGISTER:
