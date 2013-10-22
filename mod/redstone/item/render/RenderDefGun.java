@@ -3,13 +3,9 @@ package redstone.item.render;
 import java.nio.FloatBuffer;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.RenderPlayer;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
-import net.minecraftforge.client.event.RenderPlayerEvent;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;

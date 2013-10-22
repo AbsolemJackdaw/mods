@@ -1,7 +1,6 @@
 package toolbelts.handlers;
 
 import net.minecraft.entity.player.EntityPlayer;
-import toolbelts.PlayerBeltTracker;
 import toolbelts.handlers.packets.BeltPacket;
 import cpw.mods.fml.common.IPlayerTracker;
 

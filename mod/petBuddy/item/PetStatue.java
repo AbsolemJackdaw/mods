@@ -7,7 +7,7 @@ import java.util.List;
 
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -124,7 +124,7 @@ public class PetStatue extends Item {
 			EntityPlayer par3EntityPlayer) {
 
 		if (par2World!= null && par2World.isRemote && FMLCommonHandler.instance().getEffectiveSide().isClient()) {
-			EntityLiving el= Targetting.isTargetingLivingEntity(4.0D); 
+			EntityLivingBase el= Targetting.isTargetingLivingEntity(4.0D); 
 
 			if (el != null ) {
 				int id =  BuddyUtils.EntityToID(el.getClass());

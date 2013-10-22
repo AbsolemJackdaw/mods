@@ -150,8 +150,6 @@ public class PetInterface extends GuiScreen {
 	}
 
 	public void drawScreen(int par1, int par2, float par3) {
-		this.xSize_lo = (float) par1;
-		this.ySize_lo = (float) par2;
 
 		try
 		{

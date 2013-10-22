@@ -9,7 +9,6 @@ import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.world.World;
 import toolbelts.PlayerBeltTracker;
 import toolbelts.Utils;
-import toolbelts.sets.BeltBase;
 import cpw.mods.fml.common.network.IPacketHandler;
 import cpw.mods.fml.common.network.Player;
 

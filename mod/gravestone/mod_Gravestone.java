@@ -41,7 +41,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
 
-@Mod(modid = "GraveStoneMod", name = "GraveStone", version = "1.6.4 v2")
+@Mod(modid = "GraveStoneMod", name = "GraveStone", version = mod_Gravestone.version)
 @NetworkMod(clientSideRequired = true, serverSideRequired = false,
 clientPacketHandlerSpec =
 @SidedPacketHandler(channels = {"graveData"}, packetHandler = PacketHandler.class),
@@ -50,7 +50,7 @@ serverPacketHandlerSpec =
 
 public class mod_Gravestone{
 	
-	private static final String version = "1.6.4 v2";
+	protected static final String version = "1.6.4 v2";
 	private static final String name = "GraveStones";
 
 	public static mod_Gravestone instance;

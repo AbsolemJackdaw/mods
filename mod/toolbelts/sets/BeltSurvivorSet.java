@@ -1,11 +1,11 @@
 package toolbelts.sets;
 
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.RenderPlayerEvent.SetArmorModel;
+
+import org.lwjgl.opengl.GL11;
 
 public class BeltSurvivorSet extends BeltBase{
 

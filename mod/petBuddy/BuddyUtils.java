@@ -1,7 +1,7 @@
 package petBuddy;
 
 import net.minecraft.block.Block;
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.monster.EntityBlaze;
@@ -112,7 +112,7 @@ public class BuddyUtils {
 		}
 	}
 
-	public static int EntityToID(Class<? extends EntityLiving> class1){
+	public static int EntityToID(Class<? extends EntityLivingBase> class1){
 
 		if(class1.equals(EntityPig.class))
 			return 2;

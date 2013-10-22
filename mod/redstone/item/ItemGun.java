@@ -2,9 +2,6 @@ package redstone.item;
 
 import java.util.List;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
@@ -22,6 +19,8 @@ import redstone.ammo.BlueAmmo;
 import redstone.ammo.EndAmmo;
 import redstone.ammo.GreenAmmo;
 import redstone.ammo.RedAmmo;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemGun extends Item {
 

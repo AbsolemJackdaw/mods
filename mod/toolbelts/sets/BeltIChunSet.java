@@ -1,7 +1,6 @@
 package toolbelts.sets;
 
 import net.minecraft.block.Block;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.RenderPlayerEvent.SetArmorModel;
 
