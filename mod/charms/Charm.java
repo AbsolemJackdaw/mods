@@ -24,7 +24,7 @@ public class Charm extends Item{
 
 	private final int SLOT_ID;
 	private final int TIER;
-	
+
 	public Charm(int par1, int heal, int color, int tier) {
 		super(par1);
 		this.setMaxStackSize(1);
@@ -114,7 +114,7 @@ public class Charm extends Item{
 		list.add(StatCollector.translateToLocal("Total : " + heartsToHeal/ (ConfigClass.instance.halfHearts? 1 : 2)));
 		list.add(StatCollector.translateToLocal("Left : " + (heartsToHeal-stack.getItemDamage())/(ConfigClass.instance.halfHearts? 1 : 2)));
 		list.add(StatCollector.translateToLocal("CoolDown : "+(cooldown/20)+" s"));
-		list.add(StatCollector.translateToLocal("Equip in slot "+SLOT_ID+" !"));
+		list.add(StatCollector.translateToLocal("Equip in slot "+(SLOT_ID+1)+" !"));
 
 	}
 
@@ -129,14 +129,13 @@ public class Charm extends Item{
 	@Override
 	public boolean hasEffect(ItemStack par1ItemStack)
 	{
-		return par1ItemStack.getMaxDamage() >= 50*2;
+		return TIER >= 4;
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
 	public EnumRarity getRarity(ItemStack par1ItemStack)
 	{
-		return par1ItemStack.getMaxDamage() == 70*2 ? EnumRarity.rare :
-			par1ItemStack.getMaxDamage() == 100*2? EnumRarity.epic :EnumRarity.common;
+		return TIER == 4? EnumRarity.rare : TIER == 5 ? EnumRarity.epic :EnumRarity.common;
 	}
 }

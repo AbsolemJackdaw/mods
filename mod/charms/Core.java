@@ -15,7 +15,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 
 
 
-@Mod(modid = "Charms", name = "Health Charms", version = "1.6.4 v1")
+@Mod(modid = "Charms", name = Core.name, version = Core.version)
 
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
 
@@ -24,8 +24,8 @@ public class Core {
 	@SidedProxy(serverSide = "charms.CharmHUDCommonRenderer", clientSide = "charms.CharmHUDClientRenderer")
 	public static CharmHUDCommonRenderer proxy;
 
-	private static final String name = "HealthCharms";
-	private static final String version = "1.6.4 v1";
+	protected static final String name = "Health Charms";
+	protected static final String version = "1.6.4 v2";
 	
 	public static Item charmTierI;
 	public static Item charmTierII;
@@ -50,11 +50,11 @@ public class Core {
 	
 		GameRegistry.registerPlayerTracker(new OnPlayerLogin(version, name));
 		
-		charmTierI = new Charm(845, 10*2,0xc1c1c1,1).setUnlocalizedName("charmTierI");
-		charmTierII = new Charm(846, 15*2, 0xffe083,2).setUnlocalizedName("charmTierII");
-		charmTierIII = new Charm(847, 30*2, 0xdfd8cf,3).setUnlocalizedName("charmTierIII");
-		charmTierIV = new Charm(848, 70*2, 0xd1fbf3,4).setUnlocalizedName("charmTierIV");
-		charmTierV = new Charm(849, 100*2, 0x9bffcc,5).setUnlocalizedName("charmTierV");
+		charmTierI = new Charm(845, 20*2,0xc1c1c1,1).setUnlocalizedName("charmTierI");
+		charmTierII = new Charm(846, 30*2, 0xffe083,2).setUnlocalizedName("charmTierII");
+		charmTierIII = new Charm(847, 50*2, 0xdfd8cf,3).setUnlocalizedName("charmTierIII");
+		charmTierIV = new Charm(848, 100*2, 0xd1fbf3,4).setUnlocalizedName("charmTierIV");
+		charmTierV = new Charm(849, 250*2, 0x9bffcc,5).setUnlocalizedName("charmTierV");
 		
 		LanguageRegistry.addName(charmTierI, "Iron Charm");
 		LanguageRegistry.addName(charmTierII, "Gold Charm");
@@ -63,13 +63,18 @@ public class Core {
 		LanguageRegistry.addName(charmTierV, "Diamond Charm");
 
 		GameRegistry.addShapelessRecipe(new ItemStack(charmTierI), new Object[]{Item.paper, new ItemStack(Item.dyePowder, 1, 0), 
-			Item.ingotIron, Item.ingotIron, Item.ingotIron});
-		GameRegistry.addShapelessRecipe(new ItemStack(charmTierII), new Object[]{charmTierI, Item.ingotGold, Item.ingotGold,
-			new ItemStack(Item.dyePowder, 1, 0)});
+			Item.ingotIron, Item.ingotIron, Item.ingotIron, Item.ingotIron, Item.ingotIron, Item.ingotIron, Item.ingotIron});
+		
+		GameRegistry.addShapelessRecipe(new ItemStack(charmTierII), new Object[]{charmTierI, Item.goldNugget, Item.goldNugget,
+			new ItemStack(Item.dyePowder, 1, 0), Item.goldNugget, Item.goldNugget, Item.goldNugget,});
+		
 		GameRegistry.addShapelessRecipe(new ItemStack(charmTierIII), new Object[]{charmTierII, Item.netherQuartz, 
-			Item.netherQuartz, Item.netherQuartz, Item.netherQuartz, new ItemStack(Item.dyePowder, 1, 0)});
-		GameRegistry.addShapelessRecipe(new ItemStack(charmTierIV), new Object[]{charmTierIII, Item.emerald, Item.emerald
+			Item.netherQuartz, Item.netherQuartz, Item.netherQuartz,Item.netherQuartz, Item.netherQuartz, Item.netherQuartz,
+			new ItemStack(Item.dyePowder, 1, 0)});
+		
+		GameRegistry.addShapelessRecipe(new ItemStack(charmTierIV), new Object[]{charmTierIII, Item.emerald, Item.emerald, Item.emerald
 			, new ItemStack(Item.dyePowder, 1, 0)});
+		
 		GameRegistry.addShapelessRecipe(new ItemStack(charmTierV), new Object[]{charmTierIV, Item.diamond
 			, new ItemStack(Item.dyePowder, 1, 0)});
 
