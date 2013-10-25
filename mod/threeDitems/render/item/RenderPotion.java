@@ -66,39 +66,39 @@ public class RenderPotion extends Render3DInterface{
 	@Override
 	public void postSpecials(ItemStack item,ModelBase model, Object... data) {
 		super.postSpecials(item, model);
-		
-		if(item.getItem() instanceof ItemPotion|| item.getItem().equals(Item.expBottle)){
-
-			Minecraft.getMinecraft().renderEngine.bindTexture(content);
+//		
+//		if(item.getItem() instanceof ItemPotion|| item.getItem().equals(Item.expBottle)){
+//
+//			Minecraft.getMinecraft().renderEngine.bindTexture(content);
+////			GL11.glEnable(GL11.GL_BLEND);
+//			GL11.glDisable(GL11.GL_LIGHTING);
+////			GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);
+//
+//			if(item.getItem().equals(Item.potion) || item.getItem().equals(Item.glassBottle))
+//			{
+//				int color = ((ItemPotion)item.getItem()).getColorFromDamage(item.getItemDamage());
+//				float red = (float)(color >> 16 & 255) / 255.0F;
+//				float green = (float)(color >> 8 & 255) / 255.0F;
+//				float blue = (float)(color & 255) / 255.0F;					
+//				GL11.glColor4f(red, green,blue, 1.0F);
+//				GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_SRC_COLOR);
+//				GL11.glEnable(GL11.GL_BLEND);
+//				((bottle)model).renderContent(null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
+//				GL11.glDisable(GL11.GL_BLEND);
+//			}else if(item.getItem().equals(Item.expBottle)){
+//				GL11.glColor4f(0.7f, 1.0f, 0.0f, 1.0F);
+//				((bottle)model).renderContent(null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
+//			}
+//		}
+//
+//		if(item.getItem() instanceof ItemPotion || 
+//				item.getItem().equals(Item.glassBottle)||
+//				item.getItem().equals(Item.expBottle)){
 //			GL11.glEnable(GL11.GL_BLEND);
-			GL11.glDisable(GL11.GL_LIGHTING);
+//			GL11.glDisable(GL11.GL_LIGHTING);
 //			GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);
-
-			if(item.getItem().equals(Item.potion) || item.getItem().equals(Item.glassBottle))
-			{
-				int color = ((ItemPotion)item.getItem()).getColorFromDamage(item.getItemDamage());
-				float red = (float)(color >> 16 & 255) / 255.0F;
-				float green = (float)(color >> 8 & 255) / 255.0F;
-				float blue = (float)(color & 255) / 255.0F;					
-				GL11.glColor4f(red, green,blue, 1.0F);
-				GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_SRC_COLOR);
-				GL11.glEnable(GL11.GL_BLEND);
-				((bottle)model).renderContent(null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
-				GL11.glDisable(GL11.GL_BLEND);
-			}else if(item.getItem().equals(Item.expBottle)){
-				GL11.glColor4f(0.7f, 1.0f, 0.0f, 1.0F);
-				((bottle)model).renderContent(null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
-			}
-		}
-
-		if(item.getItem() instanceof ItemPotion || 
-				item.getItem().equals(Item.glassBottle)||
-				item.getItem().equals(Item.expBottle)){
-			GL11.glEnable(GL11.GL_BLEND);
-			GL11.glDisable(GL11.GL_LIGHTING);
-			GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);
-			GL11.glColor4f(0.2f, 0.2f, 0.2f, 0.2f);
-			((bottle)model).renderBottle(null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
-		}
+//			GL11.glColor4f(0.2f, 0.2f, 0.2f, 0.2f);
+//			((bottle)model).renderBottle(null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
+//		}
 	}
 }

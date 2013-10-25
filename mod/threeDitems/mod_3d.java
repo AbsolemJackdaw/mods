@@ -32,7 +32,7 @@ public class mod_3d
 
 //		proxy.renderBlocks();
 		
-		proxy.render();
+//		proxy.render();
 	}
 
 }
