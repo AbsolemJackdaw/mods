@@ -26,7 +26,7 @@ serverPacketHandlerSpec =
 
 public class mod_telepads {
 
-	protected static final String version = "1.6.4 v1";
+	protected static final String version = "1.6.4 v5";
 	protected static final String modID = "telepads";
 	protected static final String modName = "Teleportation Pads";
 	
@@ -51,6 +51,7 @@ public class mod_telepads {
 		
 		
 		proxy.registerTileEntity();
+		GameRegistry.registerTileEntity(TETelepad.class, "TETelepad");
 		proxy.registerItemRenderer();
 		
 		NetworkRegistry.instance().registerGuiHandler(this, new TelePadGuiHandler());

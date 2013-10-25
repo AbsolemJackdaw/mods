@@ -80,7 +80,7 @@ public class BlockTelepad extends BlockContainer{
 				p.inventory.addItemStackToInventory(stack);
 			}
 
-			FMLNetworkHandler.openGui(p, mod_telepads.instance, 1, par1World, x, y, z);
+			p.openGui(mod_telepads.instance, 1, par1World, x, y, z);
 
 		}
 

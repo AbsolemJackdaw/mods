@@ -8,7 +8,7 @@ public class CLProxy extends SProxy{
 	
 	@Override
 	public void registerTileEntity() {
-		ClientRegistry.registerTileEntity(TETelepad.class, "TETelepad", new TESRTelePad());		
+		ClientRegistry.bindTileEntitySpecialRenderer(TETelepad.class, new TESRTelePad());
 	}
 	
 	@Override
