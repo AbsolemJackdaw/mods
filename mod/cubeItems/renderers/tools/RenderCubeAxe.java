@@ -25,7 +25,7 @@ public class RenderCubeAxe extends RenderCubeInterface{
 		GL11.glRotatef(0, 1, 0, 0);
 		GL11.glRotatef(0, 0, 0, 1);
 		
-		GL11.glTranslatef(0.5f, -0.3f, 0f);
+		GL11.glTranslatef(0.7f, -0.5f, 0.3f);
 	
 	}
 
@@ -36,7 +36,7 @@ public class RenderCubeAxe extends RenderCubeInterface{
 		GL11.glRotatef(-70, 1, 0, 0);
 		GL11.glRotatef(0, 0, 0, 1);
 		
-		GL11.glTranslatef(-0.1f, -0.8f, 1.3f);	
+		GL11.glTranslatef(-0.25f, -0.8f, 1.6f);	
 	}
 	
 	@Override

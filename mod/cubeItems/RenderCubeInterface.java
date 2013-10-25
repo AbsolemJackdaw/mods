@@ -24,7 +24,7 @@ public abstract class RenderCubeInterface implements IItemRenderer {
 		glint = new ResourceLocation("textures/misc/enchanted_item_glint.png");
 	}
 
-	
+
 	@Override
 	public boolean handleRenderType(ItemStack item, ItemRenderType type) {
 		return type != type.INVENTORY && !rend.renderInFrame ? true : false;
@@ -40,13 +40,13 @@ public abstract class RenderCubeInterface implements IItemRenderer {
 	public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
 
 
-//		if(!shouldIgnoreTextureRendering())
-//			Minecraft.getMinecraft().renderEngine.bindTexture(modelTexture);
-		
+		//		if(!shouldIgnoreTextureRendering())
+		//			Minecraft.getMinecraft().renderEngine.bindTexture(modelTexture);
+
 		GL11.glPushMatrix();
-		
+
 		renderScale();
-		
+
 		switch(type){
 		case ENTITY:
 			renderEntity();
@@ -60,16 +60,16 @@ public abstract class RenderCubeInterface implements IItemRenderer {
 		default : 
 			break;
 		}
-		
+
 
 		preSpecials(item, model, data);
-		
+
 		if(!shouldIgnoreModelRendering()){
-			model.render();
+				model.render();
 		}
-		
+
 		postSpecials(item, model, data);
-		
+
 		renderglow(item);
 
 		GL11.glPopMatrix();

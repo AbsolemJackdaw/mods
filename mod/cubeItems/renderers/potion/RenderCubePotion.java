@@ -1,16 +1,11 @@
 package cubeItems.renderers.potion;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ModelBase;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemStack;
 
 import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.common.FMLLog;
-
-import threeDitems.models.bottle;
 
 import cubeItems.ModelCubeWorld;
 import cubeItems.RenderCubeInterface;
@@ -20,6 +15,8 @@ public class RenderCubePotion extends RenderCubeInterface{
 	ModelCubeWorld potion_base_greyScale = new ModelCubeWorld(ModelCubeWorld.class.getResourceAsStream("/assets/subaraki/cubeModels/bottle_bottom_greyscale.cub"));
 	ModelCubeWorld potion_base_empty = new ModelCubeWorld(ModelCubeWorld.class.getResourceAsStream("/assets/subaraki/cubeModels/bottle_bottom_empty.cub"));
 	ModelCubeWorld potion_base_water = new ModelCubeWorld(ModelCubeWorld.class.getResourceAsStream("/assets/subaraki/cubeModels/bottle_bottom_water.cub"));
+	ModelCubeWorld potion_top_splash = new ModelCubeWorld(ModelCubeWorld.class.getResourceAsStream("/assets/subaraki/cubeModels/bottle_top_splash.cub"));
+	ModelCubeWorld potion_top_regular = new ModelCubeWorld(ModelCubeWorld.class.getResourceAsStream("/assets/subaraki/cubeModels/bottle_top.cub"));
 
 	ModelCubeWorld potion_bottom;
 
@@ -74,6 +71,19 @@ public class RenderCubePotion extends RenderCubeInterface{
 		GL11.glScalef(f,f,f);
 	}
 
+	@Override
+	public void preSpecials(ItemStack item, ModelCubeWorld model,
+			Object... data) {
+		if(((ItemPotion)item.getItem()).isSplash(item.getItemDamage())){
+			this.model = potion_top_splash;
+
+		}else{
+			this.model = potion_top_regular;
+		}
+		
+		super.preSpecials(item, model, data);
+	}
+	
 	@Override
 	public void postSpecials(ItemStack item, ModelCubeWorld model, Object... data) {
 		super.postSpecials(item, model, data);

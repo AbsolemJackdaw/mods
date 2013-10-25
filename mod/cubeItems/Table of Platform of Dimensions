@@ -1,0 +1,15 @@
+
+
+Table of Platform Dimensions:
+This table can be used by modders to assure a 100% compatibility with the classes that are provided in the API.
+Use these dimensions when making a new model and using an already existing renderclass to not mess up the model's offset.
+
+Swords
+12*9
+
+Pick-Axe
+8*28
+
+Axe
+9*28
+

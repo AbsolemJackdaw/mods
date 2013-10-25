@@ -36,7 +36,7 @@ public class RenderCubeSword extends RenderCubeInterface{
 		GL11.glRotatef(-75, 1, 0, 0);
 		GL11.glRotatef(0, 0, 0, 1);
 		
-		GL11.glTranslatef(-0.1f, -0.8f, 0.75f);	
+		GL11.glTranslatef(-0.25f, -0.8f, 0.8f);	
 	}
 	
 	@Override

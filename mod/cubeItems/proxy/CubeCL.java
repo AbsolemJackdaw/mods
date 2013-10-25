@@ -3,13 +3,14 @@ package cubeItems.proxy;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.MinecraftForgeClient;
 import cubeItems.ModelCubeWorld;
+import cubeItems.renderers.RenderCubeBowl;
 import cubeItems.renderers.RenderCubeDisc;
-import cubeItems.renderers.RenderGenericII;
 import cubeItems.renderers.food.RenderCubePotato;
 import cubeItems.renderers.potion.RenderCubePotion;
 import cubeItems.renderers.tools.RenderCubeAxe;
 import cubeItems.renderers.tools.RenderCubePickAxe;
 import cubeItems.renderers.tools.RenderCubeSword;
+
 
 public class CubeCL extends CubeS {
 
@@ -31,10 +32,15 @@ public class CubeCL extends CubeS {
 	String[] apple = new String[] {"apple_red","apple_gold"};
 	int[] appleID = new int[] {Item.appleRed.itemID, Item.appleGold.itemID};
 
-	int[] discsID = new int[] {Item.recordStrad.itemID, Item.record11.itemID};
+	String[] carrot = new String[] {"carrot","carrot_gold"};
+	int[] carrotID = new int[] {Item.carrot.itemID, Item.goldenCarrot.itemID};
+	
+	int[] discsID = new int[] {Item.record13.itemID, Item.recordCat.itemID, Item.recordBlocks.itemID,Item.recordChirp.itemID,Item.recordFar.itemID,
+			Item.recordMall.itemID,Item.recordMellohi.itemID,Item.recordStal.itemID,Item.recordStrad.itemID,Item.recordWard.itemID,Item.record11.itemID,
+			Item.recordWait.itemID};
 
 	int[] potionID = new int[] {Item.glassBottle.itemID, Item.potion.itemID};
-
+	
 	@Override
 	public void render() {
 
@@ -59,7 +65,7 @@ public class CubeCL extends CubeS {
 		}
 
 		for(int i = 0; i < bowl.length; i++){
-			MinecraftForgeClient.registerItemRenderer(bowlID[i], new RenderGenericII(
+			MinecraftForgeClient.registerItemRenderer(bowlID[i], new RenderCubeBowl(
 					new ModelCubeWorld(ModelCubeWorld.class.getResourceAsStream("/assets/subaraki/cubeModels/"+bowl[i]+".cub"))));
 		}
 
@@ -68,14 +74,20 @@ public class CubeCL extends CubeS {
 					new ModelCubeWorld(ModelCubeWorld.class.getResourceAsStream("/assets/subaraki/cubeModels/"+apple[i]+".cub"))));
 		}
 
+		for(int i = 0; i < carrot.length; i++){
+			MinecraftForgeClient.registerItemRenderer(carrotID[i], new RenderCubePotato(
+					new ModelCubeWorld(ModelCubeWorld.class.getResourceAsStream("/assets/subaraki/cubeModels/"+carrot[i]+".cub"))));
+		}
+
+		
 		for(int i = 0; i < potionID.length; i++){
 			MinecraftForgeClient.registerItemRenderer(potionID[i], new RenderCubePotion(
 					new ModelCubeWorld(ModelCubeWorld.class.getResourceAsStream("/assets/subaraki/cubeModels/bottle_top.cub")),i));
 		}
 
 		for(int i = 0; i < discsID.length; i++){
-			MinecraftForgeClient.registerItemRenderer(potionID[i], new RenderCubePotion(
-					new ModelCubeWorld(ModelCubeWorld.class.getResourceAsStream("/assets/subaraki/cubeModels/music_disc_1"+(i+1)+".cub")),i));
+			MinecraftForgeClient.registerItemRenderer(discsID[i], new RenderCubeDisc(
+					new ModelCubeWorld(ModelCubeWorld.class.getResourceAsStream("/assets/subaraki/cubeModels/music_disc_"+(i+1)+".cub"))));
 		}
 
 		MinecraftForgeClient.registerItemRenderer(Item.bread.itemID, new RenderCubePotato(
@@ -83,5 +95,8 @@ public class CubeCL extends CubeS {
 
 		MinecraftForgeClient.registerItemRenderer(Item.cookie.itemID, new RenderCubeDisc(
 				new ModelCubeWorld(ModelCubeWorld.class.getResourceAsStream("/assets/subaraki/cubeModels/cookie.cub"))));
+		
+		MinecraftForgeClient.registerItemRenderer(Item.stick.itemID, new RenderCubeSword(
+				new ModelCubeWorld(ModelCubeWorld.class.getResourceAsStream("/assets/subaraki/cubeModels/stick.cub"))));
 	}
 }

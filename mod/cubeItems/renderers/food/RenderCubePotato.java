@@ -8,6 +8,7 @@ import cubeItems.mod_cubeItems;
 
 public class RenderCubePotato extends RenderCubeInterface{
 
+	/**RenderFood : platform of 10x10*/
 	public RenderCubePotato(ModelCubeWorld model) {
 		super(model);
 	}
@@ -26,7 +27,6 @@ public class RenderCubePotato extends RenderCubeInterface{
 
 	@Override
 	public void renderEquipped() {
-		
 		GL11.glRotatef(-45, 0, 1, 0);
 		GL11.glRotatef(0, 1, 0, 0);
 		GL11.glRotatef(45, 0, 0, 1);

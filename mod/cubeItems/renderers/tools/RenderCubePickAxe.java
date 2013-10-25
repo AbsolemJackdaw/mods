@@ -25,7 +25,7 @@ public class RenderCubePickAxe extends RenderCubeInterface{
 		GL11.glRotatef(0, 1, 0, 0);
 		GL11.glRotatef(0, 0, 0, 1);
 		
-		GL11.glTranslatef(0f, -0.5f, 0.9f);
+		GL11.glTranslatef(0f, -0.7f, 1.2f);
 	
 	}
 
@@ -36,7 +36,7 @@ public class RenderCubePickAxe extends RenderCubeInterface{
 		GL11.glRotatef(0, 1, 0, 0);
 		GL11.glRotatef(75, 0, 0, 1);
 		
-		GL11.glTranslatef(-0.25f, -0.9f, 0.25f);	
+		GL11.glTranslatef(-0.45f, -0.9f, 0.25f);	
 	}
 	
 	@Override

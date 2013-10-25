@@ -5,9 +5,9 @@ import org.lwjgl.opengl.GL11;
 import cubeItems.ModelCubeWorld;
 import cubeItems.RenderCubeInterface;
 
-public class RenderGenericII extends RenderCubeInterface{
+public class RenderCubeBowl extends RenderCubeInterface{
 
-	public RenderGenericII(ModelCubeWorld model) {
+	public RenderCubeBowl(ModelCubeWorld model) {
 		super(model);
 	}
 
