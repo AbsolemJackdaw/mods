@@ -51,7 +51,6 @@ public class ItemPadLocations extends Item {
 				int [] a_ray = new int[3];
 				a_ray = tag.getIntArray(LOCATION_+i);
 
-				//FMLLog.getLogger().info("" + tag);
 				if(a_ray != null)
 					par3List.add("x" + a_ray[0] + " y"+ a_ray[1] + " z"+a_ray[2] + " "+ tag.getString("TelePadName_"+i) + " dim. "+ tag.getInteger(DIM_+i));
 			}

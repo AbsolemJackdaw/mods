@@ -370,7 +370,6 @@ public class BlockTelepad extends BlockContainer{
 
 					//if the coordinates are in, do nothing, it will 'remove' them from the list.
 					//the player IS the owner, so theoreticly, it should be in the list. if it isn't, that's even better.
-					FMLLog.getLogger().info(" 'removed' index " + c);
 
 				}else{
 					//copy over values to a new nbt. 

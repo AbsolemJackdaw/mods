@@ -83,7 +83,6 @@ public class TelePadsTeleportHandler implements IPacketHandler {
 
 					int dimID = dis.readInt();
 
-					FMLLog.getLogger().info("read " + dimID);
 
 					
 					//if the dimension id = the End, play endscreen and teleport to spawn point. 
@@ -108,7 +107,6 @@ public class TelePadsTeleportHandler implements IPacketHandler {
 				ItemStack stack = new ItemStack(mod_telepads.padLocator);
 				stack.setTagCompound(new NBTTagCompound());
 				
-				FMLLog.getLogger().info("HANDLER " + pad.allCoords.size() +" " +pad.allNames.size() + " " +pad.allDims.size());
 				for(int i = 0; i < pad.allCoords.size(); i++ ){
 
 					stack.getTagCompound().setIntArray(ItemPadLocations.LOCATION_+i, pad.allCoords.get(i));

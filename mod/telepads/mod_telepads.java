@@ -49,7 +49,6 @@ public class mod_telepads {
 		
 		GameRegistry.registerBlock(telepad, "TelePad");
 		
-		
 		proxy.registerTileEntity();
 		GameRegistry.registerTileEntity(TETelepad.class, "TETelepad");
 		proxy.registerItemRenderer();
@@ -60,9 +59,7 @@ public class mod_telepads {
 		LanguageRegistry.addName(padLocator, "Register With TelePadLocations");
 		
 		proxy.registerSound();
-		
-//		MinecraftForge.EVENT_BUS.register(new sndmngr());
-		
+				
 		GameRegistry.addRecipe(new ItemStack(telepad,2),new Object[] {"GGG", "RER", "RIR", 
 			'G', Block.glass, 'R', Item.redstone, 'E', Item.enderPearl, 'I', Block.blockIron });
 
