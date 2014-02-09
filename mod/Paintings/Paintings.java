@@ -2,9 +2,8 @@ package Paintings;
 
 import java.lang.reflect.Field;
 
-import modUpdateChecked.OnPlayerLogin;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.EnumHelper;
+import net.minecraftforge.common.util.EnumHelper;
 import Paintings.config.ConfigFile;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
@@ -12,17 +11,15 @@ import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.network.NetworkMod;
-import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraftforge.common.MinecraftForge;
 
-@Mod(modid = "PaintingsMod", name = "Paintings++", version = "1.6.4")
-@NetworkMod(clientSideRequired = true, serverSideRequired = false)
+@Mod(modid = "PaintingsMod", name = "Paintings++", version = "1.7.2")
 
 
 public class Paintings {
 
 	private static final String name = "Paintings++";
-	private static final String version = "1.6.4 v1";
+	private static final String version = "1.7.2 v1";
 	
 	public static Paintings instance;
 	@SidedProxy(serverSide = "Paintings.CommonProxy", clientSide = "Paintings.ClientProxy")
@@ -37,8 +34,6 @@ public class Paintings {
 	@EventHandler
 	public void load(FMLInitializationEvent init){
 		
-		GameRegistry.registerPlayerTracker(new OnPlayerLogin(version, name));
-
 		boolean Insane = ConfigFile.instance.Insane;
 		boolean sphax = ConfigFile.instance.Sphax;
 		boolean tiny = ConfigFile.instance.TinyPics ;

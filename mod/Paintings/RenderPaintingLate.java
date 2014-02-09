@@ -6,7 +6,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityPainting;
-import net.minecraft.util.EnumArt;
+import net.minecraft.entity.item.EntityPainting.EnumArt;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 
@@ -164,13 +164,13 @@ public class RenderPaintingLate extends Render
 		this.renderThePainting((EntityPainting)par1Entity, par2, par4, par6, par8, par9);
 	}
 
-	protected ResourceLocation func_110806_a(EntityPainting par1EntityPainting)
+	protected ResourceLocation getEntityTexture(EntityPainting par1EntityPainting)
 	{
 		return art;
 	}
 
 	@Override
 	protected ResourceLocation getEntityTexture(Entity entity) {
-		return this.func_110806_a((EntityPainting)entity);
+		return this.getEntityTexture((EntityPainting)entity);
 	}
 }
