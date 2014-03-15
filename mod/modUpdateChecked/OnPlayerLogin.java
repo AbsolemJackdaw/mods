@@ -49,10 +49,10 @@ public class OnPlayerLogin implements IPlayerTracker{
 			in.close();
 		} catch (MalformedURLException e) {
 			FMLLog.getLogger().info("[ERROR] Couldn't Handle Update. Index 1.");
-			player.addChatMessage("Could not verify mod version. ");
+			player.addChatMessage("Could not verify version for " + name);
 		} catch (IOException e) {
-			FMLLog.getLogger().info("[ERROR] Couldn't Handle Update. Index 2.");
-			player.addChatMessage("Could not verify mod version. ");
+			FMLLog.getLogger().info("[ERROR] Couldn't Handle Update. Index 2. No Internet Connection");
+			player.addChatMessage("Could not verify version for " + name);
 		}
 	}
 

@@ -8,13 +8,14 @@ import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.passive.EntityAnimal;
+import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.world.World;
 import betterbreeds.entity.EntityWolf2;
 
 public class EntityAIMateWolf extends EntityAIBase
 {
-	private EntityAnimal theAnimal;
+	private EntityTameable theAnimal;
 	World theWorld;
 	private EntityAnimal targetMate;
 	Random rand = new Random();
@@ -29,7 +30,7 @@ public class EntityAIMateWolf extends EntityAIBase
 
 	public EntityAIMateWolf(EntityAgeable par1EntityAnimal, float par2)
 	{
-		this.theAnimal = (EntityAnimal)par1EntityAnimal;
+		this.theAnimal = (EntityTameable)par1EntityAnimal;
 		this.theWorld = par1EntityAnimal.worldObj;
 		this.moveSpeed = par2;
 		this.setMutexBits(3);
@@ -118,7 +119,7 @@ public class EntityAIMateWolf extends EntityAIBase
 	 */
 	private void spawnBaby()
 	{
-		EntityAgeable entityageable = null ;
+		EntityTameable entityageable = null ;
 
 		double chance = Math.random();
 
@@ -136,6 +137,8 @@ public class EntityAIMateWolf extends EntityAIBase
 			this.targetMate.resetInLove();
 			entityageable.setGrowingAge(-24000);
 			entityageable.setLocationAndAngles(this.theAnimal.posX, this.theAnimal.posY, this.theAnimal.posZ, 0.0F, 0.0F);
+			entityageable.setTamed(true);
+			entityageable.setOwner(theAnimal.getOwnerName());
 			this.theWorld.spawnEntityInWorld(entityageable);
 			Random random = this.theAnimal.getRNG();
 

@@ -19,6 +19,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.util.ResourceLocation;
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class GuiTeleport extends GuiScreen{
@@ -33,6 +34,8 @@ public class GuiTeleport extends GuiScreen{
 	int[] ray = new int[3];
 
 	public GuiTeleport(EntityPlayer player, TETelepad te){
+		mc.getMinecraft().gameSettings.guiScale = 2;
+
 		this.te = te;
 		thePlayer = player;
 
@@ -53,6 +56,11 @@ public class GuiTeleport extends GuiScreen{
 	@Override
 	public void initGui() {
 
+		
+		//used to offset buttons
+		int offSetX = 150;
+		int offSetY = 250;
+
 		int posX = (this.width) / 2;
 		int posY = (this.height) / 2;
 		this.buttonList.clear();
@@ -60,7 +68,6 @@ public class GuiTeleport extends GuiScreen{
 		try {
 			int c = te.allCoords.size();
 
-			this.buttonList.add(new GuiButton(EXIT_BUTTON, posX, posY, 20, 20,"X")); 
 
 			for(int i = 0; i < c; i++){
 
@@ -70,9 +77,13 @@ public class GuiTeleport extends GuiScreen{
 
 				String name = isCurrentPad ? "Current Location" :	telepadCertificate.getTagCompound().getString("TelePadName_"+i);
 
-				this.buttonList.add(new GuiButton(i, /*x*/posX-200 + (i < 10 ? 0 : i< 20 ? 150 : 300),/*y*/posY+(i*25) - ( i< 10 ? 100 : i < 20 ? 350 : 600), 
+				this.buttonList.add(new GuiButton(i, /*x*/posX-200 + (i/10 > 0 && i%10 >= 0 ? 120*(i/10) : 0),/*y*/posY+((i*25)) - (i/10 > 0 && i%10 >= 0 ? (250*(i/10))+100 : 100), 
 						/*size*/100, 20, /**/name)); 
+				FMLLog.getLogger().info("" + (i%10));
 			}
+			
+			this.buttonList.add(new GuiButton(EXIT_BUTTON, posX-200, posY - 130, 20, 20,"X")); 
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -131,6 +142,9 @@ public class GuiTeleport extends GuiScreen{
 			}
 		}
 
+		if(telepadCertificate != null){
+			Minecraft.getMinecraft().gameSettings.guiScale = telepadCertificate.getTagCompound().getInteger("originalGUIScale");
+		}
 		te.resetTE();
 	}
 

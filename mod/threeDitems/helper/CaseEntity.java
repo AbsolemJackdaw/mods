@@ -36,22 +36,46 @@ public class CaseEntity
 {
 	private static final ResourceLocation bottleLoc = new ResourceLocation("subaraki:3d/bottle.png");
 	private static final ResourceLocation spotsLoc = new ResourceLocation("subaraki:3d/eggSpawnSpots.png");
-	
+
 	private static final ResourceLocation skullSkelly = new ResourceLocation("textures/entity/skeleton/skeleton.png");
 	private static final ResourceLocation skullWither = new ResourceLocation("textures/entity/skeleton/wither_skeleton.png");
 	private static final ResourceLocation skullZombie = new ResourceLocation("textures/entity/zombie/zombie.png");
 	private static final ResourceLocation skullCreeper = new ResourceLocation("textures/entity/creeper/creeper.png");
 	private static final ResourceLocation skullSteve = new ResourceLocation("textures/entity/steve.png");
 
-	
 
-	public void render(ItemRenderType type, ItemStack item, float x, float y, float z, float rotZ, float rotY, float rotX, 
-			float X, float Y, float Z, float fpsX, float fpsY, float fpsZ, float scale, 
-			String name, RenderBlocks render, FrameHelper frame, ModelBase theItem, MinecartHelper helper, 
+
+	public void potionContent(Entity p, ItemStack item, ModelBase theItem)
+	{
+		Minecraft mc = Minecraft.getMinecraft();
+		Minecraft.getMinecraft().renderEngine.bindTexture(bottleLoc);
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glDisable(GL11.GL_LIGHTING);
+		GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		if(item.getItem() != null)
+			if(item.getItem().equals(Item.potion) || item.getItem().equals(Item.glassBottle))
+			{
+				int color = ((ItemPotion)item.getItem()).getColorFromDamage(item.getItemDamage());
+				float red = ((color >> 16) & 255) / 255.0F;
+				float green = ((color >> 8) & 255) / 255.0F;
+				float blue = (color & 255) / 255.0F;
+				GL11.glColor4f(red, green,blue, 1.0F);
+				((bottle)theItem).renderContent(p, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
+			}
+			else if(item.getItem().equals(Item.expBottle))
+			{
+				GL11.glColor4f(0.7f, 1.0f, 0.0f, 1.0F);
+				((bottle)theItem).renderContent(p, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
+			}
+	}
+
+	public void render(ItemRenderType type, ItemStack item, float x, float y, float z, float rotZ, float rotY, float rotX,
+			float X, float Y, float Z, float fpsX, float fpsY, float fpsZ, float scale,
+			String name, RenderBlocks render, FrameHelper frame, ModelBase theItem, MinecartHelper helper,
 			Block blockToRender, Object[] data)
 	{
 		GL11.glPushMatrix();
-		if(item.getItem() instanceof ItemSkull){
+		if(item.getItem() instanceof ItemSkull)
 			switch(item.getItemDamage()){
 			case 0:
 				Minecraft.getMinecraft().renderEngine.bindTexture(skullSkelly);
@@ -62,12 +86,12 @@ public class CaseEntity
 			case 2:
 				Minecraft.getMinecraft().renderEngine.bindTexture(skullZombie);
 				break;
-			case 3: 
-				if(item.getTagCompound() != null){
+			case 3:
+				if(item.getTagCompound() != null)
 					if (item.getTagCompound().hasKey("SkullOwner")){
 						ResourceLocation resourcelocation = AbstractClientPlayer.locationStevePng;
 
-						if (item.getTagCompound().getString("SkullOwner") != null && item.getTagCompound().getString("SkullOwner").length() > 0)
+						if ((item.getTagCompound().getString("SkullOwner") != null) && (item.getTagCompound().getString("SkullOwner").length() > 0))
 						{
 							resourcelocation = AbstractClientPlayer.getLocationSkin(item.getTagCompound().getString("SkullOwner"));
 							AbstractClientPlayer.getDownloadImageSkin(resourcelocation, item.getTagCompound().getString("SkullOwner"));
@@ -75,7 +99,6 @@ public class CaseEntity
 
 						Minecraft.getMinecraft().renderEngine.bindTexture(resourcelocation);
 					}
-				}
 				break;
 			case 4:
 				Minecraft.getMinecraft().renderEngine.bindTexture(skullCreeper);
@@ -84,7 +107,6 @@ public class CaseEntity
 				Minecraft.getMinecraft().renderEngine.bindTexture(skullSteve);
 				break;
 			}
-		}
 
 		GL11.glScalef(3f, 3f,3f);
 		GL11.glRotatef(0, 0.0f, 0.0f, 1.0f);
@@ -106,31 +128,30 @@ public class CaseEntity
 			ArmorHelper ah= new ArmorHelper();
 			int c =((ItemArmor)item.getItem()).armorType;
 			ah.setArmorModel((ModelBiped)theItem, item, c, RenderBiped.bipedArmorFilenamePrefix[((ItemArmor)item.getItem()).renderIndex]);
-			if(c == 0){
-				GL11.glTranslatef(0f, -0.5f ,0F);
-			}if(c == 1){
-				GL11.glTranslatef(0f, 0f ,-0.8F);
-				GL11.glRotatef(90f, 1.0f,0.0f,0.0f);
-			}if(c == 2){
-				GL11.glTranslatef(0f, 0f,-1.2F);
-				GL11.glRotatef(90f, 1.0f,0.0f,0.0f);
-			}if(c == 3){
-				GL11.glTranslatef(0f, 0f ,-1.4F);
-				GL11.glRotatef(90f, 1.0f,0.0f,0.0f);
-			}
+			if(c == 0)
+				GL11.glTranslatef(0f, -0.5f ,0F);if(c == 1){
+					GL11.glTranslatef(0f, 0f ,-0.8F);
+					GL11.glRotatef(90f, 1.0f,0.0f,0.0f);
+				}if(c == 2){
+					GL11.glTranslatef(0f, 0f,-1.2F);
+					GL11.glRotatef(90f, 1.0f,0.0f,0.0f);
+				}if(c == 3){
+					GL11.glTranslatef(0f, 0f ,-1.4F);
+					GL11.glRotatef(90f, 1.0f,0.0f,0.0f);
+				}
 		}
 		if(item.getItem() instanceof ItemMinecart){
 			GL11.glTranslatef(0f,-0.2f,0F);
 			helper.cartzz(item, theItem, render);
 		}
 		if(blockToRender != null){
-            Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationBlocksTexture);
-            GL11.glRotatef(180f, 0.0f,0.0f,1.0f);
-            GL11.glTranslatef(0f, 0.4f ,0F);
+			Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationBlocksTexture);
+			GL11.glRotatef(180f, 0.0f,0.0f,1.0f);
+			GL11.glTranslatef(0f, 0.4f ,0F);
 			render.renderBlockAsItem(blockToRender, 0, 2f);
 		}
 
-		if(item.getItem() != null && item.getItem().equals(Item.bow)){
+		if((item.getItem() != null) && item.getItem().equals(Item.bow))
 			if((Entity)data[1] instanceof EntityPlayer){
 				EntityPlayer player = (EntityPlayer)data[1];
 				int count =player.getItemInUseCount();
@@ -139,13 +160,12 @@ public class CaseEntity
 				((bow)theItem).restBow(false);
 				((bow)theItem).pullSlow(false);
 				((bow)theItem).pullHard(false);
-				if(passed == 72000){
+				if(passed == 72000)
 					((bow)theItem).restBow(true);
-				}
-				if(passed >=1 && passed <=10){
+				if((passed >=1) && (passed <=10)){
 					((bow)theItem).pullSlow(true);
-					if(!((EntityPlayer)data[1] == Minecraft.getMinecraft().renderViewEntity &&
-							Minecraft.getMinecraft().gameSettings.thirdPersonView == 0)){
+					if(!(((EntityPlayer)data[1] == Minecraft.getMinecraft().renderViewEntity) &&
+							(Minecraft.getMinecraft().gameSettings.thirdPersonView == 0))){
 
 					}else{
 						GL11.glTranslatef(-0.1f,0+0.3f,0);
@@ -154,10 +174,10 @@ public class CaseEntity
 						GL11.glRotatef(-10, 1.0f, 0.0f, 0.0f);
 					}
 				}
-				if(passed >10 && passed <72000){
+				if((passed >10) && (passed <72000)){
 					((bow)theItem).pullHard(true);
-					if(!((EntityPlayer)data[1] == Minecraft.getMinecraft().renderViewEntity &&
-							Minecraft.getMinecraft().gameSettings.thirdPersonView == 0)){
+					if(!(((EntityPlayer)data[1] == Minecraft.getMinecraft().renderViewEntity) &&
+							(Minecraft.getMinecraft().gameSettings.thirdPersonView == 0))){
 
 					}else{
 						GL11.glTranslatef(-0.1f, 0.3f,0);
@@ -177,9 +197,8 @@ public class CaseEntity
 				GL11.glRotatef(0, 0.0f, 1.0f, 0.0f);
 				GL11.glRotatef(90, 1.0f, 0.0f, 0.0f);
 			}
-		}
 
-		if(item.getItem() instanceof ItemSkull){
+		if(item.getItem() instanceof ItemSkull)
 			switch(item.getItemDamage()){
 			case 0:
 				((head)theItem).renderHead(0.0625f);
@@ -190,36 +209,31 @@ public class CaseEntity
 			case 2:
 				((head)theItem).renderZombie(0.0625f);
 				break;
-			case 3: 
+			case 3:
 				((head)theItem).renderHead(0.0625f);
 				break;
 			case 4:
 				((head)theItem).renderHead(0.0625f);
 				break;
 			}
-		}
 
-		if(item.getItem() instanceof ItemMonsterPlacer){
+		if(item.getItem() instanceof ItemMonsterPlacer)
 			if(item.getItem().equals(Item.monsterPlacer))
 			{
 				int color = ((ItemMonsterPlacer)item.getItem()).getColorFromItemStack(item,1);
-				float red = (float)(color >> 16 & 255) / 255.0F;
-				float green = (float)(color >> 8 & 255) / 255.0F;
-				float blue = (float)(color & 255) / 255.0F;					
+				float red = ((color >> 16) & 255) / 255.0F;
+				float green = ((color >> 8) & 255) / 255.0F;
+				float blue = (color & 255) / 255.0F;
 				GL11.glColor4f(red, green,blue, 1.0F);
 			}
-		}
-		if(item.getItem() instanceof ItemSword && !Config3D.instance.SwordModel){
+		if((item.getItem() instanceof ItemSword) && !Config3D.instance.SwordModel)
 			GL11.glRotatef(90, 1.0f, 0.0f, 0.0f);
-		}
-		if(item.getItem() instanceof ItemPickaxe){
+		if(item.getItem() instanceof ItemPickaxe)
 			GL11.glRotatef(90, 1.0f, 0.0f, 0.0f);
-		}
 		theItem.render((Entity)data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
 
-		if(item.getItem() instanceof ItemMonsterPlacer){
-			renderDots((Entity)data[1], item, theItem, 0);			
-		}
+		if(item.getItem() instanceof ItemMonsterPlacer)
+			renderDots((Entity)data[1], item, theItem, 0);
 		if(item.getItem().equals(Item.blazeRod)){
 			GL11.glEnable(GL11.GL_BLEND);
 			GL11.glDisable(GL11.GL_LIGHTING);
@@ -240,11 +254,10 @@ public class CaseEntity
 			((enderball)theItem).renderBall((Entity)data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
 		}
 
-		if(item.getItem() instanceof ItemPotion|| item.getItem().equals(Item.expBottle)){
+		if((item.getItem() instanceof ItemPotion)|| item.getItem().equals(Item.expBottle))
 			this.potionContent((Entity)data[1], item, theItem);
-		}
 
-		if(item.getItem() instanceof ItemPotion ||
+		if((item.getItem() instanceof ItemPotion) ||
 				item.getItem().equals(Item.glassBottle)||
 				item.getItem().equals(Item.expBottle)){
 			GL11.glEnable(GL11.GL_BLEND);
@@ -259,7 +272,7 @@ public class CaseEntity
 			GL11.glColor4f(0f, 0f, 0f, 1.0f);
 			((enderball)theItem).renderBall((Entity)data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
 		}
-		if(item.getItem() instanceof ItemEnderPearl|| item.getItem() instanceof ItemEnderEye ){
+		if((item.getItem() instanceof ItemEnderPearl)|| (item.getItem() instanceof ItemEnderEye) ){
 			GL11.glEnable(GL11.GL_BLEND);
 			GL11.glDisable(GL11.GL_LIGHTING);
 			GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -272,47 +285,19 @@ public class CaseEntity
 		GL11.glPopMatrix();
 	}
 
-	public void potionContent(Entity p, ItemStack item, ModelBase theItem)
-	{
-		Minecraft mc = Minecraft.getMinecraft();
-		Minecraft.getMinecraft().renderEngine.bindTexture(bottleLoc);
-		GL11.glEnable(GL11.GL_BLEND);
-		GL11.glDisable(GL11.GL_LIGHTING);
-		GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		if(item.getItem() != null)
-		{
-			if(item.getItem().equals(Item.potion) || item.getItem().equals(Item.glassBottle))
-			{
-				int color = ((ItemPotion)item.getItem()).getColorFromDamage(item.getItemDamage());
-				float red = (float)(color >> 16 & 255) / 255.0F;
-				float green = (float)(color >> 8 & 255) / 255.0F;
-				float blue = (float)(color & 255) / 255.0F;					
-				GL11.glColor4f(red, green,blue, 1.0F);
-				((bottle)theItem).renderContent(p, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
-			}
-			else if(item.getItem().equals(Item.expBottle))
-			{
-				GL11.glColor4f(0.7f, 1.0f, 0.0f, 1.0F);
-				((bottle)theItem).renderContent(p, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
-			}
-		}
-	}
-
 	public void renderDots(Entity p, ItemStack item, ModelBase theItem, int colorParser)
 	{
 		Minecraft mc = Minecraft.getMinecraft();
 		Minecraft.getMinecraft().renderEngine.bindTexture(spotsLoc);
 		if(item.getItem() != null)
-		{
 			if(item.getItem().equals(Item.monsterPlacer))
 			{
 				int color = ((ItemMonsterPlacer)item.getItem()).getColorFromItemStack(item,colorParser);
-				float red = (float)(color >> 16 & 255) / 255.0F;
-				float green = (float)(color >> 8 & 255) / 255.0F;
-				float blue = (float)(color & 255) / 255.0F;					
+				float red = ((color >> 16) & 255) / 255.0F;
+				float green = ((color >> 8) & 255) / 255.0F;
+				float blue = (color & 255) / 255.0F;
 				GL11.glColor4f(red, green,blue, 0.3F);
 				theItem.render(p, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
 			}
-		}
 	}
 }

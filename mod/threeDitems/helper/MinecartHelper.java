@@ -21,23 +21,22 @@ public class MinecartHelper {
 	private static final ResourceLocation MINECART_TEXTURE = new ResourceLocation("textures/entity/minecart.png");
 
 	public void cartzz(ItemStack item, ModelBase theItem, RenderBlocks renderer){
-//		Minecraft.getMinecraft().renderEngine.bindTexture(MINECART_TEXTURE);
-//		mod_3d.proxy.render();
-		if(item.getItem().equals(Item.minecartEmpty)){
-			theItem.render(new EntityMinecartEmpty(Minecraft.getMinecraft().theWorld),0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);				
-		}if(item.getItem().equals(Item.minecartCrate)){
-			theItem.render(new EntityMinecartChest(Minecraft.getMinecraft().theWorld),0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
-			this.renderBlock(Block.chest, renderer);
-		}if(item.getItem().equals(Item.minecartPowered)){
-			theItem.render(new EntityMinecartFurnace(Minecraft.getMinecraft().theWorld),0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
-			this.renderBlock(Block.furnaceIdle, renderer);
-		}if(item.getItem().equals(Item.minecartTnt)){
-			theItem.render(new EntityMinecartTNT(Minecraft.getMinecraft().theWorld),0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
-			this.renderBlock(Block.tnt, renderer);
-		}if(item.getItem().equals(Item.minecartHopper)){
-			theItem.render(new EntityMinecartHopper(Minecraft.getMinecraft().theWorld),0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
-			this.renderBlock(Block.hopperBlock, renderer);
-		}
+		//		Minecraft.getMinecraft().renderEngine.bindTexture(MINECART_TEXTURE);
+		//		mod_3d.proxy.render();
+		if(item.getItem().equals(Item.minecartEmpty))
+			theItem.render(new EntityMinecartEmpty(Minecraft.getMinecraft().theWorld),0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);if(item.getItem().equals(Item.minecartCrate)){
+				theItem.render(new EntityMinecartChest(Minecraft.getMinecraft().theWorld),0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
+				this.renderBlock(Block.chest, renderer);
+			}if(item.getItem().equals(Item.minecartPowered)){
+				theItem.render(new EntityMinecartFurnace(Minecraft.getMinecraft().theWorld),0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
+				this.renderBlock(Block.furnaceIdle, renderer);
+			}if(item.getItem().equals(Item.minecartTnt)){
+				theItem.render(new EntityMinecartTNT(Minecraft.getMinecraft().theWorld),0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
+				this.renderBlock(Block.tnt, renderer);
+			}if(item.getItem().equals(Item.minecartHopper)){
+				theItem.render(new EntityMinecartHopper(Minecraft.getMinecraft().theWorld),0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
+				this.renderBlock(Block.hopperBlock, renderer);
+			}
 
 	}
 
@@ -48,12 +47,12 @@ public class MinecartHelper {
 			Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationBlocksTexture);
 			float f8 = 0.75F;
 			GL11.glScalef(f8, f8, f8);
-			GL11.glTranslatef(0.0F, (float)-5 / 16.0F, 0.0F);
+			GL11.glTranslatef(0.0F, -5 / 16.0F, 0.0F);
 			GL11.glRotatef(180, 1, 0, 0);
 			render.renderBlockAsItem(block, 1, 2);
 			GL11.glPopMatrix();
 			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		}
-		
+
 	}
 }

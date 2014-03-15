@@ -19,6 +19,7 @@ import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.passive.EntityTameable;
+import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.item.Item;
@@ -31,6 +32,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import betterbreeds.entity.ai.EntityAIBeg3;
 import betterbreeds.entity.ai.EntityAITamed;
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -48,6 +50,10 @@ public class EntityWolf3 extends EntityTameable
 	 */
 	private float timeWolfIsShaking;
 	private float prevTimeWolfIsShaking;
+
+
+	public static final double maxHealth = 24;
+	public static final double speed = 0.4;
 
 	public EntityWolf3(World par1World)
 	{
@@ -78,18 +84,21 @@ public class EntityWolf3 extends EntityTameable
 		return spawnBabyAnimal(entityageable);
 	}
 
+	@Override
 	protected void applyEntityAttributes()
 	{
 		super.applyEntityAttributes();
-		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.40000001192092896D);
+		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(speed);
 
 		if (this.isTamed())
 		{
-			this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(24.0D);
+			this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(maxHealth);
+			FMLLog.getLogger().info("maxhealth");
 		}
 		else
 		{
 			this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(8.0D);
+			FMLLog.getLogger().info("minhealth");
 		}
 	}
 
@@ -118,7 +127,6 @@ public class EntityWolf3 extends EntityTameable
 		 }
 	 }
 
-
 	 @Override
 	 protected void entityInit()
 	 {
@@ -127,492 +135,402 @@ public class EntityWolf3 extends EntityTameable
 		 this.dataWatcher.addObject(20, new Byte((byte)BlockColored.getBlockFromDye(1)));
 	 }
 
+	 @Override
+	 protected void playStepSound(int par1, int par2, int par3, int par4)
+	 {
+		 this.playSound("mob.wolf.step", 0.15F, 1.0F);
+	 }
+
+	 public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
+	 {
+		 super.writeEntityToNBT(par1NBTTagCompound);
+		 par1NBTTagCompound.setBoolean("Angry", this.isAngry());
+	 }
+
+	 public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
+	 {
+		 super.readEntityFromNBT(par1NBTTagCompound);
+		 this.setAngry(par1NBTTagCompound.getBoolean("Angry"));
+	 }
+
+	 protected boolean canDespawn()
+	 {
+		 return this.isAngry();
+	 }
+
+	 public boolean isAngry()
+	 {
+		 return (this.dataWatcher.getWatchableObjectByte(16) & 2) != 0;
+	 }
+
+	 public void setAngry(boolean par1)
+	 {
+		 byte b0 = this.dataWatcher.getWatchableObjectByte(16);
+
+		 if (par1)
+		 {
+			 this.dataWatcher.updateObject(16, Byte.valueOf((byte)(b0 | 2)));
+		 }
+		 else
+		 {
+			 this.dataWatcher.updateObject(16, Byte.valueOf((byte)(b0 & -3)));
+		 }
+	 }
+
+	 @Override
+	 protected String getLivingSound()
+	 {
+		 return this.isAngry() ? "mob.wolf.growl" : (this.rand.nextInt(3) == 0 ? (this.isTamed() && this.getHealth() < maxHealth/2 ? "mob.wolf.whine" : "mob.wolf.panting") : "mob.wolf.bark");
+	 }
+
+	 protected float getSoundVolume()
+	 {
+		 return 0.4F;
+	 }
+
+	 protected int getDropItemId()
+	 {
+		 return -1;
+	 }
+	 @Override
+	 public void onLivingUpdate()
+	 {
+		 super.onLivingUpdate();
+
+		 if (!this.worldObj.isRemote && this.isShaking && !this.field_70928_h && !this.hasPath() && this.onGround)
+		 {
+			 this.field_70928_h = true;
+			 this.timeWolfIsShaking = 0.0F;
+			 this.prevTimeWolfIsShaking = 0.0F;
+			 this.worldObj.setEntityState(this, (byte)8);
+		 }
+	 }
+
+	 @Override
+	 public void onUpdate()
+	 {
+		 super.onUpdate();
+		 this.field_70924_f = this.field_70926_e;
+
+		 if (this.func_70922_bv())
+		 {
+			 this.field_70926_e += (1.0F - this.field_70926_e) * 0.4F;
+		 }
+		 else
+		 {
+			 this.field_70926_e += (0.0F - this.field_70926_e) * 0.4F;
+		 }
+
+		 if (this.func_70922_bv())
+		 {
+			 this.numTicksToChaseTarget = 10;
+		 }
+
+		 if (this.isWet())
+		 {
+			 this.isShaking = true;
+			 this.field_70928_h = false;
+			 this.timeWolfIsShaking = 0.0F;
+			 this.prevTimeWolfIsShaking = 0.0F;
+		 }
+		 else if ((this.isShaking || this.field_70928_h) && this.field_70928_h)
+		 {
+			 if (this.timeWolfIsShaking == 0.0F)
+			 {
+				 this.playSound("mob.wolf.shake", this.getSoundVolume(), (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
+			 }
+
+			 this.prevTimeWolfIsShaking = this.timeWolfIsShaking;
+			 this.timeWolfIsShaking += 0.05F;
+
+			 if (this.prevTimeWolfIsShaking >= 2.0F)
+			 {
+				 this.isShaking = false;
+				 this.field_70928_h = false;
+				 this.prevTimeWolfIsShaking = 0.0F;
+				 this.timeWolfIsShaking = 0.0F;
+			 }
+
+			 if (this.timeWolfIsShaking > 0.4F)
+			 {
+				 float f = (float)this.boundingBox.minY;
+				 int i = (int)(MathHelper.sin((this.timeWolfIsShaking - 0.4F) * (float)Math.PI) * 7.0F);
+
+				 for (int j = 0; j < i; ++j)
+				 {
+					 float f1 = (this.rand.nextFloat() * 2.0F - 1.0F) * this.width * 0.5F;
+					 float f2 = (this.rand.nextFloat() * 2.0F - 1.0F) * this.width * 0.5F;
+					 this.worldObj.spawnParticle("splash", this.posX + (double)f1, (double)(f + 0.8F), this.posZ + (double)f2, this.motionX, this.motionY, this.motionZ);
+				 }
+			 }
+		 }
+	 }
+
+	 @SideOnly(Side.CLIENT)
+	 public boolean getWolfShaking()
+	 {
+		 return this.isShaking;
+	 }
+
+	 @SideOnly(Side.CLIENT)
+	 public float getShadingWhileShaking(float par1)
+	 {
+		 return 0.75F + (this.prevTimeWolfIsShaking + (this.timeWolfIsShaking - this.prevTimeWolfIsShaking) * par1) / 2.0F * 0.25F;
+	 }
+
+	 @SideOnly(Side.CLIENT)
+	 public float getShakeAngle(float par1, float par2)
+	 {
+		 float f2 = (this.prevTimeWolfIsShaking + (this.timeWolfIsShaking - this.prevTimeWolfIsShaking) * par1 + par2) / 1.8F;
+
+		 if (f2 < 0.0F)
+		 {
+			 f2 = 0.0F;
+		 }
+		 else if (f2 > 1.0F)
+		 {
+			 f2 = 1.0F;
+		 }
+
+		 return MathHelper.sin(f2 * (float)Math.PI) * MathHelper.sin(f2 * (float)Math.PI * 11.0F) * 0.15F * (float)Math.PI;
+	 }
+
+	 @SideOnly(Side.CLIENT)
+	 public float getInterestedAngle(float par1)
+	 {
+		 return (this.field_70924_f + (this.field_70926_e - this.field_70924_f) * par1) * 0.15F * (float)Math.PI;
+	 }
+
+	 public float getEyeHeight()
+	 {
+		 return this.height * 0.8F;
+	 }
+
 	 /**
-	  * Plays step sound at given x, y, z for the entity
-	  */@Override
-	  protected void playStepSound(int par1, int par2, int par3, int par4)
-	  {
-		  this.playSound("mob.wolf.step", 0.15F, 1.0F);
-	  }
+	  * The speed it takes to move the entityliving's rotationPitch through the faceEntity method. This is only currently
+	  * use in wolves.
+	  */
+	 public int getVerticalFaceSpeed()
+	 {
+		 return this.isSitting() ? 20 : super.getVerticalFaceSpeed();
+	 }
 
+	 /**
+	  * Called when the entity is attacked.
+	  */
+	 public boolean attackEntityFrom(DamageSource par1DamageSource, int par2)
+	 {
+		 if (this.isEntityInvulnerable())
+		 {
+			 return false;
+		 }
+		 else
+		 {
+			 Entity var3 = par1DamageSource.getEntity();
+			 this.aiSit.setSitting(false);
 
-	  /**
-	   * (abstract) Protected helper method to write subclass entity data to NBT.
-	   */
-	  public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
-	  {
-		  super.writeEntityToNBT(par1NBTTagCompound);
-		  par1NBTTagCompound.setBoolean("Angry", this.isAngry());
-		  par1NBTTagCompound.setByte("CollarColor", (byte)this.getCollarColor());
-	  }
+			 if (var3 != null && !(var3 instanceof EntityPlayer) && !(var3 instanceof EntityArrow))
+			 {
+				 par2 = (par2 + 1) / 2;
+			 }
 
-	  /**
-	   * (abstract) Protected helper method to read subclass entity data from NBT.
-	   */
-	  public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
-	  {
-		  super.readEntityFromNBT(par1NBTTagCompound);
-		  this.setAngry(par1NBTTagCompound.getBoolean("Angry"));
-		  if (par1NBTTagCompound.hasKey("CollarColor"))
-		  {
-			  this.setCollarColor(par1NBTTagCompound.getByte("CollarColor"));
-		  }
-	  }
+			 return super.attackEntityFrom(par1DamageSource, par2);
+		 }
+	 }
 
-	  /**
-	   * Determines if an entity can be despawned, used on idle far away entities
-	   */
-	  protected boolean canDespawn()
-	  {
-		  return this.isAngry();
-	  }
+	 public boolean attackEntityAsMob(Entity par1Entity)
+	 {
+		 int var2 = this.isTamed() ? 6 : 2;
+		 return par1Entity.attackEntityFrom(DamageSource.causeMobDamage(this), var2);
+	 }
 
-	  /**
-	   * Returns the sound this mob makes while it's alive.
-	   */@Override
-	   protected String getLivingSound()
-	   {
-		   return this.isAngry() ? "mob.wolf.growl" : (this.rand.nextInt(3) == 0 ? (this.isTamed() && this.getHealth() < 10.0F ? "mob.wolf.whine" : "mob.wolf.panting") : "mob.wolf.bark");
-	   }
+	 /**
+	  * Called when a player interacts with a mob. e.g. gets milk from a cow, gets into the saddle on a pig.
+	  */
+	 public boolean interact(EntityPlayer par1EntityPlayer)
+	 {
+		 ItemStack itemstack = par1EntityPlayer.inventory.getCurrentItem();
 
-	   /**
-	    * Returns the sound this mob makes when it is hurt.
-	    */
-	   protected String getHurtSound()
-	   {
-		   return "mob.wolf.hurt";
-	   }
+		 if (this.isTamed())
+		 {
+			 if (itemstack != null)
+			 {
+				 if (Item.itemsList[itemstack.itemID] instanceof ItemFood)
+				 {
+					 ItemFood itemfood = (ItemFood)Item.itemsList[itemstack.itemID];
 
-	   /**
-	    * Returns the sound this mob makes on death.
-	    */
-	   protected String getDeathSound()
-	   {
-		   return "mob.wolf.death";
-	   }
+					 if (itemfood.isWolfsFavoriteMeat() && this.getHealth() < maxHealth)
+					 {
+						 if (!par1EntityPlayer.capabilities.isCreativeMode)
+						 {
+							 --itemstack.stackSize;
+						 }
 
-	   /**
-	    * Returns the volume for the sounds this mob makes.
-	    */
-	   protected float getSoundVolume()
-	   {
-		   return 0.4F;
-	   }
+						 this.heal((float)itemfood.getHealAmount());
 
-	   /**
-	    * Returns the item ID for the item the mob drops on death.
-	    */
-	   protected int getDropItemId()
-	   {
-		   return -1;
-	   }
+						 if (itemstack.stackSize <= 0)
+						 {
+							 par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
+						 }
 
-	   /**
-	    * Called frequently so the entity can update its state every tick as required. For example, zombies and skeletons
-	    * use this to react to sunlight and start to burn.
-	    */
-	   public void onLivingUpdate()
-	   {
-		   super.onLivingUpdate();
+						 return true;
+					 }
+				 }
+			 }
 
-		   if (!this.worldObj.isRemote && this.isShaking && !this.field_70928_h && !this.hasPath() && this.onGround)
-		   {
-			   this.field_70928_h = true;
-			   this.timeWolfIsShaking = 0.0F;
-			   this.prevTimeWolfIsShaking = 0.0F;
-			   this.worldObj.setEntityState(this, (byte)8);
-		   }
-	   }
+			 if (par1EntityPlayer.getCommandSenderName().equalsIgnoreCase(this.getOwnerName()) && !this.worldObj.isRemote && !this.isBreedingItem(itemstack))
+			 {
+				 this.aiSit.setSitting(!this.isSitting());
+				 this.isJumping = false;
+				 this.setPathToEntity((PathEntity)null);
+				 this.setTarget((Entity)null);
+				 this.setAttackTarget((EntityLivingBase)null);
+			 }
+		 }
+		 else if (itemstack != null && itemstack.itemID == Item.bone.itemID && !this.isAngry())
+		 {
+			 if (!par1EntityPlayer.capabilities.isCreativeMode)
+			 {
+				 --itemstack.stackSize;
+			 }
 
-	   /**
-	    * Called to update the entity's position/logic.
-	    */
-	   public void onUpdate()
-	   {
-		   super.onUpdate();
-		   this.field_70924_f = this.field_70926_e;
+			 if (itemstack.stackSize <= 0)
+			 {
+				 par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
+			 }
 
-		   if (this.func_70922_bv())
-		   {
-			   this.field_70926_e += (1.0F - this.field_70926_e) * 0.4F;
-		   }
-		   else
-		   {
-			   this.field_70926_e += (0.0F - this.field_70926_e) * 0.4F;
-		   }
+			 if (!this.worldObj.isRemote)
+			 {
+				 if (this.rand.nextInt(3) == 0)
+				 {
+					 this.setTamed(true);
+					 this.setPathToEntity((PathEntity)null);
+					 this.setAttackTarget((EntityLivingBase)null);
+					 this.aiSit.setSitting(true);
+					 this.setOwner(par1EntityPlayer.getCommandSenderName());
+					 this.playTameEffect(true);
+					 this.worldObj.setEntityState(this, (byte)7);
+				 }
+				 else
+				 {
+					 this.playTameEffect(false);
+					 this.worldObj.setEntityState(this, (byte)6);
+				 }
+			 }
 
-		   if (this.func_70922_bv())
-		   {
-			   this.numTicksToChaseTarget = 10;
-		   }
+			 return true;
+		 }
 
-		   if (this.isWet())
-		   {
-			   this.isShaking = true;
-			   this.field_70928_h = false;
-			   this.timeWolfIsShaking = 0.0F;
-			   this.prevTimeWolfIsShaking = 0.0F;
-		   }
-		   else if ((this.isShaking || this.field_70928_h) && this.field_70928_h)
-		   {
-			   if (this.timeWolfIsShaking == 0.0F)
-			   {
-				   this.playSound("mob.wolf.shake", this.getSoundVolume(), (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
-			   }
+		 return super.interact(par1EntityPlayer);
+	 }
 
-			   this.prevTimeWolfIsShaking = this.timeWolfIsShaking;
-			   this.timeWolfIsShaking += 0.05F;
+	 //	 @Override
+	 public void func_70918_i(boolean par1)
+	 {
+		 byte var2 = this.dataWatcher.getWatchableObjectByte(19);
 
-			   if (this.prevTimeWolfIsShaking >= 2.0F)
-			   {
-				   this.isShaking = false;
-				   this.field_70928_h = false;
-				   this.prevTimeWolfIsShaking = 0.0F;
-				   this.timeWolfIsShaking = 0.0F;
-			   }
+		 if (par1)
+		 {
+			 this.dataWatcher.updateObject(19, Byte.valueOf((byte)1));
+		 }
+		 else
+		 {
+			 this.dataWatcher.updateObject(19, Byte.valueOf((byte)0));
+		 }
+	 }
 
-			   if (this.timeWolfIsShaking > 0.4F)
-			   {
-				   float f = (float)this.boundingBox.minY;
-				   int i = (int)(MathHelper.sin((this.timeWolfIsShaking - 0.4F) * (float)Math.PI) * 7.0F);
+	 @SideOnly(Side.CLIENT)
+	 @Override
+	 public void handleHealthUpdate(byte par1)
+	 {
+		 if (par1 == 8)
+		 {
+			 this.field_70928_h = true;
+			 this.timeWolfIsShaking = 0.0F;
+			 this.prevTimeWolfIsShaking = 0.0F;
+		 }
+		 else
+		 {
+			 super.handleHealthUpdate(par1);
+		 }
+	 }
 
-				   for (int j = 0; j < i; ++j)
-				   {
-					   float f1 = (this.rand.nextFloat() * 2.0F - 1.0F) * this.width * 0.5F;
-					   float f2 = (this.rand.nextFloat() * 2.0F - 1.0F) * this.width * 0.5F;
-					   this.worldObj.spawnParticle("splash", this.posX + (double)f1, (double)(f + 0.8F), this.posZ + (double)f2, this.motionX, this.motionY, this.motionZ);
-				   }
-			   }
-		   }
-	   }
+	 @SideOnly(Side.CLIENT)
+	 public float getTailRotation()
+	 {
+		 return this.isAngry() ? 1.5393804F : (this.isTamed() ? (0.65F - ((float)maxHealth - this.getHealth()) * 0.02F) * (float)Math.PI : ((float)Math.PI / 5F));
+	 }
 
-	   @SideOnly(Side.CLIENT)
-	   public boolean getWolfShaking()
-	   {
-		   return this.isShaking;
-	   }
+	 /**
+	  * Checks if the parameter is an item which this animal can be fed to breed it (wheat, carrots or seeds depending on
+	  * the animal type)
+	  */
+	 public boolean isBreedingItem(ItemStack par1ItemStack)
+	 {
+		 return par1ItemStack == null ? false : (!(Item.itemsList[par1ItemStack.itemID] instanceof ItemFood) ? false : ((ItemFood)Item.itemsList[par1ItemStack.itemID]).isWolfsFavoriteMeat());
+	 }
 
-	   @SideOnly(Side.CLIENT)
+	 /**
+	  * Will return how many at most can spawn in a chunk at once.
+	  */
+	 public int getMaxSpawnedInChunk()
+	 {
+		 return 8;
+	 }
 
-	   /**
-	    * Used when calculating the amount of shading to apply while the wolf is shaking.
-	    */
-	   public float getShadingWhileShaking(float par1)
-	   {
-		   return 0.75F + (this.prevTimeWolfIsShaking + (this.timeWolfIsShaking - this.prevTimeWolfIsShaking) * par1) / 2.0F * 0.25F;
-	   }
+	 /**
+	  * This function is used when two same-species animals in 'love mode' breed to generate the new baby animal.
+	  */
+	 //@Override
+	 public EntityTameable spawnBabyAnimal(EntityAgeable par1EntityAgeable)
+	 {
+		 double chance = Math.random();
 
-	   @SideOnly(Side.CLIENT)
-	   public float getShakeAngle(float par1, float par2)
-	   {
-		   float f2 = (this.prevTimeWolfIsShaking + (this.timeWolfIsShaking - this.prevTimeWolfIsShaking) * par1 + par2) / 1.8F;
+		 if (chance < 0.5){
+			 EntityWolf3 var3 = new EntityWolf3(this.worldObj);
+			 var3.setOwner(this.getOwnerName());
+			 var3.setTamed(true);
+			 return var3;
+		 }else if (chance < 0.7){
+			 EntityWolf3 var4 = new EntityWolf3(this.worldObj);
+			 var4.setOwner(this.getOwnerName());
+			 var4.setTamed(true);
+			 return var4;
+		 }else{
+			 EntityWolf var2 = new EntityWolf(this.worldObj);
+			 var2.setOwner(this.getOwnerName());
+			 var2.setTamed(true);
+			 return var2;
+		 }
+	 }
 
-		   if (f2 < 0.0F)
-		   {
-			   f2 = 0.0F;
-		   }
-		   else if (f2 > 1.0F)
-		   {
-			   f2 = 1.0F;
-		   }
+	 /**
+	  * Returns true if the mob is currently able to mate with the specified mob.
+	  */
+	 @Override
+	 public boolean canMateWith(EntityAnimal par1EntityAnimal)
+	 {
+		 if (par1EntityAnimal == this)
+		 {
+			 return false;
+		 }
+		 else if (!this.isTamed())
+		 {
+			 return false;
+		 }
+		 else if (!(par1EntityAnimal instanceof EntityWolf3))
+		 {
+			 return false;
+		 }
+		 else
+		 {
+			 EntityWolf3 var2 = (EntityWolf3)par1EntityAnimal;
+			 return !var2.isTamed() ? false : (var2.isSitting() ? false : this.isInLove() && var2.isInLove());
+		 }
+	 }
 
-		   return MathHelper.sin(f2 * (float)Math.PI) * MathHelper.sin(f2 * (float)Math.PI * 11.0F) * 0.15F * (float)Math.PI;
-	   }
-
-	   @SideOnly(Side.CLIENT)
-	   public float getInterestedAngle(float par1)
-	   {
-		   return (this.field_70924_f + (this.field_70926_e - this.field_70924_f) * par1) * 0.15F * (float)Math.PI;
-	   }
-
-	   public float getEyeHeight()
-	   {
-		   return this.height * 0.8F;
-	   }
-
-	   /**
-	    * The speed it takes to move the entityliving's rotationPitch through the faceEntity method. This is only currently
-	    * use in wolves.
-	    */
-	   public int getVerticalFaceSpeed()
-	   {
-		   return this.isSitting() ? 20 : super.getVerticalFaceSpeed();
-	   }
-
-	   /**
-	    * Called when the entity is attacked.
-	    */
-	   public boolean attackEntityFrom(DamageSource par1DamageSource, int par2)
-	   {
-		   if (this.isEntityInvulnerable())
-		   {
-			   return false;
-		   }
-		   else
-		   {
-			   Entity var3 = par1DamageSource.getEntity();
-			   this.aiSit.setSitting(false);
-
-			   if (var3 != null && !(var3 instanceof EntityPlayer) && !(var3 instanceof EntityArrow))
-			   {
-				   par2 = (par2 + 1) / 2;
-			   }
-
-			   return super.attackEntityFrom(par1DamageSource, par2);
-		   }
-	   }
-
-	   public boolean attackEntityAsMob(Entity par1Entity)
-	   {
-		   int var2 = this.isTamed() ? 8 : 4;
-		   return par1Entity.attackEntityFrom(DamageSource.causeMobDamage(this), var2);
-	   }
-
-	   /**
-	    * Called when a player interacts with a mob. e.g. gets milk from a cow, gets into the saddle on a pig.
-	    */
-	   public boolean interact(EntityPlayer par1EntityPlayer)
-	   {
-		   ItemStack itemstack = par1EntityPlayer.inventory.getCurrentItem();
-
-		   if (this.isTamed())
-		   {
-			   if (itemstack != null)
-			   {
-				   if (Item.itemsList[itemstack.itemID] instanceof ItemFood)
-				   {
-					   ItemFood itemfood = (ItemFood)Item.itemsList[itemstack.itemID];
-
-					   if (itemfood.isWolfsFavoriteMeat() && this.getHealth() < 20.0F)
-					   {
-						   if (!par1EntityPlayer.capabilities.isCreativeMode)
-						   {
-							   --itemstack.stackSize;
-						   }
-
-						   this.heal((float)itemfood.getHealAmount());
-
-						   if (itemstack.stackSize <= 0)
-						   {
-							   par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
-						   }
-
-						   return true;
-					   }
-				   }
-				   else if (itemstack.itemID == Item.dyePowder.itemID)
-				   {
-					   int i = BlockColored.getBlockFromDye(itemstack.getItemDamage());
-
-					   if (i != this.getCollarColor())
-					   {
-						   this.setCollarColor(i);
-
-						   if (!par1EntityPlayer.capabilities.isCreativeMode && --itemstack.stackSize <= 0)
-						   {
-							   par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
-						   }
-
-						   return true;
-					   }
-				   }
-			   }
-
-			   if (par1EntityPlayer.getCommandSenderName().equalsIgnoreCase(this.getOwnerName()) && !this.worldObj.isRemote && !this.isBreedingItem(itemstack))
-			   {
-				   this.aiSit.setSitting(!this.isSitting());
-				   this.isJumping = false;
-				   this.setPathToEntity((PathEntity)null);
-				   this.setTarget((Entity)null);
-				   this.setAttackTarget((EntityLivingBase)null);
-			   }
-		   }
-		   else if (itemstack != null && itemstack.itemID == Item.bone.itemID && !this.isAngry())
-		   {
-			   if (!par1EntityPlayer.capabilities.isCreativeMode)
-			   {
-				   --itemstack.stackSize;
-			   }
-
-			   if (itemstack.stackSize <= 0)
-			   {
-				   par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
-			   }
-
-			   if (!this.worldObj.isRemote)
-			   {
-				   if (this.rand.nextInt(3) == 0)
-				   {
-					   this.setTamed(true);
-					   this.setPathToEntity((PathEntity)null);
-					   this.setAttackTarget((EntityLivingBase)null);
-					   this.aiSit.setSitting(true);
-					   this.setOwner(par1EntityPlayer.getCommandSenderName());
-					   this.playTameEffect(true);
-					   this.worldObj.setEntityState(this, (byte)7);
-				   }
-				   else
-				   {
-					   this.playTameEffect(false);
-					   this.worldObj.setEntityState(this, (byte)6);
-				   }
-			   }
-
-			   return true;
-		   }
-
-		   return super.interact(par1EntityPlayer);
-	   }
-
-	   public void func_70918_i(boolean par1)
-	   {
-		   byte var2 = this.dataWatcher.getWatchableObjectByte(19);
-
-		   if (par1)
-		   {
-			   this.dataWatcher.updateObject(19, Byte.valueOf((byte)1));
-		   }
-		   else
-		   {
-			   this.dataWatcher.updateObject(19, Byte.valueOf((byte)0));
-		   }
-	   }
-
-	   @SideOnly(Side.CLIENT)
-	   public void handleHealthUpdate(byte par1)
-	   {
-		   if (par1 == 8)
-		   {
-			   this.field_70928_h = true;
-			   this.timeWolfIsShaking = 0.0F;
-			   this.prevTimeWolfIsShaking = 0.0F;
-		   }
-		   else
-		   {
-			   super.handleHealthUpdate(par1);
-		   }
-	   }
-
-	   @SideOnly(Side.CLIENT)
-	   public float getTailRotation()
-	   {
-		   return this.isAngry() ? 1.5393804F : (this.isTamed() ? (0.65F - (20.0F - this.getHealth()) * 0.02F) * (float)Math.PI : ((float)Math.PI / 5F));
-	   }
-
-	   /**
-	    * Checks if the parameter is an item which this animal can be fed to breed it (wheat, carrots or seeds depending on
-	    * the animal type)
-	    */
-	   public boolean isBreedingItem(ItemStack par1ItemStack)
-	   {
-		   return par1ItemStack == null ? false : (!(Item.itemsList[par1ItemStack.itemID] instanceof ItemFood) ? false : ((ItemFood)Item.itemsList[par1ItemStack.itemID]).isWolfsFavoriteMeat());
-	   }
-
-	   /**
-	    * Will return how many at most can spawn in a chunk at once.
-	    */
-	   public int getMaxSpawnedInChunk()
-	   {
-		   return 8;
-	   }
-
-	   /**
-	    * Determines whether this wolf is angry or not.
-	    */
-	   public boolean isAngry()
-	   {
-		   return (this.dataWatcher.getWatchableObjectByte(16) & 2) != 0;
-	   }
-
-	   /**
-	    * Sets whether this wolf is angry or not.
-	    */
-	   public void setAngry(boolean par1)
-	   {
-		   byte var2 = this.dataWatcher.getWatchableObjectByte(16);
-
-		   if (par1)
-		   {
-			   this.dataWatcher.updateObject(16, Byte.valueOf((byte)(var2 | 2)));
-		   }
-		   else
-		   {
-			   this.dataWatcher.updateObject(16, Byte.valueOf((byte)(var2 & -3)));
-		   }
-	   }
-
-	   /**
-	    * Return this wolf's collar color.
-	    */
-	   public int getCollarColor()
-	   {
-		   return this.dataWatcher.getWatchableObjectByte(20) & 15;
-	   }
-
-	   /**
-	    * Set this wolf's collar color.
-	    */
-	   public void setCollarColor(int par1)
-	   {
-		   this.dataWatcher.updateObject(20, Byte.valueOf((byte)(par1 & 15)));
-	   }
-
-	   /**
-	    * This function is used when two same-species animals in 'love mode' breed to generate the new baby animal.
-	    */
-	   public EntityAnimal spawnBabyAnimal(EntityAgeable par1EntityAgeable)
-	   {
-		   double chance = Math.random();
-
-		   if (chance < 0.5)
-		   {
-			   EntityWolf3 var3 = new EntityWolf3(this.worldObj);
-			   var3.setOwner(this.getOwnerName());
-			   var3.setTamed(true);
-			   return var3;
-		   }
-		   else if (chance < 0.7)
-		   {
-			   EntityWolf2 var4 = new EntityWolf2(this.worldObj);
-			   var4.setOwner(this.getOwnerName());
-			   var4.setTamed(true);
-			   return var4;
-		   }
-		   else
-		   {
-			   EntityWolf4 var2 = new EntityWolf4(this.worldObj);
-			   var2.setOwner(this.getOwnerName());
-			   var2.setTamed(true);
-			   return var2;
-		   }
-	   }
-
-	   /**
-	    * Returns true if the mob is currently able to mate with the specified mob.
-	    */
-	   public boolean canMateWith(EntityAnimal par1EntityAnimal)
-	   {
-		   if (par1EntityAnimal == this)
-		   {
-			   return false;
-		   }
-		   else if (!this.isTamed())
-		   {
-			   return false;
-		   }
-		   else if (!(par1EntityAnimal instanceof EntityWolf3))
-		   {
-			   return false;
-		   }
-		   else
-		   {
-			   EntityWolf3 var2 = (EntityWolf3)par1EntityAnimal;
-			   return !var2.isTamed() ? false : (var2.isSitting() ? false : this.isInLove() && var2.isInLove());
-		   }
-	   }
-
-	   public boolean func_70922_bv()
-	   {
-		   return this.dataWatcher.getWatchableObjectByte(19) == 1;
-	   }
+	 public boolean func_70922_bv()
+	 {
+		 return this.dataWatcher.getWatchableObjectByte(19) == 1;
+	 }
 }

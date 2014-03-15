@@ -24,12 +24,12 @@ public class RenderRail extends Render3DInterface{
 	}
 
 	@Override
-	public void renderScale() {
-		GL11.glScalef(0.01F,0.01F,0.01F);
+	public void renderEquippedFP() {
+
 	}
 
 	@Override
-	public void renderEquippedFP() {
-		
+	public void renderScale() {
+		GL11.glScalef(0.01F,0.01F,0.01F);
 	}
 }

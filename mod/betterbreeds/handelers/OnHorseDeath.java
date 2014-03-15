@@ -12,10 +12,9 @@ import betterbreeds.ModBreeds;
 public class OnHorseDeath {
 
 	Random rand = new Random();
-
-
+	
 	@ForgeSubscribe
-	public void onPlayerHurt(LivingHurtEvent event) {
+	public void onEntityHurt(LivingHurtEvent event) {
 
 		if (event.entityLiving instanceof EntityHorse)
 		{

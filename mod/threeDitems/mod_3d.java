@@ -15,24 +15,24 @@ public class mod_3d
 
 	@SidedProxy(serverSide="threeDitems.proxy.cmp", clientSide="threeDitems.proxy.clp")
 	public static cmp proxy;
-	
+
 	public static mod_3d inst;
 	public boolean isRendering3D = true;
 	public boolean showHud = false;
 
 	@EventHandler
-	public void preLoad(FMLPreInitializationEvent e){
-//		Config3D.instance.loadConfig(e.getSuggestedConfigurationFile());	
+	public void load(FMLInitializationEvent e)
+	{
+		inst = this;
+
+		//		proxy.renderBlocks();
+
+		//		proxy.render();
 	}
 
 	@EventHandler
-	public void load(FMLInitializationEvent e)
-	{
-		inst = this;		
-
-//		proxy.renderBlocks();
-		
-//		proxy.render();
+	public void preLoad(FMLPreInitializationEvent e){
+		//		Config3D.instance.loadConfig(e.getSuggestedConfigurationFile());
 	}
 
 }

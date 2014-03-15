@@ -20,7 +20,7 @@ public class BlockBones extends BlockContainer {
 
 	public BlockBones(int par1, Material par2Material) {
 		super(par1, par2Material);
-		this.setTickRandomly(true);
+		//this.setTickRandomly(true);
 	}
 
 	@Override
@@ -28,6 +28,8 @@ public class BlockBones extends BlockContainer {
 	{
 		return 10;
 	}
+	
+	
 
 	public int onBlockPlaced(World par1World, int x, int y, int z, int l, float par6, float par7, float par8, int par9)
 	{

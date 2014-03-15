@@ -18,7 +18,7 @@ public class head extends ModelBase
 		Shape1.setRotationPoint(0F, 0F, 0F);
 		Shape1.mirror = true;
 		setRotation(Shape1, 0F, 0F, 0F);
-		
+
 		Shape2 = new ModelRenderer(this, 0, 0);
 		Shape2.setTextureSize(64,64);
 		Shape2.addBox(-4F, -8F, -4F, 8, 8, 8);
@@ -27,17 +27,18 @@ public class head extends ModelBase
 		setRotation(Shape2, 0F, 0F, 0F);
 	}
 
+	@Override
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
 	{
 		super.render(entity, f, f1, f2, f3, f4, f5);
 		setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-		
+
 	}
-	
+
 	public void renderHead(float f5){
 		Shape1.render(f5);
 	}
-	
+
 	public void renderZombie(float f5){
 		Shape2.render(f5);
 	}

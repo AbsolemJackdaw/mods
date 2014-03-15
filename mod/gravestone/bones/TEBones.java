@@ -39,12 +39,14 @@ public class TEBones extends TileEntity {
 
 		int id = this.worldObj.getBlockId(xCoord,yCoord-1,zCoord);
 		Block block = Block.blocksList[id];
-		Icon icon;
-		String texture = "";
-		int sat=0;
+
 		if(block != null && block.blockID >0){
 			int meta2 = block.getDamageValue(this.worldObj, xCoord, yCoord-1, zCoord);
+
 			if(this.worldObj.isRemote){
+				Icon icon;
+				String texture = "";
+				int sat=0;
 				icon = block.getBlockTextureFromSide(1);
 				texture =icon.getIconName();
 				sat = block.getBlockColor();
@@ -59,7 +61,6 @@ public class TEBones extends TileEntity {
 		Packet132TileEntityData datapacket = null;
 		NBTTagCompound blockinfo = new NBTTagCompound();
 		writeToNBT(blockinfo);
-		//4th paramater is action type, 1-4 will perform vanilla functions via this packet, dont use.
 		datapacket = new Packet132TileEntityData(this.xCoord, this.yCoord, this.zCoord,5, blockinfo);
 		return datapacket;
 	}
@@ -83,6 +84,7 @@ public class TEBones extends TileEntity {
 		rotation = par1NBTTagCompound.getFloat("rotation");
 		saturation = par1NBTTagCompound.getInteger("sat");
 	}
+	
 	@Override
 	public void onDataPacket(INetworkManager net, Packet132TileEntityData pkt) {
 		this.readFromNBT(pkt.data);

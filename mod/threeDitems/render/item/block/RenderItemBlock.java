@@ -21,13 +21,11 @@ public class RenderItemBlock extends Render3DInterface{
 	}
 
 	@Override
-	public void renderEquippedFP() {
-//		mod_3d.proxy.render();
-		GL11.glRotatef(45,0,1,0);
-		GL11.glRotatef(0,0,0,1);
-		GL11.glRotatef(0,1,0,0);
+	public void preSpecials(ItemStack item, ModelBase model, Object...data) {
+		super.preSpecials(item, model);
+		Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationBlocksTexture);
+		render.renderBlockAsItem(block, item.getItemDamage(), 1);
 
-		GL11.glTranslatef(0f, 1.2f, 0.5f);	
 	}
 
 	@Override
@@ -36,10 +34,10 @@ public class RenderItemBlock extends Render3DInterface{
 		GL11.glRotatef(0,0,0,1);
 		GL11.glRotatef(0,1,0,0);
 
-		GL11.glTranslatef(0f, 1f, 0f);	
-//
-//		float f = 2f;
-//		GL11.glScalef(f, f, f);	
+		GL11.glTranslatef(0f, 1f, 0f);
+		//
+		//		float f = 2f;
+		//		GL11.glScalef(f, f, f);
 	}
 
 	@Override
@@ -49,23 +47,25 @@ public class RenderItemBlock extends Render3DInterface{
 		GL11.glRotatef(10,1,0,0);
 
 		GL11.glTranslatef(0.4f, 0.5f, 0f);
-		
+
 		float f = 0.7f;
-		GL11.glScalef(f, f, f);		
+		GL11.glScalef(f, f, f);
+	}
+
+	@Override
+	public void renderEquippedFP() {
+		//		mod_3d.proxy.render();
+		GL11.glRotatef(45,0,1,0);
+		GL11.glRotatef(0,0,0,1);
+		GL11.glRotatef(0,1,0,0);
+
+		GL11.glTranslatef(0f, 1.2f, 0.5f);
 	}
 
 	@Override
 	public void renderScale() {
 		float f = 1.5f;
-		GL11.glScalef(f, f, f);		
-	}
-
-	@Override
-	public void preSpecials(ItemStack item, ModelBase model, Object...data) {
-		super.preSpecials(item, model);
-		Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationBlocksTexture);
-		render.renderBlockAsItem(block, item.getItemDamage(), 1);
-
+		GL11.glScalef(f, f, f);
 	}
 
 	@Override

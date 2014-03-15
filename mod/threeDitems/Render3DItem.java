@@ -7,7 +7,7 @@ import net.minecraftforge.client.MinecraftForgeClient;
 public class Render3DItem {
 
 	public static Render3DItem inst = new Render3DItem();
-	
+
 	public Render3DItem(){
 		inst = this;
 	}

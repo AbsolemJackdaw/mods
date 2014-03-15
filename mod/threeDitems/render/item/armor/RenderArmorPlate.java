@@ -22,15 +22,10 @@ public class RenderArmorPlate extends Render3DInterface{
 	}
 
 	@Override
-	public void renderEquippedFP() {
-		GL11.glRotatef(100-(45/2),0,1,0);
-		GL11.glRotatef(180,0,0,1);
-		GL11.glRotatef(-10,1,0,0);
-			
-		GL11.glTranslatef(0.3f, -3f, 0.2f);	
-		
-//		float f = 1.5f;
-//		GL11.glScalef(f, f, f);	
+	public void preSpecials(ItemStack item, ModelBase model, Object...data) {
+		super.preSpecials(item, model);
+		ah.setArmorModel((ModelBiped)model, item,
+				((ItemArmor)item.getItem()).armorType, RenderBiped.bipedArmorFilenamePrefix[((ItemArmor)item.getItem()).renderIndex]);
 	}
 
 	@Override
@@ -38,11 +33,11 @@ public class RenderArmorPlate extends Render3DInterface{
 		GL11.glRotatef(0,0,1,0);
 		GL11.glRotatef(180,0,0,1);
 		GL11.glRotatef(90,1,0,0);
-			
-		GL11.glTranslatef(0f, -6.5f, 0f);		
-		
+
+		GL11.glTranslatef(0f, -6.5f, 0f);
+
 		float f = 3f;
-		GL11.glScalef(f, f, f);		
+		GL11.glScalef(f, f, f);
 	}
 
 	@Override
@@ -51,24 +46,29 @@ public class RenderArmorPlate extends Render3DInterface{
 		GL11.glRotatef(180,0,0,1);
 		GL11.glRotatef(-10,1,0,0);
 
-		GL11.glTranslatef(-0.3f, -2.3f, 0.3f);	
+		GL11.glTranslatef(-0.3f, -2.3f, 0.3f);
+	}
+
+	@Override
+	public void renderEquippedFP() {
+		GL11.glRotatef(100-(45/2),0,1,0);
+		GL11.glRotatef(180,0,0,1);
+		GL11.glRotatef(-10,1,0,0);
+
+		GL11.glTranslatef(0.3f, -3f, 0.2f);
+
+		//		float f = 1.5f;
+		//		GL11.glScalef(f, f, f);
 	}
 
 	@Override
 	public void renderScale() {
 		float f = 2.5f;
-		GL11.glScalef(f, f, f);		
-	}
-
-	@Override
-	public void preSpecials(ItemStack item, ModelBase model, Object...data) {
-		super.preSpecials(item, model);
-		ah.setArmorModel((ModelBiped)model, item, 
-				((ItemArmor)item.getItem()).armorType, RenderBiped.bipedArmorFilenamePrefix[((ItemArmor)item.getItem()).renderIndex]);
+		GL11.glScalef(f, f, f);
 	}
 
 	/**Do not use this unless you know what you are doing !
-	 * Used for Armor and minecarts to ignore the actual loading of the primary, 
+	 * Used for Armor and minecarts to ignore the actual loading of the primary,
 	 * If you use this, make sure to manually load a texture*/
 	@Override @Deprecated protected boolean shouldIgnoreTextureRendering() {
 		return true;

@@ -4,17 +4,19 @@ import net.minecraft.block.BlockRail;
 
 public class Block3DRail extends BlockRail{
 	public int renderId = 1;
-    public Block3DRail(int par1) {
+	public Block3DRail(int par1) {
 		super(par1);
 	}
 
+	@Override
 	public int getRenderType()
-    {
-        return renderId;
-    }
-	
-    public boolean isOpaqueCube()
-    {
-        return false;
-    }
+	{
+		return renderId;
+	}
+
+	@Override
+	public boolean isOpaqueCube()
+	{
+		return false;
+	}
 }

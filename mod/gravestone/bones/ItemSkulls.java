@@ -29,21 +29,28 @@ public class ItemSkulls extends Item{
 			world.setBlock(x, y+1, z, mod_Gravestone.bones.blockID);
 			TileEntity te = world.getBlockTileEntity(x,y+1,z);
 
-			int id = world.getBlockId(x,y,z);
-			int meta = world.getBlockMetadata(x,y,z);
-			Block block = Block.blocksList[id];
-			Icon icon = block.getIcon(1, meta);
-			int sat = block.getBlockColor();
-			texture = icon.getIconName();
-			if(te != null)
-			{
-				TEBones bones = (TEBones)te;
-				bones.setTexture(texture);
-				bones.setSat(sat);
-				world.setBlockTileEntity(x, y+1, z, bones);
-			}	
-			else
-				par2EntityPlayer.addChatMessage("te ==null");
+//			int id = world.getBlockId(x,y,z);
+//			int meta = world.getBlockMetadata(x,y,z);
+//			Block block = Block.blocksList[id];
+//
+//
+//			if(te != null)
+//			{
+//				TEBones bones = (TEBones)te;
+//
+//				if(world.isRemote){
+//					Icon icon = block.getIcon(1, meta);
+//					texture = icon.getIconName();
+//					int sat = block.getBlockColor();
+//
+//					bones.setTexture(texture);
+//					bones.setSat(sat);
+//				}
+				
+//				world.setBlockTileEntity(x, y+1, z, bones);
+//			}	
+//			else
+//				par2EntityPlayer.addChatMessage("te ==null");
 		}
 		return false;
 

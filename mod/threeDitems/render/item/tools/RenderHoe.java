@@ -13,19 +13,10 @@ public class RenderHoe extends Render3DInterface {
 	}
 
 	@Override
-	public void renderEquippedFP() {
-		GL11.glRotatef(130,0,1,0);
-		GL11.glRotatef(180,0,0,1);
-		GL11.glRotatef(50,1,0,0);
-		
-		GL11.glTranslatef(01f, 0f, 0f);		
-	}
-
-	@Override
 	public void renderEntity() {
 		float f = 1.5f;
 		GL11.glRotatef(90, 0, 0, 1);
-		GL11.glScalef(f, f, f);		
+		GL11.glScalef(f, f, f);
 	}
 
 	@Override
@@ -33,16 +24,25 @@ public class RenderHoe extends Render3DInterface {
 		GL11.glRotatef(-95,0,1,0);
 		GL11.glRotatef(-5,0,0,1);
 		GL11.glRotatef(-50,1,0,0);
-			
-		GL11.glTranslatef(-0.1f, 0.6f, -0.2f);	
+
+		GL11.glTranslatef(-0.1f, 0.6f, -0.2f);
 		float f = 0.5f;
-		GL11.glScalef(f, f, f);		
+		GL11.glScalef(f, f, f);
+	}
+
+	@Override
+	public void renderEquippedFP() {
+		GL11.glRotatef(130,0,1,0);
+		GL11.glRotatef(180,0,0,1);
+		GL11.glRotatef(50,1,0,0);
+
+		GL11.glTranslatef(01f, 0f, 0f);
 	}
 
 	@Override
 	public void renderScale() {
 		float f = 4f;
-		GL11.glScalef(f, f, f);		
+		GL11.glScalef(f, f, f);
 	}
 
 }

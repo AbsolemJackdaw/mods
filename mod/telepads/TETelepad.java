@@ -138,8 +138,6 @@ public class TETelepad extends TileEntity{
 
 										if(p.username.equals(ownerName) || ownerName.equals("UNIVERSAL")){
 
-
-
 											allCoords = new ArrayList<int[]>();
 											allNames = new ArrayList<String>();
 											allDims = new ArrayList<Integer>();
@@ -162,6 +160,9 @@ public class TETelepad extends TileEntity{
 
 											setRegisterToPad(stack);
 
+//											setMCGuiSettingToRegister(stack);
+											stack.getTagCompound().setInteger("originalGUIScale", Minecraft.getMinecraft().gameSettings.guiScale);
+											
 											// ... and open gui
 											p.openGui(mod_telepads.instance, 0, worldObj, xCoord, yCoord, zCoord);
 											break;
@@ -184,6 +185,8 @@ public class TETelepad extends TileEntity{
 			}
 		}
 	}
+
+	
 
 	@Override
 	public boolean canUpdate() {
@@ -211,6 +214,23 @@ public class TETelepad extends TileEntity{
 	}
 
 
+//	/**Saves current mc gui screen size setting to the pad to restore it afterwards.*/
+//	private void setMCGuiSettingToRegister(ItemStack stack) {
+//		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+//		DataOutputStream outputStream = new DataOutputStream(bytes);
+//		try {
+//			writeBasic(TelePadsTeleportHandler.IDENTIFIER_GUISIZE, outputStream);
+//
+//			Packet.writeItemStack(stack, outputStream);
+//
+//			Packet250CustomPayload packet = new Packet250CustomPayload("telePads", bytes.toByteArray());
+//			PacketDispatcher.sendPacketToServer(packet);
+//
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//	}
+	
 	/**Saves the register's content to the TelePad*/
 	public void setRegisterToPad(ItemStack stack){
 

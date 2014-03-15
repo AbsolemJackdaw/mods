@@ -8,15 +8,10 @@ import betterbreeds.entity.EntityChicken2;
 import betterbreeds.entity.EntityChicken3;
 import betterbreeds.entity.EntityChicken4;
 import betterbreeds.entity.EntityChicken5;
-import betterbreeds.entity.EntityCow2;
-import betterbreeds.entity.EntityCow3;
+import betterbreeds.entity.EntityCommonCow;
+import betterbreeds.entity.EntityCommonPig;
 import betterbreeds.entity.EntityCow4;
 import betterbreeds.entity.EntityJelly;
-import betterbreeds.entity.EntityPig2;
-import betterbreeds.entity.EntityPig3;
-import betterbreeds.entity.EntityPig4;
-import betterbreeds.entity.EntityPig5;
-import betterbreeds.entity.EntityPig6;
 import betterbreeds.entity.EntitySheep2;
 import betterbreeds.entity.EntitySheep3;
 import betterbreeds.entity.EntitySheep4;
@@ -45,15 +40,10 @@ import betterbreeds.entity.render.RenderChicken2;
 import betterbreeds.entity.render.RenderChicken3;
 import betterbreeds.entity.render.RenderChicken4;
 import betterbreeds.entity.render.RenderChicken5;
-import betterbreeds.entity.render.RenderCow2;
-import betterbreeds.entity.render.RenderCow3;
+import betterbreeds.entity.render.RenderCommonCow;
+import betterbreeds.entity.render.RenderCommonPig;
 import betterbreeds.entity.render.RenderCow4;
 import betterbreeds.entity.render.RenderJelly;
-import betterbreeds.entity.render.RenderPig2;
-import betterbreeds.entity.render.RenderPig3;
-import betterbreeds.entity.render.RenderPig4;
-import betterbreeds.entity.render.RenderPig5;
-import betterbreeds.entity.render.RenderPig6;
 import betterbreeds.entity.render.RenderSheep2;
 import betterbreeds.entity.render.RenderSheep3;
 import betterbreeds.entity.render.RenderSheep4;
@@ -72,15 +62,11 @@ public class ClientProxy extends CommonProxy
 	public void registerRenderInformation()
 	{
 
-		RenderingRegistry.registerEntityRenderingHandler(EntityPig2.class, new RenderPig2(new ModelPig(), null, 0.2F));
-		RenderingRegistry.registerEntityRenderingHandler(EntityPig3.class, new RenderPig3(new ModelPig(), null, 0.2F));
-		RenderingRegistry.registerEntityRenderingHandler(EntityPig4.class, new RenderPig4(new ModelPig(), null, 0.2F));
-		RenderingRegistry.registerEntityRenderingHandler(EntityPig5.class, new RenderPig5(new ModelPig(), null, 0.2F));
-		RenderingRegistry.registerEntityRenderingHandler(EntityPig6.class, new RenderPig6(new ModelPig(), null, 0.2F));
+		RenderingRegistry.registerEntityRenderingHandler(EntityCommonPig.class, new RenderCommonPig(new ModelPig(), new ModelPig(), 0.5F));
+		
+		RenderingRegistry.registerEntityRenderingHandler(EntityCommonCow.class, new RenderCommonCow(new ModelCow(), 0.5F));
+		RenderingRegistry.registerEntityRenderingHandler(EntityCow4.class, new RenderCow4(new ModelCow(), 0.5F));
 
-		RenderingRegistry.registerEntityRenderingHandler(EntityCow2.class, new RenderCow2(new ModelCow(), 0.2F));
-		RenderingRegistry.registerEntityRenderingHandler(EntityCow3.class, new RenderCow3(new ModelCow(), 0.2F));
-		RenderingRegistry.registerEntityRenderingHandler(EntityCow4.class, new RenderCow4(new ModelCow(), 0.2F));
 
 		RenderingRegistry.registerEntityRenderingHandler(EntityWolf2.class, new RenderWolf2(new Wolf2(), 0.2F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityWolf3.class, new RenderWolf3(new Wolf3(), 0.2F));

@@ -5,36 +5,36 @@ import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.util.ResourceLocation;
-import betterbreeds.entity.EntityPig6;
+import betterbreeds.entity.EntityCommonPig;
+import betterbreeds.entity.EntityCommonPig;
 
-public class RenderPig6 extends RenderLiving
+public class RenderCommonPig extends RenderLiving
 {
-	private static final ResourceLocation texture = new ResourceLocation("subaraki:BB/pighoney.png");
 
-	protected ResourceLocation func_110919_a(EntityPig6 par1EntityChicken)
+	protected ResourceLocation func_110919_a(EntityCommonPig p)
 	{
-		return texture;
+		return p.getTexture();
 	}
 
 	@Override
 	protected ResourceLocation getEntityTexture(Entity par1Entity)
 	{
-		return this.func_110919_a((EntityPig6)par1Entity);
+		return this.func_110919_a((EntityCommonPig)par1Entity);
 	}
 	
-    public RenderPig6(ModelBase par1ModelBase, ModelBase par2ModelBase, float par3)
+    public RenderCommonPig(ModelBase par1ModelBase, ModelBase par2ModelBase, float par3)
     {
         super(par1ModelBase, par3);
         this.setRenderPassModel(par2ModelBase);
     }
 
-    protected int renderSaddledPig(EntityPig6 par1EntityPig, int par2, float par3)
+    protected int renderSaddledPig(EntityCommonPig p, int par2, float par3)
     {
 		this.bindTexture(new ResourceLocation("textures/entity/pig/pig_saddle.png"));
-        return par2 == 0 && par1EntityPig.getSaddled() ? 1 : -1;
+        return par2 == 0 && p.getSaddled() ? 1 : -1;
     }
 
-    public void func_77098_a(EntityPig6 par1EntityPig, double par2, double par4, double par6, float par8, float par9)
+    public void func_77098_a(EntityCommonPig par1EntityPig, double par2, double par4, double par6, float par8, float par9)
     {
         super.doRenderLiving(par1EntityPig, par2, par4, par6, par8, par9);
     }
@@ -44,12 +44,12 @@ public class RenderPig6 extends RenderLiving
      */
     protected int shouldRenderPass(EntityLiving par1EntityLiving, int par2, float par3)
     {
-        return this.renderSaddledPig((EntityPig6)par1EntityLiving, par2, par3);
+        return this.renderSaddledPig((EntityCommonPig)par1EntityLiving, par2, par3);
     }
 
     public void doRenderLiving(EntityLiving par1EntityLiving, double par2, double par4, double par6, float par8, float par9)
     {
-        this.func_77098_a((EntityPig6)par1EntityLiving, par2, par4, par6, par8, par9);
+        this.func_77098_a((EntityCommonPig)par1EntityLiving, par2, par4, par6, par8, par9);
     }
 
     /**
@@ -60,6 +60,6 @@ public class RenderPig6 extends RenderLiving
      */
     public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9)
     {
-        this.func_77098_a((EntityPig6)par1Entity, par2, par4, par6, par8, par9);
+        this.func_77098_a((EntityCommonPig)par1Entity, par2, par4, par6, par8, par9);
     }
 }

@@ -5,15 +5,15 @@ import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.util.ResourceLocation;
+import betterbreeds.entity.EntityCommonCow;
 import betterbreeds.entity.EntityCow2;
 
-public class RenderCow2 extends RenderLiving
+public class RenderCommonCow extends RenderLiving
 {
-	private static final ResourceLocation texture = new ResourceLocation("subaraki:BB/cow2.png");
 
-	protected ResourceLocation func_110919_a(EntityCow2 par1EntityChicken)
+	protected ResourceLocation func_110919_a(EntityCommonCow c)
 	{
-		return texture;
+		return c.getTexture();
 	}
 
 	@Override
@@ -21,7 +21,7 @@ public class RenderCow2 extends RenderLiving
 	{
 		return this.func_110919_a((EntityCow2)par1Entity);
 	}
-    public RenderCow2(ModelBase par1ModelBase, float par2)
+    public RenderCommonCow(ModelBase par1ModelBase, float par2)
     {
         super(par1ModelBase, par2);
     }

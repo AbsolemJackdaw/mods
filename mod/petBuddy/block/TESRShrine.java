@@ -139,7 +139,7 @@ public class TESRShrine extends TileEntitySpecialRenderer{
 							GL11.glTranslatef(0.0F, 0.35F, 0.0F);
 							float f3 = 1.0F;
 							GL11.glDisable(GL11.GL_LIGHTING);
-							GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_SRC_COLOR);
+							GL11.glBlendFunc(GL11.GL_SRC_COLOR, GL11.GL_SRC_COLOR);
 							GL11.glEnable(GL11.GL_BLEND);
 //							this.blockrender.renderStandardBlock(Block.dirt, (int)d, (int)d1, (int)d2);
 							

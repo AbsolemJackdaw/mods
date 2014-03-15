@@ -4,7 +4,6 @@ import org.lwjgl.opengl.GL11;
 
 import cubeItems.ModelCubeWorld;
 import cubeItems.RenderCubeInterface;
-import cubeItems.mod_cubeItems;
 
 public class RenderCubeDisc extends RenderCubeInterface{
 
@@ -14,13 +13,12 @@ public class RenderCubeDisc extends RenderCubeInterface{
 
 
 	@Override
-	public void renderEquippedFP() {
-
-		GL11.glRotatef(45, 0, 1, 0);
-		GL11.glRotatef(90, 1, 0, 0);
+	public void renderEntity() {
+		GL11.glRotatef(0, 0, 1, 0);
+		GL11.glRotatef(0, 1, 0, 0);
 		GL11.glRotatef(0, 0, 0, 1);
 
-		GL11.glTranslatef(0f,0.3f,0.2f);
+		GL11.glTranslatef(-0.3f,0f,0.3f);
 
 	}
 
@@ -30,16 +28,17 @@ public class RenderCubeDisc extends RenderCubeInterface{
 		GL11.glRotatef(90, 1, 0, 0);
 		GL11.glRotatef(0, 0, 0, 1);
 
-		GL11.glTranslatef(-0.1f,-0.05f,0.25f);	
+		GL11.glTranslatef(-0.1f,-0.05f,0.25f);
 	}
 
 	@Override
-	public void renderEntity() {
-		GL11.glRotatef(0, 0, 1, 0);
-		GL11.glRotatef(0, 1, 0, 0);
+	public void renderEquippedFP() {
+
+		GL11.glRotatef(45, 0, 1, 0);
+		GL11.glRotatef(90, 1, 0, 0);
 		GL11.glRotatef(0, 0, 0, 1);
 
-		GL11.glTranslatef(-0.3f,0f,0.3f);
+		GL11.glTranslatef(0f,0.3f,0.2f);
 
 	}
 

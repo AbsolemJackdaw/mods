@@ -14,7 +14,7 @@ public class RenderStick extends Render3DInterface{
 
 	@Override
 	public void renderEntity() {
-//		GL11.glTranslatef(0, -0.25f, 0);
+		//		GL11.glTranslatef(0, -0.25f, 0);
 		GL11.glRotatef(90, 1, 0, 0);
 	}
 
@@ -27,12 +27,12 @@ public class RenderStick extends Render3DInterface{
 	}
 
 	@Override
-	public void renderScale() {
-		GL11.glScalef(5F,5F,5F);
+	public void renderEquippedFP() {
+		GL11.glTranslatef(0.7f, 1f, 0.3f);
 	}
 
 	@Override
-	public void renderEquippedFP() {
-		GL11.glTranslatef(0.7f, 1f, 0.3f);
+	public void renderScale() {
+		GL11.glScalef(5F,5F,5F);
 	}
 }

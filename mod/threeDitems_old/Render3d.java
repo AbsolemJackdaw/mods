@@ -32,7 +32,7 @@
 //	private String name = "";
 //	public static String[] armorFilenamePrefix = new String[] {"cloth", "chain", "iron", "diamond", "gold"};
 //
-//	
+//
 //	private static final CaseEquipped eq = new CaseEquipped();
 //	private static final CaseEquipped e = new CaseEquipped();
 //	private static final CaseEntity caseEntity = new CaseEntity();
@@ -57,7 +57,7 @@
 //	private float scale;
 //	private float scaleWorld;
 //	/**
-//	 * 
+//	 *
 //	 * @param model     the model to be rendered
 //	 * @param texture   the texture to be applied.
 //	 * @param posX3p    translation X of model in 3th person
@@ -74,7 +74,7 @@
 //	 * @param rotZ1p	rotation Z of model in 1st person
 //	 * @param ScaleDown Scales the model down to 0.5 if true
 //	 */
-//	public Render3d(ModelBase model, String texture, 
+//	public Render3d(ModelBase model, String texture,
 //			float posX3p, float posY3p, float posZ3p,
 //			float rotX3p, float rotY3p, float rotZ3p,
 //			float posX1, float posY1, float posZ1,
@@ -99,7 +99,7 @@
 //		helper = new MinecartHelper();
 //	}
 //
-//	public Render3d(ModelBase model, String texture, 
+//	public Render3d(ModelBase model, String texture,
 //			float posX3p, float posY3p, float posZ3p,
 //			float rotX3p, float rotY3p, float rotZ3p,
 //			float posX1, float posY1, float posZ1,
@@ -131,16 +131,16 @@
 //			switch(type)
 //			{
 //			//if itemdye is lapis and nothing else
-//			case  EQUIPPED: 
+//			case  EQUIPPED:
 //				if(!(item.getItem().equals(Item.dyePowder) && item.getItemDamage() != 4))
 //					return true;
-//			case  EQUIPPED_FIRST_PERSON: 
+//			case  EQUIPPED_FIRST_PERSON:
 //				if(!(item.getItem().equals(Item.dyePowder) && item.getItemDamage() != 4))
 //					return true;
 //			case ENTITY:
 //				if(!(item.getItem().equals(Item.dyePowder) && item.getItemDamage() != 4))
 //					return true;
-//			default: 
+//			default:
 //				return false;
 //			}
 //		}else{
@@ -175,7 +175,7 @@
 //				break;
 //			default:
 //				break;
-//			}		
+//			}
 //		}
 //	}
 //
@@ -193,7 +193,7 @@
 //					int color = ((ItemPotion)item.getItem()).getColorFromDamage(item.getItemDamage());
 //					float red = (float)(color >> 16 & 255) / 255.0F;
 //					float green = (float)(color >> 8 & 255) / 255.0F;
-//					float blue = (float)(color & 255) / 255.0F;					
+//					float blue = (float)(color & 255) / 255.0F;
 //					GL11.glColor4f(red, green,blue, 1.0F);
 //					((bottle)theItem).renderContent(p, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
 //				}else if(player.getCurrentEquippedItem().getItem().equals(Item.expBottle)){

@@ -1,5 +1,8 @@
 package toolbelts.render;
 
+import cpw.mods.fml.common.FMLLog;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.event.ForgeSubscribe;
 import toolbelts.PlayerBeltTracker;
@@ -15,7 +18,7 @@ public class RenderHipItemsOnPlayer {
 
 	@ForgeSubscribe
 	public void PlayerRender(RenderPlayerEvent.SetArmorModel evt ){
-		
+
 		switch (PlayerBeltTracker.get(evt.entityPlayer).BeltID) {
 		case 0:
 			new BeltDefaultSet(evt);

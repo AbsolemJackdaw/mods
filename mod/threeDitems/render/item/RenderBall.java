@@ -21,39 +21,10 @@ public class RenderBall extends Render3DInterface {
 	}
 
 	@Override
-	public void renderEquippedFP() {
-		GL11.glRotatef(45,0,1,0);
-		GL11.glRotatef(0,0,0,1);
-		GL11.glRotatef(0,1,0,0);
-
-		GL11.glTranslatef(0f, 01f, 0.5f);		
-	}
-
-	@Override
-	public void renderEntity() {
-		GL11.glRotatef(0,0,1,0);
-		GL11.glRotatef(0,0,0,1);
-		GL11.glRotatef(0,1,0,0);
-
-		GL11.glTranslatef(0f, 0.5f, 0f);		
-	}
-
-	@Override
-	public void renderEquipped() {
-		GL11.glRotatef(10,0,1,0);
-		GL11.glRotatef(15,0,0,1);
-		GL11.glRotatef(180,1,0,0);
-			
-		GL11.glTranslatef(0.4f, 0f, -0.3f);	
-		
-		float f = 0.4f;
-		GL11.glScalef(f, f, f);			
-	}
-
-	@Override
-	public void renderScale() {
-		float f = 3f;
-		GL11.glScalef(f, f, f);		
+	public void postSpecials(ItemStack item, ModelBase model, Object... data) {
+		super.postSpecials(item, model);
+		if(item.getItem().equals(Item.magmaCream))
+			GL11.glDisable(GL11.GL_BLEND);
 	}
 
 	@Override
@@ -87,12 +58,39 @@ public class RenderBall extends Render3DInterface {
 	}
 
 	@Override
-	public void postSpecials(ItemStack item, ModelBase model, Object... data) {
-		super.postSpecials(item, model);
-		if(item.getItem().equals(Item.magmaCream))
-		{
-			GL11.glDisable(GL11.GL_BLEND);
-		}
+	public void renderEntity() {
+		GL11.glRotatef(0,0,1,0);
+		GL11.glRotatef(0,0,0,1);
+		GL11.glRotatef(0,1,0,0);
+
+		GL11.glTranslatef(0f, 0.5f, 0f);
 	}
-	
+
+	@Override
+	public void renderEquipped() {
+		GL11.glRotatef(10,0,1,0);
+		GL11.glRotatef(15,0,0,1);
+		GL11.glRotatef(180,1,0,0);
+
+		GL11.glTranslatef(0.4f, 0f, -0.3f);
+
+		float f = 0.4f;
+		GL11.glScalef(f, f, f);
+	}
+
+	@Override
+	public void renderEquippedFP() {
+		GL11.glRotatef(45,0,1,0);
+		GL11.glRotatef(0,0,0,1);
+		GL11.glRotatef(0,1,0,0);
+
+		GL11.glTranslatef(0f, 01f, 0.5f);
+	}
+
+	@Override
+	public void renderScale() {
+		float f = 3f;
+		GL11.glScalef(f, f, f);
+	}
+
 }

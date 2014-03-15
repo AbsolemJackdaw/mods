@@ -398,22 +398,6 @@ public class EntityWolf6 extends EntityTameable
 	    					return true;
 	    				}
 	    			}
-	    			else if (itemstack.itemID == Item.dyePowder.itemID)
-	    			{
-	    				int i = BlockColored.getBlockFromDye(itemstack.getItemDamage());
-
-	    				if (i != this.getCollarColor())
-	    				{
-	    					this.setCollarColor(i);
-
-	    					if (!par1EntityPlayer.capabilities.isCreativeMode && --itemstack.stackSize <= 0)
-	    					{
-	    						par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
-	    					}
-
-	    					return true;
-	    				}
-	    			}
 	    		}
 
 	    		if (par1EntityPlayer.getCommandSenderName().equalsIgnoreCase(this.getOwnerName()) && !this.worldObj.isRemote && !this.isBreedingItem(itemstack))

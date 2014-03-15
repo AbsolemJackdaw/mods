@@ -1,17 +1,10 @@
 package cubeItems;
 
-import javax.imageio.spi.RegisterableService;
-
-import modUpdateChecked.OnPlayerLogin;
-
-import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
-import cpw.mods.fml.common.registry.GameRegistry;
 import cubeItems.proxy.CubeS;
 
 @Mod(modid="cubeItems", name=mod_cubeItems.name, version=mod_cubeItems.version)
@@ -31,10 +24,10 @@ public class mod_cubeItems
 	@EventHandler
 	public void load(FMLInitializationEvent e)
 	{
-		
-		GameRegistry.registerPlayerTracker(new OnPlayerLogin(version, name));
 
-		inst = this;				
+		//GameRegistry.registerPlayerTracker(new OnPlayerLogin(version, name));
+
+		inst = this;
 		proxy.render();
 	}
 
