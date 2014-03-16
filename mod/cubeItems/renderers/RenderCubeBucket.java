@@ -5,13 +5,12 @@ import org.lwjgl.opengl.GL11;
 import cubeItems.ModelCubeWorld;
 import cubeItems.RenderCubeInterface;
 
-public class RenderCubeBucket extends RenderCubeInterface{
+public class RenderCubeBucket extends RenderCubeInterface {
 
-	/**RenderFood : platform of 10x10*/
+	/** RenderFood : platform of 10x10 */
 	public RenderCubeBucket(ModelCubeWorld model) {
 		super(model);
 	}
-
 
 	@Override
 	public void renderEntity() {
@@ -19,7 +18,7 @@ public class RenderCubeBucket extends RenderCubeInterface{
 		GL11.glRotatef(0, 1, 0, 0);
 		GL11.glRotatef(0, 0, 0, 1);
 
-		GL11.glTranslatef(-0.3f,-0.1f,0.3f);
+		GL11.glTranslatef(-0.3f, -0.1f, 0.3f);
 
 	}
 
@@ -32,7 +31,7 @@ public class RenderCubeBucket extends RenderCubeInterface{
 		GL11.glRotatef(0, 1, 0, 0);
 		GL11.glRotatef(45, 0, 0, 1);
 
-		GL11.glTranslatef(0.2f,-0.2f,0.25f);
+		GL11.glTranslatef(0.2f, -0.2f, 0.25f);
 	}
 
 	@Override
@@ -43,7 +42,7 @@ public class RenderCubeBucket extends RenderCubeInterface{
 		GL11.glRotatef(0, 1, 0, 0);
 		GL11.glRotatef(0, 0, 0, 1);
 
-		GL11.glTranslatef(-0.2f,0.2f,0.6f);
+		GL11.glTranslatef(-0.2f, 0.2f, 0.6f);
 
 	}
 
@@ -51,7 +50,7 @@ public class RenderCubeBucket extends RenderCubeInterface{
 	public void renderScale() {
 
 		float f = 4f;
-		GL11.glScalef(f,f,f);
+		GL11.glScalef(f, f, f);
 
 	}
 }

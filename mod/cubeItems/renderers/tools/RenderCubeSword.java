@@ -7,11 +7,11 @@ import org.lwjgl.opengl.GL11;
 import cubeItems.ModelCubeWorld;
 import cubeItems.RenderCubeInterface;
 
-public class RenderCubeSword extends RenderCubeInterface{
+public class RenderCubeSword extends RenderCubeInterface {
 
 	RenderItem rend = new RenderItem();
 
-	public RenderCubeSword (ModelCubeWorld model){
+	public RenderCubeSword(ModelCubeWorld model) {
 		super(model);
 	}
 

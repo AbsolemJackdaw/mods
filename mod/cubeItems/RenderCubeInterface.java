@@ -15,38 +15,41 @@ public abstract class RenderCubeInterface implements IItemRenderer {
 
 	private final ResourceLocation glint;
 
-
 	RenderItem rend = new RenderItem();
 
-	public RenderCubeInterface(ModelCubeWorld model){
+	public RenderCubeInterface(ModelCubeWorld model) {
 		this.model = model;
 
 		glint = new ResourceLocation("textures/misc/enchanted_item_glint.png");
 	}
 
-
 	@Override
 	public boolean handleRenderType(ItemStack item, ItemRenderType type) {
-		return (type != ItemRenderType.INVENTORY) && !RenderItem.renderInFrame ? true : false;
+		return (type != ItemRenderType.INVENTORY) && !RenderItem.renderInFrame ? true
+				: false;
 	}
 
-	public void postSpecials(ItemStack item, ModelCubeWorld model, Object... data){
+	public void postSpecials(ItemStack item, ModelCubeWorld model,
+			Object... data) {
 	}
 
-	public boolean preRenderBlock(IBlockAccess world, int x, int y, int z, Block block){
+	public boolean preRenderBlock(IBlockAccess world, int x, int y, int z,
+			Block block) {
 		return true;
 	}
 
-	public void preSpecials(ItemStack item, ModelCubeWorld model, Object... data){
+	public void preSpecials(ItemStack item, ModelCubeWorld model,
+			Object... data) {
 	}
 
-
 	public abstract void renderEntity();
+
 	public abstract void renderEquipped();
+
 	public abstract void renderEquippedFP();
-	private void renderglow(ItemStack item){
-		if (item.hasEffect(item.getItemDamage()))
-		{
+
+	private void renderglow(ItemStack item) {
+		if (item.hasEffect(item.getItemDamage())) {
 			float tickModifier = ((Minecraft.getSystemTime() % 3000L) / 3000.0F) * 48.0F;
 			Minecraft.getMinecraft().renderEngine.bindTexture(glint);
 			GL11.glEnable(GL11.GL_BLEND);
@@ -56,7 +59,6 @@ public abstract class RenderCubeInterface implements IItemRenderer {
 			GL11.glDepthMask(false);
 
 			for (int var21 = 0; var21 < 2; var21++) {
-
 
 				GL11.glDisable(GL11.GL_LIGHTING);
 				float var22 = 0.76F;
@@ -70,8 +72,9 @@ public abstract class RenderCubeInterface implements IItemRenderer {
 				GL11.glRotatef(-50, 0, 0, 1);
 				GL11.glTranslatef(0, var23, 0);
 				GL11.glMatrixMode(GL11.GL_MODELVIEW);
-				if(!shouldIgnoreModelRendering())
+				if (!shouldIgnoreModelRendering()) {
 					model.render();
+				}
 
 			}
 
@@ -89,15 +92,14 @@ public abstract class RenderCubeInterface implements IItemRenderer {
 	@Override
 	public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
 
-
-		//		if(!shouldIgnoreTextureRendering())
-		//			Minecraft.getMinecraft().renderEngine.bindTexture(modelTexture);
+		// if(!shouldIgnoreTextureRendering())
+		// Minecraft.getMinecraft().renderEngine.bindTexture(modelTexture);
 
 		GL11.glPushMatrix();
 
 		renderScale();
 
-		switch(type){
+		switch (type) {
 		case ENTITY:
 			renderEntity();
 			break;
@@ -107,15 +109,15 @@ public abstract class RenderCubeInterface implements IItemRenderer {
 		case EQUIPPED_FIRST_PERSON:
 			renderEquippedFP();
 			break;
-		default :
+		default:
 			break;
 		}
 
-
 		preSpecials(item, model, data);
 
-		if(!shouldIgnoreModelRendering())
+		if (!shouldIgnoreModelRendering()) {
 			model.render();
+		}
 
 		postSpecials(item, model, data);
 
@@ -124,25 +126,27 @@ public abstract class RenderCubeInterface implements IItemRenderer {
 		GL11.glPopMatrix();
 
 	}
+
 	public abstract void renderScale();
 
-	/**used to bypass general model rendering. used for blocks and ItemFrame*/
-	protected boolean shouldIgnoreModelRendering(){
+	/** used to bypass general model rendering. used for blocks and ItemFrame */
+	protected boolean shouldIgnoreModelRendering() {
 		return false;
 	}
 
-	/**Do not use this unless you know what you are doing !
-	 * Used for Armor and minecarts to ignore the actual loading of the primary,
-	 * If you use this, make sure to manually load a texture
-	 * UNUSED*/
-	protected boolean shouldIgnoreTextureRendering(){
+	/**
+	 * Do not use this unless you know what you are doing ! Used for Armor and
+	 * minecarts to ignore the actual loading of the primary, If you use this,
+	 * make sure to manually load a texture UNUSED
+	 */
+	protected boolean shouldIgnoreTextureRendering() {
 		return false;
 	}
-
 
 	@Override
 	public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item,
 			ItemRendererHelper helper) {
-		return (type != ItemRenderType.INVENTORY) && !RenderItem.renderInFrame ? true : false;
+		return (type != ItemRenderType.INVENTORY) && !RenderItem.renderInFrame ? true
+				: false;
 	}
 }

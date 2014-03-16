@@ -7,11 +7,11 @@ import org.lwjgl.opengl.GL11;
 import cubeItems.ModelCubeWorld;
 import cubeItems.RenderCubeInterface;
 
-public class RenderCubePickAxe extends RenderCubeInterface{
+public class RenderCubePickAxe extends RenderCubeInterface {
 
 	RenderItem rend = new RenderItem();
 
-	public RenderCubePickAxe (ModelCubeWorld model){
+	public RenderCubePickAxe(ModelCubeWorld model) {
 		super(model);
 	}
 
@@ -21,7 +21,7 @@ public class RenderCubePickAxe extends RenderCubeInterface{
 		GL11.glRotatef(-75, 1, 0, 0);
 		GL11.glRotatef(0, 0, 0, 1);
 
-		GL11.glTranslatef(-0.7f,-1f,0.5f);
+		GL11.glTranslatef(-0.7f, -1f, 0.5f);
 
 	}
 
