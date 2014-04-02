@@ -1,7 +1,9 @@
 package telepads;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufOutputStream;
+import io.netty.buffer.Unpooled;
+
 import java.io.IOException;
 
 import net.minecraft.client.Minecraft;
@@ -14,6 +16,7 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.common.FMLLog;
+import cpw.mods.fml.common.network.internal.FMLProxyPacket;
 
 public class GuiTeleport extends GuiScreen{
 
@@ -96,6 +99,7 @@ public class GuiTeleport extends GuiScreen{
 
 	float c = 0;
 	float sd = 0;
+	
 	@Override
 	public void drawBackground(int par1) {
 		c += 1f;
@@ -127,11 +131,11 @@ public class GuiTeleport extends GuiScreen{
 			int id = button.id;
 			if(id == EXIT_BUTTON ){
 				sendPacket(EXIT_BUTTON);
-				thePlayer.openContainer = thePlayer.inventoryContainer; //closes the screen
+				this.mc.thePlayer.closeScreen(); //closes the screen
 
 			}else{
 				sendPacket(id);
-				thePlayer.openContainer = thePlayer.inventoryContainer; //closes the screen
+				this.mc.thePlayer.closeScreen(); //closes the screen
 			}
 		}
 
@@ -144,30 +148,39 @@ public class GuiTeleport extends GuiScreen{
 
 	public void sendPacket(int id){
 
-		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-		DataOutputStream outputStream = new DataOutputStream(bytes);
+		ByteBuf buf = Unpooled.buffer();
+		ByteBufOutputStream out = new ByteBufOutputStream(buf);
+		
 		try {
-			outputStream.writeInt(ServerPacketHandler.IDENTIFIER_TELPORTER);
+			out.writeInt(ServerPacketHandler.IDENTIFIER_TELEPORTER);
 			
-			System.out.println("SEND PACKET HERE ! teleport player");
+			out.writeInt(te.xCoord);
+			out.writeInt(te.yCoord);
+			out.writeInt(te.zCoord);
+			
+//			System.out.println("SEND PACKET HERE ! teleport player");
 //
 //			outputStream.writeInt(te.xCoord);
 //			outputStream.writeInt(te.yCoord);
 //			outputStream.writeInt(te.zCoord);
 //
-//			outputStream.writeInt(id);
+			out.writeInt(id);
 //
-//			if(id < EXIT_BUTTON){
-//				outputStream.writeInt(te.allCoords.get(id)[0]);//x
-//				outputStream.writeInt(te.allCoords.get(id)[1]);//y
-//				outputStream.writeInt(te.allCoords.get(id)[2]);//z
-//
-//				outputStream.writeInt(te.allDims.get(id));
-//			}
+			if(id < EXIT_BUTTON){
+				out.writeInt(te.allCoords.get(id)[0]);//x
+				out.writeInt(te.allCoords.get(id)[1]);//y
+				out.writeInt(te.allCoords.get(id)[2]);//z
+
+				out.writeInt(te.allDims.get(id));
+			}
 //
 //
 //			Packet250CustomPayload packet = new Packet250CustomPayload("telePads", bytes.toByteArray());
-//			PacketDispatcher.sendPacketToServer(packet);
+//			PacketDispatcher.sendPacketToServer(packet);			
+			
+			Telepads.Channel.sendToServer(new FMLProxyPacket(buf, Telepads.channelName));
+			
+			out.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

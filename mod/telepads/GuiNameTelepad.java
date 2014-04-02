@@ -1,5 +1,9 @@
 package telepads;
 
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufOutputStream;
+import io.netty.buffer.Unpooled;
+
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -12,6 +16,8 @@ import net.minecraft.entity.player.EntityPlayer;
 
 import org.lwjgl.input.Keyboard;
 
+import cpw.mods.fml.common.network.internal.FMLProxyPacket;
+
 public class GuiNameTelepad extends GuiScreen{
 
 	private GuiTextField textfield;
@@ -22,8 +28,6 @@ public class GuiNameTelepad extends GuiScreen{
 		thePlayer = player;
 		this.te = te;
 	}
-
-
 
 	@Override
 	public void initGui() {
@@ -45,13 +49,13 @@ public class GuiNameTelepad extends GuiScreen{
 
 	@Override
 	public void drawScreen(int par1, int par2, float par3) {
-		
+
 		int posX = (this.width ) / 2;
 		int posY = (this.height ) / 2;
 		try{
 			fontRendererObj.drawSplitString("Press Enter to confirm", posX+1 -75, posY-1, 180 ,0x000000);
 			fontRendererObj.drawSplitString("Press Enter to confirm", posX -75, posY, 180 ,0xffffff);
-			
+
 			fontRendererObj.drawSplitString("Name Your TelePad : "+textfield.getText(), posX+1 -75, posY-1-20, 180 ,0x000000);
 			fontRendererObj.drawSplitString("Name Your TelePad : "+textfield.getText(), posX   -75, posY  -20, 180 ,0xff0000);
 		}finally{
@@ -66,7 +70,7 @@ public class GuiNameTelepad extends GuiScreen{
 		if(i == Keyboard.KEY_RETURN){
 			sendPacket(textfield.getText());
 		}
-		
+
 		if(textfield != null) 
 			textfield.textboxKeyTyped(c, i);
 	}
@@ -85,29 +89,27 @@ public class GuiNameTelepad extends GuiScreen{
 	@Override
 	public void actionPerformed(GuiButton button) {
 		sendPacket(textfield.getText());
-		thePlayer.openContainer = thePlayer.inventoryContainer;
+		this.mc.thePlayer.closeScreen();
 	}
 
 	public void sendPacket(String padName){
-		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-		ObjectOutput out;
-		DataOutputStream outputStream = new DataOutputStream(bytes);
+		ByteBuf buf = Unpooled.buffer();
+		ByteBufOutputStream out = new ByteBufOutputStream(buf);
 		try {
-			outputStream.writeInt(ServerPacketHandler.IDENTIFIER_NAMEPAD);
 
-			System.out.println("SEND PACKET HERE ! TelePort gui tp packet");
-//			outputStream.writeInt(te.xCoord);
-//			outputStream.writeInt(te.yCoord);
-//			outputStream.writeInt(te.zCoord);
-//
-//			outputStream.writeUTF(padName);
-//
-//			Packet250CustomPayload packet = new Packet250CustomPayload("telePads", bytes.toByteArray());
-//			PacketDispatcher.sendPacketToServer(packet);
+			out.writeInt(ServerPacketHandler.IDENTIFIER_NAMEPAD);
+			out.writeInt(te.xCoord);
+			out.writeInt(te.yCoord);
+			out.writeInt(te.zCoord);
+			out.writeUTF(padName);
+			out.close();
+			
+			Telepads.Channel.sendToServer(new FMLProxyPacket(buf, Telepads.channelName ));
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		thePlayer.openContainer = thePlayer.inventoryContainer; //closes the screen
+
+		this.mc.thePlayer.closeScreen();
 	}
 }

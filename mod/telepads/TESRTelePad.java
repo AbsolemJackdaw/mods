@@ -40,14 +40,6 @@ public class TESRTelePad extends TileEntitySpecialRenderer {
 		GL11.glScalef(1.0F, -1F, -1F);
 
 		bindTexture(loc);
-
-//		if(tileentity != null){
-//			if(tileentity instanceof TETelepad){
-//				TETelepad pad = (TETelepad)tileentity;
-//				if(pad.ownerName.equals("UNIVERSAL"));
-//				bindTexture(locUniversal);
-//			}
-//		}
 		
 		float f2 = 1.5f;
 		GL11.glScalef(f2,f2,f2);

@@ -16,7 +16,7 @@ public class CLProxy extends SProxy{
 	@Override
 	public void registerItemRenderer(){
 		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Telepads.telepad), new ItemPadRenderer());
-		Telepads.Channel.register(new ServerPacketHandler());
+		Telepads.Channel.register(new ClientPacketHandler());
 	}
 	@Override
 	public void registerSound(){

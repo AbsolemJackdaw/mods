@@ -1,10 +1,18 @@
 package telepads;
 
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufOutputStream;
+import io.netty.buffer.ByteBufUtil;
+import io.netty.buffer.Unpooled;
+
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import cpw.mods.fml.common.network.ByteBufUtils;
+import cpw.mods.fml.common.network.internal.FMLProxyPacket;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -91,9 +99,9 @@ public class TETelepad extends TileEntity{
 	@Override
 	public void updateEntity() {
 
-		if(ownerName.equals("UNIVERSAL") && !telepadname.equals("Universal Pad")){
-			this.telepadname = "Universal Pad";
-		}
+		//		if(ownerName.equals("UNIVERSAL") && !telepadname.equals("Universal Pad")){
+		//			this.telepadname = "Universal Pad";
+		//		}
 
 		if(worldObj.isRemote){//client only
 			AxisAlignedBB aabb = this.getRenderBoundingBox().copy().expand(-0.5, 0.5, -0.5);
@@ -129,40 +137,35 @@ public class TETelepad extends TileEntity{
 										break;
 									}else{
 
-										if(p.getDisplayName().equals(ownerName) || ownerName.equals("UNIVERSAL")){
+										//if(p.getDisplayName().equals(ownerName) || ownerName.equals("UNIVERSAL")){
 
-											allCoords = new ArrayList<int[]>();
-											allNames = new ArrayList<String>();
-											allDims = new ArrayList<Integer>();
+										allCoords = new ArrayList<int[]>();
+										allNames = new ArrayList<String>();
+										allDims = new ArrayList<Integer>();
 
-											int size = stack.getTagCompound().getInteger(ItemPadLocations.SIZE);
+										int size = stack.getTagCompound().getInteger(ItemPadLocations.SIZE);
 
-											for(int c =0; c < size; c++){
+										for(int c =0; c < size; c++){
 
-												int[] ray = new int[3];
-												ray[0] = stack.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[0];
-												ray[1] = stack.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[1];
-												ray[2] = stack.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[2];
+											int[] ray = new int[3];
+											ray[0] = stack.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[0];
+											ray[1] = stack.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[1];
+											ray[2] = stack.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[2];
 
-												String padName = stack.getTagCompound().getString("TelePadName_"+c);
-												int dim = stack.getTagCompound().getInteger(ItemPadLocations.DIM_+c);
-												allCoords.add(ray);
-												allNames.add(padName);
-												allDims.add(dim);
-											}
-
-											setRegisterToPad(stack);
-
-//											setMCGuiSettingToRegister(stack);
-											stack.getTagCompound().setInteger("originalGUIScale", Minecraft.getMinecraft().gameSettings.guiScale);
-											
-											// ... and open gui
-											p.openGui(Telepads.instance, 0, worldObj, xCoord, yCoord, zCoord);
-											break;
-										}else{
-											ResetAndNotify("Oops, this is not my TelePad.");
-											break;
+											String padName = stack.getTagCompound().getString("TelePadName_"+c);
+											int dim = stack.getTagCompound().getInteger(ItemPadLocations.DIM_+c);
+											allCoords.add(ray);
+											allNames.add(padName);
+											allDims.add(dim);
 										}
+
+										setRegisterToPad(stack);
+
+										stack.getTagCompound().setInteger("originalGUIScale", Minecraft.getMinecraft().gameSettings.guiScale);
+
+										// ... and open gui
+										p.openGui(Telepads.instance, 0, worldObj, xCoord, yCoord, zCoord);
+										break;
 									}
 								}
 							}
@@ -179,7 +182,7 @@ public class TETelepad extends TileEntity{
 		}
 	}
 
-	
+
 
 	@Override
 	public boolean canUpdate() {
@@ -190,18 +193,18 @@ public class TETelepad extends TileEntity{
 
 		NBTTagCompound nbt = new NBTTagCompound();
 		this.writeToNBT(nbt);
-//		return new Packet132TileEntityData(this.xCoord, this.yCoord, this.zCoord, 1, nbt);
+		//		return new Packet132TileEntityData(this.xCoord, this.yCoord, this.zCoord, 1, nbt);
 		return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 1, nbt);
 	}
 
 	@Override
 	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
 		this.readFromNBT(pkt.func_148857_g());  //packet.data	
-		}
-//	@Override
-//	public void onDataPacket(INetworkManager net, Packet132TileEntityData pkt) {
-//		this.readFromNBT(pkt.data);
-//	}
+	}
+	//	@Override
+	//	public void onDataPacket(INetworkManager net, Packet132TileEntityData pkt) {
+	//		this.readFromNBT(pkt.data);
+	//	}
 
 
 	public void resetTE(){
@@ -212,36 +215,38 @@ public class TETelepad extends TileEntity{
 	}
 
 
-//	/**Saves current mc gui screen size setting to the pad to restore it afterwards.*/
-//	private void setMCGuiSettingToRegister(ItemStack stack) {
-//		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-//		DataOutputStream outputStream = new DataOutputStream(bytes);
-//		try {
-//			writeBasic(ServerPacketHandler.IDENTIFIER_GUISIZE, outputStream);
-//
-//			Packet.writeItemStack(stack, outputStream);
-//
-//			Packet250CustomPayload packet = new Packet250CustomPayload("telePads", bytes.toByteArray());
-//			PacketDispatcher.sendPacketToServer(packet);
-//
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//	}
-	
+	//	/**Saves current mc gui screen size setting to the pad to restore it afterwards.*/
+	//	private void setMCGuiSettingToRegister(ItemStack stack) {
+	//		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+	//		DataOutputStream outputStream = new DataOutputStream(bytes);
+	//		try {
+	//			writeBasic(ServerPacketHandler.IDENTIFIER_GUISIZE, outputStream);
+	//
+	//			Packet.writeItemStack(stack, outputStream);
+	//
+	//			Packet250CustomPayload packet = new Packet250CustomPayload("telePads", bytes.toByteArray());
+	//			PacketDispatcher.sendPacketToServer(packet);
+	//
+	//		} catch (IOException e) {
+	//			e.printStackTrace();
+	//		}
+	//	}
+
 	/**Saves the register's content to the TelePad*/
 	public void setRegisterToPad(ItemStack stack){
 
-		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-		DataOutputStream outputStream = new DataOutputStream(bytes);
+		ByteBuf buf = Unpooled.buffer();
+		ByteBufOutputStream out = new ByteBufOutputStream(buf);
 		try {
-			writeBasic(ServerPacketHandler.IDENTIFIER_TE, outputStream);
+			writeBasic(ServerPacketHandler.IDENTIFIER_TE, out);
 
 			System.out.println("SEND PACKET HERE ! identifier te");
-//			Packet.writeItemStack(stack, outputStream);
-//
-//			Packet250CustomPayload packet = new Packet250CustomPayload("telePads", bytes.toByteArray());
-//			PacketDispatcher.sendPacketToServer(packet);
+			//			Packet.writeItemStack(stack, outputStream);
+			//
+			ByteBufUtils.writeItemStack(buf, stack);			
+
+			Telepads.Channel.sendToServer(new FMLProxyPacket(buf, Telepads.channelName));
+
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -258,17 +263,19 @@ public class TETelepad extends TileEntity{
 		if(!b)
 			playerStandingOnPad = null;
 
-		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-		DataOutputStream outputStream = new DataOutputStream(bytes);
+		ByteBuf buf = Unpooled.buffer();
+		ByteBufOutputStream out = new ByteBufOutputStream(buf);
 
 		try {
-			writeBasic(ServerPacketHandler.IDENTIFIER_PLATFORM, outputStream);
+			writeBasic(ServerPacketHandler.IDENTIFIER_PLATFORM, out);
 
-			outputStream.writeBoolean(b);
+			out.writeBoolean(b);
+			out.close();
 
-//			Packet250CustomPayload packet = new Packet250CustomPayload("telePads", bytes.toByteArray());
-//			PacketDispatcher.sendPacketToServer(packet);
-			System.out.println("send packet here Telepads TETELEPAD");
+			Telepads.Channel.sendToServer(new FMLProxyPacket(buf, Telepads.channelName));
+
+
+			//			System.out.println("send packet here Telepads TETELEPAD");
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -278,16 +285,17 @@ public class TETelepad extends TileEntity{
 	/**Resets the TelePad and notifies the player of it : aka, send chat mesage*/
 	public void ResetAndNotify(String message){
 		resetTE();
-		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-		DataOutputStream outputStream = new DataOutputStream(bytes);
+
+		ByteBuf buf = Unpooled.buffer();
+		ByteBufOutputStream out = new ByteBufOutputStream(buf);
 
 		try {
-			writeBasic(ServerPacketHandler.IDENTIFIER_RESETnNOTIFY, outputStream);
+			writeBasic(ServerPacketHandler.IDENTIFIER_RESETnNOTIFY, out);
 
-			outputStream.writeUTF(message);
-			System.out.println("send packet here Telepads TETELEPAD");
-//			Packet250CustomPayload packet = new Packet250CustomPayload("telePads", bytes.toByteArray());
-//			PacketDispatcher.sendPacketToServer(packet);
+			out.writeUTF(message);
+
+			Telepads.Channel.sendToServer(new FMLProxyPacket(buf, Telepads.channelName));
+			out.close();
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -295,7 +303,7 @@ public class TETelepad extends TileEntity{
 	}
 
 
-	private void writeBasic(int identifier, DataOutputStream stream) throws IOException{
+	private void writeBasic(int identifier, ByteBufOutputStream stream) throws IOException{
 		stream.writeInt(identifier);
 
 		stream.writeInt(xCoord);

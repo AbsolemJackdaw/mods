@@ -77,13 +77,13 @@ public class ItemPadLocations extends Item {
 			par3EntityPlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + "/*=TELEPADS=*/"));
 			par3EntityPlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + "1.Teleporting : stand on pad and wait 3-5 Seconds."));
 			par3EntityPlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + "2.Removing TelePad : Right Click Register on TelePad"));
-			par3EntityPlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + "3.Allowing friends to use a pad :"));
-			par3EntityPlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + ".a: Right Click TelePad empty handed"));
-			par3EntityPlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + ".b: Let Friend RightClick his Register on the TelePad"));
-			par3EntityPlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + "4.Lost your register ? Stand on one of your pads to recover"));
-			par3EntityPlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + "one. TelePads Remember what locations you travelled to last !"));
-			par3EntityPlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + "5.FYI :TelePads are player only and can be shared with anyone if set to Universal Acces(Step 3)"));
-			par3EntityPlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + "Universal Pads can't be removed."));
+//			par3EntityPlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + "3.Allowing friends to use a pad :"));
+//			par3EntityPlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + ".a: Right Click TelePad empty handed"));
+//			par3EntityPlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + ".b: Let Friend RightClick his Register on the TelePad"));
+//			par3EntityPlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + "4.Lost your register ? Stand on one of your pads to recover"));
+//			par3EntityPlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + "one. TelePads Remember what locations you travelled to last !"));
+//			par3EntityPlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + "5.FYI :TelePads are player only and can be shared with anyone if set to Universal Acces(Step 3)"));
+//			par3EntityPlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + "Universal Pads can't be removed."));
 
 		}
 

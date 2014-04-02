@@ -13,6 +13,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.FMLNetworkEvent.ClientCustomPacketEvent;
 
 public class ClientPacketHandler extends ServerPacketHandler {
@@ -29,7 +30,7 @@ public class ClientPacketHandler extends ServerPacketHandler {
 	@SubscribeEvent
 	public void onClientPacket(ClientCustomPacketEvent event) {
 
-		if(!event.packet.channel().equals("TelePadsPacket"))
+		if(!event.packet.channel().equals(Telepads.channelName))
 			return;
 
 		EntityPlayer p = Minecraft.getMinecraft().thePlayer;
@@ -68,6 +69,7 @@ public class ClientPacketHandler extends ServerPacketHandler {
 						}
 					}
 				}
+				System.out.println(name);
 
 				pad.telepadname = name;
 				pad.allNames.add(name);
@@ -136,7 +138,7 @@ public class ClientPacketHandler extends ServerPacketHandler {
 			case IDENTIFIER_TE :
 
 				//TODO 
-				ItemStack stack1 = null;
+				ItemStack stack1 = ByteBufUtils.readItemStack(buf);
 
 				pad.allCoords = new ArrayList<int[]>();
 				pad.allNames = new ArrayList<String>();

@@ -12,13 +12,14 @@ import net.minecraft.network.NetHandlerPlayServer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.FMLNetworkEvent.ServerCustomPacketEvent;
 
 public class ServerPacketHandler {
 
 	
 	public static final int IDENTIFIER_NAMEPAD = 5000;
-	public static final int IDENTIFIER_TELPORTER = 5100;
+	public static final int IDENTIFIER_TELEPORTER = 5100;
 	public static final int IDENTIFIER_REGISTER = 5200;
 	public static final int IDENTIFIER_TE = 5300;
 	public static final int IDENTIFIER_PLATFORM = 5400;
@@ -27,7 +28,7 @@ public class ServerPacketHandler {
 	@SubscribeEvent
 	public void onServerPacket(ServerCustomPacketEvent event) {
 
-		if(!event.packet.channel().equals("TelePadsPacket"))
+		if(!event.packet.channel().equals(Telepads.channelName))
 			return;
 
 		EntityPlayerMP p = ((NetHandlerPlayServer) event.handler).playerEntity;
@@ -66,12 +67,12 @@ public class ServerPacketHandler {
 						}
 					}
 				}
-
+				System.out.println(name  + " server " );
 				pad.telepadname = name;
 				pad.allNames.add(name);
 				break;
 
-			case IDENTIFIER_TELPORTER:
+			case IDENTIFIER_TELEPORTER:
 
 				if(dis.readInt() == GuiTeleport.EXIT_BUTTON){
 					pad.resetTE();
@@ -87,8 +88,6 @@ public class ServerPacketHandler {
 					int otherPadZ = dis.readInt();
 
 					int dimID = dis.readInt();
-
-
 
 					//if the dimension id = the End, play endscreen and teleport to spawn point. 
 					//this is needed or game will act funny if you don't.
@@ -134,7 +133,7 @@ public class ServerPacketHandler {
 			case IDENTIFIER_TE :
 
 				//TODO 
-				ItemStack stack1 = null;
+				ItemStack stack1 = ByteBufUtils.readItemStack(buf);
 
 				pad.allCoords = new ArrayList<int[]>();
 				pad.allNames = new ArrayList<String>();

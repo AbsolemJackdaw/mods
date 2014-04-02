@@ -1,8 +1,14 @@
 package telepads;
 
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufOutputStream;
+import io.netty.buffer.Unpooled;
+
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+
+import cpw.mods.fml.common.network.internal.FMLProxyPacket;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -50,11 +56,11 @@ public class GuiNewRegister extends GuiScreen {
 		switch (button.id) {
 		case 0:
 			sendPacket(button.id, null);
-			thePlayer.openContainer = thePlayer.inventoryContainer; //closes the screen
+			this.mc.thePlayer.closeScreen(); //closes the screen
 			break;
 
 		default:
-			thePlayer.openContainer = thePlayer.inventoryContainer; //closes the screen
+			this.mc.thePlayer.closeScreen(); //closes the screen
 			break;
 		}
 
@@ -67,20 +73,20 @@ public class GuiNewRegister extends GuiScreen {
 
 	public void sendPacket(int id, ItemStack stack){
 
-		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-		DataOutputStream outputStream = new DataOutputStream(bytes);
+		ByteBuf buf = Unpooled.buffer();
+		ByteBufOutputStream out = new ByteBufOutputStream(buf);
 		try {
-			outputStream.writeInt(ServerPacketHandler.IDENTIFIER_REGISTER);
+			out.writeInt(ServerPacketHandler.IDENTIFIER_REGISTER);
 			
 			System.out.println("SEND PACKET HERE! making register");
-//
-//			outputStream.writeInt(te.xCoord);
-//			outputStream.writeInt(te.yCoord);
-//			outputStream.writeInt(te.zCoord);
-//
-//			Packet250CustomPayload packet = new Packet250CustomPayload("telePads", bytes.toByteArray());
-//			PacketDispatcher.sendPacketToServer(packet);
 
+			out.writeInt(te.xCoord);
+			out.writeInt(te.yCoord);
+			out.writeInt(te.zCoord);
+			out.close();
+
+			Telepads.Channel.sendToServer(new FMLProxyPacket(buf, Telepads.channelName));			
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
