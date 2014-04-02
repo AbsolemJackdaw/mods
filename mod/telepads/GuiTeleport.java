@@ -147,7 +147,7 @@ public class GuiTeleport extends GuiScreen{
 		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
 		DataOutputStream outputStream = new DataOutputStream(bytes);
 		try {
-			outputStream.writeInt(TelePadsTeleportHandler.IDENTIFIER_TELPORTER);
+			outputStream.writeInt(ServerPacketHandler.IDENTIFIER_TELPORTER);
 			
 			System.out.println("SEND PACKET HERE ! teleport player");
 //

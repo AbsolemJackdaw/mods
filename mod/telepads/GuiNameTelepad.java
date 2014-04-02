@@ -93,7 +93,7 @@ public class GuiNameTelepad extends GuiScreen{
 		ObjectOutput out;
 		DataOutputStream outputStream = new DataOutputStream(bytes);
 		try {
-			outputStream.writeInt(TelePadsTeleportHandler.IDENTIFIER_NAMEPAD);
+			outputStream.writeInt(ServerPacketHandler.IDENTIFIER_NAMEPAD);
 
 			System.out.println("SEND PACKET HERE ! TelePort gui tp packet");
 //			outputStream.writeInt(te.xCoord);

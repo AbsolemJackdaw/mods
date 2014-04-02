@@ -70,7 +70,7 @@ public class GuiNewRegister extends GuiScreen {
 		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
 		DataOutputStream outputStream = new DataOutputStream(bytes);
 		try {
-			outputStream.writeInt(TelePadsTeleportHandler.IDENTIFIER_REGISTER);
+			outputStream.writeInt(ServerPacketHandler.IDENTIFIER_REGISTER);
 			
 			System.out.println("SEND PACKET HERE! making register");
 //
