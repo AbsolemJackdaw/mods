@@ -1,5 +1,7 @@
 package telepads;
 
+import rpgInventory.handlers.packets.ServerPacketHandler;
+import net.minecraft.item.Item;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.client.registry.ClientRegistry;
@@ -13,8 +15,8 @@ public class CLProxy extends SProxy{
 	
 	@Override
 	public void registerItemRenderer(){
-		MinecraftForgeClient.registerItemRenderer(mod_telepads.telepad.blockID, new ItemPadRenderer());
-
+		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Telepads.telepad), new ItemPadRenderer());
+		Telepads.Channel.register(new ServerPacketHandler());
 	}
 	@Override
 	public void registerSound(){

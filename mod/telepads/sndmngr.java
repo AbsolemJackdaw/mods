@@ -1,16 +1,17 @@
 package telepads;
 import net.minecraftforge.client.event.sound.SoundLoadEvent;
-import net.minecraftforge.event.ForgeSubscribe;
 import cpw.mods.fml.common.FMLLog;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class sndmngr {
-	@ForgeSubscribe
+	
+	@SubscribeEvent
 	public void onSound(SoundLoadEvent event)
 	{
 		try 
 		{
-			event.manager.addSound("subaraki:telepadShort.ogg");
-			event.manager.addSound("subaraki:telepadLong.ogg");
+//			event.manager.addSound("subaraki:telepadShort.ogg");
+//			event.manager.addSound("subaraki:telepadLong.ogg");
 
 		}
 		catch (Exception e)

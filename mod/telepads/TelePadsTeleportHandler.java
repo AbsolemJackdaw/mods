@@ -1,22 +1,17 @@
 package telepads;
 
+import ibxm.Player;
+
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.util.ArrayList;
 
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.INetworkManager;
-import net.minecraft.network.packet.Packet250CustomPayload;
-import net.minecraft.tileentity.TileEntity;
-import cpw.mods.fml.common.FMLLog;
-import cpw.mods.fml.common.network.IPacketHandler;
-import cpw.mods.fml.common.network.Player;
 
-public class TelePadsTeleportHandler implements IPacketHandler {
+public class TelePadsTeleportHandler  {
 
 
 	public static final int IDENTIFIER_NAMEPAD = 5000;
@@ -51,7 +46,7 @@ public class TelePadsTeleportHandler implements IPacketHandler {
 
 				String name = dis.readUTF();
 
-				if(p.inventory.hasItem(mod_telepads.padLocator.itemID)){
+				if(p.inventory.hasItem(Telepads.padLocator.itemID)){
 					for(int i = 0; i < p.inventory.getSizeInventory(); i++){
 						if(p.inventory.getStackInSlot(i) != null && p.inventory.getStackInSlot(i).getItem() instanceof ItemPadLocations){
 							ItemStack stack = p.inventory.getStackInSlot(i);
@@ -104,7 +99,7 @@ public class TelePadsTeleportHandler implements IPacketHandler {
 
 			case IDENTIFIER_REGISTER:
 
-				ItemStack stack = new ItemStack(mod_telepads.padLocator);
+				ItemStack stack = new ItemStack(Telepads.padLocator);
 				stack.setTagCompound(new NBTTagCompound());
 				
 				for(int i = 0; i < pad.allCoords.size(); i++ ){

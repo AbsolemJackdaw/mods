@@ -2,9 +2,9 @@ package telepads;
 
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -12,24 +12,24 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.FMLLog;
-import cpw.mods.fml.common.network.FMLNetworkHandler;
 
 public class BlockTelepad extends BlockContainer{
 
-	public BlockTelepad(int par1, Material par2Material) {
-		super(par1, par2Material);
+	public BlockTelepad(Material par2Material) {
+		super( par2Material);
 		float f = 0.5F;
 		this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, 0.25F, 0.5F + f);
 	}
 
-	@Override
-	public void registerIcons(IconRegister par1IconRegister) {
-		this.blockIcon = par1IconRegister.registerIcon("wool_colored_pink");
-	}
-	
+	//	@Override
+	//	public void registerIcons(IIconRegister par1IconRegister) {
+	//		this.blockIcon = par1IconRegister.registerIcon("wool_colored_pink");
+	//	}
+
 	@Override
 	public void onBlockPlacedBy(World par1World, int x, int y, int z,
 			EntityLivingBase par5EntityLivingBase, ItemStack par6ItemStack) {
@@ -40,7 +40,7 @@ public class BlockTelepad extends BlockContainer{
 		if(par5EntityLivingBase instanceof EntityPlayer){
 			EntityPlayer p = (EntityPlayer)par5EntityLivingBase;		
 
-			te.ownerName = p.username;
+			te.ownerName = p.getDisplayName();
 			int[] a_ray = new int[3];
 			a_ray[0] = x;
 			a_ray[1] = y;
@@ -49,7 +49,7 @@ public class BlockTelepad extends BlockContainer{
 			if(!par1World.isRemote)
 				te.allCoords.add(te.allCoords.size(), a_ray);
 
-			if(p.inventory.hasItem(mod_telepads.padLocator.itemID)){
+			if(p.inventory.hasItem(Telepads.padLocator)){
 				for(int i = 0; i < p.inventory.getSizeInventory(); i++){
 					if(p.inventory.getStackInSlot(i) != null && p.inventory.getStackInSlot(i).getItem() instanceof ItemPadLocations){
 						ItemStack stack = p.inventory.getStackInSlot(i);
@@ -72,7 +72,7 @@ public class BlockTelepad extends BlockContainer{
 					}
 				}
 			}else{
-				ItemStack stack = new ItemStack(mod_telepads.padLocator);
+				ItemStack stack = new ItemStack(Telepads.padLocator);
 				stack.setTagCompound(new NBTTagCompound());
 				stack.getTagCompound().setInteger(ItemPadLocations.SIZE, 1);
 				stack.getTagCompound().setIntArray(ItemPadLocations.LOCATION_+0, a_ray);
@@ -80,47 +80,49 @@ public class BlockTelepad extends BlockContainer{
 				p.inventory.addItemStackToInventory(stack);
 			}
 
-			p.openGui(mod_telepads.instance, 1, par1World, x, y, z);
+			p.openGui(Telepads.instance, 1, par1World, x, y, z);
 
 		}
 
-		par1World.setBlockTileEntity(x, y, z, te);
+		par1World.setTileEntity(x, y, z, te);
 	}
 
-	@Override
-	public boolean isBlockNormalCube(World world, int x, int y, int z) {
-		return false;
-	}
+	//	@Override
+	//	public boolean isBlockNormalCube(World world, int x, int y, int z) {
+	//		return false;
+	//	}
 
 	@Override
 	public void onEntityCollidedWithBlock(World par1World, int x, int y, int z, Entity par5Entity)
 	{
 		if(par5Entity instanceof EntityPlayer){
 			EntityPlayer player = (EntityPlayer)par5Entity;
-			TETelepad te = (TETelepad)par1World.getBlockTileEntity(x, y, z);
+			TETelepad te = (TETelepad)par1World.getTileEntity(x, y, z);
 
 			te.playerStandingOnPad = player;
 		}
 	}
 
 
-
 	@Override
-	public TileEntity createNewTileEntity(World world) {
+	public TileEntity createTileEntity(World world, int metadata) {
 		return new TETelepad();
 	}
+
 
 	@Override
 	public int getRenderType()
 	{
 		return RenderingRegistry.getNextAvailableRenderId();
 	}
-
+	
 	@Override
-	public int idDropped(int par1, Random par2Random, int par3) {
-		// TODO Auto-generated method stub
-		return this.blockID;
+	protected void dropBlockAsItem(World p_149642_1_, int p_149642_2_,
+			int p_149642_3_, int p_149642_4_, ItemStack p_149642_5_) {
+		super.dropBlockAsItem(p_149642_1_, p_149642_2_, p_149642_3_, p_149642_4_,
+				p_149642_5_);
 	}
+
 	@Override
 	public boolean isOpaqueCube() {
 		return false;
@@ -133,9 +135,9 @@ public class BlockTelepad extends BlockContainer{
 
 	@Override
 	public void breakBlock(World par1World, int par2, int par3, int par4,
-			int par5, int par6) {
-		super.breakBlock(par1World, par2, par3, par4, par5, par6);
-		par1World.removeBlockTileEntity(par2, par3, par4);
+			Block b, int par6) {
+		super.breakBlock(par1World, par2, par3, par4, b, par6);
+		par1World.removeTileEntity(par2, par3, par4);
 	}
 
 	@Override
@@ -143,15 +145,14 @@ public class BlockTelepad extends BlockContainer{
 			int z, EntityPlayer par5EntityPlayer, int par6, float par7,
 			float par8, float par9) {
 
-		//
-		TETelepad te = (TETelepad)par1World.getBlockTileEntity(x, y, z);
+		TETelepad te = (TETelepad)par1World.getTileEntity(x, y, z);
 
 
-		if(par5EntityPlayer.getCurrentEquippedItem() == null || par5EntityPlayer.getCurrentEquippedItem() != null && !par5EntityPlayer.getCurrentEquippedItem().getItem().equals(mod_telepads.padLocator)){
-			if(te.ownerName.equals(par5EntityPlayer.username) && par5EntityPlayer.isSneaking()){
+		if(par5EntityPlayer.getCurrentEquippedItem() == null || par5EntityPlayer.getCurrentEquippedItem() != null && !par5EntityPlayer.getCurrentEquippedItem().getItem().equals(Telepads.padLocator)){
+			if(te.ownerName.equals(par5EntityPlayer.getDisplayName()) && par5EntityPlayer.isSneaking()){
 
 
-				if(par5EntityPlayer.inventory.hasItem(mod_telepads.padLocator.itemID)){
+				if(par5EntityPlayer.inventory.hasItem(Telepads.padLocator)){
 					for(int i = 0; i < par5EntityPlayer.inventory.getSizeInventory(); i++){
 						if(par5EntityPlayer.inventory.getStackInSlot(i) != null && par5EntityPlayer.inventory.getStackInSlot(i).getItem() instanceof ItemPadLocations){
 
@@ -174,13 +175,13 @@ public class BlockTelepad extends BlockContainer{
 				}
 
 				if(!par1World.isRemote)
-					par5EntityPlayer.addChatMessage("TelePad " + te.telepadname + " got set to universal acces.");
+					par5EntityPlayer.addChatMessage(new ChatComponentText("TelePad " + te.telepadname + " got set to universal acces."));
 				te.ownerName = "UNIVERSAL";
 
 
 			}
 		}else{
-			if(par5EntityPlayer.inventory.hasItem(mod_telepads.padLocator.itemID)){
+			if(par5EntityPlayer.inventory.hasItem(Telepads.padLocator)){
 				for(int i = 0; i < par5EntityPlayer.inventory.getSizeInventory(); i++){
 					if(par5EntityPlayer.inventory.getStackInSlot(i) != null && par5EntityPlayer.inventory.getStackInSlot(i).getItem() instanceof ItemPadLocations){
 
@@ -203,7 +204,7 @@ public class BlockTelepad extends BlockContainer{
 							registerAddPad(par5EntityPlayer, stack, te, par1World, x, y, z);
 						}
 
-						if(te.ownerName.equals(par5EntityPlayer.username)){
+						if(te.ownerName.equals(par5EntityPlayer.getDisplayName())){
 							registerRemovePad(par5EntityPlayer, stack, te, par1World, x, y, z);
 						}
 					}
@@ -219,7 +220,7 @@ public class BlockTelepad extends BlockContainer{
 	@Override
 	public void randomDisplayTick(World par1World, int x, int y, int z, Random par5Random)
 	{
-		TETelepad te = (TETelepad)par1World.getBlockTileEntity(x, y, z);
+		TETelepad te = (TETelepad)par1World.getTileEntity(x, y, z);
 
 		if(te.isStandingOnPlatform)	{	
 			par1World.playSound((double)x , (double)y, (double)z, "subaraki:telepadLong", 0.7F, par5Random.nextFloat() * 0.4F + 0.4F, false);
@@ -273,7 +274,7 @@ public class BlockTelepad extends BlockContainer{
 
 	/**Adds a universal pad to the register*/
 	private void registerAddPad(EntityPlayer par5EntityPlayer, ItemStack stack, TETelepad te, World par1World, int x, int y, int z){
-		if(par5EntityPlayer.getCurrentEquippedItem().itemID == stack.itemID){
+		if(par5EntityPlayer.getCurrentEquippedItem() == stack){
 			boolean sendRegisterMessage = true;
 			int size = stack.getTagCompound().getInteger(ItemPadLocations.SIZE);
 
@@ -288,7 +289,7 @@ public class BlockTelepad extends BlockContainer{
 
 				if(ray[0] == x && ray[1] == y && ray[2] == z){
 					if(!par1World.isRemote)
-						par5EntityPlayer.addChatMessage("I already registered this Universal Telepad.");
+						par5EntityPlayer.addChatMessage(new ChatComponentText("I already registered this Universal Telepad."));
 					sendRegisterMessage = false;
 					universalPadArray = null;
 					break;
@@ -302,7 +303,7 @@ public class BlockTelepad extends BlockContainer{
 
 			if(sendRegisterMessage ){
 				if(!par1World.isRemote)
-					par5EntityPlayer.addChatMessage("Universal TelePad was added to the Register.");
+					par5EntityPlayer.addChatMessage(new ChatComponentText("Universal TelePad was added to the Register."));
 				if(universalPadArray != null){
 					//dont do size+1. size is already the maximum value and in loops always gets checked for -1 (0 included)
 					//aka : size == list.addLast(Object)
@@ -343,14 +344,14 @@ public class BlockTelepad extends BlockContainer{
 		}
 
 		if(!par1World.isRemote)
-			par5EntityPlayer.addChatMessage("Universal TelePad was added to the Register.");
+			par5EntityPlayer.addChatMessage(new ChatComponentText("Universal TelePad was added to the Register."));
 		//stack.setTagCompound(newNBT);
 	}
 
 
 	/**Used to remove a pad from the register*/
 	private void registerRemovePad(EntityPlayer par5EntityPlayer, ItemStack stack, TETelepad te, World par1World, int x, int y, int z){
-		if(par5EntityPlayer.getCurrentEquippedItem().itemID == stack.itemID){
+		if(par5EntityPlayer.getCurrentEquippedItem() == stack){
 
 			int size = stack.getTagCompound().getInteger(ItemPadLocations.SIZE);
 
@@ -386,10 +387,10 @@ public class BlockTelepad extends BlockContainer{
 
 			stack.setTagCompound(newNBT);
 			//and spawn a new block
-			if(te != null && par1World.getBlockId(x, y, z) == mod_telepads.telepad.blockID){
+			if(te != null && par1World.getBlock(x, y, z).equals(Telepads.telepad)){
 				par1World.setBlockToAir(x, y, z);
-				par1World.removeBlockTileEntity(x, y, z);
-				ItemStack telePad = new ItemStack(mod_telepads.telepad,1,0);
+				par1World.removeTileEntity(x, y, z);
+				ItemStack telePad = new ItemStack(Telepads.telepad,1,0);
 				EntityItem item = new EntityItem(par1World, x, y, z, telePad);
 				if(!par1World.isRemote)
 					par1World.spawnEntityInWorld(item);
@@ -400,9 +401,13 @@ public class BlockTelepad extends BlockContainer{
 
 
 	@Override
-	public boolean canEntityDestroy(World world, int x, int y, int z,
+	public boolean canEntityDestroy(IBlockAccess world, int x, int y, int z,
 			Entity entity) {
-		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public TileEntity createNewTileEntity(World var1, int var2) {
+		return new TETelepad();
 	}
 }

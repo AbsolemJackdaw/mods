@@ -3,25 +3,16 @@ package telepads;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutput;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.INetworkManager;
-import net.minecraft.network.packet.Packet;
-import net.minecraft.network.packet.Packet132TileEntityData;
-import net.minecraft.network.packet.Packet250CustomPayload;
+import net.minecraft.network.Packet;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
-import cpw.mods.fml.common.FMLLog;
-import cpw.mods.fml.common.network.FMLNetworkHandler;
-import cpw.mods.fml.common.network.PacketDispatcher;
-import cpw.mods.fml.common.network.Player;
 
 public class TETelepad extends TileEntity{
 
@@ -124,7 +115,7 @@ public class TETelepad extends TileEntity{
 
 				if(counter <= 0){
 					if(p != null && Minecraft.getMinecraft().currentScreen == null){
-						if(p.inventory.hasItem(mod_telepads.padLocator.itemID)){
+						if(p.inventory.hasItem(Telepads.padLocator)){
 							for(int i = 0; i < p.inventory.getSizeInventory(); i++){
 								if(p.inventory.getStackInSlot(i) != null && p.inventory.getStackInSlot(i).getItem() instanceof ItemPadLocations){
 
@@ -136,7 +127,7 @@ public class TETelepad extends TileEntity{
 										break;
 									}else{
 
-										if(p.username.equals(ownerName) || ownerName.equals("UNIVERSAL")){
+										if(p.getDisplayName().equals(ownerName) || ownerName.equals("UNIVERSAL")){
 
 											allCoords = new ArrayList<int[]>();
 											allNames = new ArrayList<String>();
@@ -164,7 +155,7 @@ public class TETelepad extends TileEntity{
 											stack.getTagCompound().setInteger("originalGUIScale", Minecraft.getMinecraft().gameSettings.guiScale);
 											
 											// ... and open gui
-											p.openGui(mod_telepads.instance, 0, worldObj, xCoord, yCoord, zCoord);
+											p.openGui(Telepads.instance, 0, worldObj, xCoord, yCoord, zCoord);
 											break;
 										}else{
 											ResetAndNotify("Oops, this is not my TelePad.");
@@ -175,8 +166,8 @@ public class TETelepad extends TileEntity{
 							}
 						}else{
 
-							if(p.username.equals(ownerName))
-								p.openGui(mod_telepads.instance, 2, worldObj, xCoord, yCoord, zCoord);
+							if(p.getDisplayName().equals(ownerName))
+								p.openGui(Telepads.instance, 2, worldObj, xCoord, yCoord, zCoord);
 							ResetAndNotify("Damn, I forgot my TelePad Register...");
 							break;
 						}
@@ -239,10 +230,11 @@ public class TETelepad extends TileEntity{
 		try {
 			writeBasic(TelePadsTeleportHandler.IDENTIFIER_TE, outputStream);
 
-			Packet.writeItemStack(stack, outputStream);
-
-			Packet250CustomPayload packet = new Packet250CustomPayload("telePads", bytes.toByteArray());
-			PacketDispatcher.sendPacketToServer(packet);
+			System.out.println("SEND PACKET HERE ! identifier te");
+//			Packet.writeItemStack(stack, outputStream);
+//
+//			Packet250CustomPayload packet = new Packet250CustomPayload("telePads", bytes.toByteArray());
+//			PacketDispatcher.sendPacketToServer(packet);
 
 		} catch (IOException e) {
 			e.printStackTrace();

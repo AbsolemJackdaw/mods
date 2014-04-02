@@ -17,11 +17,11 @@ public class TelePadGuiHandler implements IGuiHandler{
 			int x, int y, int z) {
 		switch (ID) {
 		case 0:
-			return new GuiTeleport(player, (TETelepad) world.getBlockTileEntity(x, y, z));
+			return new GuiTeleport(player, (TETelepad) world.getTileEntity(x, y, z));
 		case 1:
-			return new GuiNameTelepad(player, (TETelepad) world.getBlockTileEntity(x, y, z));
+			return new GuiNameTelepad(player, (TETelepad) world.getTileEntity(x, y, z));
 		case 2:
-			return new GuiNewRegister(player, (TETelepad) world.getBlockTileEntity(x, y, z));
+			return new GuiNewRegister(player, (TETelepad) world.getTileEntity(x, y, z));
 		}
 		return null;
 	}

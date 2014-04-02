@@ -1,6 +1,6 @@
 package telepads;
 
-import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
+import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
@@ -27,6 +27,7 @@ public class ItemPadRenderer implements IItemRenderer {
 	public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
 		//		Minecraft.getMinecraft().renderEngine.bindTexture(loc);
 		//		pad.render(null, 0, 0, 0, 0, 0, 0.0625f);
-		TileEntityRenderer.instance.renderTileEntityAt(new TETelepad(), 0.0D, 0.0D, 0.0D, 0.0F);
+		TileEntityRendererDispatcher.instance.renderTileEntityAt(new TETelepad(), 0.0D, 0.0D, 0.0D, 0.0F);
+
 	}
 }

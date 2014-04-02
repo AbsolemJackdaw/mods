@@ -3,17 +3,11 @@ package telepads;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutput;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.packet.Packet;
-import net.minecraft.network.packet.Packet250CustomPayload;
-import cpw.mods.fml.common.FMLLog;
-import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class GuiNewRegister extends GuiScreen {
 
@@ -46,8 +40,8 @@ public class GuiNewRegister extends GuiScreen {
 		super.drawScreen(par1, par2, par3);
 		int posX = (this.width) / 2;
 		int posY = (this.height) / 2;
-		fontRenderer.drawSplitString("As the owner of this pad, it looks like you lost your register. Would you like a new one ?", posX+1 -80, posY-1-60, 180 ,0x000000);
-		fontRenderer.drawSplitString("As the owner of this pad, it looks like you lost your register. Would you like a new one ?", posX -80, posY-60, 180 ,0xd494e8);
+		fontRendererObj.drawSplitString("As the owner of this pad, it looks like you lost your register. Would you like a new one ?", posX+1 -80, posY-1-60, 180 ,0x000000);
+		fontRendererObj.drawSplitString("As the owner of this pad, it looks like you lost your register. Would you like a new one ?", posX -80, posY-60, 180 ,0xd494e8);
 	}
 
 
@@ -56,11 +50,11 @@ public class GuiNewRegister extends GuiScreen {
 		switch (button.id) {
 		case 0:
 			sendPacket(button.id, null);
-			thePlayer.closeScreen();
+			thePlayer.openContainer = thePlayer.inventoryContainer; //closes the screen
 			break;
 
 		default:
-			thePlayer.closeScreen();
+			thePlayer.openContainer = thePlayer.inventoryContainer; //closes the screen
 			break;
 		}
 
@@ -68,7 +62,6 @@ public class GuiNewRegister extends GuiScreen {
 
 	@Override
 	public boolean doesGuiPauseGame() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -78,13 +71,15 @@ public class GuiNewRegister extends GuiScreen {
 		DataOutputStream outputStream = new DataOutputStream(bytes);
 		try {
 			outputStream.writeInt(TelePadsTeleportHandler.IDENTIFIER_REGISTER);
-
-			outputStream.writeInt(te.xCoord);
-			outputStream.writeInt(te.yCoord);
-			outputStream.writeInt(te.zCoord);
-
-			Packet250CustomPayload packet = new Packet250CustomPayload("telePads", bytes.toByteArray());
-			PacketDispatcher.sendPacketToServer(packet);
+			
+			System.out.println("SEND PACKET HERE! making register");
+//
+//			outputStream.writeInt(te.xCoord);
+//			outputStream.writeInt(te.yCoord);
+//			outputStream.writeInt(te.zCoord);
+//
+//			Packet250CustomPayload packet = new Packet250CustomPayload("telePads", bytes.toByteArray());
+//			PacketDispatcher.sendPacketToServer(packet);
 
 		} catch (IOException e) {
 			e.printStackTrace();

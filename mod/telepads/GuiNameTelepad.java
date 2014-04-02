@@ -5,14 +5,12 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutput;
 
-import org.lwjgl.input.Keyboard;
-
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.network.packet.Packet250CustomPayload;
-import cpw.mods.fml.common.network.PacketDispatcher;
+
+import org.lwjgl.input.Keyboard;
 
 public class GuiNameTelepad extends GuiScreen{
 
@@ -34,9 +32,9 @@ public class GuiNameTelepad extends GuiScreen{
 		int posY = (this.height ) / 2;
 		this.buttonList.clear();
 
-		textfield = new GuiTextField(fontRenderer, posX-(150/2) , posY-50, 150, 20);
+		textfield = new GuiTextField(fontRendererObj, posX-(150/2) , posY-50, 150, 20);
 
-		String text = te.telepadname.equals("TelePad") ? te.worldObj.getBiomeGenForCoords(te.xCoord, te.zCoord).biomeName : te.telepadname;
+		String text = te.telepadname.equals("TelePad") ? te.getWorldObj().getBiomeGenForCoords(te.xCoord, te.zCoord).biomeName : te.telepadname;
 
 		if(textfield != null){
 			textfield.setText(text);
@@ -51,11 +49,11 @@ public class GuiNameTelepad extends GuiScreen{
 		int posX = (this.width ) / 2;
 		int posY = (this.height ) / 2;
 		try{
-			fontRenderer.drawSplitString("Press Enter to confirm", posX+1 -75, posY-1, 180 ,0x000000);
-			fontRenderer.drawSplitString("Press Enter to confirm", posX -75, posY, 180 ,0xffffff);
+			fontRendererObj.drawSplitString("Press Enter to confirm", posX+1 -75, posY-1, 180 ,0x000000);
+			fontRendererObj.drawSplitString("Press Enter to confirm", posX -75, posY, 180 ,0xffffff);
 			
-			fontRenderer.drawSplitString("Name Your TelePad : "+textfield.getText(), posX+1 -75, posY-1-20, 180 ,0x000000);
-			fontRenderer.drawSplitString("Name Your TelePad : "+textfield.getText(), posX   -75, posY  -20, 180 ,0xff0000);
+			fontRendererObj.drawSplitString("Name Your TelePad : "+textfield.getText(), posX+1 -75, posY-1-20, 180 ,0x000000);
+			fontRendererObj.drawSplitString("Name Your TelePad : "+textfield.getText(), posX   -75, posY  -20, 180 ,0xff0000);
 		}finally{
 			if(textfield != null) textfield.drawTextBox();
 		}
@@ -87,7 +85,7 @@ public class GuiNameTelepad extends GuiScreen{
 	@Override
 	public void actionPerformed(GuiButton button) {
 		sendPacket(textfield.getText());
-		thePlayer.closeScreen();
+		thePlayer.openContainer = thePlayer.inventoryContainer;
 	}
 
 	public void sendPacket(String padName){
@@ -97,18 +95,19 @@ public class GuiNameTelepad extends GuiScreen{
 		try {
 			outputStream.writeInt(TelePadsTeleportHandler.IDENTIFIER_NAMEPAD);
 
-			outputStream.writeInt(te.xCoord);
-			outputStream.writeInt(te.yCoord);
-			outputStream.writeInt(te.zCoord);
-
-			outputStream.writeUTF(padName);
-
-			Packet250CustomPayload packet = new Packet250CustomPayload("telePads", bytes.toByteArray());
-			PacketDispatcher.sendPacketToServer(packet);
+			System.out.println("SEND PACKET HERE ! TelePort gui tp packet");
+//			outputStream.writeInt(te.xCoord);
+//			outputStream.writeInt(te.yCoord);
+//			outputStream.writeInt(te.zCoord);
+//
+//			outputStream.writeUTF(padName);
+//
+//			Packet250CustomPayload packet = new Packet250CustomPayload("telePads", bytes.toByteArray());
+//			PacketDispatcher.sendPacketToServer(packet);
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		thePlayer.closeScreen();
+		thePlayer.openContainer = thePlayer.inventoryContainer; //closes the screen
 	}
 }

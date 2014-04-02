@@ -1,30 +1,22 @@
 package telepads;
 
-import modUpdateChecked.OnPlayerLogin;
-import net.minecraft.block.Block;
+import rpgInventory.handlers.packets.ServerPacketHandler;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.network.NetworkMod;
-import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
+import cpw.mods.fml.common.network.FMLEventChannel;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-@Mod(modid = mod_telepads.modID, name = mod_telepads.modName, version = mod_telepads.version)
-@NetworkMod(clientSideRequired = true, serverSideRequired = false,
-clientPacketHandlerSpec =
-@SidedPacketHandler(channels = {"telePads"}, packetHandler = TelePadsTeleportHandler.class),
-serverPacketHandlerSpec =
-@SidedPacketHandler(channels = {"telePads"}, packetHandler = TelePadsTeleportHandler.class))
-
-public class mod_telepads {
+@Mod(modid = Telepads.modID, name = Telepads.modName, version = Telepads.version)
+public class Telepads {
 
 	protected static final String version = "1.6.4 v5";
 	protected static final String modID = "telepads";
@@ -36,16 +28,18 @@ public class mod_telepads {
 	
 	@SidedProxy(serverSide = "telepads.SProxy", clientSide = "telepads.CLProxy")
 	public static SProxy proxy;
-	public static mod_telepads instance;
+	public static Telepads instance;
 	
+	public static FMLEventChannel Channel;
+
 	
 	@EventHandler
 	public void load(FMLInitializationEvent evt){
 		instance = this;
 		
-		telepad = (BlockTelepad) new BlockTelepad(412, Material.wood).setUnlocalizedName("telepad").setLightValue(0.2f).setCreativeTab(CreativeTabs.tabTransport).setBlockUnbreakable();
+		telepad = (BlockTelepad) new BlockTelepad( Material.wood).setBlockName("telepad").setLightLevel(0.2f).setCreativeTab(CreativeTabs.tabTransport).setBlockUnbreakable();
 		
-		padLocator = (ItemPadLocations) new ItemPadLocations(7520).setUnlocalizedName("padLocator").setMaxStackSize(1).setFull3D();
+		padLocator = (ItemPadLocations) new ItemPadLocations().setUnlocalizedName("padLocator").setMaxStackSize(1).setFull3D();
 		
 		GameRegistry.registerBlock(telepad, "TelePad");
 		
@@ -53,7 +47,7 @@ public class mod_telepads {
 		GameRegistry.registerTileEntity(TETelepad.class, "TETelepad");
 		proxy.registerItemRenderer();
 		
-		NetworkRegistry.instance().registerGuiHandler(this, new TelePadGuiHandler());
+		NetworkRegistry.INSTANCE.registerGuiHandler(this, new TelePadGuiHandler());
 
 		LanguageRegistry.addName(telepad, "TelePad");
 		LanguageRegistry.addName(padLocator, "Register With TelePadLocations");
@@ -61,9 +55,11 @@ public class mod_telepads {
 		proxy.registerSound();
 				
 		GameRegistry.addRecipe(new ItemStack(telepad,2),new Object[] {"GGG", "RER", "RIR", 
-			'G', Block.glass, 'R', Item.redstone, 'E', Item.enderPearl, 'I', Block.blockIron });
+			'G', Blocks.glass, 'R', Items.redstone, 'E', Items.ender_pearl, 'I', Blocks.iron_block});
 
-		GameRegistry.registerPlayerTracker(new OnPlayerLogin(version, modName));
+		Channel = NetworkRegistry.INSTANCE.newEventDrivenChannel("TelePadsPacket");
+		Channel.register(new ServerPacketHandler());
+//		GameRegistry.registerPlayerTracker(new OnPlayerLogin(version, modName));
 
 	}
 

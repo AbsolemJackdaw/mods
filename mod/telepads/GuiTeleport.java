@@ -3,24 +3,17 @@ package telepads;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutput;
-import java.nio.FloatBuffer;
-import java.util.Random;
-
-import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.ActiveRenderInfo;
-import net.minecraft.client.renderer.GLAllocation;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.util.ResourceLocation;
+
+import org.lwjgl.opengl.GL11;
+
 import cpw.mods.fml.common.FMLLog;
-import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class GuiTeleport extends GuiScreen{
 
@@ -44,7 +37,7 @@ public class GuiTeleport extends GuiScreen{
 		ray[2] = te.zCoord;
 
 
-		if(player.inventory.hasItem(mod_telepads.padLocator.itemID)){
+		if(player.inventory.hasItem(Telepads.padLocator)){
 			for(int i = 0; i < player.inventory.getSizeInventory(); i++){
 				if(player.inventory.getStackInSlot(i) != null && player.inventory.getStackInSlot(i).getItem() instanceof ItemPadLocations){
 					telepadCertificate = player.inventory.getStackInSlot(i);
@@ -134,11 +127,11 @@ public class GuiTeleport extends GuiScreen{
 			int id = button.id;
 			if(id == EXIT_BUTTON ){
 				sendPacket(EXIT_BUTTON);
-				thePlayer.closeScreen();
+				thePlayer.openContainer = thePlayer.inventoryContainer; //closes the screen
 
 			}else{
 				sendPacket(id);
-				thePlayer.closeScreen();
+				thePlayer.openContainer = thePlayer.inventoryContainer; //closes the screen
 			}
 		}
 
@@ -155,24 +148,26 @@ public class GuiTeleport extends GuiScreen{
 		DataOutputStream outputStream = new DataOutputStream(bytes);
 		try {
 			outputStream.writeInt(TelePadsTeleportHandler.IDENTIFIER_TELPORTER);
-
-			outputStream.writeInt(te.xCoord);
-			outputStream.writeInt(te.yCoord);
-			outputStream.writeInt(te.zCoord);
-
-			outputStream.writeInt(id);
-
-			if(id < EXIT_BUTTON){
-				outputStream.writeInt(te.allCoords.get(id)[0]);//x
-				outputStream.writeInt(te.allCoords.get(id)[1]);//y
-				outputStream.writeInt(te.allCoords.get(id)[2]);//z
-
-				outputStream.writeInt(te.allDims.get(id));
-			}
-
-
-			Packet250CustomPayload packet = new Packet250CustomPayload("telePads", bytes.toByteArray());
-			PacketDispatcher.sendPacketToServer(packet);
+			
+			System.out.println("SEND PACKET HERE ! teleport player");
+//
+//			outputStream.writeInt(te.xCoord);
+//			outputStream.writeInt(te.yCoord);
+//			outputStream.writeInt(te.zCoord);
+//
+//			outputStream.writeInt(id);
+//
+//			if(id < EXIT_BUTTON){
+//				outputStream.writeInt(te.allCoords.get(id)[0]);//x
+//				outputStream.writeInt(te.allCoords.get(id)[1]);//y
+//				outputStream.writeInt(te.allCoords.get(id)[2]);//z
+//
+//				outputStream.writeInt(te.allDims.get(id));
+//			}
+//
+//
+//			Packet250CustomPayload packet = new Packet250CustomPayload("telePads", bytes.toByteArray());
+//			PacketDispatcher.sendPacketToServer(packet);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

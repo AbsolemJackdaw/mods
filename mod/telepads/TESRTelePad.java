@@ -60,9 +60,9 @@ public class TESRTelePad extends TileEntitySpecialRenderer {
 	public void renderEndPortalSurface(double par2, double par4, double par6, float par8)
 	{
 
-		float f1 = (float)this.tileEntityRenderer.playerX;
-		float f2 = (float)this.tileEntityRenderer.playerY;
-		float f3 = (float)this.tileEntityRenderer.playerZ;
+		float f1 = (float)this.field_147501_a.staticPlayerX; //tile entity renderer
+		float f2 = (float)this.field_147501_a.staticPlayerY;
+		float f3 = (float)this.field_147501_a.staticPlayerZ;
 		GL11.glDisable(GL11.GL_LIGHTING);
 		field_110644_e.setSeed(31100L);
 		float f4 = 0.75F /5;//offset y
