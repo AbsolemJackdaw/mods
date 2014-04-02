@@ -10,7 +10,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 
@@ -188,13 +190,18 @@ public class TETelepad extends TileEntity{
 
 		NBTTagCompound nbt = new NBTTagCompound();
 		this.writeToNBT(nbt);
-		return new Packet132TileEntityData(this.xCoord, this.yCoord, this.zCoord, 1, nbt);
+//		return new Packet132TileEntityData(this.xCoord, this.yCoord, this.zCoord, 1, nbt);
+		return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 1, nbt);
 	}
 
 	@Override
-	public void onDataPacket(INetworkManager net, Packet132TileEntityData pkt) {
-		this.readFromNBT(pkt.data);
-	}
+	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
+		this.readFromNBT(pkt.func_148857_g());  //packet.data	
+		}
+//	@Override
+//	public void onDataPacket(INetworkManager net, Packet132TileEntityData pkt) {
+//		this.readFromNBT(pkt.data);
+//	}
 
 
 	public void resetTE(){
@@ -210,7 +217,7 @@ public class TETelepad extends TileEntity{
 //		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
 //		DataOutputStream outputStream = new DataOutputStream(bytes);
 //		try {
-//			writeBasic(TelePadsTeleportHandler.IDENTIFIER_GUISIZE, outputStream);
+//			writeBasic(ServerPacketHandler.IDENTIFIER_GUISIZE, outputStream);
 //
 //			Packet.writeItemStack(stack, outputStream);
 //
@@ -228,7 +235,7 @@ public class TETelepad extends TileEntity{
 		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
 		DataOutputStream outputStream = new DataOutputStream(bytes);
 		try {
-			writeBasic(TelePadsTeleportHandler.IDENTIFIER_TE, outputStream);
+			writeBasic(ServerPacketHandler.IDENTIFIER_TE, outputStream);
 
 			System.out.println("SEND PACKET HERE ! identifier te");
 //			Packet.writeItemStack(stack, outputStream);
@@ -255,12 +262,13 @@ public class TETelepad extends TileEntity{
 		DataOutputStream outputStream = new DataOutputStream(bytes);
 
 		try {
-			writeBasic(TelePadsTeleportHandler.IDENTIFIER_PLATFORM, outputStream);
+			writeBasic(ServerPacketHandler.IDENTIFIER_PLATFORM, outputStream);
 
 			outputStream.writeBoolean(b);
 
-			Packet250CustomPayload packet = new Packet250CustomPayload("telePads", bytes.toByteArray());
-			PacketDispatcher.sendPacketToServer(packet);
+//			Packet250CustomPayload packet = new Packet250CustomPayload("telePads", bytes.toByteArray());
+//			PacketDispatcher.sendPacketToServer(packet);
+			System.out.println("send packet here Telepads TETELEPAD");
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -274,12 +282,12 @@ public class TETelepad extends TileEntity{
 		DataOutputStream outputStream = new DataOutputStream(bytes);
 
 		try {
-			writeBasic(TelePadsTeleportHandler.IDENTIFIER_RESETnNOTIFY, outputStream);
+			writeBasic(ServerPacketHandler.IDENTIFIER_RESETnNOTIFY, outputStream);
 
 			outputStream.writeUTF(message);
-
-			Packet250CustomPayload packet = new Packet250CustomPayload("telePads", bytes.toByteArray());
-			PacketDispatcher.sendPacketToServer(packet);
+			System.out.println("send packet here Telepads TETELEPAD");
+//			Packet250CustomPayload packet = new Packet250CustomPayload("telePads", bytes.toByteArray());
+//			PacketDispatcher.sendPacketToServer(packet);
 
 		} catch (IOException e) {
 			e.printStackTrace();
