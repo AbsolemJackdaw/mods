@@ -1,6 +1,7 @@
 package telepads;
 
 import rpgInventory.handlers.packets.ServerPacketHandler;
+import net.minecraft.block.BlockAnvil;
 import net.minecraft.block.BlockColored;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
@@ -60,7 +61,6 @@ public class Telepads {
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, new TelePadGuiHandler());
 
 		//		GameRegistry.registerPlayerTracker(new OnPlayerLogin(version, modName));
-
 	}
 
 

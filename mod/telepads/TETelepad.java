@@ -22,7 +22,9 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AABBPool;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.ChatComponentText;
 
 public class TETelepad extends TileEntity{
 
@@ -99,90 +101,80 @@ public class TETelepad extends TileEntity{
 	@Override
 	public void updateEntity() {
 
-		//		if(ownerName.equals("UNIVERSAL") && !telepadname.equals("Universal Pad")){
-		//			this.telepadname = "Universal Pad";
-		//		}
+		AxisAlignedBB aabb = AxisAlignedBB.getBoundingBox(xCoord, yCoord, zCoord, xCoord+0.5, yCoord+0.5, zCoord+0.5);//this.().copy().expand(-0.5, 0.5, -0.5);
 
-		if(worldObj.isRemote){//client only
-			AxisAlignedBB aabb = this.getRenderBoundingBox().copy().expand(-0.5, 0.5, -0.5);
+		List<EntityPlayer> playerInAabb = worldObj.getEntitiesWithinAABB(EntityPlayer.class, aabb);		
 
-			List<EntityPlayer> playerInAabb = worldObj.getEntitiesWithinAABB(EntityPlayer.class, aabb);		
-
-			if(isStandingOnPlatform){
-				if(playerInAabb.isEmpty() || !playerInAabb.contains(playerStandingOnPad)){
-					changePlatformState(false);
-				}
+		if(isStandingOnPlatform){
+			if(playerInAabb.isEmpty() || !playerInAabb.contains(playerStandingOnPad)){
+				changePlatformState(false);
 			}
+		}
 
-			for(EntityPlayer p : playerInAabb){
-				if(p!=null){
-					if(isStandingOnPlatform == false)//check to prevent packet from spamming
-						changePlatformState(true);
+		for(EntityPlayer p : playerInAabb){
+			if(p!=null){
+				if(isStandingOnPlatform == false)//check to prevent packet from spamming
+					changePlatformState(true);
 
-					if(counter >=0)
-						counter --;
-				}
+				if(counter >=0)
+					counter --;
+			}
+			if(counter <= 0){
+				if(p != null){
+					if(p.inventory.hasItem(Telepads.padLocator)){
+						for(int i = 0; i < p.inventory.getSizeInventory(); i++){
+							if(p.inventory.getStackInSlot(i) != null && p.inventory.getStackInSlot(i).getItem() instanceof ItemPadLocations){
 
-				if(counter <= 0){
-					if(p != null && Minecraft.getMinecraft().currentScreen == null){
-						if(p.inventory.hasItem(Telepads.padLocator)){
-							for(int i = 0; i < p.inventory.getSizeInventory(); i++){
-								if(p.inventory.getStackInSlot(i) != null && p.inventory.getStackInSlot(i).getItem() instanceof ItemPadLocations){
+								ItemStack stack = p.inventory.getStackInSlot(i);//the telepad register
+								//for nitwits that put in a new list from creative or trough 'cheating'
+								if(!stack.hasTagCompound()){
+									ResetAndNotify("Damn, that's not the right TelePad Register...", p);
+									break;
+								}else{
 
-									ItemStack stack = p.inventory.getStackInSlot(i);//the telepad register
+									allCoords = new ArrayList<int[]>();
+									allNames = new ArrayList<String>();
+									allDims = new ArrayList<Integer>();
 
-									//for nitwits that put in a new list from creative or trough 'cheating'
-									if(!stack.hasTagCompound()){
-										ResetAndNotify("Damn, that's not the right TelePad Register...");
-										break;
-									}else{
+									int size = stack.getTagCompound().getInteger(ItemPadLocations.SIZE);
 
-										//if(p.getDisplayName().equals(ownerName) || ownerName.equals("UNIVERSAL")){
+									for(int c =0; c < size; c++){
 
-										allCoords = new ArrayList<int[]>();
-										allNames = new ArrayList<String>();
-										allDims = new ArrayList<Integer>();
+										int[] ray = new int[3];
+										ray[0] = stack.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[0];
+										ray[1] = stack.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[1];
+										ray[2] = stack.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[2];
 
-										int size = stack.getTagCompound().getInteger(ItemPadLocations.SIZE);
+										String padName = stack.getTagCompound().getString("TelePadName_"+c);
+										int dim = stack.getTagCompound().getInteger(ItemPadLocations.DIM_+c);
+										allCoords.add(ray);
+										allNames.add(padName);
+										allDims.add(dim);
+									}
 
-										for(int c =0; c < size; c++){
+									setRegisterToPad(stack);
 
-											int[] ray = new int[3];
-											ray[0] = stack.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[0];
-											ray[1] = stack.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[1];
-											ray[2] = stack.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[2];
-
-											String padName = stack.getTagCompound().getString("TelePadName_"+c);
-											int dim = stack.getTagCompound().getInteger(ItemPadLocations.DIM_+c);
-											allCoords.add(ray);
-											allNames.add(padName);
-											allDims.add(dim);
-										}
-
-										setRegisterToPad(stack);
-
+									if(!worldObj.isRemote)
 										stack.getTagCompound().setInteger("originalGUIScale", Minecraft.getMinecraft().gameSettings.guiScale);
 
-										// ... and open gui
+									//opens gui in proxy wit id 0
 										p.openGui(Telepads.instance, 0, worldObj, xCoord, yCoord, zCoord);
-										break;
-									}
+									break;
 								}
 							}
-						}else{
-
-							if(p.getDisplayName().equals(ownerName))
-								p.openGui(Telepads.instance, 2, worldObj, xCoord, yCoord, zCoord);
-							ResetAndNotify("Damn, I forgot my TelePad Register...");
-							break;
 						}
+					}else{
+
+						if(p.getDisplayName().equals(ownerName)){
+							p.openGui(Telepads.instance, 2, worldObj, xCoord, yCoord, zCoord);
+						}
+						ResetAndNotify("TelePad Error : Telepad Register is missing " + p.getDisplayName(), p);
+						break;
 					}
 				}
 			}
 		}
 	}
-
-
 
 	@Override
 	public boolean canUpdate() {
@@ -193,7 +185,6 @@ public class TETelepad extends TileEntity{
 
 		NBTTagCompound nbt = new NBTTagCompound();
 		this.writeToNBT(nbt);
-		//		return new Packet132TileEntityData(this.xCoord, this.yCoord, this.zCoord, 1, nbt);
 		return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 1, nbt);
 	}
 
@@ -201,55 +192,35 @@ public class TETelepad extends TileEntity{
 	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
 		this.readFromNBT(pkt.func_148857_g());  //packet.data	
 	}
-	//	@Override
-	//	public void onDataPacket(INetworkManager net, Packet132TileEntityData pkt) {
-	//		this.readFromNBT(pkt.data);
-	//	}
-
 
 	public void resetTE(){
-
 		counter = def_count;
 		isStandingOnPlatform = false;
-
 	}
-
-
-	//	/**Saves current mc gui screen size setting to the pad to restore it afterwards.*/
-	//	private void setMCGuiSettingToRegister(ItemStack stack) {
-	//		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-	//		DataOutputStream outputStream = new DataOutputStream(bytes);
-	//		try {
-	//			writeBasic(ServerPacketHandler.IDENTIFIER_GUISIZE, outputStream);
-	//
-	//			Packet.writeItemStack(stack, outputStream);
-	//
-	//			Packet250CustomPayload packet = new Packet250CustomPayload("telePads", bytes.toByteArray());
-	//			PacketDispatcher.sendPacketToServer(packet);
-	//
-	//		} catch (IOException e) {
-	//			e.printStackTrace();
-	//		}
-	//	}
 
 	/**Saves the register's content to the TelePad*/
 	public void setRegisterToPad(ItemStack stack){
 
-		ByteBuf buf = Unpooled.buffer();
-		ByteBufOutputStream out = new ByteBufOutputStream(buf);
-		try {
-			writeBasic(ServerPacketHandler.IDENTIFIER_TE, out);
+		ItemStack stack1 = stack;
 
-			System.out.println("SEND PACKET HERE ! identifier te");
-			//			Packet.writeItemStack(stack, outputStream);
-			//
-			ByteBufUtils.writeItemStack(buf, stack);			
+		allCoords = new ArrayList<int[]>();
+		allNames = new ArrayList<String>();
+		allDims = new ArrayList<Integer>();
 
-			Telepads.Channel.sendToServer(new FMLProxyPacket(buf, Telepads.channelName));
+		int size = stack1.getTagCompound().getInteger(ItemPadLocations.SIZE);
 
+		for(int c =0; c < size; c++){
 
-		} catch (IOException e) {
-			e.printStackTrace();
+			int[] ray = new int[3];
+			ray[0] = stack1.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[0];
+			ray[1] = stack1.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[1];
+			ray[2] = stack1.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[2];
+
+			String padName = stack1.getTagCompound().getString("TelePadName_"+c);
+			int dim = stack1.getTagCompound().getInteger(ItemPadLocations.DIM_+c);
+			allCoords.add(ray);
+			allNames.add(padName);
+			allDims.add(dim);
 		}
 	}
 
@@ -257,49 +228,17 @@ public class TETelepad extends TileEntity{
 
 	/**Sets isStandingOnPlatform, and reset's TE if false*/
 	public void changePlatformState(boolean b){
-
 		isStandingOnPlatform = b;
-
-		if(!b)
+		if(!b){
+			resetTE();
 			playerStandingOnPad = null;
-
-		ByteBuf buf = Unpooled.buffer();
-		ByteBufOutputStream out = new ByteBufOutputStream(buf);
-
-		try {
-			writeBasic(ServerPacketHandler.IDENTIFIER_PLATFORM, out);
-
-			out.writeBoolean(b);
-			out.close();
-
-			Telepads.Channel.sendToServer(new FMLProxyPacket(buf, Telepads.channelName));
-
-
-			//			System.out.println("send packet here Telepads TETELEPAD");
-
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
 	}
 
 	/**Resets the TelePad and notifies the player of it : aka, send chat mesage*/
-	public void ResetAndNotify(String message){
+	public void ResetAndNotify(String message, EntityPlayer p){
+		p.addChatComponentMessage(new ChatComponentText(message));
 		resetTE();
-
-		ByteBuf buf = Unpooled.buffer();
-		ByteBufOutputStream out = new ByteBufOutputStream(buf);
-
-		try {
-			writeBasic(ServerPacketHandler.IDENTIFIER_RESETnNOTIFY, out);
-
-			out.writeUTF(message);
-
-			Telepads.Channel.sendToServer(new FMLProxyPacket(buf, Telepads.channelName));
-			out.close();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 

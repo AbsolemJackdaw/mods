@@ -75,7 +75,7 @@ public class GuiTeleport extends GuiScreen{
 
 				this.buttonList.add(new GuiButton(i, /*x*/posX-200 + (i/10 > 0 && i%10 >= 0 ? 120*(i/10) : 0),/*y*/posY+((i*25)) - (i/10 > 0 && i%10 >= 0 ? (250*(i/10))+100 : 100), 
 						/*size*/100, 20, /**/name)); 
-				FMLLog.getLogger().info("" + (i%10));
+//				FMLLog.getLogger().info("" + (i%10));
 			}
 			
 			this.buttonList.add(new GuiButton(EXIT_BUTTON, posX-200, posY - 130, 20, 20,"X")); 
@@ -158,14 +158,8 @@ public class GuiTeleport extends GuiScreen{
 			out.writeInt(te.yCoord);
 			out.writeInt(te.zCoord);
 			
-//			System.out.println("SEND PACKET HERE ! teleport player");
-//
-//			outputStream.writeInt(te.xCoord);
-//			outputStream.writeInt(te.yCoord);
-//			outputStream.writeInt(te.zCoord);
-//
 			out.writeInt(id);
-//
+
 			if(id < EXIT_BUTTON){
 				out.writeInt(te.allCoords.get(id)[0]);//x
 				out.writeInt(te.allCoords.get(id)[1]);//y
@@ -173,11 +167,7 @@ public class GuiTeleport extends GuiScreen{
 
 				out.writeInt(te.allDims.get(id));
 			}
-//
-//
-//			Packet250CustomPayload packet = new Packet250CustomPayload("telePads", bytes.toByteArray());
-//			PacketDispatcher.sendPacketToServer(packet);			
-			
+
 			Telepads.Channel.sendToServer(new FMLProxyPacket(buf, Telepads.channelName));
 			
 			out.close();

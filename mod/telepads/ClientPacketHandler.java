@@ -19,7 +19,7 @@ import cpw.mods.fml.common.network.FMLNetworkEvent.ClientCustomPacketEvent;
 public class ClientPacketHandler extends ServerPacketHandler {
 
 	public static final int IDENTIFIER_NAMEPAD = 5000;
-	public static final int IDENTIFIER_TELPORTER = 5100;
+	public static final int IDENTIFIER_TELEPORTER = 5100;
 	public static final int IDENTIFIER_REGISTER = 5200;
 	public static final int IDENTIFIER_TE = 5300;
 	public static final int IDENTIFIER_PLATFORM = 5400;
@@ -55,6 +55,13 @@ public class ClientPacketHandler extends ServerPacketHandler {
 
 			switch (packetID){
 
+			case IDENTIFIER_GUI :
+
+				int id = dis.readInt();
+				p.openGui(Telepads.instance, id, world, x2,y2,z2);
+				System.out.println(id);
+
+				break;
 			case IDENTIFIER_NAMEPAD:
 
 				String name = dis.readUTF();
@@ -75,7 +82,7 @@ public class ClientPacketHandler extends ServerPacketHandler {
 				pad.allNames.add(name);
 				break;
 
-			case IDENTIFIER_TELPORTER:
+			case IDENTIFIER_TELEPORTER:
 
 				if(dis.readInt() == GuiTeleport.EXIT_BUTTON){
 					pad.resetTE();

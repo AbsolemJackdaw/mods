@@ -46,7 +46,7 @@ public class BlockTelepad extends BlockContainer{
 			a_ray[1] = y;
 			a_ray[2] = z;
 
-			if(!par1World.isRemote)
+//			if(!par1World.isRemote)
 				te.allCoords.add(te.allCoords.size(), a_ray);
 
 			if(p.inventory.hasItem(Telepads.padLocator)){
@@ -81,7 +81,6 @@ public class BlockTelepad extends BlockContainer{
 			}
 
 			p.openGui(Telepads.instance, 1, par1World, x, y, z);
-
 		}
 
 		par1World.setTileEntity(x, y, z, te);

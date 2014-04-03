@@ -24,6 +24,7 @@ public class ServerPacketHandler {
 	public static final int IDENTIFIER_TE = 5300;
 	public static final int IDENTIFIER_PLATFORM = 5400;
 	public static final int IDENTIFIER_RESETnNOTIFY = 5500;
+	public static final int IDENTIFIER_GUI = 5600;
 	
 	@SubscribeEvent
 	public void onServerPacket(ServerCustomPacketEvent event) {
@@ -53,6 +54,11 @@ public class ServerPacketHandler {
 
 			switch (packetID){
 
+			case IDENTIFIER_GUI :
+				int id = dis.readInt();
+				p.openGui(Telepads.instance, id, world, x2,y2,z2);
+				break;
+				
 			case IDENTIFIER_NAMEPAD:
 
 				String name = dis.readUTF();
@@ -133,27 +139,27 @@ public class ServerPacketHandler {
 			case IDENTIFIER_TE :
 
 				//TODO 
-				ItemStack stack1 = ByteBufUtils.readItemStack(buf);
-
-				pad.allCoords = new ArrayList<int[]>();
-				pad.allNames = new ArrayList<String>();
-				pad.allDims = new ArrayList<Integer>();
-
-				int size = stack1.getTagCompound().getInteger(ItemPadLocations.SIZE);
-
-				for(int c =0; c < size; c++){
-
-					int[] ray = new int[3];
-					ray[0] = stack1.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[0];
-					ray[1] = stack1.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[1];
-					ray[2] = stack1.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[2];
-
-					String padName = stack1.getTagCompound().getString("TelePadName_"+c);
-					int dim = stack1.getTagCompound().getInteger(ItemPadLocations.DIM_+c);
-					pad.allCoords.add(ray);
-					pad.allNames.add(padName);
-					pad.allDims.add(dim);
-				}
+//				ItemStack stack1 = ByteBufUtils.readItemStack(buf);
+//
+//				pad.allCoords = new ArrayList<int[]>();
+//				pad.allNames = new ArrayList<String>();
+//				pad.allDims = new ArrayList<Integer>();
+//
+//				int size = stack1.getTagCompound().getInteger(ItemPadLocations.SIZE);
+//
+//				for(int c =0; c < size; c++){
+//
+//					int[] ray = new int[3];
+//					ray[0] = stack1.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[0];
+//					ray[1] = stack1.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[1];
+//					ray[2] = stack1.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[2];
+//
+//					String padName = stack1.getTagCompound().getString("TelePadName_"+c);
+//					int dim = stack1.getTagCompound().getInteger(ItemPadLocations.DIM_+c);
+//					pad.allCoords.add(ray);
+//					pad.allNames.add(padName);
+//					pad.allDims.add(dim);
+//				}
 				break;
 
 
