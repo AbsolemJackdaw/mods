@@ -1,18 +1,10 @@
 package telepads;
 
-import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufOutputStream;
-import io.netty.buffer.ByteBufUtil;
-import io.netty.buffer.Unpooled;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import cpw.mods.fml.common.network.ByteBufUtils;
-import cpw.mods.fml.common.network.internal.FMLProxyPacket;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,7 +14,6 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AABBPool;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ChatComponentText;
 
@@ -151,14 +142,15 @@ public class TETelepad extends TileEntity{
 										allNames.add(padName);
 										allDims.add(dim);
 									}
-
-									setRegisterToPad(stack);
-
+									System.out.println(ownerName + " " +p.getDisplayName());
+									if(p.getDisplayName().equals(ownerName)){
+										setRegisterToPad(stack);
+										System.out.println("passed");
+									}
 									if(!worldObj.isRemote)
 										stack.getTagCompound().setInteger("originalGUIScale", Minecraft.getMinecraft().gameSettings.guiScale);
-
 									//opens gui in proxy wit id 0
-										p.openGui(Telepads.instance, 0, worldObj, xCoord, yCoord, zCoord);
+									p.openGui(Telepads.instance, 0, worldObj, xCoord, yCoord, zCoord);
 									break;
 								}
 							}
@@ -168,7 +160,7 @@ public class TETelepad extends TileEntity{
 						if(p.getDisplayName().equals(ownerName)){
 							p.openGui(Telepads.instance, 2, worldObj, xCoord, yCoord, zCoord);
 						}
-						ResetAndNotify("TelePad Error : Telepad Register is missing " + p.getDisplayName(), p);
+						ResetAndNotify("TelePad Error :"+ p.getDisplayName() + " has no TeleRegister !", p);
 						break;
 					}
 				}
@@ -224,8 +216,6 @@ public class TETelepad extends TileEntity{
 		}
 	}
 
-
-
 	/**Sets isStandingOnPlatform, and reset's TE if false*/
 	public void changePlatformState(boolean b){
 		isStandingOnPlatform = b;
@@ -237,7 +227,8 @@ public class TETelepad extends TileEntity{
 
 	/**Resets the TelePad and notifies the player of it : aka, send chat mesage*/
 	public void ResetAndNotify(String message, EntityPlayer p){
-		p.addChatComponentMessage(new ChatComponentText(message));
+		if(!worldObj.isRemote)
+			p.addChatComponentMessage(new ChatComponentText(message));
 		resetTE();
 	}
 

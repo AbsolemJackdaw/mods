@@ -1,7 +1,5 @@
 package telepads;
 
-import java.util.ArrayList;
-
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufInputStream;
 import net.minecraft.entity.item.EntityItem;
@@ -12,7 +10,6 @@ import net.minecraft.network.NetHandlerPlayServer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.FMLNetworkEvent.ServerCustomPacketEvent;
 
 public class ServerPacketHandler {

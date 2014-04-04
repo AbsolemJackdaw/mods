@@ -1,8 +1,5 @@
 package telepads;
 
-import rpgInventory.handlers.packets.ServerPacketHandler;
-import net.minecraft.block.BlockAnvil;
-import net.minecraft.block.BlockColored;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
