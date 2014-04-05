@@ -1,30 +1,41 @@
-package telepads;
+package telepads.gui;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufOutputStream;
 import io.netty.buffer.Unpooled;
 
+import java.awt.TextField;
 import java.io.IOException;
+import java.util.List;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
+
+import telepads.ServerPacketHandler;
+import telepads.Telepads;
+import telepads.block.TETelepad;
+import telepads.util.ExportTelepad;
 
 import cpw.mods.fml.common.network.internal.FMLProxyPacket;
 
 public class GuiTeleport extends GuiScreen{
 
+	private GuiTextField channelField;
+
 	public EntityPlayer thePlayer;
 	public TETelepad te;
-	/**can be null !*/
-	public ItemStack telepadCertificate = null;
 
 	public static final int EXIT_BUTTON = 10000;
+
+	private String channelName;
 
 	int[] ray = new int[3];
 
@@ -38,20 +49,12 @@ public class GuiTeleport extends GuiScreen{
 		ray[1] = te.yCoord;
 		ray[2] = te.zCoord;
 
-
-		if(player.inventory.hasItem(Telepads.padLocator)){
-			for(int i = 0; i < player.inventory.getSizeInventory(); i++){
-				if(player.inventory.getStackInSlot(i) != null && player.inventory.getStackInSlot(i).getItem() instanceof ItemPadLocations){
-					telepadCertificate = player.inventory.getStackInSlot(i);
-				}
-			}
-		}
+		channelName = te.channelName;
 	}
 
 	@Override
 	public void initGui() {
 
-		
 		//used to offset buttons
 		int offSetX = 150;
 		int offSetY = 250;
@@ -60,23 +63,29 @@ public class GuiTeleport extends GuiScreen{
 		int posY = (this.height) / 2;
 		this.buttonList.clear();
 
-		try {
-			int c = te.allCoords.size();
+		channelField = new GuiTextField(fontRendererObj, posX- 50 , posY- 130, 150, 20);
 
+		if(channelField != null){
+			channelField.setText(channelName);
+			channelField.setMaxStringLength(50);
+		}
+
+		try {
+			List<int[]> allCoords = ExportTelepad.read(channelName);
+			int c = allCoords.size();
+
+			if(c == 0){
+				return;
+			}
 
 			for(int i = 0; i < c; i++){
 
-				boolean isCurrentPad = telepadCertificate.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+i)[0] == ray[0] &&
-						telepadCertificate.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+i)[1] == ray[1] &&
-						telepadCertificate.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+i)[2] == ray[2];
+				String name = ExportTelepad.readName(allCoords.get(i));
 
-				String name = isCurrentPad ? "Current Location" :	telepadCertificate.getTagCompound().getString("TelePadName_"+i);
-
-				this.buttonList.add(new GuiButton(i, /*x*/posX-200 + (i/10 > 0 && i%10 >= 0 ? 120*(i/10) : 0),/*y*/posY+((i*25)) - (i/10 > 0 && i%10 >= 0 ? (250*(i/10))+100 : 100), 
-						/*size*/100, 20, /**/name)); 
-//				FMLLog.getLogger().info("" + (i%10));
+				this.buttonList.add(new GuiTeleportButton(i, /*x*/posX-200 + (i/10 > 0 && i%10 >= 0 ? 120*(i/10) : 0),/*y*/posY+((i*25)) - (i/10 > 0 && i%10 >= 0 ? (250*(i/10))+100 : 100), 
+						/*size*/100, 20, /**/name, allCoords.get(i)[0], allCoords.get(i)[1], allCoords.get(i)[2], allCoords.get(i)[3])); 
 			}
-			
+
 			this.buttonList.add(new GuiButton(EXIT_BUTTON, posX-200, posY - 130, 20, 20,"X")); 
 
 		} catch (Exception e) {
@@ -85,12 +94,45 @@ public class GuiTeleport extends GuiScreen{
 	}
 
 
+	protected void keyTyped(char c, int i)
+	{
+		super.keyTyped(c, i);
+		if(i == Keyboard.KEY_RETURN){
+			initGui();
+		}
+
+		if(channelField != null) {
+			channelField.textboxKeyTyped(c, i);
+
+			channelName = channelField.getText();
+		}
+	}
+
+	protected void mouseClicked(int i, int j, int k)
+	{
+		super.mouseClicked(i, j, k);
+		if(channelField != null) channelField.mouseClicked(i, j, k);
+	}
+
 	@Override
 	public void drawScreen(int par1, int par2, float par3) {
 
 		this.drawBackground(par1);
 
 		super.drawScreen(par1, par2, par3);
+
+		int posX = (this.width ) / 2;
+		int posY = (this.height ) / 2;
+		try{
+			fontRendererObj.drawSplitString("Press Enter to confirm", posX+1 -75, posY-1, 180 ,0x000000);
+			fontRendererObj.drawSplitString("Press Enter to confirm", posX -75, posY, 180 ,0xffffff);
+
+			fontRendererObj.drawSplitString("What Channel do you want to connect to ? : "+channelField.getText(), posX+1 -75, posY-1-20, 180 ,0x000000);
+			fontRendererObj.drawSplitString("What Channel do you want to connect to ? : "+channelField.getText(), posX   -75, posY  -20, 180 ,0xff0000);
+
+		}finally{
+			if(channelName != null) channelField.drawTextBox();
+		}
 	}
 
 	private static final ResourceLocation enderPortalEndSkyTextures = new ResourceLocation("textures/environment/end_sky.png");
@@ -98,25 +140,25 @@ public class GuiTeleport extends GuiScreen{
 
 	float c = 0;
 	float sd = 0;
-	
+
 	@Override
 	public void drawBackground(int par1) {
 		c += 1f;
 		sd +=0.01f;
 		float k = c+2;
-		
+
 		GL11.glPushMatrix();
 		GL11.glColor4f(0.2f, 0.6f, 1f, sd < 0.7f ? sd : 0.7f);
 		mc.getMinecraft().renderEngine.bindTexture(enderPortalEndSkyTextures);
 		drawTexturedModalRect(0, 0, -(int)k*2, -(int)c*2 , 3000, 3000);
 		GL11.glPopMatrix();
-		
+
 		GL11.glPushMatrix();
 		GL11.glColor4f(0.2f, 0.6f, 1f, sd < 0.75f ? sd : 0.75f);
 		mc.getMinecraft().renderEngine.bindTexture(endPortalTextures);
 		drawTexturedModalRect(0, 0, (int)k*2, (int)c*2 , 3000, 3000);
 		GL11.glPopMatrix();
-		
+
 	}
 
 	public boolean doesGuiPauseGame() {
@@ -129,50 +171,48 @@ public class GuiTeleport extends GuiScreen{
 		if(thePlayer != null){
 			int id = button.id;
 			if(id == EXIT_BUTTON ){
-				sendPacket(EXIT_BUTTON);
+				sendPacket(EXIT_BUTTON, button);
 				this.mc.thePlayer.closeScreen(); //closes the screen
 
 			}else{
-				sendPacket(id);
+				sendPacket(id, (GuiTeleportButton)button);
 				this.mc.thePlayer.closeScreen(); //closes the screen
 			}
 		}
 
-		if(telepadCertificate != null){
-			Minecraft.getMinecraft().gameSettings.guiScale = telepadCertificate.getTagCompound().getInteger("originalGUIScale");
-		}
 		te.resetTE();
 	}
 
 
-	public void sendPacket(int id){
+	public void sendPacket(int id, GuiButton button){
 
 		ByteBuf buf = Unpooled.buffer();
 		ByteBufOutputStream out = new ByteBufOutputStream(buf);
-		
+
 		try {
 			out.writeInt(ServerPacketHandler.IDENTIFIER_TELEPORTER);
-			
+
 			out.writeInt(te.xCoord);
 			out.writeInt(te.yCoord);
 			out.writeInt(te.zCoord);
-			
+
 			out.writeInt(id);
 
 			if(id < EXIT_BUTTON){
-				out.writeInt(te.allCoords.get(id)[0]);//x
-				out.writeInt(te.allCoords.get(id)[1]);//y
-				out.writeInt(te.allCoords.get(id)[2]);//z
-
-				out.writeInt(te.allDims.get(id));
+				if(button instanceof GuiTeleportButton){
+					GuiTeleportButton b = (GuiTeleportButton)button;
+					out.writeInt(b.xTeleport);//x
+					out.writeInt(b.yTeleport);//y
+					out.writeInt(b.zTeleport);//z
+					out.writeInt(b.dimTeleport);//dim
+				}
 			}
 
 			Telepads.Channel.sendToServer(new FMLProxyPacket(buf, Telepads.channelName));
-			
+
 			out.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-
 }

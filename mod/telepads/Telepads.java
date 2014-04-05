@@ -1,5 +1,8 @@
 package telepads;
 
+import telepads.block.BlockTelepad;
+import telepads.block.TETelepad;
+import telepads.util.TelePadGuiHandler;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
@@ -24,8 +27,6 @@ public class Telepads {
 
 	public static BlockTelepad telepad;
 
-	public static ItemPadLocations padLocator;
-
 	public static final String channelName = "TelePadsPacket";
 
 	@SidedProxy(serverSide = "telepads.SProxy", clientSide = "telepads.CLProxy")
@@ -34,13 +35,11 @@ public class Telepads {
 
 	public static FMLEventChannel Channel;
 
-
 	@EventHandler
 	public void load(FMLInitializationEvent evt){
 		instance = this;		
 
 		LanguageRegistry.addName(telepad, "TelePad");
-		LanguageRegistry.addName(padLocator, "Register With TelePadLocations");
 
 		proxy.registerSound();
 
@@ -50,25 +49,16 @@ public class Telepads {
 		Channel = NetworkRegistry.INSTANCE.newEventDrivenChannel("TelePadsPacket");
 		Channel.register(new ServerPacketHandler());
 
-
 		proxy.registerTileEntity();
 		GameRegistry.registerTileEntity(TETelepad.class, "TETelepad");
 		proxy.registerItemRenderer();
 
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, new TelePadGuiHandler());
-
-		//		GameRegistry.registerPlayerTracker(new OnPlayerLogin(version, modName));
 	}
-
-
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent e){
 		telepad = (BlockTelepad) new BlockTelepad(Material.wood).setBlockName("telepad").setLightLevel(0.2f).setCreativeTab(CreativeTabs.tabTransport).setBlockUnbreakable().setBlockTextureName("wool_colored_pink");
-
-		padLocator = (ItemPadLocations) new ItemPadLocations().setUnlocalizedName("padLocator").setMaxStackSize(1).setFull3D().setTextureName("map_empty");
-
-		GameRegistry.registerItem(padLocator, "PadLocator");
 		GameRegistry.registerBlock(telepad, "TelePad");
 	}
 }

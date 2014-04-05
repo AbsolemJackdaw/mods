@@ -2,27 +2,30 @@ package telepads;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufInputStream;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetHandlerPlayServer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
+import telepads.block.TETelepad;
+import telepads.gui.GuiTeleport;
+import telepads.util.ExportTelepad;
+import telepads.util.TelePadGuiHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.network.FMLNetworkEvent.ServerCustomPacketEvent;
 
 public class ServerPacketHandler {
 
-	
+
 	public static final int IDENTIFIER_NAMEPAD = 5000;
 	public static final int IDENTIFIER_TELEPORTER = 5100;
 	public static final int IDENTIFIER_REGISTER = 5200;
-	public static final int IDENTIFIER_TE = 5300;
+	//	public static final int IDENTIFIER_TE = 5300;
 	public static final int IDENTIFIER_PLATFORM = 5400;
 	public static final int IDENTIFIER_RESETnNOTIFY = 5500;
 	public static final int IDENTIFIER_GUI = 5600;
-	
+//	public static final int IDENTIFIER_NAMECHANNEL = 5700;
+	public static final int IDENTIFIER_ENTEREDCHANNEL = 5800;
+
 	@SubscribeEvent
 	public void onServerPacket(ServerCustomPacketEvent event) {
 
@@ -55,24 +58,15 @@ public class ServerPacketHandler {
 				int id = dis.readInt();
 				p.openGui(Telepads.instance, id, world, x2,y2,z2);
 				break;
-				
+
 			case IDENTIFIER_NAMEPAD:
-
 				String name = dis.readUTF();
+				String channel = dis.readUTF();
 
-				if(p.inventory.hasItem(Telepads.padLocator)){
-					for(int i = 0; i < p.inventory.getSizeInventory(); i++){
-						if(p.inventory.getStackInSlot(i) != null && p.inventory.getStackInSlot(i).getItem() instanceof ItemPadLocations){
-							ItemStack stack = p.inventory.getStackInSlot(i);
+				pad.telepadname = name;				
+				pad.channelName = channel;
 
-							int size = stack.getTagCompound().getInteger(ItemPadLocations.SIZE);
-							stack.getTagCompound().setString("TelePadName_"+(size-1), name);
-						}
-					}
-				}
-				System.out.println(name  + " server " );
-				pad.telepadname = name;
-				pad.allNames.add(name);
+				ExportTelepad.export(pad);
 				break;
 
 			case IDENTIFIER_TELEPORTER:
@@ -109,55 +103,13 @@ public class ServerPacketHandler {
 
 				break;
 
-			case IDENTIFIER_REGISTER:
-
-				ItemStack stack = new ItemStack(Telepads.padLocator);
-				stack.setTagCompound(new NBTTagCompound());
-
-				for(int i = 0; i < pad.allCoords.size(); i++ ){
-
-					stack.getTagCompound().setIntArray(ItemPadLocations.LOCATION_+i, pad.allCoords.get(i));
-				}
-
-				for (int t = 0; t < pad.allNames.size(); t++){
-					stack.getTagCompound().setString("TelePadName_"+t, pad.allNames.get(t));
-				}
-
-				for (int t = 0; t < pad.allDims.size(); t++){
-					stack.getTagCompound().setInteger(ItemPadLocations.DIM_+t, pad.allDims.get(t));
-				}
-
-				stack.getTagCompound().setInteger(ItemPadLocations.SIZE, pad.allCoords.size());
-
-				EntityItem item = new EntityItem(p.worldObj, p.posX, p.posY, p.posZ, stack);
-				p.worldObj.spawnEntityInWorld(item);
-				break;
-
-			case IDENTIFIER_TE :
-
-				//TODO 
-//				ItemStack stack1 = ByteBufUtils.readItemStack(buf);
+//			case IDENTIFIER_NAMECHANNEL :
 //
-//				pad.allCoords = new ArrayList<int[]>();
-//				pad.allNames = new ArrayList<String>();
-//				pad.allDims = new ArrayList<Integer>();
+//				String channel = dis.readUTF();
+//				pad.channelName = channel;
 //
-//				int size = stack1.getTagCompound().getInteger(ItemPadLocations.SIZE);
-//
-//				for(int c =0; c < size; c++){
-//
-//					int[] ray = new int[3];
-//					ray[0] = stack1.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[0];
-//					ray[1] = stack1.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[1];
-//					ray[2] = stack1.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[2];
-//
-//					String padName = stack1.getTagCompound().getString("TelePadName_"+c);
-//					int dim = stack1.getTagCompound().getInteger(ItemPadLocations.DIM_+c);
-//					pad.allCoords.add(ray);
-//					pad.allNames.add(padName);
-//					pad.allDims.add(dim);
-//				}
-				break;
+//				ExportTelepad.export(pad);
+//				break;
 
 
 			case IDENTIFIER_PLATFORM :

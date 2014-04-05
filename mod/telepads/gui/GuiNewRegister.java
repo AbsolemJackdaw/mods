@@ -1,10 +1,14 @@
-package telepads;
+package telepads.gui;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufOutputStream;
 import io.netty.buffer.Unpooled;
 
 import java.io.IOException;
+
+import telepads.ServerPacketHandler;
+import telepads.Telepads;
+import telepads.block.TETelepad;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;

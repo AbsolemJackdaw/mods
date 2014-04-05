@@ -5,6 +5,9 @@ import io.netty.buffer.ByteBufInputStream;
 
 import java.util.ArrayList;
 
+import telepads.block.TETelepad;
+import telepads.gui.GuiTeleport;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -65,21 +68,8 @@ public class ClientPacketHandler extends ServerPacketHandler {
 			case IDENTIFIER_NAMEPAD:
 
 				String name = dis.readUTF();
-
-				if(p.inventory.hasItem(Telepads.padLocator)){
-					for(int i = 0; i < p.inventory.getSizeInventory(); i++){
-						if(p.inventory.getStackInSlot(i) != null && p.inventory.getStackInSlot(i).getItem() instanceof ItemPadLocations){
-							ItemStack stack = p.inventory.getStackInSlot(i);
-
-							int size = stack.getTagCompound().getInteger(ItemPadLocations.SIZE);
-							stack.getTagCompound().setString("TelePadName_"+(size-1), name);
-						}
-					}
-				}
-				System.out.println(name);
-
 				pad.telepadname = name;
-				pad.allNames.add(name);
+				
 				break;
 
 			case IDENTIFIER_TELEPORTER:
@@ -120,52 +110,32 @@ public class ClientPacketHandler extends ServerPacketHandler {
 
 			case IDENTIFIER_REGISTER:
 
-				ItemStack stack = new ItemStack(Telepads.padLocator);
-				stack.setTagCompound(new NBTTagCompound());
-
-				for(int i = 0; i < pad.allCoords.size(); i++ ){
-
-					stack.getTagCompound().setIntArray(ItemPadLocations.LOCATION_+i, pad.allCoords.get(i));
-				}
-
-				for (int t = 0; t < pad.allNames.size(); t++){
-					stack.getTagCompound().setString("TelePadName_"+t, pad.allNames.get(t));
-				}
-
-				for (int t = 0; t < pad.allDims.size(); t++){
-					stack.getTagCompound().setInteger(ItemPadLocations.DIM_+t, pad.allDims.get(t));
-				}
-
-				stack.getTagCompound().setInteger(ItemPadLocations.SIZE, pad.allCoords.size());
-
-				EntityItem item = new EntityItem(p.worldObj, p.posX, p.posY, p.posZ, stack);
-				p.worldObj.spawnEntityInWorld(item);
 				break;
 
 			case IDENTIFIER_TE :
 
-				//TODO 
-				ItemStack stack1 = ByteBufUtils.readItemStack(buf);
-
-				pad.allCoords = new ArrayList<int[]>();
-				pad.allNames = new ArrayList<String>();
-				pad.allDims = new ArrayList<Integer>();
-
-				int size = stack1.getTagCompound().getInteger(ItemPadLocations.SIZE);
-
-				for(int c =0; c < size; c++){
-
-					int[] ray = new int[3];
-					ray[0] = stack1.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[0];
-					ray[1] = stack1.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[1];
-					ray[2] = stack1.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[2];
-
-					String padName = stack1.getTagCompound().getString("TelePadName_"+c);
-					int dim = stack1.getTagCompound().getInteger(ItemPadLocations.DIM_+c);
-					pad.allCoords.add(ray);
-					pad.allNames.add(padName);
-					pad.allDims.add(dim);
-				}
+//				//TODO 
+//				ItemStack stack1 = ByteBufUtils.readItemStack(buf);
+//
+//				pad.allCoords = new ArrayList<int[]>();
+//				pad.allNames = new ArrayList<String>();
+//				pad.allDims = new ArrayList<Integer>();
+//
+//				int size = stack1.getTagCompound().getInteger(ItemPadLocations.SIZE);
+//
+//				for(int c =0; c < size; c++){
+//
+//					int[] ray = new int[3];
+//					ray[0] = stack1.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[0];
+//					ray[1] = stack1.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[1];
+//					ray[2] = stack1.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[2];
+//
+//					String padName = stack1.getTagCompound().getString("TelePadName_"+c);
+//					int dim = stack1.getTagCompound().getInteger(ItemPadLocations.DIM_+c);
+//					pad.allCoords.add(ray);
+//					pad.allNames.add(padName);
+//					pad.allDims.add(dim);
+//				}
 				break;
 
 

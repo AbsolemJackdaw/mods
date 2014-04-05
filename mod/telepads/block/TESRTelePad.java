@@ -1,4 +1,4 @@
-package telepads;
+package telepads.block;
 
 import java.nio.FloatBuffer;
 import java.util.Random;
@@ -12,6 +12,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
+
+import telepads.model.telepad;
 
 
 public class TESRTelePad extends TileEntitySpecialRenderer {

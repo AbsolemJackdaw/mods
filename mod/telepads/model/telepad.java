@@ -1,4 +1,4 @@
-package telepads;
+package telepads.model;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;

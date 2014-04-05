@@ -1,5 +1,8 @@
 package telepads;
 
+import telepads.block.TESRTelePad;
+import telepads.block.TETelepad;
+import telepads.util.sndmngr;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;

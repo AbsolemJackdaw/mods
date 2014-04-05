@@ -1,5 +1,7 @@
 package telepads;
 
+import telepads.block.TETelepad;
+import telepads.model.telepad;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
