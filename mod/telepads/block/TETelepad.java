@@ -8,6 +8,7 @@ import java.util.List;
 
 import telepads.Telepads;
 import telepads.util.TelePadGuiHandler;
+import telepads.util.TelepadWorldData;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -33,8 +34,8 @@ public class TETelepad extends TileEntity{
 	public static final int def_count = 5*20;
 	public int counter = def_count;
 
-	public String channelName = "defaultchannel";
-
+	//TODO set channel client side when placed
+	public String TELEPORTCHANNEL = "DefaultChannel";
 
 	/**Set when player walks on a pad*/
 	public EntityPlayer playerStandingOnPad = null;
@@ -46,9 +47,10 @@ public class TETelepad extends TileEntity{
 		par1nbtTagCompound.setString("name", telepadname);
 		par1nbtTagCompound.setString("owner", ownerName);
 		par1nbtTagCompound.setInteger("dimension", dimension);
-		par1nbtTagCompound.setString("channel", channelName);
+		par1nbtTagCompound.setString("channel", TELEPORTCHANNEL);
 
 		super.writeToNBT(par1nbtTagCompound);
+		System.out.println("write");
 	}
 
 	@Override
@@ -57,15 +59,16 @@ public class TETelepad extends TileEntity{
 		telepadname = (par1nbtTagCompound.getString("name"));
 		ownerName = par1nbtTagCompound.getString("owner");
 		dimension = par1nbtTagCompound.getInteger("dimension");
-		channelName = par1nbtTagCompound.getString("channel");
+		TELEPORTCHANNEL = par1nbtTagCompound.getString("channel");
 
 		super.readFromNBT(par1nbtTagCompound);
+		System.out.println("read");
 	}
 
 	@Override
 	public void updateEntity() {
 
-		AxisAlignedBB aabb = AxisAlignedBB.getBoundingBox(xCoord, yCoord, zCoord, xCoord+0.5, yCoord+0.5, zCoord+0.5);//this.().copy().expand(-0.5, 0.5, -0.5);
+		AxisAlignedBB aabb = AxisAlignedBB.getBoundingBox(xCoord, yCoord, zCoord, xCoord+0.5, yCoord+0.5, zCoord+0.5);
 
 		List<EntityPlayer> playerInAabb = worldObj.getEntitiesWithinAABB(EntityPlayer.class, aabb);		
 
@@ -80,11 +83,11 @@ public class TETelepad extends TileEntity{
 				if(isStandingOnPlatform == false)//check to prevent packet from spamming
 					changePlatformState(true);
 
-				if(counter >=0)
-					counter --;
+				if(counter >=0)counter --;
 			}
-			if(counter <= 0){
+			if(counter < 0){
 				if(p != null){
+					markDirty();
 					p.openGui(Telepads.instance, TelePadGuiHandler.TELEPORT, worldObj, xCoord, yCoord, zCoord);
 				}
 			}
@@ -111,6 +114,8 @@ public class TETelepad extends TileEntity{
 	public void resetTE(){
 		counter = def_count;
 		isStandingOnPlatform = false;
+		markDirty();
+		TelepadWorldData.get(worldObj).markDirty();
 	}
 
 	/**Sets isStandingOnPlatform, and reset's TE if false*/

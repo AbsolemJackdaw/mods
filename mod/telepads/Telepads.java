@@ -8,6 +8,8 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.MinecraftForge;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.SidedProxy;
@@ -54,6 +56,9 @@ public class Telepads {
 		proxy.registerItemRenderer();
 
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, new TelePadGuiHandler());
+		
+//		MinecraftForge.EVENT_BUS.register(new DataTracker());
+		FMLCommonHandler.instance().bus().register(new DataTracker());
 	}
 
 	@EventHandler

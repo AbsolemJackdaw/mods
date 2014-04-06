@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import telepads.block.TETelepad;
 import telepads.gui.GuiTeleport;
+import telepads.util.TelepadWorldData;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.item.EntityItem;
@@ -27,8 +28,7 @@ public class ClientPacketHandler extends ServerPacketHandler {
 	public static final int IDENTIFIER_TE = 5300;
 	public static final int IDENTIFIER_PLATFORM = 5400;
 	public static final int IDENTIFIER_RESETnNOTIFY = 5500;
-
-
+	
 
 	@SubscribeEvent
 	public void onClientPacket(ClientCustomPacketEvent event) {
@@ -63,13 +63,15 @@ public class ClientPacketHandler extends ServerPacketHandler {
 				int id = dis.readInt();
 				p.openGui(Telepads.instance, id, world, x2,y2,z2);
 				System.out.println(id);
-
 				break;
-			case IDENTIFIER_NAMEPAD:
-
-				String name = dis.readUTF();
-				pad.telepadname = name;
 				
+			case IDENTIFIER_NAMEPAD:
+				String name = dis.readUTF();
+				String channel = dis.readUTF();
+
+				pad.telepadname = name;
+				pad.TELEPORTCHANNEL = channel;
+
 				break;
 
 			case IDENTIFIER_TELEPORTER:
@@ -89,8 +91,6 @@ public class ClientPacketHandler extends ServerPacketHandler {
 
 					int dimID = dis.readInt();
 
-
-
 					//if the dimension id = the End, play endscreen and teleport to spawn point. 
 					//this is needed or game will act funny if you don't.
 					if( dimID!= p.worldObj.provider.dimensionId){
@@ -107,37 +107,6 @@ public class ClientPacketHandler extends ServerPacketHandler {
 				}
 
 				break;
-
-			case IDENTIFIER_REGISTER:
-
-				break;
-
-			case IDENTIFIER_TE :
-
-//				//TODO 
-//				ItemStack stack1 = ByteBufUtils.readItemStack(buf);
-//
-//				pad.allCoords = new ArrayList<int[]>();
-//				pad.allNames = new ArrayList<String>();
-//				pad.allDims = new ArrayList<Integer>();
-//
-//				int size = stack1.getTagCompound().getInteger(ItemPadLocations.SIZE);
-//
-//				for(int c =0; c < size; c++){
-//
-//					int[] ray = new int[3];
-//					ray[0] = stack1.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[0];
-//					ray[1] = stack1.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[1];
-//					ray[2] = stack1.getTagCompound().getIntArray(ItemPadLocations.LOCATION_+c)[2];
-//
-//					String padName = stack1.getTagCompound().getString("TelePadName_"+c);
-//					int dim = stack1.getTagCompound().getInteger(ItemPadLocations.DIM_+c);
-//					pad.allCoords.add(ray);
-//					pad.allNames.add(padName);
-//					pad.allDims.add(dim);
-//				}
-				break;
-
 
 			case IDENTIFIER_PLATFORM :
 				boolean b = dis.readBoolean();

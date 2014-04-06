@@ -10,13 +10,13 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import telepads.Telepads;
-import telepads.util.ExportTelepad;
+import telepads.util.TelePadGuiHandler;
+import telepads.util.TelepadWorldData;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class BlockTelepad extends BlockContainer{
@@ -31,6 +31,8 @@ public class BlockTelepad extends BlockContainer{
 	public void onBlockPlacedBy(World par1World, int x, int y, int z,
 			EntityLivingBase par5EntityLivingBase, ItemStack par6ItemStack) {
 
+		TelepadWorldData.get(par1World).print();
+
 		TETelepad te = new TETelepad();
 
 		int c = 0;
@@ -40,7 +42,7 @@ public class BlockTelepad extends BlockContainer{
 			te.ownerName = p.getDisplayName();
 			te.dimension = par1World.provider.dimensionId;
 
-			p.openGui(Telepads.instance, 1, par1World, x, y, z);
+			p.openGui(Telepads.instance, TelePadGuiHandler.NAMETELEPAD, par1World, x, y, z);
 		}
 
 		par1World.setTileEntity(x, y, z, te);
@@ -54,6 +56,7 @@ public class BlockTelepad extends BlockContainer{
 			TETelepad te = (TETelepad)par1World.getTileEntity(x, y, z);
 
 			te.playerStandingOnPad = player;
+			
 		}
 	}
 
@@ -96,13 +99,27 @@ public class BlockTelepad extends BlockContainer{
 			float par8, float par9) {
 
 		TETelepad te = (TETelepad)par1World.getTileEntity(x, y, z);
+		
+		if(!par5EntityPlayer.isSneaking()){
+			if(te.ownerName.equals(par5EntityPlayer.getDisplayName())){
+				par1World.setBlockToAir(x, y, z);
+				par1World.removeTileEntity(x, y, z);
 
-		if(te.ownerName.equals(par5EntityPlayer.getDisplayName()))
-			ExportTelepad.delete(te);
-		else
-			if(!par1World.isRemote)
-				par5EntityPlayer.addChatComponentMessage(new ChatComponentText("This is not mine. I should not do this !"));
+				ItemStack stack = new ItemStack(Telepads.telepad);
+				EntityItem ei = new EntityItem(par1World, x, y, z, stack);
+				if(!par1World.isRemote)
+					par1World.spawnEntityInWorld(ei);
 
+				TelepadWorldData.get(par1World).removePad(te);
+				TelepadWorldData.get(par1World).print();
+			}
+			else
+				if(par1World.isRemote)
+					par5EntityPlayer.addChatComponentMessage(new ChatComponentText("This is not mine. I should not do this !"));
+	}else{
+		TelepadWorldData.get(par1World).print();
+		par5EntityPlayer.openGui(Telepads.instance, TelePadGuiHandler.TELEPORT, par1World, x, y, z);
+	}
 		return false;
 	}
 

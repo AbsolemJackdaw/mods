@@ -1,29 +1,32 @@
 package telepads;
 
+import java.io.IOException;
+
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufInputStream;
+import io.netty.buffer.ByteBufOutputStream;
+import io.netty.buffer.Unpooled;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.NetHandlerPlayServer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import telepads.block.TETelepad;
 import telepads.gui.GuiTeleport;
-import telepads.util.ExportTelepad;
-import telepads.util.TelePadGuiHandler;
+import telepads.model.telepad;
+import telepads.util.TelepadWorldData;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.network.FMLNetworkEvent.ServerCustomPacketEvent;
+import cpw.mods.fml.common.network.internal.FMLProxyPacket;
+import cpw.mods.fml.relauncher.Side;
 
 public class ServerPacketHandler {
 
 
 	public static final int IDENTIFIER_NAMEPAD = 5000;
 	public static final int IDENTIFIER_TELEPORTER = 5100;
-	public static final int IDENTIFIER_REGISTER = 5200;
-	//	public static final int IDENTIFIER_TE = 5300;
 	public static final int IDENTIFIER_PLATFORM = 5400;
 	public static final int IDENTIFIER_RESETnNOTIFY = 5500;
 	public static final int IDENTIFIER_GUI = 5600;
-//	public static final int IDENTIFIER_NAMECHANNEL = 5700;
 	public static final int IDENTIFIER_ENTEREDCHANNEL = 5800;
 
 	@SubscribeEvent
@@ -63,10 +66,31 @@ public class ServerPacketHandler {
 				String name = dis.readUTF();
 				String channel = dis.readUTF();
 
-				pad.telepadname = name;				
-				pad.channelName = channel;
+				pad.telepadname = name;
+				pad.TELEPORTCHANNEL = channel;
+				
+				TelepadWorldData.get(world).addPad(pad);
+				pad.markDirty();
+				TelepadWorldData.get(world).markDirty();
+				
+				ByteBuf buff = Unpooled.buffer();
+				ByteBufOutputStream out = new ByteBufOutputStream(buff);
+				try {
 
-				ExportTelepad.export(pad);
+					out.writeInt(ServerPacketHandler.IDENTIFIER_NAMEPAD);
+					out.writeInt(x2);
+					out.writeInt(y2);
+					out.writeInt(z2);
+					out.writeUTF(name);
+					out.writeUTF(channel);
+					out.close();
+
+					if(!p.worldObj.isRemote)
+						Telepads.Channel.sendTo(new FMLProxyPacket(buf, Telepads.channelName), p);
+
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 				break;
 
 			case IDENTIFIER_TELEPORTER:
@@ -103,15 +127,6 @@ public class ServerPacketHandler {
 
 				break;
 
-//			case IDENTIFIER_NAMECHANNEL :
-//
-//				String channel = dis.readUTF();
-//				pad.channelName = channel;
-//
-//				ExportTelepad.export(pad);
-//				break;
-
-
 			case IDENTIFIER_PLATFORM :
 				boolean b = dis.readBoolean();
 
@@ -130,7 +145,6 @@ public class ServerPacketHandler {
 				break;
 
 			}
-
 
 			dis.close();
 		} catch (Exception e) {

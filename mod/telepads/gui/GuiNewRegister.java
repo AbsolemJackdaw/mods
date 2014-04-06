@@ -77,7 +77,7 @@ public class GuiNewRegister extends GuiScreen {
 		ByteBuf buf = Unpooled.buffer();
 		ByteBufOutputStream out = new ByteBufOutputStream(buf);
 		try {
-			out.writeInt(ServerPacketHandler.IDENTIFIER_REGISTER);
+//			out.writeInt(ServerPacketHandler.IDENTIFIER_REGISTER);
 			
 			System.out.println("SEND PACKET HERE! making register");
 
@@ -86,7 +86,7 @@ public class GuiNewRegister extends GuiScreen {
 			out.writeInt(te.zCoord);
 			out.close();
 
-			Telepads.Channel.sendToServer(new FMLProxyPacket(buf, Telepads.channelName));			
+//			Telepads.Channel.sendToServer(new FMLProxyPacket(buf, Telepads.channelName));			
 			
 		} catch (IOException e) {
 			e.printStackTrace();

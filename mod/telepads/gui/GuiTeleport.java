@@ -32,7 +32,7 @@ public class GuiTeleport extends GuiScreen{
 	public static final int EXIT_BUTTON = 10000;
 
 	boolean nameGui;
-	
+
 	String channelName;
 
 	public GuiTeleport(EntityPlayer player, TETelepad te){
@@ -42,7 +42,7 @@ public class GuiTeleport extends GuiScreen{
 		thePlayer = player;
 
 		nameGui = true;
-		
+
 		channelName = te.TELEPORTCHANNEL;
 	}
 
@@ -87,20 +87,20 @@ public class GuiTeleport extends GuiScreen{
 	@Override
 	public void drawScreen(int par1, int par2, float par3) {
 
-		//this.drawBackground(par1);
+		this.drawBackground(par1);
 		super.drawScreen(par1, par2, par3);
-		
+
 		int posX = (this.width ) / 2;
 		int posY = (this.height ) / 2;
 		try{
-		fontRendererObj.drawSplitString("Press Enter to confirm", posX+1 -75, posY-1, 180 ,0x000000);
-		fontRendererObj.drawSplitString("Press Enter to confirm", posX -75, posY, 180 ,0xffffff);
+			fontRendererObj.drawSplitString("Press Enter to confirm", posX+1 -75, posY-1, 180 ,0x000000);
+			fontRendererObj.drawSplitString("Press Enter to confirm", posX -75, posY, 180 ,0xffffff);
 
-		fontRendererObj.drawSplitString("What Channel do you want to connect to ? : "+channelField.getText(), posX+1 -75, posY-1-20, 180 ,0x000000);
-		fontRendererObj.drawSplitString("What Channel do you want to connect to ? : "+channelField.getText(), posX -75, posY -20, 180 ,0xff0000);
+			fontRendererObj.drawSplitString("What Channel do you want to connect to ? : "+channelField.getText(), posX+1 -75, posY-1-20, 180 ,0x000000);
+			fontRendererObj.drawSplitString("What Channel do you want to connect to ? : "+channelField.getText(), posX -75, posY -20, 180 ,0xff0000);
 
 		}finally{
-		if(channelName != null) channelField.drawTextBox();
+			if(channelName != null) channelField.drawTextBox();
 		}
 	}
 
@@ -113,8 +113,8 @@ public class GuiTeleport extends GuiScreen{
 		if(channelField != null) {
 			channelField.textboxKeyTyped(c, i);
 			channelName = channelField.getText();
-			}
-		
+		}
+
 		if(i == Keyboard.KEY_ESCAPE){
 			te.resetTE();
 			mc.thePlayer.closeScreen();
@@ -127,31 +127,32 @@ public class GuiTeleport extends GuiScreen{
 		super.mouseClicked(i, j, k);
 		if(channelField != null) channelField.mouseClicked(i, j, k);
 	}
-	//	private static final ResourceLocation enderPortalEndSkyTextures = new ResourceLocation("textures/environment/end_sky.png");
-	//	private static final ResourceLocation endPortalTextures = new ResourceLocation("textures/entity/end_portal.png");
-	//
-	//	float c = 0;
-	//	float sd = 0;
-	//
-	//	@Override
-	//	public void drawBackground(int par1) {
-	//		c += 1f;
-	//		sd +=0.01f;
-	//		float k = c+2;
-	//
-	//		GL11.glPushMatrix();
-	//		GL11.glColor4f(0.2f, 0.6f, 1f, sd < 0.7f ? sd : 0.7f);
-	//		mc.getMinecraft().renderEngine.bindTexture(enderPortalEndSkyTextures);
-	//		drawTexturedModalRect(0, 0, -(int)k*2, -(int)c*2 , 3000, 3000);
-	//		GL11.glPopMatrix();
-	//
-	//		GL11.glPushMatrix();
-	//		GL11.glColor4f(0.2f, 0.6f, 1f, sd < 0.75f ? sd : 0.75f);
-	//		mc.getMinecraft().renderEngine.bindTexture(endPortalTextures);
-	//		drawTexturedModalRect(0, 0, (int)k*2, (int)c*2 , 3000, 3000);
-	//		GL11.glPopMatrix();
-	//
-	//	}
+
+	private static final ResourceLocation enderPortalEndSkyTextures = new ResourceLocation("textures/environment/end_sky.png");
+	private static final ResourceLocation endPortalTextures = new ResourceLocation("textures/entity/end_portal.png");
+
+	float c = 0;
+	float sd = 0;
+
+	@Override
+	public void drawBackground(int par1) {
+		c += 1f;
+		sd +=0.01f;
+		float k = c+2;
+
+		GL11.glPushMatrix();
+		GL11.glColor4f(0.2f, 0.6f, 1f, sd < 0.7f ? sd : 0.7f);
+		mc.getMinecraft().renderEngine.bindTexture(enderPortalEndSkyTextures);
+		drawTexturedModalRect(0, 0, -(int)k*2, -(int)c*2 , 3000, 3000);
+		GL11.glPopMatrix();
+
+		GL11.glPushMatrix();
+		GL11.glColor4f(0.2f, 0.6f, 1f, sd < 0.75f ? sd : 0.75f);
+		mc.getMinecraft().renderEngine.bindTexture(endPortalTextures);
+		drawTexturedModalRect(0, 0, (int)k*2, (int)c*2 , 3000, 3000);
+		GL11.glPopMatrix();
+
+	}
 
 	public boolean doesGuiPauseGame() {
 		return false;
@@ -191,8 +192,6 @@ public class GuiTeleport extends GuiScreen{
 			out.writeInt(id);
 
 			if(id < EXIT_BUTTON){
-				//				System.out.println(b.xTeleport + " " + b.yTeleport + " " + b.zTeleport);
-
 				ArrayList<int[]>a = TelepadWorldData.get(thePlayer.worldObj).getCoordsForChannel(te.TELEPORTCHANNEL);
 				int x = a.get(button.id)[0];
 				int y = a.get(button.id)[1];

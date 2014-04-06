@@ -10,6 +10,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 
 import org.lwjgl.input.Keyboard;
 
@@ -17,6 +18,7 @@ import telepads.ServerPacketHandler;
 import telepads.Telepads;
 import telepads.block.TETelepad;
 import telepads.util.TelePadGuiHandler;
+import telepads.util.TelepadWorldData;
 
 import cpw.mods.fml.common.network.internal.FMLProxyPacket;
 
@@ -24,7 +26,7 @@ public class GuiNameTelepad extends GuiScreen{
 
 	private GuiTextField padNameField;
 	private GuiTextField channelNameField;
-	
+
 	public EntityPlayer thePlayer;
 	public TETelepad te;
 
@@ -42,15 +44,15 @@ public class GuiNameTelepad extends GuiScreen{
 
 		padNameField = new GuiTextField(fontRendererObj, posX-(150/2)    -100 , posY-50, 150, 20);
 		channelNameField = new GuiTextField(fontRendererObj, posX-(150/2)+100 , posY-50, 150, 20);
-		
+
 		String padName = te.telepadname.equals("TelePad") ? te.getWorldObj().getBiomeGenForCoords(te.xCoord, te.zCoord).biomeName : te.telepadname;
-		String channel = "DefaultChannel";
-		
+		String channel = te.TELEPORTCHANNEL;
+
 		if(padNameField != null){
 			padNameField.setText(padName);
 			padNameField.setMaxStringLength(50);
 		}
-		
+
 		if(channelNameField!= null){
 			channelNameField.setText(channel);
 			channelNameField.setMaxStringLength(50);
@@ -69,7 +71,7 @@ public class GuiNameTelepad extends GuiScreen{
 
 			fontRendererObj.drawSplitString("Name Your TelePad : "+padNameField.getText(), posX+1 -75 -100, posY-1-20, 180 ,0x000000);
 			fontRendererObj.drawSplitString("Name Your TelePad : "+padNameField.getText(), posX   -75 -100, posY  -20, 180 ,0xff0000);
-			
+
 			fontRendererObj.drawSplitString("Name Your Channel : "+channelNameField.getText(), posX+1 -75 +100, posY-1-20, 180 ,0x000000);
 			fontRendererObj.drawSplitString("Name Your Channel : "+channelNameField.getText(), posX   -75 +100, posY  -20, 180 ,0xff0000);
 		}finally{
@@ -108,7 +110,6 @@ public class GuiNameTelepad extends GuiScreen{
 	@Override
 	public void actionPerformed(GuiButton button) {
 		sendPacket(padNameField.getText(), channelNameField.getText());
-		
 	}
 
 	public void sendPacket(String padName, String channelName){

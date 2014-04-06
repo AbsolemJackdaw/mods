@@ -27,8 +27,6 @@ public class ItemPadRenderer implements IItemRenderer {
 
 	@Override
 	public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
-		//		Minecraft.getMinecraft().renderEngine.bindTexture(loc);
-		//		pad.render(null, 0, 0, 0, 0, 0, 0.0625f);
 		TileEntityRendererDispatcher.instance.renderTileEntityAt(new TETelepad(), 0.0D, 0.0D, 0.0D, 0.0F);
 
 	}
